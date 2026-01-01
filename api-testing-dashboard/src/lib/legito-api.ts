@@ -197,6 +197,16 @@ export interface TestContext {
   createdTemplateTag?: { id?: string; [key: string]: unknown };
   createdObjectRecord?: { systemName?: string; [key: string]: unknown };
   files?: unknown[];
+  // New context properties for CRUD tests
+  createdDocumentRecord?: { code?: string; [key: string]: unknown };
+  createdUser?: { id?: string; email?: string; [key: string]: unknown };
+  createdUserGroup?: { id?: string; [key: string]: unknown };
+  uploadedFile?: { id?: string; [key: string]: unknown };
+  createdUserShare?: unknown;
+  createdUserGroupShare?: unknown;
+  createdExternalLink?: { id?: string; [key: string]: unknown };
+  jsonIntegrationDocument?: unknown;
+  notificationSettings?: unknown;
   [key: string]: unknown;
 }
 
@@ -368,6 +378,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
       const objs = ctx.objects as unknown[];
       if (Array.isArray(objs) && objs.length > 0) {
         const first = objs[0] as { id?: string };
+        ctx.firstObject = first;
         return `/object-record/${first.id}`;
       }
       return '/object-record/unknown';
@@ -380,7 +391,71 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns response', type: 'status' },
     ],
   },
-  // Note: POST/PUT/DELETE for object-record require valid object structure - skipping for safety
+  {
+    id: 'object-record-create',
+    name: 'POST /object-record/{objectId}',
+    description: 'Creates new Object Record',
+    category: 'Object Records',
+    usesContext: ['objects'],
+    dynamicEndpoint: (ctx) => {
+      const objs = ctx.objects as unknown[];
+      if (Array.isArray(objs) && objs.length > 0) {
+        const first = objs[0] as { id?: string };
+        return `/object-record/${first.id}`;
+      }
+      return '/object-record/unknown';
+    },
+    endpoint: '/object-record/{objectId}',
+    method: 'POST',
+    body: {
+      name: `API-Test-ObjectRecord-${Date.now()}`,
+    },
+    setsContext: 'createdObjectRecord',
+    expectedStatus: [200, 201, 400, 422],
+    skipIf: (ctx) => !Array.isArray(ctx.objects) || ctx.objects.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'object-record-update',
+    name: 'PUT /object-record/{systemName}',
+    description: 'Updates existing Object Record',
+    category: 'Object Records',
+    usesContext: ['createdObjectRecord'],
+    dynamicEndpoint: (ctx) => {
+      const rec = ctx.createdObjectRecord as { systemName?: string };
+      return `/object-record/${rec?.systemName || 'unknown'}`;
+    },
+    endpoint: '/object-record/{systemName}',
+    method: 'PUT',
+    dynamicBody: (ctx) => ({
+      name: `API-Test-ObjectRecord-Updated-${Date.now()}`,
+    }),
+    expectedStatus: [200, 204, 400, 404, 422],
+    skipIf: (ctx) => !ctx.createdObjectRecord?.systemName,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'object-record-delete',
+    name: 'DELETE /object-record/{systemName}',
+    description: 'Removes Object Record (cleanup)',
+    category: 'Object Records',
+    usesContext: ['createdObjectRecord'],
+    dynamicEndpoint: (ctx) => {
+      const rec = ctx.createdObjectRecord as { systemName?: string };
+      return `/object-record/${rec?.systemName || 'unknown'}`;
+    },
+    endpoint: '/object-record/{systemName}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.createdObjectRecord?.systemName,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
 
   // ==================== LABELS (CRUD) ====================
   {
@@ -478,7 +553,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== USERS ====================
+  // ==================== USERS (CRUD) ====================
   {
     id: 'user-list',
     name: 'GET /user',
@@ -492,6 +567,46 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
       { name: 'Has data', type: 'hasData' },
+    ],
+  },
+  {
+    id: 'user-create',
+    name: 'POST /user',
+    description: 'Creates a new user with default permissions',
+    category: 'Users',
+    endpoint: '/user',
+    method: 'POST',
+    body: {
+      email: `api-test-user-${Date.now()}@test.legito.com`,
+      firstName: 'API',
+      lastName: 'TestUser',
+    },
+    setsContext: 'createdUser',
+    expectedStatus: [200, 201, 400, 409, 422],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'user-update',
+    name: 'PUT /user/{userIdOrEmail}',
+    description: 'Updates user details',
+    category: 'Users',
+    usesContext: ['createdUser'],
+    dynamicEndpoint: (ctx) => {
+      const user = ctx.createdUser as { id?: string; email?: string };
+      return `/user/${user?.id || user?.email || 'unknown'}`;
+    },
+    endpoint: '/user/{userIdOrEmail}',
+    method: 'PUT',
+    dynamicBody: () => ({
+      firstName: 'API-Updated',
+      lastName: 'TestUser-Updated',
+    }),
+    expectedStatus: [200, 204, 400, 404, 422],
+    skipIf: (ctx) => !ctx.createdUser?.id && !ctx.createdUser?.email,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
     ],
   },
   {
@@ -516,9 +631,47 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns response', type: 'status' },
     ],
   },
-  // Note: POST/PUT/DELETE for users is risky - skipping to avoid accidents
+  {
+    id: 'user-permission-update',
+    name: 'PUT /user/permission/{userIdOrEmail}',
+    description: 'Adds a user permission',
+    category: 'Users',
+    usesContext: ['createdUser'],
+    dynamicEndpoint: (ctx) => {
+      const user = ctx.createdUser as { id?: string; email?: string };
+      return `/user/permission/${user?.id || user?.email || 'unknown'}`;
+    },
+    endpoint: '/user/permission/{userIdOrEmail}',
+    method: 'PUT',
+    body: {
+      permission: 'document.read',
+    },
+    expectedStatus: [200, 204, 400, 404, 422],
+    skipIf: (ctx) => !ctx.createdUser?.id && !ctx.createdUser?.email,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'user-delete',
+    name: 'DELETE /user/{userIdOrEmail}',
+    description: 'Removes user (cleanup)',
+    category: 'Users',
+    usesContext: ['createdUser'],
+    dynamicEndpoint: (ctx) => {
+      const user = ctx.createdUser as { id?: string; email?: string };
+      return `/user/${user?.id || user?.email || 'unknown'}`;
+    },
+    endpoint: '/user/{userIdOrEmail}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.createdUser?.id && !ctx.createdUser?.email,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
 
-  // ==================== USER GROUPS ====================
+  // ==================== USER GROUPS (CRUD) ====================
   {
     id: 'user-group-list',
     name: 'GET /user-group',
@@ -533,7 +686,110 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
-  // Note: POST/PUT/DELETE for user groups is risky - skipping
+  {
+    id: 'user-group-create',
+    name: 'POST /user-group',
+    description: 'Inserts new user group',
+    category: 'User Groups',
+    endpoint: '/user-group',
+    method: 'POST',
+    body: {
+      name: `API-Test-Group-${Date.now()}`,
+    },
+    setsContext: 'createdUserGroup',
+    expectedStatus: [200, 201, 400, 409, 422],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'user-group-update',
+    name: 'PUT /user-group/{userGroupId}',
+    description: 'Updates existing user group',
+    category: 'User Groups',
+    usesContext: ['createdUserGroup'],
+    dynamicEndpoint: (ctx) => {
+      const group = ctx.createdUserGroup as { id?: string };
+      return `/user-group/${group?.id || 'unknown'}`;
+    },
+    endpoint: '/user-group/{userGroupId}',
+    method: 'PUT',
+    dynamicBody: () => ({
+      name: `API-Test-Group-Updated-${Date.now()}`,
+    }),
+    expectedStatus: [200, 204, 400, 404, 422],
+    skipIf: (ctx) => !ctx.createdUserGroup?.id,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'user-group-add-user',
+    name: 'POST /user-group/user/{userGroupId}',
+    description: 'Adds user to user group',
+    category: 'User Groups',
+    usesContext: ['createdUserGroup', 'users'],
+    dynamicEndpoint: (ctx) => {
+      const group = ctx.createdUserGroup as { id?: string };
+      return `/user-group/user/${group?.id || 'unknown'}`;
+    },
+    endpoint: '/user-group/user/{userGroupId}',
+    method: 'POST',
+    dynamicBody: (ctx) => {
+      const users = ctx.users as unknown[];
+      if (Array.isArray(users) && users.length > 0) {
+        const first = users[0] as { id?: string; email?: string };
+        return { userIdOrEmail: first.id || first.email };
+      }
+      return { userIdOrEmail: 'unknown' };
+    },
+    expectedStatus: [200, 201, 400, 404, 409, 422],
+    skipIf: (ctx) => !ctx.createdUserGroup?.id || !Array.isArray(ctx.users) || ctx.users.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'user-group-remove-user',
+    name: 'DELETE /user-group/user/{userGroupId}/{userIdOrEmail}',
+    description: 'Removes user from department',
+    category: 'User Groups',
+    usesContext: ['createdUserGroup', 'users'],
+    dynamicEndpoint: (ctx) => {
+      const group = ctx.createdUserGroup as { id?: string };
+      const users = ctx.users as unknown[];
+      if (Array.isArray(users) && users.length > 0) {
+        const first = users[0] as { id?: string };
+        return `/user-group/user/${group?.id || 'unknown'}/${first.id}`;
+      }
+      return '/user-group/user/unknown/unknown';
+    },
+    endpoint: '/user-group/user/{userGroupId}/{userIdOrEmail}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.createdUserGroup?.id || !Array.isArray(ctx.users) || ctx.users.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'user-group-delete',
+    name: 'DELETE /user-group/{userGroupId}',
+    description: 'Removes user group (cleanup)',
+    category: 'User Groups',
+    usesContext: ['createdUserGroup'],
+    dynamicEndpoint: (ctx) => {
+      const group = ctx.createdUserGroup as { id?: string };
+      return `/user-group/${group?.id || 'unknown'}`;
+    },
+    endpoint: '/user-group/{userGroupId}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.createdUserGroup?.id,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
 
   // ==================== WORKFLOWS ====================
   {
@@ -573,7 +829,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== DOCUMENT RECORDS ====================
+  // ==================== DOCUMENT RECORDS (CRUD) ====================
   {
     id: 'document-record-list',
     name: 'GET /document-record',
@@ -586,6 +842,44 @@ export const LEGITO_TESTS: LegitoTest[] = [
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
+    ],
+  },
+  {
+    id: 'document-record-create',
+    name: 'POST /document-record',
+    description: 'Creates new Document Record',
+    category: 'Document Records',
+    endpoint: '/document-record',
+    method: 'POST',
+    body: {
+      name: `API-Test-DocRecord-${Date.now()}`,
+      templateSuiteId: 10132,
+    },
+    setsContext: 'createdDocumentRecord',
+    expectedStatus: [200, 201, 400, 422],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'document-record-update',
+    name: 'PUT /document-record/{code}',
+    description: 'Updates existing Document Record',
+    category: 'Document Records',
+    usesContext: ['createdDocumentRecord'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.createdDocumentRecord as { code?: string };
+      return `/document-record/${doc?.code || 'unknown'}`;
+    },
+    endpoint: '/document-record/{code}',
+    method: 'PUT',
+    dynamicBody: (ctx) => ({
+      name: `API-Test-DocRecord-Updated-${Date.now()}`,
+    }),
+    expectedStatus: [200, 204, 400, 404, 422],
+    skipIf: (ctx) => !ctx.createdDocumentRecord?.code,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
     ],
   },
   {
@@ -637,6 +931,24 @@ export const LEGITO_TESTS: LegitoTest[] = [
     },
     setsContext: 'createdDocRecordType',
     expectedStatus: [200, 201, 400],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'document-record-type-update',
+    name: 'PUT /document-record-type/{documentRecordTypeId}',
+    description: 'Updates the Document Record Type',
+    category: 'Document Record Types',
+    usesContext: ['createdDocRecordType'],
+    dynamicEndpoint: (ctx) => `/document-record-type/${ctx.createdDocRecordType?.id || 'unknown'}`,
+    endpoint: '/document-record-type/{documentRecordTypeId}',
+    method: 'PUT',
+    dynamicBody: (ctx) => ({
+      name: `API-Test-DocType-Updated-${Date.now()}`,
+    }),
+    expectedStatus: [200, 204, 400, 404],
+    skipIf: (ctx) => !ctx.createdDocRecordType?.id,
     assertions: [
       { name: 'Returns response', type: 'status' },
     ],
@@ -716,6 +1028,47 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
+    id: 'document-version-update',
+    name: 'PUT /document-version/data/{documentRecordcode}',
+    description: 'Updates document version with new element data',
+    category: 'Document Versions',
+    usesContext: ['permanentDocument'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { documentRecordCode?: string };
+      return `/document-version/data/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/document-version/data/{documentRecordcode}',
+    method: 'PUT',
+    dynamicBody: () => ([
+      { name: 'client_name', value: `API Test Client Updated - ${Date.now()}` },
+    ]),
+    expectedStatus: [200, 201, 400, 404, 422],
+    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'document-version-json-integration',
+    name: 'POST /document-version/json-integration',
+    description: 'Maps json data to new document version',
+    category: 'Document Versions',
+    endpoint: '/document-version/json-integration',
+    method: 'POST',
+    body: {
+      templateSuiteId: 10132,
+      data: {
+        client_name: 'JSON Integration Test Client',
+        contractor_name: 'JSON Integration Test Contractor',
+      },
+    },
+    setsContext: 'jsonIntegrationDocument',
+    expectedStatus: [200, 201, 400, 422],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
     id: 'document-version-create-for-delete',
     name: 'POST /document-version/data/{templateSuiteId} (for DELETE test)',
     description: 'Creates temporary Document for DELETE test',
@@ -751,7 +1104,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== FILES ====================
+  // ==================== FILES (CRUD) ====================
   {
     id: 'file-list',
     name: 'GET /file/{documentRecordCode}',
@@ -775,8 +1128,66 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns response', type: 'status' },
     ],
   },
-  // Note: POST /file (upload) requires multipart form data - complex to test
-  // Note: DELETE /file/{fileId} and GET /file/download/{fileId} require existing file ID
+  {
+    id: 'file-upload',
+    name: 'POST /file/{documentRecordCode}',
+    description: 'Uploads external file into Document Record',
+    category: 'Files',
+    usesContext: ['permanentDocument'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { documentRecordCode?: string };
+      return `/file/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/file/{documentRecordCode}',
+    method: 'POST',
+    body: {
+      name: 'api-test-file.txt',
+      content: btoa('API Test File Content - ' + Date.now()),
+      mimeType: 'text/plain',
+    },
+    setsContext: 'uploadedFile',
+    expectedStatus: [200, 201, 400, 415, 422],
+    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'file-download',
+    name: 'GET /file/download/{fileId}',
+    description: 'Downloads external file',
+    category: 'Files',
+    usesContext: ['uploadedFile'],
+    dynamicEndpoint: (ctx) => {
+      const file = ctx.uploadedFile as { id?: string };
+      return `/file/download/${file?.id || 'unknown'}`;
+    },
+    endpoint: '/file/download/{fileId}',
+    method: 'GET',
+    expectedStatus: [200, 404],
+    skipIf: (ctx) => !ctx.uploadedFile?.id,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'file-delete',
+    name: 'DELETE /file/{fileId}',
+    description: 'Removes external file from Document Record',
+    category: 'Files',
+    usesContext: ['uploadedFile'],
+    dynamicEndpoint: (ctx) => {
+      const file = ctx.uploadedFile as { id?: string };
+      return `/file/${file?.id || 'unknown'}`;
+    },
+    endpoint: '/file/{fileId}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.uploadedFile?.id,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
 
   // ==================== PUSH CONNECTIONS (Webhooks) ====================
   {
@@ -828,7 +1239,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== SHARING ====================
+  // ==================== SHARING (CRUD) ====================
   {
     id: 'share-get',
     name: 'GET /share/{code}',
@@ -851,7 +1262,174 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns response', type: 'status' },
     ],
   },
-  // Note: POST/DELETE share endpoints require valid user/group IDs - complex to test safely
+  {
+    id: 'share-user-create',
+    name: 'POST /share/user/{code}',
+    description: 'Creates a user share for document record',
+    category: 'Sharing',
+    usesContext: ['permanentDocument', 'users'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { documentRecordCode?: string };
+      return `/share/user/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/share/user/{code}',
+    method: 'POST',
+    dynamicBody: (ctx) => {
+      const users = ctx.users as unknown[];
+      if (Array.isArray(users) && users.length > 0) {
+        const first = users[0] as { id?: string; email?: string };
+        return {
+          userIdOrEmail: first.id || first.email,
+          permission: 'read',
+        };
+      }
+      return { userIdOrEmail: 'unknown', permission: 'read' };
+    },
+    setsContext: 'createdUserShare',
+    expectedStatus: [200, 201, 400, 404, 422],
+    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode || !Array.isArray(ctx.users) || ctx.users.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'share-user-delete',
+    name: 'DELETE /share/user/{code}/{userIdOrEmail}',
+    description: 'Removes the user share from Document record',
+    category: 'Sharing',
+    usesContext: ['permanentDocument', 'users'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { documentRecordCode?: string };
+      const users = ctx.users as unknown[];
+      if (Array.isArray(users) && users.length > 0) {
+        const first = users[0] as { id?: string };
+        return `/share/user/${doc?.documentRecordCode || 'unknown'}/${first.id}`;
+      }
+      return '/share/user/unknown/unknown';
+    },
+    endpoint: '/share/user/{code}/{userIdOrEmail}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode || !Array.isArray(ctx.users) || ctx.users.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'share-user-group-create',
+    name: 'POST /share/user-group/{code}',
+    description: 'Creates a user group share for document record',
+    category: 'Sharing',
+    usesContext: ['permanentDocument', 'userGroups'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { documentRecordCode?: string };
+      return `/share/user-group/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/share/user-group/{code}',
+    method: 'POST',
+    dynamicBody: (ctx) => {
+      const groups = ctx.userGroups as unknown[];
+      if (Array.isArray(groups) && groups.length > 0) {
+        const first = groups[0] as { id?: string };
+        return {
+          userGroupId: first.id,
+          permission: 'read',
+        };
+      }
+      return { userGroupId: 'unknown', permission: 'read' };
+    },
+    setsContext: 'createdUserGroupShare',
+    expectedStatus: [200, 201, 400, 404, 422],
+    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode || !Array.isArray(ctx.userGroups) || ctx.userGroups.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'share-user-group-delete',
+    name: 'DELETE /share/user-group/{code}/{userGroupId}',
+    description: 'Removes the user group share from Document record',
+    category: 'Sharing',
+    usesContext: ['permanentDocument', 'userGroups'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { documentRecordCode?: string };
+      const groups = ctx.userGroups as unknown[];
+      if (Array.isArray(groups) && groups.length > 0) {
+        const first = groups[0] as { id?: string };
+        return `/share/user-group/${doc?.documentRecordCode || 'unknown'}/${first.id}`;
+      }
+      return '/share/user-group/unknown/unknown';
+    },
+    endpoint: '/share/user-group/{code}/{userGroupId}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode || !Array.isArray(ctx.userGroups) || ctx.userGroups.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'share-external-link-create',
+    name: 'POST /share/external-link/{code}',
+    description: 'Creates an External link for Document Record',
+    category: 'Sharing',
+    usesContext: ['permanentDocument'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { documentRecordCode?: string };
+      return `/share/external-link/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/share/external-link/{code}',
+    method: 'POST',
+    body: {
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      permission: 'read',
+    },
+    setsContext: 'createdExternalLink',
+    expectedStatus: [200, 201, 400, 404, 422],
+    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'share-external-link-update',
+    name: 'PUT /share/external-link/{externalLinkId}',
+    description: 'Updates an External link',
+    category: 'Sharing',
+    usesContext: ['createdExternalLink'],
+    dynamicEndpoint: (ctx) => {
+      const link = ctx.createdExternalLink as { id?: string };
+      return `/share/external-link/${link?.id || 'unknown'}`;
+    },
+    endpoint: '/share/external-link/{externalLinkId}',
+    method: 'PUT',
+    body: {
+      expiresAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    expectedStatus: [200, 204, 400, 404],
+    skipIf: (ctx) => !ctx.createdExternalLink?.id,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'share-external-link-delete',
+    name: 'DELETE /share/external-link/{externalLinkId}',
+    description: 'Deactivates and removes the External Link',
+    category: 'Sharing',
+    usesContext: ['createdExternalLink'],
+    dynamicEndpoint: (ctx) => {
+      const link = ctx.createdExternalLink as { id?: string };
+      return `/share/external-link/${link?.id || 'unknown'}`;
+    },
+    endpoint: '/share/external-link/{externalLinkId}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.createdExternalLink?.id,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
 
   // ==================== NOTIFICATION SETTINGS ====================
   {
@@ -871,6 +1449,33 @@ export const LEGITO_TESTS: LegitoTest[] = [
     endpoint: '/notification-setting/{userIdOrEmail}',
     method: 'GET',
     expectedStatus: [200, 404],
+    skipIf: (ctx) => !Array.isArray(ctx.users) || ctx.users.length === 0,
+    setsContext: 'notificationSettings',
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'notification-setting-update',
+    name: 'PUT /notification-setting/{userIdOrEmail}',
+    description: 'Updates user notification settings',
+    category: 'Notification Settings',
+    usesContext: ['users'],
+    dynamicEndpoint: (ctx) => {
+      const users = ctx.users as unknown[];
+      if (Array.isArray(users) && users.length > 0) {
+        const first = users[0] as { id?: string };
+        return `/notification-setting/${first.id}`;
+      }
+      return '/notification-setting/unknown';
+    },
+    endpoint: '/notification-setting/{userIdOrEmail}',
+    method: 'PUT',
+    body: {
+      emailNotifications: true,
+      inAppNotifications: true,
+    },
+    expectedStatus: [200, 204, 400, 404, 422],
     skipIf: (ctx) => !Array.isArray(ctx.users) || ctx.users.length === 0,
     assertions: [
       { name: 'Returns response', type: 'status' },
