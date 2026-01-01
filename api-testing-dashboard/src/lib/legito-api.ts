@@ -1,5 +1,7 @@
 // Legito API Client with JWT Authentication
 
+// Use local proxy to bypass CORS when running in browser
+const PROXY_BASE_URL = '/api/legito';
 const LEGITO_BASE_URL = 'https://emea.legito.com/api/v7';
 
 interface JWTConfig {
@@ -60,7 +62,16 @@ export interface ApiResponse<T = unknown> {
   headers: Record<string, string>;
 }
 
-// Make authenticated API request
+// Proxy response format from our Next.js API route
+interface ProxyResponse {
+  data?: unknown;
+  status: number;
+  statusText: string;
+  duration: number;
+  error?: string;
+}
+
+// Make authenticated API request via proxy to bypass CORS
 export async function legitoRequest<T = unknown>(
   endpoint: string,
   options: {
@@ -75,7 +86,10 @@ export async function legitoRequest<T = unknown>(
   const timeoutId = setTimeout(() => controller.abort(), options.timeout || 30000);
 
   try {
-    const response = await fetch(`${LEGITO_BASE_URL}${endpoint}`, {
+    // Use the proxy endpoint to bypass CORS
+    const proxyUrl = `${PROXY_BASE_URL}${endpoint}`;
+
+    const response = await fetch(proxyUrl, {
       method: options.method || 'GET',
       headers: {
         'Authorization': `Bearer ${options.jwt}`,
@@ -94,33 +108,57 @@ export async function legitoRequest<T = unknown>(
       headers[key] = value;
     });
 
-    // Parse response body
-    let data: T | undefined;
-    let error: string | undefined;
+    // Parse the proxy response
+    let proxyData: ProxyResponse;
+    try {
+      proxyData = await response.json();
+    } catch {
+      return {
+        success: false,
+        status: 0,
+        statusText: 'Network Error',
+        error: 'Failed to parse proxy response',
+        duration,
+        headers,
+      };
+    }
 
-    const contentType = response.headers.get('content-type');
-    if (contentType?.includes('application/json')) {
-      try {
-        const json = await response.json();
-        if (response.ok) {
-          data = json;
-        } else {
-          error = json.message || json.error || JSON.stringify(json);
-        }
-      } catch {
-        error = 'Failed to parse JSON response';
+    // Check for proxy-level errors
+    if (proxyData.error && proxyData.status === 0) {
+      return {
+        success: false,
+        status: 0,
+        statusText: proxyData.statusText || 'Network Error',
+        error: proxyData.error,
+        duration: proxyData.duration || duration,
+        headers,
+      };
+    }
+
+    // Extract the actual API response from proxy wrapper
+    const actualStatus = proxyData.status;
+    const actualStatusText = proxyData.statusText;
+    const actualData = proxyData.data as T | undefined;
+    const isSuccess = actualStatus >= 200 && actualStatus < 300;
+
+    // Check for error in the response data
+    let error: string | undefined;
+    if (!isSuccess && actualData) {
+      if (typeof actualData === 'object' && actualData !== null) {
+        const errorData = actualData as Record<string, unknown>;
+        error = (errorData.message || errorData.error || JSON.stringify(actualData)) as string;
+      } else if (typeof actualData === 'string') {
+        error = actualData;
       }
-    } else if (!response.ok) {
-      error = await response.text();
     }
 
     return {
-      success: response.ok,
-      status: response.status,
-      statusText: response.statusText,
-      data,
+      success: isSuccess,
+      status: actualStatus,
+      statusText: actualStatusText,
+      data: actualData,
       error,
-      duration,
+      duration: proxyData.duration || duration,
       headers,
     };
   } catch (err) {
