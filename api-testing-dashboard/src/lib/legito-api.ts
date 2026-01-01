@@ -407,8 +407,14 @@ export const LEGITO_TESTS: LegitoTest[] = [
     },
     endpoint: '/object-record/{objectId}',
     method: 'POST',
+    // ObjectRecord schema: properties array with systemName and value
     body: {
-      name: `API-Test-ObjectRecord-${Date.now()}`,
+      properties: [
+        {
+          systemName: 'api-test-property',
+          value: `API-Test-ObjectRecord-${Date.now()}`,
+        },
+      ],
     },
     setsContext: 'createdObjectRecord',
     expectedStatus: [200, 201, 400, 422],
@@ -576,10 +582,12 @@ export const LEGITO_TESTS: LegitoTest[] = [
     category: 'Users',
     endpoint: '/user',
     method: 'POST',
+    // User schema: email, name, position, timezone, customIdentifier
     body: {
       email: `api-test-user-${Date.now()}@test.legito.com`,
-      firstName: 'API',
-      lastName: 'TestUser',
+      name: 'API Test User',
+      position: 'API Tester',
+      timezone: 'Europe/Prague',
     },
     setsContext: 'createdUser',
     expectedStatus: [200, 201, 400, 409, 422],
@@ -1140,10 +1148,10 @@ export const LEGITO_TESTS: LegitoTest[] = [
     },
     endpoint: '/file/{documentRecordCode}',
     method: 'POST',
+    // FileWithData schema: name, data (base64 with MIME prefix)
     body: {
       name: 'api-test-file.txt',
-      content: btoa('API Test File Content - ' + Date.now()),
-      mimeType: 'text/plain',
+      data: 'data:text/plain;base64,QVBJIFRlc3QgRmlsZSBDb250ZW50',
     },
     setsContext: 'uploadedFile',
     expectedStatus: [200, 201, 400, 415, 422],
@@ -1211,11 +1219,14 @@ export const LEGITO_TESTS: LegitoTest[] = [
     category: 'Push Connections',
     endpoint: '/push-connection',
     method: 'POST',
+    // PushConnection schema: name (required), url (required), enabled, eventTypes, templateSuiteAll
     body: {
       name: `API-Test-Webhook-${Date.now()}`,
       url: 'https://webhook.site/test-legito-api',
-      events: ['document.created'],
-      active: false,
+      enabled: false,
+      eventTypes: ['DocumentRecordCreated', 'DocumentRecordUpdated'],
+      templateSuiteAll: true,
+      documentRecordTypeAll: true,
     },
     setsContext: 'createdPushConnection',
     expectedStatus: [200, 201, 400],
@@ -1274,16 +1285,19 @@ export const LEGITO_TESTS: LegitoTest[] = [
     },
     endpoint: '/share/user/{code}',
     method: 'POST',
+    // ShareUser schema: array of [{id or email, permission: LIST|READ|EDIT|MANAGE}]
     dynamicBody: (ctx) => {
       const users = ctx.users as unknown[];
       if (Array.isArray(users) && users.length > 0) {
-        const first = users[0] as { id?: string; email?: string };
-        return {
-          userIdOrEmail: first.id || first.email,
-          permission: 'read',
-        };
+        const first = users[0] as { id?: number; email?: string };
+        return [
+          {
+            id: first.id,
+            permission: 'READ',
+          },
+        ];
       }
-      return { userIdOrEmail: 'unknown', permission: 'read' };
+      return [{ email: 'unknown@test.com', permission: 'READ' }];
     },
     setsContext: 'createdUserShare',
     expectedStatus: [200, 201, 400, 404, 422],
@@ -1327,16 +1341,14 @@ export const LEGITO_TESTS: LegitoTest[] = [
     },
     endpoint: '/share/user-group/{code}',
     method: 'POST',
+    // ShareUserGroup schema: array of [{id}]
     dynamicBody: (ctx) => {
       const groups = ctx.userGroups as unknown[];
       if (Array.isArray(groups) && groups.length > 0) {
-        const first = groups[0] as { id?: string };
-        return {
-          userGroupId: first.id,
-          permission: 'read',
-        };
+        const first = groups[0] as { id?: number };
+        return [{ id: first.id }];
       }
-      return { userGroupId: 'unknown', permission: 'read' };
+      return [{ id: 0 }];
     },
     setsContext: 'createdUserGroupShare',
     expectedStatus: [200, 201, 400, 404, 422],
@@ -1380,10 +1392,15 @@ export const LEGITO_TESTS: LegitoTest[] = [
     },
     endpoint: '/share/external-link/{code}',
     method: 'POST',
-    body: {
-      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-      permission: 'read',
-    },
+    // ExternalLink schema: array of [{active, type, permission, useMax}]
+    body: [
+      {
+        active: true,
+        type: 'document',
+        permission: 'READ',
+        useMax: 0,
+      },
+    ],
     setsContext: 'createdExternalLink',
     expectedStatus: [200, 201, 400, 404, 422],
     skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode,
@@ -1471,11 +1488,14 @@ export const LEGITO_TESTS: LegitoTest[] = [
     },
     endpoint: '/notification-setting/{userIdOrEmail}',
     method: 'PUT',
+    // NotificationSetting schema: objects with web/email properties (Newer|My|Shared)
     body: {
-      emailNotifications: true,
-      inAppNotifications: true,
+      changeOwner: { web: 'Newer', email: 'My' },
+      share: { web: 'Shared', email: 'Newer' },
+      fileUpload: { web: 'Shared', email: 'Newer' },
+      newDocumentVersion: { web: 'Shared', email: 'Newer' },
     },
-    expectedStatus: [200, 204, 400, 404, 422],
+    expectedStatus: [200, 201, 204, 400, 404, 422],
     skipIf: (ctx) => !Array.isArray(ctx.users) || ctx.users.length === 0,
     assertions: [
       { name: 'Returns response', type: 'status' },
