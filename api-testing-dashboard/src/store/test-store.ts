@@ -11,6 +11,7 @@ import type {
   DashboardStats,
   HistoricalData,
 } from '@/types';
+import { LEGITO_TESTS } from '@/lib/legito-api';
 
 interface TestStore {
   // Test Data
@@ -59,18 +60,19 @@ interface TestStore {
 }
 
 const defaultConfiguration: TestConfiguration = {
-  id: 'default',
-  name: 'Default Configuration',
-  baseUrl: 'https://api.example.com',
+  id: 'legito-production',
+  name: 'Legito Production',
+  baseUrl: 'https://emea.legito.com/api/v7',
   authType: 'jwt',
   authToken: '',
   apiKey: '',
-  templateIds: [],
+  privateKey: '',
+  templateIds: ['10132'],
   documentIds: [],
   timeout: 30000,
   retryCount: 0,
   parallelExecution: false,
-  environment: 'development',
+  environment: 'production',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -89,240 +91,50 @@ const defaultStats: DashboardStats = {
   weeklyRuns: 0,
 };
 
-// Sample test categories for demonstration
-const sampleCategories: TestCategory[] = [
-  {
-    id: 'auth',
-    name: 'Authentication',
-    description: 'Authentication and authorization tests',
-    tests: [
-      {
-        id: 'auth-1',
-        name: 'Login with valid credentials',
-        description: 'Verify successful login with valid username and password',
-        category: 'auth',
-        endpoint: '/api/auth/login',
-        method: 'POST',
-        status: 'pending',
-        assertions: 5,
-      },
-      {
-        id: 'auth-2',
-        name: 'Login with invalid credentials',
-        description: 'Verify error response for invalid credentials',
-        category: 'auth',
-        endpoint: '/api/auth/login',
-        method: 'POST',
-        status: 'pending',
-        assertions: 3,
-      },
-      {
-        id: 'auth-3',
-        name: 'Token refresh',
-        description: 'Verify JWT token refresh functionality',
-        category: 'auth',
-        endpoint: '/api/auth/refresh',
-        method: 'POST',
-        status: 'pending',
-        assertions: 4,
-      },
-      {
-        id: 'auth-4',
-        name: 'Logout',
-        description: 'Verify logout invalidates session',
-        category: 'auth',
-        endpoint: '/api/auth/logout',
-        method: 'POST',
-        status: 'pending',
-        assertions: 2,
-      },
-    ],
-  },
-  {
-    id: 'templates',
-    name: 'Templates',
-    description: 'Template CRUD operations',
-    tests: [
-      {
-        id: 'tmpl-1',
-        name: 'List all templates',
-        description: 'Retrieve paginated list of templates',
-        category: 'templates',
-        endpoint: '/api/templates',
-        method: 'GET',
-        status: 'pending',
-        assertions: 6,
-      },
-      {
-        id: 'tmpl-2',
-        name: 'Get template by ID',
-        description: 'Retrieve single template details',
-        category: 'templates',
-        endpoint: '/api/templates/:id',
-        method: 'GET',
-        status: 'pending',
-        assertions: 4,
-      },
-      {
-        id: 'tmpl-3',
-        name: 'Create new template',
-        description: 'Create template with valid data',
-        category: 'templates',
-        endpoint: '/api/templates',
-        method: 'POST',
-        status: 'pending',
-        assertions: 5,
-      },
-      {
-        id: 'tmpl-4',
-        name: 'Update template',
-        description: 'Update existing template',
-        category: 'templates',
-        endpoint: '/api/templates/:id',
-        method: 'PUT',
-        status: 'pending',
-        assertions: 4,
-      },
-      {
-        id: 'tmpl-5',
-        name: 'Delete template',
-        description: 'Delete template and verify removal',
-        category: 'templates',
-        endpoint: '/api/templates/:id',
-        method: 'DELETE',
-        status: 'pending',
-        assertions: 3,
-      },
-    ],
-  },
-  {
-    id: 'documents',
-    name: 'Documents',
-    description: 'Document management tests',
-    tests: [
-      {
-        id: 'doc-1',
-        name: 'Generate document from template',
-        description: 'Create document using template and data',
-        category: 'documents',
-        endpoint: '/api/documents/generate',
-        method: 'POST',
-        status: 'pending',
-        assertions: 7,
-      },
-      {
-        id: 'doc-2',
-        name: 'List documents',
-        description: 'Retrieve list of generated documents',
-        category: 'documents',
-        endpoint: '/api/documents',
-        method: 'GET',
-        status: 'pending',
-        assertions: 5,
-      },
-      {
-        id: 'doc-3',
-        name: 'Download document',
-        description: 'Download document in specified format',
-        category: 'documents',
-        endpoint: '/api/documents/:id/download',
-        method: 'GET',
-        status: 'pending',
-        assertions: 4,
-      },
-      {
-        id: 'doc-4',
-        name: 'Delete document',
-        description: 'Delete document permanently',
-        category: 'documents',
-        endpoint: '/api/documents/:id',
-        method: 'DELETE',
-        status: 'pending',
-        assertions: 3,
-      },
-    ],
-  },
-  {
-    id: 'users',
-    name: 'Users',
-    description: 'User management operations',
-    tests: [
-      {
-        id: 'user-1',
-        name: 'Get current user',
-        description: 'Retrieve authenticated user profile',
-        category: 'users',
-        endpoint: '/api/users/me',
-        method: 'GET',
-        status: 'pending',
-        assertions: 5,
-      },
-      {
-        id: 'user-2',
-        name: 'Update user profile',
-        description: 'Update user profile information',
-        category: 'users',
-        endpoint: '/api/users/me',
-        method: 'PUT',
-        status: 'pending',
-        assertions: 4,
-      },
-      {
-        id: 'user-3',
-        name: 'List organization users',
-        description: 'List all users in organization',
-        category: 'users',
-        endpoint: '/api/users',
-        method: 'GET',
-        status: 'pending',
-        assertions: 6,
-      },
-    ],
-  },
-  {
-    id: 'webhooks',
-    name: 'Webhooks',
-    description: 'Webhook configuration and delivery',
-    tests: [
-      {
-        id: 'wh-1',
-        name: 'Create webhook',
-        description: 'Register new webhook endpoint',
-        category: 'webhooks',
-        endpoint: '/api/webhooks',
-        method: 'POST',
-        status: 'pending',
-        assertions: 4,
-      },
-      {
-        id: 'wh-2',
-        name: 'List webhooks',
-        description: 'List all configured webhooks',
-        category: 'webhooks',
-        endpoint: '/api/webhooks',
-        method: 'GET',
-        status: 'pending',
-        assertions: 3,
-      },
-      {
-        id: 'wh-3',
-        name: 'Test webhook delivery',
-        description: 'Send test payload to webhook',
-        category: 'webhooks',
-        endpoint: '/api/webhooks/:id/test',
-        method: 'POST',
-        status: 'pending',
-        assertions: 5,
-      },
-    ],
-  },
-];
+// Convert LEGITO_TESTS to TestCategory format, grouped by category
+function buildCategories(): TestCategory[] {
+  const categoryMap = new Map<string, TestCase[]>();
+
+  LEGITO_TESTS.forEach((test) => {
+    const existing = categoryMap.get(test.category) || [];
+    existing.push({
+      id: test.id,
+      name: test.name,
+      description: test.description,
+      category: test.category,
+      endpoint: test.endpoint,
+      method: test.method,
+      status: 'pending',
+      assertions: test.assertions.length,
+    });
+    categoryMap.set(test.category, existing);
+  });
+
+  const categoryDescriptions: Record<string, string> = {
+    'Smoke Tests': 'Basic health checks and connectivity tests',
+    'Reference Data': 'Read-only reference data endpoints',
+    'Templates': 'Template suite operations',
+    'Users & Groups': 'User and group management',
+    'Workflows': 'Workflow definitions and stages',
+    'Documents': 'Document record operations',
+    'Webhooks': 'Push connection/webhook operations',
+  };
+
+  return Array.from(categoryMap.entries()).map(([name, tests]) => ({
+    id: name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and'),
+    name,
+    description: categoryDescriptions[name] || `${name} tests`,
+    tests,
+  }));
+}
+
+const legitoCategories = buildCategories();
 
 export const useTestStore = create<TestStore>()(
   persist(
     (set, get) => ({
       // Initial State
-      categories: sampleCategories,
+      categories: legitoCategories,
       currentRun: null,
       testResults: [],
       logs: [],
@@ -455,7 +267,7 @@ export const useTestStore = create<TestStore>()(
       setHistoricalData: (data) => set({ historicalData: data }),
     }),
     {
-      name: 'api-test-dashboard',
+      name: 'legito-api-test-dashboard',
       partialize: (state) => ({
         configuration: state.configuration,
         savedConfigurations: state.savedConfigurations,

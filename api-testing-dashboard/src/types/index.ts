@@ -89,6 +89,7 @@ export interface TestConfiguration {
   authType: 'jwt' | 'apiKey' | 'none';
   authToken?: string;
   apiKey?: string;
+  privateKey?: string; // For JWT signing (Legito API)
   templateIds: string[];
   documentIds: string[];
   timeout: number;

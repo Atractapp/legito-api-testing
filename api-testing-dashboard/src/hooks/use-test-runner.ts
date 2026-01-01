@@ -3,10 +3,18 @@
 import { useCallback, useRef } from 'react';
 import { useTestStore } from '@/store/test-store';
 import type { TestResult, TestRun, LogEntry } from '@/types';
+import {
+  generateJWT,
+  legitoRequest,
+  LEGITO_TESTS,
+  runAssertion,
+  type LegitoTest,
+  type ApiResponse,
+  type TestContext,
+} from '@/lib/legito-api';
 
 export function useTestRunner() {
   const {
-    categories,
     selectedTests,
     configuration,
     setCurrentRun,
@@ -19,6 +27,8 @@ export function useTestRunner() {
   } = useTestStore();
 
   const abortControllerRef = useRef<AbortController | null>(null);
+  const jwtRef = useRef<string | null>(null);
+  const contextRef = useRef<TestContext>({});
 
   const log = useCallback(
     (level: LogEntry['level'], message: string, testId?: string) => {
@@ -34,20 +44,22 @@ export function useTestRunner() {
   );
 
   const runTests = useCallback(async () => {
-    if (selectedTests.length === 0) {
+    // Get tests to run from LEGITO_TESTS based on selectedTests
+    const testsToRun = LEGITO_TESTS.filter((test) =>
+      selectedTests.includes(test.id)
+    );
+
+    if (testsToRun.length === 0) {
       log('warn', 'No tests selected');
       return;
     }
 
     // Setup
     abortControllerRef.current = new AbortController();
+    contextRef.current = {}; // Reset context
     clearTestResults();
     clearLogs();
     setIsRunning(true);
-
-    const testsToRun = categories
-      .flatMap((cat) => cat.tests)
-      .filter((test) => selectedTests.includes(test.id));
 
     const run: TestRun = {
       id: `run-${Date.now()}`,
@@ -63,8 +75,33 @@ export function useTestRunner() {
 
     setCurrentRun(run);
     log('info', `Starting test run with ${testsToRun.length} tests`);
-    log('info', `Configuration: ${configuration.name} (${configuration.environment})`);
-    log('info', `Base URL: ${configuration.baseUrl}`);
+    log('info', `Target: Legito API v7 (https://emea.legito.com/api/v7)`);
+
+    // Generate JWT token
+    const apiKey = configuration.apiKey || process.env.NEXT_PUBLIC_LEGITO_API_KEY;
+    const privateKey = configuration.privateKey || process.env.NEXT_PUBLIC_LEGITO_PRIVATE_KEY;
+
+    if (!apiKey || !privateKey) {
+      log('error', 'Missing API credentials. Please configure API Key and Private Key.');
+      setIsRunning(false);
+      run.status = 'completed';
+      run.endTime = new Date().toISOString();
+      setCurrentRun(run);
+      return;
+    }
+
+    try {
+      log('info', 'Generating JWT token...');
+      jwtRef.current = await generateJWT({ apiKey, privateKey });
+      log('info', 'JWT token generated successfully');
+    } catch (error) {
+      log('error', `Failed to generate JWT: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setIsRunning(false);
+      run.status = 'completed';
+      run.endTime = new Date().toISOString();
+      setCurrentRun(run);
+      return;
+    }
 
     // Reset all test statuses
     testsToRun.forEach((test) => updateTestStatus(test.id, 'pending'));
@@ -76,25 +113,79 @@ export function useTestRunner() {
         break;
       }
 
+      // Check if test should be skipped
+      if (test.skipIf && test.skipIf(contextRef.current)) {
+        updateTestStatus(test.id, 'skipped');
+        run.skippedTests++;
+        log('warn', `⊘ SKIPPED: ${test.name} (dependencies not met)`, test.id);
+
+        // Create skipped result
+        const skippedResult: TestResult = {
+          id: `result-${Date.now()}-${test.id}`,
+          testId: test.id,
+          testName: test.name,
+          category: test.category,
+          status: 'skipped',
+          duration: 0,
+          timestamp: new Date().toISOString(),
+          request: {
+            url: `https://emea.legito.com/api/v7${test.endpoint}`,
+            method: test.method,
+            headers: {},
+          },
+          response: {
+            status: 0,
+            statusText: 'Skipped',
+            headers: {},
+            body: null,
+            size: 0,
+          },
+          assertions: [],
+          logs: [],
+        };
+        addTestResult(skippedResult);
+        run.results.push(skippedResult);
+        setCurrentRun({ ...run });
+        continue;
+      }
+
       updateTestStatus(test.id, 'running');
       log('info', `Running: ${test.name}`, test.id);
 
+      // Resolve dynamic endpoint
+      const endpoint = test.dynamicEndpoint
+        ? test.dynamicEndpoint(contextRef.current)
+        : test.endpoint;
+      log('info', `${test.method} ${endpoint}`, test.id);
+
       try {
-        // Simulate test execution
-        const result = await simulateTestExecution(test, configuration);
+        const result = await executeTest(
+          test,
+          endpoint,
+          jwtRef.current!,
+          configuration.timeout,
+          contextRef.current,
+          log
+        );
+
+        // Store context if test sets it
+        if (test.setsContext && result.response.body) {
+          contextRef.current[test.setsContext] = result.response.body;
+          log('debug', `Stored context: ${test.setsContext}`, test.id);
+        }
 
         updateTestStatus(test.id, result.status);
         addTestResult(result);
 
         if (result.status === 'passed') {
           run.passedTests++;
-          log('info', `PASSED: ${test.name} (${result.duration}ms)`, test.id);
+          log('info', `✓ PASSED: ${test.name} (${result.duration}ms)`, test.id);
         } else if (result.status === 'failed') {
           run.failedTests++;
-          log('error', `FAILED: ${test.name} - ${result.error?.message}`, test.id);
+          log('error', `✗ FAILED: ${test.name} - ${result.error?.message}`, test.id);
         } else if (result.status === 'skipped') {
           run.skippedTests++;
-          log('warn', `SKIPPED: ${test.name}`, test.id);
+          log('warn', `⊘ SKIPPED: ${test.name}`, test.id);
         }
 
         run.results.push(result);
@@ -115,13 +206,16 @@ export function useTestRunner() {
     setCurrentRun(run);
     setIsRunning(false);
 
+    const passRate = run.totalTests > 0
+      ? Math.round((run.passedTests / run.totalTests) * 100)
+      : 0;
+
     log(
       'info',
-      `Test run ${run.status}: ${run.passedTests} passed, ${run.failedTests} failed, ${run.skippedTests} skipped`
+      `Test run ${run.status}: ${run.passedTests} passed, ${run.failedTests} failed, ${run.skippedTests} skipped (${passRate}% pass rate)`
     );
     log('info', `Total duration: ${(run.duration / 1000).toFixed(2)}s`);
   }, [
-    categories,
     selectedTests,
     configuration,
     setCurrentRun,
@@ -140,14 +234,15 @@ export function useTestRunner() {
   }, [setIsRunning, log]);
 
   const resetTests = useCallback(() => {
-    categories.flatMap((cat) => cat.tests).forEach((test) => {
+    LEGITO_TESTS.forEach((test) => {
       updateTestStatus(test.id, 'pending');
     });
     clearTestResults();
     clearLogs();
     setCurrentRun(null);
+    contextRef.current = {};
     log('info', 'Tests reset');
-  }, [categories, updateTestStatus, clearTestResults, clearLogs, setCurrentRun, log]);
+  }, [updateTestStatus, clearTestResults, clearLogs, setCurrentRun, log]);
 
   return {
     runTests,
@@ -156,85 +251,109 @@ export function useTestRunner() {
   };
 }
 
-// Simulate test execution (replace with actual API calls in production)
-async function simulateTestExecution(
-  test: { id: string; name: string; category: string; endpoint: string; method: string; assertions: number },
-  configuration: { baseUrl: string; authToken?: string; timeout: number }
+// Execute a single test against the real Legito API
+async function executeTest(
+  test: LegitoTest,
+  resolvedEndpoint: string,
+  jwt: string,
+  timeout: number,
+  context: TestContext,
+  log: (level: LogEntry['level'], message: string, testId?: string) => void
 ): Promise<TestResult> {
   const startTime = Date.now();
 
-  // Simulate network delay (200-1500ms)
-  await new Promise((resolve) =>
-    setTimeout(resolve, 200 + Math.random() * 1300)
-  );
+  // Resolve dynamic body if present
+  const body = test.dynamicBody ? test.dynamicBody(context) : test.body;
+
+  // Make the actual API request
+  const response: ApiResponse = await legitoRequest(resolvedEndpoint, {
+    method: test.method,
+    body,
+    jwt,
+    timeout,
+  });
 
   const duration = Date.now() - startTime;
 
-  // Simulate random results (80% pass rate)
-  const passed = Math.random() > 0.2;
-  const assertionResults = Array.from({ length: test.assertions }, (_, i) => ({
-    name: `Assertion ${i + 1}`,
-    passed: passed || Math.random() > 0.5,
-    expected: passed ? 200 : 200,
-    actual: passed ? 200 : 500,
-    message: passed ? undefined : 'Expected status 200 but got 500',
-  }));
+  // Log response details
+  log('info', `Response: ${response.status} ${response.statusText} (${response.duration}ms)`, test.id);
 
-  const allAssertionsPassed = assertionResults.every((a) => a.passed);
+  // Check if status is in expected range
+  const expectedStatuses = Array.isArray(test.expectedStatus)
+    ? test.expectedStatus
+    : [test.expectedStatus];
+  const statusOk = expectedStatuses.includes(response.status);
+
+  // Run assertions
+  const assertionResults = test.assertions.map((assertion) => {
+    // For status assertion, check against expected statuses
+    if (assertion.type === 'status') {
+      return {
+        name: assertion.name,
+        passed: statusOk,
+        expected: expectedStatuses,
+        actual: response.status,
+        message: statusOk
+          ? `Status ${response.status} OK`
+          : `Status ${response.status} not in expected [${expectedStatuses.join(', ')}]`,
+      };
+    }
+
+    const result = runAssertion(assertion, response);
+    return {
+      name: assertion.name,
+      passed: result.passed,
+      expected: assertion.expected,
+      actual: undefined,
+      message: result.message,
+    };
+  });
+
+  const allPassed = assertionResults.every((a) => a.passed);
+
+  // Log assertion results
+  assertionResults.forEach((a) => {
+    if (a.passed) {
+      log('info', `  ✓ ${a.name}: ${a.message}`, test.id);
+    } else {
+      log('error', `  ✗ ${a.name}: ${a.message}`, test.id);
+    }
+  });
 
   return {
     id: `result-${Date.now()}-${test.id}`,
     testId: test.id,
     testName: test.name,
     category: test.category,
-    status: allAssertionsPassed ? 'passed' : 'failed',
+    status: allPassed ? 'passed' : 'failed',
     duration,
     timestamp: new Date().toISOString(),
     request: {
-      url: `${configuration.baseUrl}${test.endpoint}`,
+      url: `https://emea.legito.com/api/v7${resolvedEndpoint}`,
       method: test.method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: configuration.authToken ? `Bearer ${configuration.authToken}` : '',
+        Authorization: 'Bearer [JWT]',
       },
-      body: test.method !== 'GET' ? { data: 'sample' } : undefined,
+      body,
     },
     response: {
-      status: allAssertionsPassed ? 200 : 500,
-      statusText: allAssertionsPassed ? 'OK' : 'Internal Server Error',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Request-Id': `req-${Date.now()}`,
-      },
-      body: allAssertionsPassed
-        ? { success: true, data: { id: 1, name: 'Sample' } }
-        : { success: false, error: 'Internal server error' },
-      size: Math.floor(Math.random() * 5000) + 500,
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+      body: response.data,
+      size: JSON.stringify(response.data || {}).length,
     },
     assertions: assertionResults,
-    error: allAssertionsPassed
+    error: allPassed
       ? undefined
       : {
-          message: 'One or more assertions failed',
-          stack: 'at runTest (test-runner.ts:123)\nat async runTests (test-runner.ts:45)',
+          message: response.error || 'One or more assertions failed',
+          stack: assertionResults
+            .filter((a) => !a.passed)
+            .map((a) => `${a.name}: ${a.message}`)
+            .join('\n'),
         },
-    logs: [
-      {
-        id: `log-${Date.now()}-1`,
-        timestamp: new Date().toISOString(),
-        level: 'info',
-        message: `Requesting ${test.method} ${test.endpoint}`,
-        testId: test.id,
-      },
-      {
-        id: `log-${Date.now()}-2`,
-        timestamp: new Date().toISOString(),
-        level: allAssertionsPassed ? 'info' : 'error',
-        message: allAssertionsPassed
-          ? `Response received: 200 OK`
-          : `Response received: 500 Internal Server Error`,
-        testId: test.id,
-      },
-    ],
+    logs: [],
   };
 }

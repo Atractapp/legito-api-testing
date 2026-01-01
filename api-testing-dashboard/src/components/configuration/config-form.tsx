@@ -203,110 +203,92 @@ export function ConfigurationPanel() {
         <TabsContent value="authentication">
           <Card>
             <CardHeader>
-              <CardTitle>Authentication</CardTitle>
-              <CardDescription>Configure API authentication settings</CardDescription>
+              <CardTitle>Legito API Authentication</CardTitle>
+              <CardDescription>
+                Enter your Legito API credentials. JWT tokens are generated automatically.
+                <br />
+                <span className="text-xs">Get your keys from: My Account &gt; Settings &gt; Developers &gt; API</span>
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="authType">Authentication Type</Label>
-                <Select
-                  value={configuration.authType}
-                  onValueChange={(value: TestConfiguration['authType']) =>
-                    setConfiguration({ authType: value })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">None</SelectItem>
-                    <SelectItem value="jwt">JWT Token</SelectItem>
-                    <SelectItem value="apiKey">API Key</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="apiKey">API Key (Issuer)</Label>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Input
+                      id="apiKey"
+                      type={showToken ? 'text' : 'password'}
+                      placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                      value={configuration.apiKey || ''}
+                      onChange={(e) => setConfiguration({ apiKey: e.target.value })}
+                      className="pr-10 font-mono text-sm"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+                      onClick={() => setShowToken(!showToken)}
+                    >
+                      {showToken ? (
+                        <EyeOff className="h-3.5 w-3.5" />
+                      ) : (
+                        <Eye className="h-3.5 w-3.5" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Used as the &quot;iss&quot; claim in the JWT token
+                </p>
               </div>
 
-              {configuration.authType === 'jwt' && (
-                <div className="space-y-2">
-                  <Label htmlFor="authToken">JWT Token</Label>
-                  <div className="flex gap-2">
-                    <div className="relative flex-1">
-                      <Input
-                        id="authToken"
-                        type={showToken ? 'text' : 'password'}
-                        placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                        value={configuration.authToken || ''}
-                        onChange={(e) => setConfiguration({ authToken: e.target.value })}
-                        className="pr-20"
-                      />
-                      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7"
-                          onClick={() => setShowToken(!showToken)}
-                        >
-                          {showToken ? (
-                            <EyeOff className="h-3.5 w-3.5" />
-                          ) : (
-                            <Eye className="h-3.5 w-3.5" />
-                          )}
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7"
-                          onClick={() => copyToClipboard(configuration.authToken || '')}
-                        >
-                          {copied ? (
-                            <Check className="h-3.5 w-3.5" />
-                          ) : (
-                            <Copy className="h-3.5 w-3.5" />
-                          )}
-                        </Button>
-                      </div>
-                    </div>
+              <div className="space-y-2">
+                <Label htmlFor="privateKey">Private Key (Secret)</Label>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Input
+                      id="privateKey"
+                      type={showToken ? 'text' : 'password'}
+                      placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                      value={configuration.privateKey || ''}
+                      onChange={(e) => setConfiguration({ privateKey: e.target.value })}
+                      className="pr-10 font-mono text-sm"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+                      onClick={() => setShowToken(!showToken)}
+                    >
+                      {showToken ? (
+                        <EyeOff className="h-3.5 w-3.5" />
+                      ) : (
+                        <Eye className="h-3.5 w-3.5" />
+                      )}
+                    </Button>
                   </div>
                 </div>
-              )}
+                <p className="text-xs text-muted-foreground">
+                  Used to sign the JWT token with HS256 algorithm
+                </p>
+              </div>
 
-              {configuration.authType === 'apiKey' && (
-                <div className="space-y-2">
-                  <Label htmlFor="apiKey">API Key</Label>
-                  <div className="flex gap-2">
-                    <div className="relative flex-1">
-                      <Input
-                        id="apiKey"
-                        type={showToken ? 'text' : 'password'}
-                        placeholder="your-api-key"
-                        value={configuration.apiKey || ''}
-                        onChange={(e) => setConfiguration({ apiKey: e.target.value })}
-                        className="pr-20"
-                      />
-                      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7"
-                          onClick={() => setShowToken(!showToken)}
-                        >
-                          {showToken ? (
-                            <EyeOff className="h-3.5 w-3.5" />
-                          ) : (
-                            <Eye className="h-3.5 w-3.5" />
-                          )}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <Separator />
+
+              <div className="rounded-lg bg-muted p-4">
+                <h4 className="text-sm font-medium mb-2">How Authentication Works</h4>
+                <ol className="text-xs text-muted-foreground space-y-1 list-decimal list-inside">
+                  <li>JWT token is generated with your API key as issuer</li>
+                  <li>Token is signed using your private key (HS256)</li>
+                  <li>Token expires after 1 hour automatically</li>
+                  <li>Sent as: Authorization: Bearer &lt;token&gt;</li>
+                </ol>
+              </div>
 
               <div className="space-y-2">
-                <Label>Custom Headers</Label>
+                <Label>Custom Headers (Optional)</Label>
                 <Textarea
                   placeholder='{"Content-Type": "application/json"}'
                   value={JSON.stringify(configuration.headers, null, 2)}
@@ -319,7 +301,7 @@ export function ConfigurationPanel() {
                     }
                   }}
                   className="font-mono text-sm"
-                  rows={4}
+                  rows={3}
                 />
               </div>
             </CardContent>
