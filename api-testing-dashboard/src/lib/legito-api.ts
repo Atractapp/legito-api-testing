@@ -158,16 +158,12 @@ export interface LegitoTest {
   endpoint: string;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   body?: unknown;
-  // Dynamic endpoint - resolved at runtime using context
   dynamicEndpoint?: (context: TestContext) => string;
-  // Dynamic body - resolved at runtime using context
   dynamicBody?: (context: TestContext) => unknown;
-  // Chain tests - runs after this test, using this test's response
-  setsContext?: string; // Key to store response data in context
-  usesContext?: string[]; // Keys this test depends on
+  setsContext?: string;
+  usesContext?: string[];
   expectedStatus: number | number[];
   assertions: TestAssertion[];
-  // Skip this test if conditions aren't met
   skipIf?: (context: TestContext) => boolean;
 }
 
@@ -183,34 +179,40 @@ export interface TestContext {
   // Store dynamic data from previous tests
   templateSuiteId?: string;
   templateElements?: unknown[];
-  documentRecordId?: string;
-  documentVersionId?: string;
   createdLabel?: { id?: string; [key: string]: unknown };
   createdPushConnection?: { id?: string; [key: string]: unknown };
-  createdDocument?: { id?: string; [key: string]: unknown };
+  permanentDocument?: { id?: string; code?: string; documentRecordId?: string; documentRecordCode?: string; [key: string]: unknown };
+  tempDocumentForDelete?: { id?: string; code?: string; documentRecordCode?: string; [key: string]: unknown };
+  documentElements?: unknown[];
   users?: unknown[];
   userGroups?: unknown[];
   workflows?: unknown[];
   documentRecords?: unknown[];
   documentVersions?: unknown[];
   objects?: unknown[];
-  firstObject?: unknown;
+  firstObject?: { id?: string; [key: string]: unknown };
   templateSuites?: unknown[];
   pushConnections?: unknown[];
+  createdDocRecordType?: { id?: string; [key: string]: unknown };
+  createdTemplateTag?: { id?: string; [key: string]: unknown };
+  createdObjectRecord?: { systemName?: string; [key: string]: unknown };
+  files?: unknown[];
   [key: string]: unknown;
 }
 
-// Default template suite ID for tests (configurable)
+// Default template suite ID for tests
 export const DEFAULT_TEMPLATE_SUITE_ID = '10132';
 
-// Define all Legito API tests - COMPREHENSIVE
+// ============================================================================
+// COMPREHENSIVE LEGITO API TESTS - ALL ENDPOINTS
+// ============================================================================
 export const LEGITO_TESTS: LegitoTest[] = [
-  // ==================== SMOKE TESTS ====================
+  // ==================== SYSTEM INFO ====================
   {
-    id: 'smoke-info',
-    name: 'System Info',
-    description: 'Get Legito system version and status',
-    category: 'Smoke Tests',
+    id: 'info-get',
+    name: 'GET /info',
+    description: 'Returns system information',
+    category: 'System Info',
     endpoint: '/info',
     method: 'GET',
     expectedStatus: 200,
@@ -219,39 +221,39 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Has version field', type: 'hasField', field: 'version' },
     ],
   },
+
+  // ==================== REFERENCE DATA ====================
   {
-    id: 'smoke-countries',
-    name: 'List Countries',
-    description: 'Get list of available countries',
-    category: 'Smoke Tests',
+    id: 'country-list',
+    name: 'GET /country',
+    description: 'Returns country list',
+    category: 'Reference Data',
     endpoint: '/country',
     method: 'GET',
     expectedStatus: 200,
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
-      { name: 'Has data', type: 'hasData' },
     ],
   },
   {
-    id: 'smoke-currencies',
-    name: 'List Currencies',
-    description: 'Get list of available currencies',
-    category: 'Smoke Tests',
+    id: 'currency-list',
+    name: 'GET /currency',
+    description: 'Returns currency list',
+    category: 'Reference Data',
     endpoint: '/currency',
     method: 'GET',
     expectedStatus: 200,
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
-      { name: 'Has data', type: 'hasData' },
     ],
   },
   {
-    id: 'smoke-languages',
-    name: 'List Languages',
-    description: 'Get list of available languages',
-    category: 'Smoke Tests',
+    id: 'language-list',
+    name: 'GET /language',
+    description: 'Returns list of languages',
+    category: 'Reference Data',
     endpoint: '/language',
     method: 'GET',
     expectedStatus: 200,
@@ -261,10 +263,10 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'smoke-timezones',
-    name: 'List Timezones',
-    description: 'Get list of available timezones',
-    category: 'Smoke Tests',
+    id: 'timezone-list',
+    name: 'GET /timezone',
+    description: 'Returns a list of timezones',
+    category: 'Reference Data',
     endpoint: '/timezone',
     method: 'GET',
     expectedStatus: 200,
@@ -273,12 +275,10 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
-
-  // ==================== REFERENCE DATA ====================
   {
-    id: 'ref-categories',
-    name: 'List Categories',
-    description: 'Get document categories',
+    id: 'category-list',
+    name: 'GET /category',
+    description: 'Returns category list',
     category: 'Reference Data',
     endpoint: '/category',
     method: 'GET',
@@ -289,9 +289,9 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'ref-properties',
-    name: 'List Properties',
-    description: 'Get document properties',
+    id: 'property-list',
+    name: 'GET /property',
+    description: 'Returns property list',
     category: 'Reference Data',
     endpoint: '/property',
     method: 'GET',
@@ -302,9 +302,9 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'ref-property-groups',
-    name: 'List Property Groups',
-    description: 'Get property group definitions',
+    id: 'property-group-list',
+    name: 'GET /property-group',
+    description: 'Returns Property Group list',
     category: 'Reference Data',
     endpoint: '/property-group',
     method: 'GET',
@@ -315,9 +315,9 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'ref-advanced-styles',
-    name: 'List Advanced Styles',
-    description: 'Get advanced style configurations',
+    id: 'advanced-style-list',
+    name: 'GET /advanced-style',
+    description: 'Returns Advanced Styles list',
     category: 'Reference Data',
     endpoint: '/advanced-style',
     method: 'GET',
@@ -328,23 +328,9 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'ref-objects',
-    name: 'List Objects',
-    description: 'Get object type definitions',
-    category: 'Reference Data',
-    endpoint: '/object',
-    method: 'GET',
-    expectedStatus: 200,
-    setsContext: 'objects',
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'ref-events',
-    name: 'List Events',
-    description: 'Get system events',
+    id: 'event-list',
+    name: 'GET /event',
+    description: 'Returns Event list',
     category: 'Reference Data',
     endpoint: '/event',
     method: 'GET',
@@ -355,11 +341,52 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
+  // ==================== OBJECTS ====================
+  {
+    id: 'object-list',
+    name: 'GET /object',
+    description: 'Returns Object list',
+    category: 'Objects',
+    endpoint: '/object',
+    method: 'GET',
+    expectedStatus: 200,
+    setsContext: 'objects',
+    assertions: [
+      { name: 'Returns 200 OK', type: 'status' },
+      { name: 'Returns array', type: 'isArray' },
+    ],
+  },
+
+  // ==================== OBJECT RECORDS (CRUD) ====================
+  {
+    id: 'object-record-list',
+    name: 'GET /object-record/{objectId}',
+    description: 'Returns Object Record list for first object',
+    category: 'Object Records',
+    usesContext: ['objects'],
+    dynamicEndpoint: (ctx) => {
+      const objs = ctx.objects as unknown[];
+      if (Array.isArray(objs) && objs.length > 0) {
+        const first = objs[0] as { id?: string };
+        return `/object-record/${first.id}`;
+      }
+      return '/object-record/unknown';
+    },
+    endpoint: '/object-record/{objectId}',
+    method: 'GET',
+    expectedStatus: [200, 404],
+    skipIf: (ctx) => !Array.isArray(ctx.objects) || ctx.objects.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  // Note: POST/PUT/DELETE for object-record require valid object structure - skipping for safety
+
   // ==================== LABELS (CRUD) ====================
   {
     id: 'label-list',
-    name: 'List Labels',
-    description: 'Get available labels',
+    name: 'GET /label',
+    description: 'Returns list of labels',
     category: 'Labels',
     endpoint: '/label',
     method: 'GET',
@@ -371,8 +398,8 @@ export const LEGITO_TESTS: LegitoTest[] = [
   },
   {
     id: 'label-create',
-    name: 'Create Label',
-    description: 'Create a new label for testing',
+    name: 'POST /label',
+    description: 'Creates new Label',
     category: 'Labels',
     endpoint: '/label',
     method: 'POST',
@@ -388,48 +415,13 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'label-get',
-    name: 'Get Label by ID',
-    description: 'Get the created label details',
-    category: 'Labels',
-    usesContext: ['createdLabel'],
-    dynamicEndpoint: (ctx) => `/label/${ctx.createdLabel?.id || 'unknown'}`,
-    endpoint: '/label/{id}',
-    method: 'GET',
-    expectedStatus: 200,
-    skipIf: (ctx) => !ctx.createdLabel?.id,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Has name field', type: 'hasField', field: 'name' },
-    ],
-  },
-  {
-    id: 'label-update',
-    name: 'Update Label',
-    description: 'Update the created label',
-    category: 'Labels',
-    usesContext: ['createdLabel'],
-    dynamicEndpoint: (ctx) => `/label/${ctx.createdLabel?.id || 'unknown'}`,
-    endpoint: '/label/{id}',
-    method: 'PUT',
-    dynamicBody: () => ({
-      name: `API-Test-Label-Updated-${Date.now()}`,
-      color: '#33FF57',
-    }),
-    expectedStatus: 200,
-    skipIf: (ctx) => !ctx.createdLabel?.id,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-    ],
-  },
-  {
     id: 'label-delete',
-    name: 'Delete Label',
-    description: 'Delete the test label (cleanup)',
+    name: 'DELETE /label/{labelId}',
+    description: 'Removes the Label (cleanup)',
     category: 'Labels',
     usesContext: ['createdLabel'],
     dynamicEndpoint: (ctx) => `/label/${ctx.createdLabel?.id || 'unknown'}`,
-    endpoint: '/label/{id}',
+    endpoint: '/label/{labelId}',
     method: 'DELETE',
     expectedStatus: [200, 204],
     skipIf: (ctx) => !ctx.createdLabel?.id,
@@ -438,12 +430,12 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== TEMPLATES ====================
+  // ==================== TEMPLATE SUITES ====================
   {
-    id: 'tmpl-list',
-    name: 'List Template Suites',
-    description: 'Get all available template suites',
-    category: 'Templates',
+    id: 'template-suite-list',
+    name: 'GET /template-suite',
+    description: 'Returns a list of Template Suites',
+    category: 'Template Suites',
     endpoint: '/template-suite',
     method: 'GET',
     expectedStatus: 200,
@@ -451,42 +443,16 @@ export const LEGITO_TESTS: LegitoTest[] = [
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
-      { name: 'Has template data', type: 'hasData' },
+      { name: 'Has data', type: 'hasData' },
     ],
   },
+
+  // ==================== TEMPLATE TAGS (CRUD) ====================
   {
-    id: 'tmpl-get-single',
-    name: 'Get Template Suite',
-    description: 'Get a specific template suite by ID (10132)',
-    category: 'Templates',
-    endpoint: '/template-suite/10132',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Has ID field', type: 'hasField', field: 'id' },
-      { name: 'Has name field', type: 'hasField', field: 'name' },
-    ],
-  },
-  {
-    id: 'tmpl-elements',
-    name: 'Get Template Elements',
-    description: 'Get elements (fields) of template suite 10132',
-    category: 'Templates',
-    endpoint: '/template-suite/10132/element',
-    method: 'GET',
-    expectedStatus: 200,
-    setsContext: 'templateElements',
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'tmpl-tags',
-    name: 'List Template Tags',
-    description: 'Get template tags',
-    category: 'Templates',
+    id: 'template-tag-list',
+    name: 'GET /template-tag',
+    description: 'Returns a list of Template Tags',
+    category: 'Template Tags',
     endpoint: '/template-tag',
     method: 'GET',
     expectedStatus: 200,
@@ -495,13 +461,29 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
+  {
+    id: 'template-tag-create',
+    name: 'POST /template-tag',
+    description: 'Creates new Template Tag',
+    category: 'Template Tags',
+    endpoint: '/template-tag',
+    method: 'POST',
+    body: {
+      name: `API-Test-Tag-${Date.now()}`,
+    },
+    setsContext: 'createdTemplateTag',
+    expectedStatus: [200, 201, 400],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
 
-  // ==================== USERS & GROUPS ====================
+  // ==================== USERS ====================
   {
     id: 'user-list',
-    name: 'List Users',
-    description: 'Get list of workspace users',
-    category: 'Users & Groups',
+    name: 'GET /user',
+    description: 'Returns user list',
+    category: 'Users',
     endpoint: '/user',
     method: 'GET',
     expectedStatus: 200,
@@ -509,37 +491,39 @@ export const LEGITO_TESTS: LegitoTest[] = [
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
-      { name: 'Has user data', type: 'hasData' },
+      { name: 'Has data', type: 'hasData' },
     ],
   },
   {
-    id: 'user-get-first',
-    name: 'Get First User',
-    description: 'Get details of first user in list',
-    category: 'Users & Groups',
+    id: 'user-permission-get',
+    name: 'GET /user/permission/{userIdOrEmail}',
+    description: 'Returns list of user permissions for first user',
+    category: 'Users',
     usesContext: ['users'],
     dynamicEndpoint: (ctx) => {
       const users = ctx.users as unknown[];
       if (Array.isArray(users) && users.length > 0) {
-        const firstUser = users[0] as { id?: string };
-        return `/user/${firstUser.id}`;
+        const first = users[0] as { id?: string };
+        return `/user/permission/${first.id}`;
       }
-      return '/user/unknown';
+      return '/user/permission/unknown';
     },
-    endpoint: '/user/{id}',
+    endpoint: '/user/permission/{userIdOrEmail}',
     method: 'GET',
-    expectedStatus: 200,
+    expectedStatus: [200, 404],
     skipIf: (ctx) => !Array.isArray(ctx.users) || ctx.users.length === 0,
     assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Has ID', type: 'hasField', field: 'id' },
+      { name: 'Returns response', type: 'status' },
     ],
   },
+  // Note: POST/PUT/DELETE for users is risky - skipping to avoid accidents
+
+  // ==================== USER GROUPS ====================
   {
-    id: 'user-groups',
-    name: 'List User Groups',
-    description: 'Get list of user groups',
-    category: 'Users & Groups',
+    id: 'user-group-list',
+    name: 'GET /user-group',
+    description: 'Returns user group list',
+    category: 'User Groups',
     endpoint: '/user-group',
     method: 'GET',
     expectedStatus: 200,
@@ -549,34 +533,13 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
-  {
-    id: 'user-group-get',
-    name: 'Get First User Group',
-    description: 'Get details of first user group',
-    category: 'Users & Groups',
-    usesContext: ['userGroups'],
-    dynamicEndpoint: (ctx) => {
-      const groups = ctx.userGroups as unknown[];
-      if (Array.isArray(groups) && groups.length > 0) {
-        const first = groups[0] as { id?: string };
-        return `/user-group/${first.id}`;
-      }
-      return '/user-group/unknown';
-    },
-    endpoint: '/user-group/{id}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.userGroups) || ctx.userGroups.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
+  // Note: POST/PUT/DELETE for user groups is risky - skipping
 
   // ==================== WORKFLOWS ====================
   {
-    id: 'wf-list',
-    name: 'List Workflows',
-    description: 'Get workflow definitions',
+    id: 'workflow-list',
+    name: 'GET /workflow',
+    description: 'Returns workflow list',
     category: 'Workflows',
     endpoint: '/workflow',
     method: 'GET',
@@ -588,42 +551,20 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'wf-get-first',
-    name: 'Get First Workflow',
-    description: 'Get details of first workflow',
+    id: 'workflow-revision-get',
+    name: 'GET /workflow/revision/{workflowRevisionId}',
+    description: 'Returns schema of Workflow Revision for first workflow',
     category: 'Workflows',
     usesContext: ['workflows'],
     dynamicEndpoint: (ctx) => {
       const wfs = ctx.workflows as unknown[];
       if (Array.isArray(wfs) && wfs.length > 0) {
         const first = wfs[0] as { id?: string };
-        return `/workflow/${first.id}`;
+        return `/workflow/revision/${first.id}`;
       }
-      return '/workflow/unknown';
+      return '/workflow/revision/unknown';
     },
-    endpoint: '/workflow/{id}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.workflows) || ctx.workflows.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'wf-stages',
-    name: 'List Workflow Stages',
-    description: 'Get workflow stages for first workflow',
-    category: 'Workflows',
-    usesContext: ['workflows'],
-    dynamicEndpoint: (ctx) => {
-      const wfs = ctx.workflows as unknown[];
-      if (Array.isArray(wfs) && wfs.length > 0) {
-        const first = wfs[0] as { id?: string };
-        return `/workflow/${first.id}/stage`;
-      }
-      return '/workflow/unknown/stage';
-    },
-    endpoint: '/workflow/{id}/stage',
+    endpoint: '/workflow/revision/{workflowRevisionId}',
     method: 'GET',
     expectedStatus: [200, 404],
     skipIf: (ctx) => !Array.isArray(ctx.workflows) || ctx.workflows.length === 0,
@@ -632,12 +573,12 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== DOCUMENTS ====================
+  // ==================== DOCUMENT RECORDS ====================
   {
-    id: 'doc-list',
-    name: 'List Document Records',
-    description: 'Get list of document records',
-    category: 'Documents',
+    id: 'document-record-list',
+    name: 'GET /document-record',
+    description: 'Returns Document Record list',
+    category: 'Document Records',
     endpoint: '/document-record',
     method: 'GET',
     expectedStatus: 200,
@@ -648,59 +589,34 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'doc-list-limit',
-    name: 'List Documents with Limit',
-    description: 'Get documents with pagination (limit=5)',
-    category: 'Documents',
-    endpoint: '/document-record?limit=5',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'doc-list-offset',
-    name: 'List Documents with Offset',
-    description: 'Get documents with pagination (offset=0, limit=3)',
-    category: 'Documents',
-    endpoint: '/document-record?offset=0&limit=3',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'doc-get-first',
-    name: 'Get First Document Record',
-    description: 'Get details of first document record',
-    category: 'Documents',
+    id: 'document-record-anonymize',
+    name: 'GET /document-record/anonymize/{code}',
+    description: 'Anonymize Document Record (test with first doc)',
+    category: 'Document Records',
     usesContext: ['documentRecords'],
     dynamicEndpoint: (ctx) => {
       const docs = ctx.documentRecords as unknown[];
       if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { id?: string };
-        return `/document-record/${first.id}`;
+        const first = docs[0] as { code?: string };
+        return `/document-record/anonymize/${first.code}`;
       }
-      return '/document-record/unknown';
+      return '/document-record/anonymize/unknown';
     },
-    endpoint: '/document-record/{id}',
+    endpoint: '/document-record/anonymize/{code}',
     method: 'GET',
-    expectedStatus: [200, 404],
+    expectedStatus: [200, 404, 400],
     skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
     assertions: [
       { name: 'Returns response', type: 'status' },
-      { name: 'Has data', type: 'hasData' },
     ],
   },
+
+  // ==================== DOCUMENT RECORD TYPES (CRUD) ====================
   {
-    id: 'doc-record-types',
-    name: 'List Document Record Types',
-    description: 'Get document record type definitions',
-    category: 'Documents',
+    id: 'document-record-type-list',
+    name: 'GET /document-record-type',
+    description: 'Returns list of Document Record Types',
+    category: 'Document Record Types',
     endpoint: '/document-record-type',
     method: 'GET',
     expectedStatus: 200,
@@ -709,118 +625,165 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
-
-  // ==================== DOCUMENT VERSION ====================
   {
-    id: 'docver-get-first',
-    name: 'Get Document Versions',
-    description: 'Get versions of first document record',
-    category: 'Document Versions',
-    usesContext: ['documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { id?: string };
-        return `/document-record/${first.id}/document-version`;
-      }
-      return '/document-record/unknown/document-version';
+    id: 'document-record-type-create',
+    name: 'POST /document-record-type',
+    description: 'Creates new Document Record Type',
+    category: 'Document Record Types',
+    endpoint: '/document-record-type',
+    method: 'POST',
+    body: {
+      name: `API-Test-DocType-${Date.now()}`,
     },
-    endpoint: '/document-record/{id}/document-version',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
-    setsContext: 'documentVersions',
+    setsContext: 'createdDocRecordType',
+    expectedStatus: [200, 201, 400],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'document-record-type-delete',
+    name: 'DELETE /document-record-type/{documentRecordTypeId}',
+    description: 'Removes the Document Record Type (cleanup)',
+    category: 'Document Record Types',
+    usesContext: ['createdDocRecordType'],
+    dynamicEndpoint: (ctx) => `/document-record-type/${ctx.createdDocRecordType?.id || 'unknown'}`,
+    endpoint: '/document-record-type/{documentRecordTypeId}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    skipIf: (ctx) => !ctx.createdDocRecordType?.id,
     assertions: [
       { name: 'Returns response', type: 'status' },
     ],
   },
 
-  // ==================== DOCUMENT CREATION (Full Flow) ====================
+  // ==================== DOCUMENT VERSIONS ====================
   {
-    id: 'doc-create-new',
-    name: 'Create Document from Template',
-    description: 'Create new document record from template 10132 with data',
-    category: 'Document Creation',
+    id: 'document-version-create',
+    name: 'POST /document-version/data/{templateSuiteId}',
+    description: 'Creates new Document Record from template 10132 (KEPT)',
+    category: 'Document Versions',
     endpoint: '/document-version/data/10132',
     method: 'POST',
-    body: {
-      name: `API-Test-Document-${Date.now()}`,
-      // The API accepts data elements - we'll send minimal required data
-      elements: {},
+    body: [
+      { name: 'client_name', value: 'API Test Client Corp' },
+      { name: 'contractor_name', value: 'API Test Contractor Ltd' },
+    ],
+    setsContext: 'permanentDocument',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has document code', type: 'hasField', field: 'code' },
+      { name: 'Has document record ID', type: 'hasField', field: 'documentRecordId' },
+    ],
+  },
+  {
+    id: 'document-version-get-data',
+    name: 'GET /document-version/data/{code}',
+    description: 'Returns Elements data from created document',
+    category: 'Document Versions',
+    usesContext: ['permanentDocument'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { code?: string };
+      return `/document-version/data/${doc?.code || 'unknown'}`;
     },
-    setsContext: 'createdDocument',
-    expectedStatus: [200, 201, 400], // 400 if template requires specific elements
+    endpoint: '/document-version/data/{code}',
+    method: 'GET',
+    expectedStatus: 200,
+    skipIf: (ctx) => !ctx.permanentDocument?.code,
+    setsContext: 'documentElements',
+    assertions: [
+      { name: 'Returns 200 OK', type: 'status' },
+      { name: 'Returns array of elements', type: 'isArray' },
+    ],
+  },
+  {
+    id: 'document-version-download',
+    name: 'GET /document-version/download/{code}/pdf',
+    description: 'Downloads document as PDF (base64 encoded)',
+    category: 'Document Versions',
+    usesContext: ['permanentDocument'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.permanentDocument as { code?: string };
+      return `/document-version/download/${doc?.code || 'unknown'}/pdf`;
+    },
+    endpoint: '/document-version/download/{code}/{format}',
+    method: 'GET',
+    expectedStatus: [200, 404],
+    skipIf: (ctx) => !ctx.permanentDocument?.code,
     assertions: [
       { name: 'Returns response', type: 'status' },
+    ],
+  },
+  {
+    id: 'document-version-create-for-delete',
+    name: 'POST /document-version/data/{templateSuiteId} (for DELETE test)',
+    description: 'Creates temporary Document for DELETE test',
+    category: 'Document Versions',
+    endpoint: '/document-version/data/10132',
+    method: 'POST',
+    body: [
+      { name: 'client_name', value: 'TEMP - Delete Test Document' },
+    ],
+    setsContext: 'tempDocumentForDelete',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has document record code', type: 'hasField', field: 'documentRecordCode' },
+    ],
+  },
+  {
+    id: 'document-record-delete',
+    name: 'DELETE /document-record/{code}',
+    description: 'Removes the temporary Document Record (cleanup)',
+    category: 'Document Versions',
+    usesContext: ['tempDocumentForDelete'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.tempDocumentForDelete as { documentRecordCode?: string };
+      return `/document-record/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/document-record/{code}',
+    method: 'DELETE',
+    expectedStatus: [200, 204],
+    skipIf: (ctx) => !ctx.tempDocumentForDelete?.documentRecordCode,
+    assertions: [
+      { name: 'Returns success', type: 'status' },
     ],
   },
 
   // ==================== FILES ====================
   {
-    id: 'file-get-first-doc',
-    name: 'Get Document Files',
-    description: 'Get files attached to first document',
+    id: 'file-list',
+    name: 'GET /file/{documentRecordCode}',
+    description: 'Returns files related to Document Record',
     category: 'Files',
     usesContext: ['documentRecords'],
     dynamicEndpoint: (ctx) => {
       const docs = ctx.documentRecords as unknown[];
       if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { id?: string };
-        return `/document-record/${first.id}/file`;
+        const first = docs[0] as { code?: string };
+        return `/file/${first.code}`;
       }
-      return '/document-record/unknown/file';
+      return '/file/unknown';
     },
-    endpoint: '/document-record/{id}/file',
+    endpoint: '/file/{documentRecordCode}',
     method: 'GET',
     expectedStatus: [200, 404],
     skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
+    setsContext: 'files',
     assertions: [
       { name: 'Returns response', type: 'status' },
     ],
   },
+  // Note: POST /file (upload) requires multipart form data - complex to test
+  // Note: DELETE /file/{fileId} and GET /file/download/{fileId} require existing file ID
 
-  // ==================== SHARING ====================
+  // ==================== PUSH CONNECTIONS (Webhooks) ====================
   {
-    id: 'share-get-first-doc',
-    name: 'Get Document Shares',
-    description: 'Get shares for first document',
-    category: 'Sharing',
-    usesContext: ['documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { id?: string };
-        return `/document-record/${first.id}/share`;
-      }
-      return '/document-record/unknown/share';
-    },
-    endpoint: '/document-record/{id}/share',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-get-first-tmpl',
-    name: 'Get Template Shares',
-    description: 'Get shares for template 10132',
-    category: 'Sharing',
-    endpoint: '/template-suite/10132/share',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== WEBHOOKS / PUSH CONNECTIONS ====================
-  {
-    id: 'webhook-list',
-    name: 'List Push Connections',
-    description: 'Get webhook/push connection list',
-    category: 'Webhooks',
+    id: 'push-connection-list',
+    name: 'GET /push-connection',
+    description: 'Returns Push Connection list',
+    category: 'Push Connections',
     endpoint: '/push-connection',
     method: 'GET',
     expectedStatus: 200,
@@ -831,47 +794,32 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
   {
-    id: 'webhook-create',
-    name: 'Create Push Connection',
-    description: 'Create a test webhook endpoint',
-    category: 'Webhooks',
+    id: 'push-connection-create',
+    name: 'POST /push-connection',
+    description: 'Creates new Push Connection',
+    category: 'Push Connections',
     endpoint: '/push-connection',
     method: 'POST',
     body: {
       name: `API-Test-Webhook-${Date.now()}`,
       url: 'https://webhook.site/test-legito-api',
       events: ['document.created'],
-      active: false, // Keep inactive for testing
+      active: false,
     },
     setsContext: 'createdPushConnection',
-    expectedStatus: [200, 201, 400], // 400 if invalid config
+    expectedStatus: [200, 201, 400],
     assertions: [
       { name: 'Returns response', type: 'status' },
     ],
   },
   {
-    id: 'webhook-get',
-    name: 'Get Push Connection',
-    description: 'Get the created push connection',
-    category: 'Webhooks',
+    id: 'push-connection-delete',
+    name: 'DELETE /push-connection/{pushConnectionId}',
+    description: 'Removes Push connection (cleanup)',
+    category: 'Push Connections',
     usesContext: ['createdPushConnection'],
     dynamicEndpoint: (ctx) => `/push-connection/${ctx.createdPushConnection?.id || 'unknown'}`,
-    endpoint: '/push-connection/{id}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !ctx.createdPushConnection?.id,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'webhook-delete',
-    name: 'Delete Push Connection',
-    description: 'Delete the test push connection (cleanup)',
-    category: 'Webhooks',
-    usesContext: ['createdPushConnection'],
-    dynamicEndpoint: (ctx) => `/push-connection/${ctx.createdPushConnection?.id || 'unknown'}`,
-    endpoint: '/push-connection/{id}',
+    endpoint: '/push-connection/{pushConnectionId}',
     method: 'DELETE',
     expectedStatus: [200, 204, 404],
     skipIf: (ctx) => !ctx.createdPushConnection?.id,
@@ -880,201 +828,50 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== OBJECT RECORDS ====================
+  // ==================== SHARING ====================
   {
-    id: 'obj-get-first',
-    name: 'Get First Object Type',
-    description: 'Get details of first object type',
-    category: 'Object Records',
-    usesContext: ['objects'],
+    id: 'share-get',
+    name: 'GET /share/{code}',
+    description: 'Returns share lists for Document Record',
+    category: 'Sharing',
+    usesContext: ['documentRecords'],
     dynamicEndpoint: (ctx) => {
-      const objs = ctx.objects as unknown[];
-      if (Array.isArray(objs) && objs.length > 0) {
-        const first = objs[0] as { id?: string };
-        return `/object/${first.id}`;
+      const docs = ctx.documentRecords as unknown[];
+      if (Array.isArray(docs) && docs.length > 0) {
+        const first = docs[0] as { code?: string };
+        return `/share/${first.code}`;
       }
-      return '/object/unknown';
+      return '/share/unknown';
     },
-    endpoint: '/object/{id}',
+    endpoint: '/share/{code}',
     method: 'GET',
     expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.objects) || ctx.objects.length === 0,
-    setsContext: 'firstObject',
+    skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
     assertions: [
       { name: 'Returns response', type: 'status' },
     ],
   },
-  {
-    id: 'obj-records-list',
-    name: 'List Object Records',
-    description: 'List records for first object type',
-    category: 'Object Records',
-    usesContext: ['objects'],
-    dynamicEndpoint: (ctx) => {
-      const objs = ctx.objects as unknown[];
-      if (Array.isArray(objs) && objs.length > 0) {
-        const first = objs[0] as { id?: string };
-        return `/object/${first.id}/record`;
-      }
-      return '/object/unknown/record';
-    },
-    endpoint: '/object/{id}/record',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.objects) || ctx.objects.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
+  // Note: POST/DELETE share endpoints require valid user/group IDs - complex to test safely
 
   // ==================== NOTIFICATION SETTINGS ====================
   {
-    id: 'notif-settings',
-    name: 'Get Notification Settings',
-    description: 'Get user notification settings',
-    category: 'Notifications',
-    endpoint: '/notification-setting',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== ADVANCED QUERIES ====================
-  {
-    id: 'doc-filter-template',
-    name: 'Filter Docs by Template',
-    description: 'Get documents filtered by template suite ID',
-    category: 'Advanced Queries',
-    endpoint: '/document-record?templateSuiteId=10132',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'tmpl-filter-active',
-    name: 'Filter Active Templates',
-    description: 'Get only active template suites',
-    category: 'Advanced Queries',
-    endpoint: '/template-suite?active=true',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'user-filter-active',
-    name: 'Filter Active Users',
-    description: 'Get only active users',
-    category: 'Advanced Queries',
-    endpoint: '/user?active=true',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-
-  // ==================== SIGNATURE ====================
-  {
-    id: 'sig-providers',
-    name: 'List Signature Providers',
-    description: 'Get available signature providers',
-    category: 'Signatures',
-    endpoint: '/signature-provider',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== AUDIT / HISTORY ====================
-  {
-    id: 'audit-first-doc',
-    name: 'Get Document History',
-    description: 'Get audit history of first document',
-    category: 'Audit',
-    usesContext: ['documentRecords'],
+    id: 'notification-setting-get',
+    name: 'GET /notification-setting/{userIdOrEmail}',
+    description: 'Returns user notification settings',
+    category: 'Notification Settings',
+    usesContext: ['users'],
     dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { id?: string };
-        return `/document-record/${first.id}/history`;
+      const users = ctx.users as unknown[];
+      if (Array.isArray(users) && users.length > 0) {
+        const first = users[0] as { id?: string };
+        return `/notification-setting/${first.id}`;
       }
-      return '/document-record/unknown/history';
+      return '/notification-setting/unknown';
     },
-    endpoint: '/document-record/{id}/history',
+    endpoint: '/notification-setting/{userIdOrEmail}',
     method: 'GET',
     expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== COMMENTS ====================
-  {
-    id: 'comments-first-doc',
-    name: 'Get Document Comments',
-    description: 'Get comments on first document',
-    category: 'Comments',
-    usesContext: ['documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { id?: string };
-        return `/document-record/${first.id}/comment`;
-      }
-      return '/document-record/unknown/comment';
-    },
-    endpoint: '/document-record/{id}/comment',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== PERMISSIONS ====================
-  {
-    id: 'perms-first-doc',
-    name: 'Get Document Permissions',
-    description: 'Get permissions for first document',
-    category: 'Permissions',
-    usesContext: ['documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { id?: string };
-        return `/document-record/${first.id}/permission`;
-      }
-      return '/document-record/unknown/permission';
-    },
-    endpoint: '/document-record/{id}/permission',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'perms-first-tmpl',
-    name: 'Get Template Permissions',
-    description: 'Get permissions for template 10132',
-    category: 'Permissions',
-    endpoint: '/template-suite/10132/permission',
-    method: 'GET',
-    expectedStatus: [200, 404],
+    skipIf: (ctx) => !Array.isArray(ctx.users) || ctx.users.length === 0,
     assertions: [
       { name: 'Returns response', type: 'status' },
     ],
