@@ -1,0 +1,461 @@
+name: API Test Execution
+
+on:
+  schedule:
+    # Daily tests at 2 AM UTC
+    - cron: '0 2 * * *'
+    # Weekly tests on Monday at 8 AM UTC
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      suite_id:
+        description: 'Test Suite ID (leave empty for all suites)'
+        required: false
+        type: string
+      environment:
+        description: 'Environment to test'
+        required: true
+        type: choice
+        default: 'production'
+        options:
+          - development
+          - staging
+          - production
+      notify_on_success:
+        description: 'Send notification on success'
+        required: false
+        type: boolean
+        default: false
+  repository_dispatch:
+    types:
+      - run-tests
+      - run-suite-tests
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  # Job 1: Initialize test execution
+  initialize:
+    runs-on: ubuntu-latest
+    name: Initialize Test Execution
+    outputs:
+      test_suites: ${{ steps.get_suites.outputs.suites }}
+      run_id: ${{ steps.generate_run_id.outputs.run_id }}
+    steps:
+      - name: Generate run ID
+        id: generate_run_id
+        run: echo "run_id=$(uuidgen)" >> $GITHUB_OUTPUT
+
+      - name: Get test suites
+        id: get_suites
+        uses: actions/github-script@v7
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        with:
+          script: |
+            const fetch = (await import('node-fetch')).default;
+
+            const suiteId = '${{ github.event.inputs.suite_id }}';
+            const environment = '${{ github.event.inputs.environment || "production" }}';
+
+            let query = `
+              SELECT id, name, base_url
+              FROM api_test_suites
+              WHERE status = 'active'
+            `;
+
+            if (suiteId) {
+              query += ` AND id = '${suiteId}'`;
+            }
+
+            const response = await fetch(
+              `${{ secrets.SUPABASE_URL }}/rest/v1/api_test_suites?select=id,name,base_url`,
+              {
+                headers: {
+                  'Authorization': `Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+            );
+
+            const suites = await response.json();
+            console.log('Found suites:', suites);
+            core.setOutput('suites', JSON.stringify(suites));
+
+      - name: Log test execution start
+        uses: actions/github-script@v7
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        with:
+          script: |
+            const fetch = (await import('node-fetch')).default;
+
+            const testRun = {
+              suite_id: '${{ github.event.inputs.suite_id || "all" }}',
+              trigger_source: 'scheduled',
+              status: 'pending',
+              environment: '${{ github.event.inputs.environment || "production" }}',
+              started_at: new Date().toISOString()
+            };
+
+            // This would be created once we get the first suite_id
+            console.log('Test run initialized');
+
+  # Job 2: Run API tests for each suite
+  run-tests:
+    runs-on: ubuntu-latest
+    needs: initialize
+    strategy:
+      matrix:
+        suite: ${{ fromJson(needs.initialize.outputs.test_suites) }}
+      max-parallel: 5
+      fail-fast: false
+    name: Test Suite - ${{ matrix.suite.name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Load test configuration
+        id: config
+        uses: actions/github-script@v7
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        with:
+          script: |
+            const fetch = (await import('node-fetch')).default;
+
+            const response = await fetch(
+              `${{ secrets.SUPABASE_URL }}/rest/v1/api_tests?suite_id=eq.${{ matrix.suite.id }}&select=*`,
+              {
+                headers: {
+                  'Authorization': `Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+            );
+
+            const tests = await response.json();
+            core.setOutput('tests', JSON.stringify(tests));
+
+      - name: Load environment variables
+        id: env_vars
+        uses: actions/github-script@v7
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        with:
+          script: |
+            const fetch = (await import('node-fetch')).default;
+
+            const response = await fetch(
+              `${{ secrets.SUPABASE_URL }}/rest/v1/test_variables?suite_id=eq.${{ matrix.suite.id }}&select=*`,
+              {
+                headers: {
+                  'Authorization': `Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+            );
+
+            const variables = await response.json();
+            const vars = {};
+            variables.forEach(v => {
+              if (!v.is_secret) {
+                vars[v.name] = v.value;
+              }
+            });
+            core.setOutput('variables', JSON.stringify(vars));
+
+      - name: Execute tests
+        id: test_execution
+        run: |
+          npm run test:api -- \
+            --suite-id ${{ matrix.suite.id }} \
+            --base-url "${{ matrix.suite.base_url }}" \
+            --environment "${{ github.event.inputs.environment || 'production' }}" \
+            --output json \
+            --output-file test-results-${{ matrix.suite.id }}.json
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        continue-on-error: true
+
+      - name: Parse test results
+        id: parse_results
+        run: |
+          if [ -f "test-results-${{ matrix.suite.id }}.json" ]; then
+            cat test-results-${{ matrix.suite.id }}.json | jq .
+            RESULTS=$(cat test-results-${{ matrix.suite.id }}.json)
+            echo "test_results<<EOF" >> $GITHUB_OUTPUT
+            echo "$RESULTS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Store test results in Supabase
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fetch = (await import('node-fetch')).default;
+
+            const testResults = {
+              suite_id: '${{ matrix.suite.id }}',
+              triggered_by: 'github-actions',
+              trigger_source: 'scheduled',
+              status: '${{ job.status }}',
+              total_tests: 0,
+              passed_tests: 0,
+              failed_tests: 0,
+              duration_ms: 0,
+              environment: '${{ github.event.inputs.environment || "production" }}',
+              metadata: {
+                workflow_run_id: '${{ github.run_id }}',
+                workflow_name: '${{ github.workflow }}',
+                ref: '${{ github.ref }}',
+                commit_sha: '${{ github.sha }}'
+              }
+            };
+
+            const response = await fetch(
+              `${{ secrets.SUPABASE_URL }}/rest/v1/test_runs`,
+              {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}`,
+                  'Content-Type': 'application/json',
+                  'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(testResults)
+              }
+            );
+
+            if (!response.ok) {
+              console.error('Failed to store results:', await response.text());
+              throw new Error('Failed to store test results');
+            }
+
+            const result = await response.json();
+            console.log('Test results stored:', result);
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.suite.id }}
+          path: test-results-${{ matrix.suite.id }}.json
+          retention-days: 30
+
+      - name: Publish test report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Test Results - ${{ matrix.suite.name }}
+          path: 'test-results-${{ matrix.suite.id }}.json'
+          reporter: 'java-junit'
+          fail-on-error: false
+
+  # Job 3: Aggregate results and notify
+  finalize:
+    runs-on: ubuntu-latest
+    needs: [initialize, run-tests]
+    if: always()
+    name: Finalize Test Execution
+    steps:
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          path: test-results
+          pattern: test-results-*
+
+      - name: Aggregate results
+        id: aggregate
+        run: |
+          TOTAL_TESTS=0
+          PASSED_TESTS=0
+          FAILED_TESTS=0
+
+          for file in test-results/*/test-results-*.json; do
+            if [ -f "$file" ]; then
+              TOTAL=$(jq '.total_tests // 0' "$file")
+              PASSED=$(jq '.passed_tests // 0' "$file")
+              FAILED=$(jq '.failed_tests // 0' "$file")
+
+              TOTAL_TESTS=$((TOTAL_TESTS + TOTAL))
+              PASSED_TESTS=$((PASSED_TESTS + PASSED))
+              FAILED_TESTS=$((FAILED_TESTS + FAILED))
+            fi
+          done
+
+          PASS_RATE=0
+          if [ $TOTAL_TESTS -gt 0 ]; then
+            PASS_RATE=$((PASSED_TESTS * 100 / TOTAL_TESTS))
+          fi
+
+          echo "total_tests=$TOTAL_TESTS" >> $GITHUB_OUTPUT
+          echo "passed_tests=$PASSED_TESTS" >> $GITHUB_OUTPUT
+          echo "failed_tests=$FAILED_TESTS" >> $GITHUB_OUTPUT
+          echo "pass_rate=$PASS_RATE" >> $GITHUB_OUTPUT
+
+      - name: Create status check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status = '${{ needs.run-tests.result }}' === 'success' ? 'success' : 'failure';
+            const conclusion = status === 'success' ? 'success' : 'failure';
+
+            github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'API Tests',
+              head_sha: '${{ github.sha }}',
+              status: 'completed',
+              conclusion: conclusion,
+              output: {
+                title: 'API Test Results',
+                summary: `Total: ${{ steps.aggregate.outputs.total_tests }} | Passed: ${{ steps.aggregate.outputs.passed_tests }} | Failed: ${{ steps.aggregate.outputs.failed_tests }} | Pass Rate: ${{ steps.aggregate.outputs.pass_rate }}%`
+              }
+            });
+
+      - name: Send Slack notification (success)
+        if: needs.run-tests.result == 'success' && github.event.inputs.notify_on_success
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "API Tests Completed Successfully",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "API Test Execution Complete"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Total Tests:*\n${{ steps.aggregate.outputs.total_tests }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Passed:*\n${{ steps.aggregate.outputs.passed_tests }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Failed:*\n${{ steps.aggregate.outputs.failed_tests }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Pass Rate:*\n${{ steps.aggregate.outputs.pass_rate }}%"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View Results"
+                      },
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+      - name: Send Slack notification (failure)
+        if: needs.run-tests.result != 'success'
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "API Tests Failed",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "API Test Execution Failed"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "One or more test suites failed to execute.\n\n*Total Tests:* ${{ steps.aggregate.outputs.total_tests }}\n*Passed:* ${{ steps.aggregate.outputs.passed_tests }}\n*Failed:* ${{ steps.aggregate.outputs.failed_tests }}"
+                  }
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View Logs"
+                      },
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                      "style": "danger"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+      - name: Send email notification on failure
+        if: needs.run-tests.result != 'success'
+        uses: davisben/action-send-email@v1
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER }}
+          server_port: ${{ secrets.EMAIL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 'API Test Execution Failed - Action Required'
+          to: ${{ secrets.ALERT_EMAIL }}
+          from: 'api-testing-platform@example.com'
+          body: |
+            API Tests Failed
+
+            Total Tests: ${{ steps.aggregate.outputs.total_tests }}
+            Passed: ${{ steps.aggregate.outputs.passed_tests }}
+            Failed: ${{ steps.aggregate.outputs.failed_tests }}
+            Pass Rate: ${{ steps.aggregate.outputs.pass_rate }}%
+
+            View details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Trigger incident if critical failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Critical: API Tests Failed',
+              body: `Workflow run failed: ${{ github.run_id }}`,
+              labels: ['critical', 'api-tests']
+            });

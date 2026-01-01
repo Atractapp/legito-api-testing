@@ -1,0 +1,145 @@
+config:
+  target: "{{ $processEnvironment.API_BASE_URL }}"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 120
+      arrivalRate: 10
+      name: "Ramp up load"
+    - duration: 300
+      arrivalRate: 20
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 5
+      name: "Cool down"
+
+  processor: "./load-test-processor.js"
+
+  variables:
+    baseUrl: "{{ $processEnvironment.API_BASE_URL }}"
+    apiVersion: "v1"
+
+  plugins:
+    metrics-by-endpoint:
+      stripQueryString: true
+      ignoreUnknownEndpoints: false
+
+  http:
+    timeout: 30
+    pool: 50
+
+  defaults:
+    headers:
+      Content-Type: "application/json"
+      Accept: "application/json"
+
+scenarios:
+  - name: "Document Records CRUD Performance"
+    weight: 40
+    flow:
+      - function: "authenticate"
+      - post:
+          url: "/api/{{ apiVersion }}/document-records"
+          json:
+            code: "PERF-{{ $randomString() }}"
+            name: "Performance Test Document {{ $randomNumber(1, 10000) }}"
+            description: "Load testing document"
+          capture:
+            - json: "$.id"
+              as: "documentId"
+          expect:
+            - statusCode: 201
+            - contentType: json
+            - hasProperty: id
+
+      - get:
+          url: "/api/{{ apiVersion }}/document-records/{{ documentId }}"
+          expect:
+            - statusCode: 200
+
+      - put:
+          url: "/api/{{ apiVersion }}/document-records/{{ documentId }}"
+          json:
+            name: "Updated Document {{ $randomNumber(1, 10000) }}"
+            description: "Updated during load test"
+          expect:
+            - statusCode: 200
+
+      - think: 1
+
+      - delete:
+          url: "/api/{{ apiVersion }}/document-records/{{ documentId }}"
+          expect:
+            - statusCode:
+                - 200
+                - 204
+
+  - name: "Document Version Operations"
+    weight: 30
+    flow:
+      - function: "authenticate"
+      - function: "createDocumentRecord"
+
+      - post:
+          url: "/api/{{ apiVersion }}/document-versions"
+          json:
+            documentRecordId: "{{ documentRecordId }}"
+            data:
+              title: "Performance Test Version"
+              content: "{{ $randomString() }}"
+            status: "draft"
+          capture:
+            - json: "$.id"
+              as: "versionId"
+          expect:
+            - statusCode: 201
+
+      - put:
+          url: "/api/{{ apiVersion }}/document-versions/{{ versionId }}/data"
+          json:
+            title: "Updated Version"
+            content: "{{ $randomString() }}"
+            timestamp: "{{ $timestamp() }}"
+          expect:
+            - statusCode: 200
+
+      - patch:
+          url: "/api/{{ apiVersion }}/document-versions/{{ versionId }}/status"
+          json:
+            status: "published"
+          expect:
+            - statusCode: 200
+
+      - think: 2
+
+      - function: "cleanup"
+
+  - name: "Read-Heavy Workload"
+    weight: 20
+    flow:
+      - function: "authenticate"
+      - loop:
+          - get:
+              url: "/api/{{ apiVersion }}/document-records"
+              qs:
+                page: "{{ $randomNumber(1, 10) }}"
+                limit: "{{ $randomNumber(10, 50) }}"
+              expect:
+                - statusCode: 200
+          - think: 0.5
+        count: 5
+
+  - name: "Document Search Performance"
+    weight: 10
+    flow:
+      - function: "authenticate"
+      - post:
+          url: "/api/{{ apiVersion }}/document-records/search"
+          json:
+            query: "{{ $randomString() }}"
+            filters:
+              tags: ["performance", "test"]
+          expect:
+            - statusCode: 200
+            - contentType: json

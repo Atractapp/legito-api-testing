@@ -1,0 +1,351 @@
+name: Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/frontend/**'
+      - 'packages/**'
+      - '.github/workflows/deployment.yml'
+      - 'vercel.json'
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip smoke tests after deployment'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  deployments: write
+  statuses: write
+
+jobs:
+  # Job 1: Pre-deployment validation
+  pre-deployment:
+    runs-on: ubuntu-latest
+    name: Pre-Deployment Validation
+    outputs:
+      deployment_id: ${{ steps.create_deployment.outputs.deployment_id }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create deployment
+        id: create_deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: 'production',
+              description: 'Production deployment',
+              auto_merge: false,
+              required_contexts: []
+            });
+            core.setOutput('deployment_id', deployment.data.id);
+
+      - name: Update deployment status (in progress)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ steps.create_deployment.outputs.deployment_id }},
+              state: 'in_progress',
+              description: 'Deployment in progress'
+            });
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run final validation
+        run: |
+          npm run lint
+          npm run type-check
+          npm run test:unit
+
+      - name: Build for production
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+  # Job 2: Database migrations
+  database-migration:
+    runs-on: ubuntu-latest
+    name: Database Migration
+    needs: pre-deployment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Supabase CLI
+        run: npm install -g supabase
+
+      - name: List pending migrations
+        id: pending_migrations
+        run: |
+          supabase db list-migrations \
+            --db-url "${{ secrets.SUPABASE_DB_URL }}" \
+            --output json > migrations.json || true
+          cat migrations.json
+
+      - name: Apply migrations to production
+        run: |
+          supabase db push \
+            --db-url "${{ secrets.SUPABASE_DB_URL }}" \
+            --dry-run=false
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Verify schema integrity
+        run: |
+          supabase db lint \
+            --db-url "${{ secrets.SUPABASE_DB_URL }}"
+
+      - name: Create migration backup
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+            const migration = {
+              timestamp: new Date().toISOString(),
+              workflow_run_id: '${{ github.run_id }}',
+              status: 'migrated',
+              file: 'migrations.json'
+            };
+            fs.writeFileSync('migration-log.json', JSON.stringify(migration, null, 2));
+
+      - name: Upload migration log
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: migration-log
+          path: migration-log.json
+          retention-days: 90
+
+  # Job 3: Deploy frontend to Vercel
+  deploy-vercel:
+    runs-on: ubuntu-latest
+    name: Deploy Frontend to Vercel
+    needs: [pre-deployment, database-migration]
+    outputs:
+      deployment_url: ${{ steps.vercel.outputs.url }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel (Production)
+        id: vercel
+        uses: vercel/action@master
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          scope: ${{ secrets.VERCEL_ORG_ID }}
+          prod: true
+
+      - name: Wait for deployment to be ready
+        run: |
+          timeout 300 bash -c '
+            while ! curl -f -s -o /dev/null "${{ steps.vercel.outputs.url }}/api/health"; do
+              echo "Waiting for deployment..."
+              sleep 10
+            done
+          '
+
+      - name: Log deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deploymentInfo = {
+              deployment_url: '${{ steps.vercel.outputs.url }}',
+              timestamp: new Date().toISOString(),
+              workflow_run_id: '${{ github.run_id }}',
+              commit_sha: '${{ github.sha }}',
+              environment: 'production'
+            };
+            console.log('Deployment Info:', deploymentInfo);
+
+  # Job 4: Deploy Edge Functions
+  deploy-edge-functions:
+    runs-on: ubuntu-latest
+    name: Deploy Edge Functions
+    needs: deploy-vercel
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Deploy Edge Functions
+        run: |
+          npx vercel deploy \
+            --token=${{ secrets.VERCEL_TOKEN }} \
+            --prod \
+            --functions-to-deploy=edge-functions
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  # Job 5: Smoke tests
+  smoke-tests:
+    runs-on: ubuntu-latest
+    name: Smoke Tests
+    needs: deploy-vercel
+    if: github.event.inputs.skip_tests != 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run smoke tests
+        run: npm run test:smoke
+        env:
+          DEPLOYMENT_URL: ${{ needs.deploy-vercel.outputs.deployment_url }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+      - name: Check critical endpoints
+        run: |
+          ENDPOINTS=(
+            "/api/health"
+            "/api/test-suites"
+            "/api/test-runs"
+          )
+
+          for endpoint in "${ENDPOINTS[@]}"; do
+            echo "Checking $endpoint..."
+            response=$(curl -s -w "\n%{http_code}" "${{ needs.deploy-vercel.outputs.deployment_url }}$endpoint")
+            http_code=$(echo "$response" | tail -n1)
+            body=$(echo "$response" | sed '$d')
+
+            if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+              echo "FAILED: $endpoint returned $http_code"
+              echo "$body"
+              exit 1
+            fi
+            echo "OK: $endpoint returned $http_code"
+          done
+
+  # Job 6: Update deployment status
+  post-deployment:
+    runs-on: ubuntu-latest
+    name: Post-Deployment
+    needs: [deploy-vercel, smoke-tests]
+    if: always()
+    steps:
+      - name: Update deployment status (success)
+        if: needs.smoke-tests.result == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ needs.pre-deployment.outputs.deployment_id }},
+              state: 'success',
+              environment_url: '${{ needs.deploy-vercel.outputs.deployment_url }}',
+              description: 'Deployment successful'
+            });
+
+      - name: Update deployment status (failure)
+        if: needs.smoke-tests.result != 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ needs.pre-deployment.outputs.deployment_id }},
+              state: 'failure',
+              description: 'Deployment failed'
+            });
+
+      - name: Trigger rollback on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Trigger rollback workflow
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'rollback.yml',
+              ref: context.ref,
+              inputs: {
+                reason: 'Automatic rollback due to deployment failure'
+              }
+            });
+
+      - name: Send deployment notification
+        if: always()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "Deployment ${{ needs.smoke-tests.result }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Deployment Status*\n${{ needs.smoke-tests.result == 'success' && 'Success' || 'Failed' }}\n\nURL: ${{ needs.deploy-vercel.outputs.deployment_url }}\nCommit: ${{ github.sha }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        continue-on-error: true
+
+      - name: Create GitHub release
+        if: needs.smoke-tests.result == 'success'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          body: |
+            Production deployment successful
+            - Commit: ${{ github.sha }}
+            - Deployment URL: ${{ needs.deploy-vercel.outputs.deployment_url }}
+          draft: false
+          prerelease: false
