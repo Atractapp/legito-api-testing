@@ -245,11 +245,134 @@ export interface TestContext {
   createdExternalLink?: { id?: string; [key: string]: unknown };
   jsonIntegrationDocument?: unknown;
   notificationSettings?: unknown;
+  comprehensiveDocument?: { code?: string; documentRecordId?: string; documentRecordCode?: string; [key: string]: unknown };
   [key: string]: unknown;
 }
 
 // Default template suite ID for tests
 export const DEFAULT_TEMPLATE_SUITE_ID = '10132';
+
+// Element type definitions from Legito API
+export type ElementType =
+  | 'Section' | 'Clause' | 'OwnClause' | 'Table' | 'TableCell'
+  | 'Text' | 'Textinput' | 'Date' | 'Selectbox' | 'ObjectRecordsSelectbox'
+  | 'Money' | 'Link' | 'ObjectLink' | 'HyperLink' | 'Question'
+  | 'ObjectRecordsQuestion' | 'Counter' | 'Title' | 'Calculation'
+  | 'Image' | 'RichText' | 'RepeatContainer' | 'TableOfContents' | 'Switcher';
+
+export interface TemplateElement {
+  id?: number;
+  name?: string;
+  uuid?: string;
+  type?: ElementType;
+  value?: unknown;
+  items?: Record<string, string>;
+  children?: TemplateElement[];
+  isRepeated?: boolean;
+  repeatIdentifier?: string;
+  parentId?: number;
+}
+
+// Generate a value for an element based on its type
+export function generateElementValue(element: TemplateElement): unknown {
+  const type = element.type;
+  const name = element.name || '';
+
+  switch (type) {
+    case 'Textinput':
+    case 'Text':
+      return `API Test Value for ${name} - ${Date.now()}`;
+
+    case 'Date':
+      return {
+        date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
+        monthByWord: true,
+      };
+
+    case 'Selectbox':
+    case 'Question':
+      // Select first available option from items
+      if (element.items) {
+        const keys = Object.keys(element.items);
+        return keys.length > 0 ? keys[0] : 'option0';
+      }
+      return 'option0';
+
+    case 'Money':
+      return {
+        number: '1000',
+        currency: 'USD',
+        wordsEnable: true,
+        text: 'one thousand',
+        textCurrency: 'US Dollars',
+      };
+
+    case 'Counter':
+      // Counter controls repeat count - return a number to trigger repeats
+      return '2'; // Will create 2 repetitions
+
+    case 'RichText':
+      return `<p>Rich text content for ${name}</p>`;
+
+    case 'Title':
+      return `Title: ${name}`;
+
+    case 'HyperLink':
+      return 'https://example.com/api-test';
+
+    case 'Calculation':
+      // Calculations are read-only, can't set value
+      return undefined;
+
+    case 'Image':
+      // Images require base64 data
+      return undefined;
+
+    case 'ObjectRecordsSelectbox':
+    case 'ObjectRecordsQuestion':
+      // These require valid object record IDs
+      return undefined;
+
+    default:
+      return undefined;
+  }
+}
+
+// Build element data array from template elements
+export function buildElementData(elements: TemplateElement[]): Array<{ name: string; value: unknown }> {
+  const result: Array<{ name: string; value: unknown }> = [];
+
+  function processElement(element: TemplateElement, repeatIdentifier?: string) {
+    // Skip containers/sections - they don't have editable values
+    if (['Section', 'Clause', 'OwnClause', 'Table', 'TableCell', 'RepeatContainer', 'TableOfContents'].includes(element.type || '')) {
+      // But process their children
+      if (element.children && Array.isArray(element.children)) {
+        element.children.forEach(child => processElement(child, repeatIdentifier));
+      }
+      return;
+    }
+
+    // Skip elements without names
+    if (!element.name) return;
+
+    // Generate value based on type
+    const value = generateElementValue(element);
+    if (value !== undefined) {
+      const elementName = repeatIdentifier
+        ? `${element.name}[${repeatIdentifier}]`
+        : element.name;
+      result.push({ name: elementName, value });
+    }
+
+    // Process children
+    if (element.children && Array.isArray(element.children)) {
+      element.children.forEach(child => processElement(child, repeatIdentifier));
+    }
+  }
+
+  elements.forEach(element => processElement(element));
+  return result;
+}
 
 // ============================================================================
 // COMPREHENSIVE LEGITO API TESTS - ALL ENDPOINTS
@@ -1038,7 +1161,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
   {
     id: 'document-version-get-data',
     name: 'GET /document-version/data/{code}',
-    description: 'Returns Elements data from created document',
+    description: 'Returns Elements data from created document (template structure)',
     category: 'Document Versions',
     usesContext: ['permanentDocument'],
     dynamicEndpoint: (ctx) => {
@@ -1053,6 +1176,57 @@ export const LEGITO_TESTS: LegitoTest[] = [
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array of elements', type: 'isArray' },
+    ],
+  },
+  {
+    id: 'document-version-create-comprehensive',
+    name: 'POST /document-version/data/{templateSuiteId} (Comprehensive)',
+    description: 'Creates document with ALL element types filled based on template',
+    category: 'Document Versions',
+    usesContext: ['documentElements'],
+    endpoint: '/document-version/data/10132',
+    method: 'POST',
+    dynamicBody: (ctx) => {
+      // Build comprehensive data from template elements we discovered
+      const elements = ctx.documentElements as TemplateElement[] | undefined;
+      if (elements && Array.isArray(elements)) {
+        const data = buildElementData(elements);
+        // Log what we're sending for debugging
+        console.log(`Creating comprehensive document with ${data.length} element values`);
+        return data;
+      }
+      // Fallback if no elements in context
+      return [
+        { name: 'client_name', value: 'Comprehensive Test Client' },
+        { name: 'contractor_name', value: 'Comprehensive Test Contractor' },
+      ];
+    },
+    setsContext: 'comprehensiveDocument',
+    expectedStatus: [200, 201, 400, 422],
+    skipIf: (ctx) => !Array.isArray(ctx.documentElements) || ctx.documentElements.length === 0,
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+      { name: 'Has document code', type: 'hasField', field: 'code' },
+    ],
+  },
+  {
+    id: 'document-version-get-comprehensive',
+    name: 'GET /document-version/data/{code} (Verify Comprehensive)',
+    description: 'Verifies comprehensive document has all elements filled',
+    category: 'Document Versions',
+    usesContext: ['comprehensiveDocument'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.comprehensiveDocument as { code?: string };
+      return `/document-version/data/${doc?.code || 'unknown'}`;
+    },
+    endpoint: '/document-version/data/{code}',
+    method: 'GET',
+    expectedStatus: 200,
+    skipIf: (ctx) => !ctx.comprehensiveDocument?.code,
+    assertions: [
+      { name: 'Returns 200 OK', type: 'status' },
+      { name: 'Returns array of elements', type: 'isArray' },
+      { name: 'Has filled elements', type: 'arrayNotEmpty' },
     ],
   },
   {
@@ -1076,18 +1250,26 @@ export const LEGITO_TESTS: LegitoTest[] = [
   {
     id: 'document-version-update',
     name: 'PUT /document-version/data/{documentRecordcode}',
-    description: 'Updates document version with new element data',
+    description: 'Updates document with comprehensive element data (all types)',
     category: 'Document Versions',
-    usesContext: ['permanentDocument'],
+    usesContext: ['permanentDocument', 'documentElements'],
     dynamicEndpoint: (ctx) => {
       const doc = ctx.permanentDocument as { documentRecordCode?: string };
       return `/document-version/data/${doc?.documentRecordCode || 'unknown'}`;
     },
     endpoint: '/document-version/data/{documentRecordcode}',
     method: 'PUT',
-    dynamicBody: () => ([
-      { name: 'client_name', value: `API Test Client Updated - ${Date.now()}` },
-    ]),
+    dynamicBody: (ctx) => {
+      // Use document elements from context to generate comprehensive data
+      const elements = ctx.documentElements as TemplateElement[] | undefined;
+      if (elements && Array.isArray(elements)) {
+        return buildElementData(elements);
+      }
+      // Fallback to basic update
+      return [
+        { name: 'client_name', value: `API Test Client Updated - ${Date.now()}` },
+      ];
+    },
     expectedStatus: [200, 201, 400, 404, 422],
     skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode,
     assertions: [
@@ -1097,16 +1279,31 @@ export const LEGITO_TESTS: LegitoTest[] = [
   {
     id: 'document-version-json-integration',
     name: 'POST /document-version/json-integration',
-    description: 'Maps json data to new document version',
+    description: 'Maps json data to new document (all element types)',
     category: 'Document Versions',
     endpoint: '/document-version/json-integration',
     method: 'POST',
-    body: {
-      templateSuiteId: 10132,
-      data: {
-        client_name: 'JSON Integration Test Client',
-        contractor_name: 'JSON Integration Test Contractor',
-      },
+    usesContext: ['documentElements'],
+    dynamicBody: (ctx) => {
+      // Build comprehensive data from template elements
+      const elements = ctx.documentElements as TemplateElement[] | undefined;
+      const data: Record<string, unknown> = {};
+
+      if (elements && Array.isArray(elements)) {
+        const elementData = buildElementData(elements);
+        elementData.forEach(item => {
+          data[item.name] = item.value;
+        });
+      } else {
+        // Fallback
+        data['client_name'] = 'JSON Integration Test Client';
+        data['contractor_name'] = 'JSON Integration Test Contractor';
+      }
+
+      return {
+        templateSuiteId: 10132,
+        data,
+      };
     },
     setsContext: 'jsonIntegrationDocument',
     expectedStatus: [200, 201, 400, 422],
