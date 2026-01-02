@@ -4,24 +4,12 @@
   "installCommand": "npm ci",
   "framework": "nextjs",
   "public": true,
-  "env": [
-    {
-      "key": "NEXT_PUBLIC_SUPABASE_URL",
-      "value": "@supabase_url"
-    },
-    {
-      "key": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-      "value": "@supabase_anon_key"
-    },
-    {
-      "key": "NEXT_PUBLIC_API_BASE_URL",
-      "value": "@api_base_url"
-    },
-    {
-      "key": "NEXT_PUBLIC_ENVIRONMENT",
-      "value": "@environment"
-    }
-  ],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "NEXT_PUBLIC_API_BASE_URL": "@api_base_url",
+    "NEXT_PUBLIC_ENVIRONMENT": "@environment"
+  },
   "headers": [
     {
       "source": "/api/:path*",
