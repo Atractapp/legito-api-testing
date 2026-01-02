@@ -8,9 +8,13 @@ import {
   legitoRequest,
   LEGITO_TESTS,
   runAssertion,
+  createEmptyTestContext,
+  recordCrudOperation,
+  generateCrudReport,
   type LegitoTest,
   type ApiResponse,
   type TestContext,
+  type ExternalLinkData,
 } from '@/lib/legito-api';
 
 export function useTestRunner() {
@@ -28,7 +32,7 @@ export function useTestRunner() {
 
   const abortControllerRef = useRef<AbortController | null>(null);
   const jwtRef = useRef<string | null>(null);
-  const contextRef = useRef<TestContext>({});
+  const contextRef = useRef<TestContext>(createEmptyTestContext());
 
   const log = useCallback(
     (level: LogEntry['level'], message: string, testId?: string) => {
@@ -56,7 +60,11 @@ export function useTestRunner() {
 
     // Setup
     abortControllerRef.current = new AbortController();
-    contextRef.current = {}; // Reset context
+    contextRef.current = createEmptyTestContext(); // Reset context with CRUD tracking
+
+    // Pass configuration values to context for dynamic tests
+    contextRef.current.templateSuiteId = configuration.templateIds?.[0] || '64004';
+    contextRef.current.objectId = '935'; // Testing Object ID
     clearTestResults();
     clearLogs();
     setIsRunning(true);
@@ -168,10 +176,58 @@ export function useTestRunner() {
           log
         );
 
-        // Store context if test sets it
-        if (test.setsContext && result.response.body) {
+        // Store context ONLY if test passed AND sets context
+        // This prevents storing error responses that could be used by dependent tests
+        if (test.setsContext && result.response.body && result.status === 'passed') {
           contextRef.current[test.setsContext] = result.response.body;
           log('debug', `Stored context: ${test.setsContext}`, test.id);
+
+          // Extract external link URL if this is the kept external link
+          if (test.setsContext === 'externalLinkKept' && result.response.body) {
+            const responseData = result.response.body as Record<string, unknown> | Record<string, unknown>[];
+            // API returns array of created external links
+            const linkData = Array.isArray(responseData) ? responseData[0] : responseData;
+
+            if (linkData) {
+              // Per API schema: url = full URL, link = token part
+              const fullUrl = linkData.url as string | undefined;
+              const linkToken = linkData.link as string | undefined;
+
+              if (fullUrl) {
+                // Use the full URL directly from the API
+                contextRef.current.crudReport.externalLinkUrl = fullUrl;
+                run.externalLinkUrl = fullUrl;
+                log('info', `*** EXTERNAL LINK URL: ${fullUrl} ***`, test.id);
+              } else if (linkToken) {
+                // Construct URL from link token
+                const externalUrl = `https://emea.legito.com/US/en/shared/${linkToken}/`;
+                contextRef.current.crudReport.externalLinkUrl = externalUrl;
+                run.externalLinkUrl = externalUrl;
+                log('info', `*** EXTERNAL LINK URL: ${externalUrl} ***`, test.id);
+              } else {
+                // Log the response structure for debugging
+                log('warn', `External link response (no url/link field): ${JSON.stringify(linkData)}`, test.id);
+              }
+            }
+          }
+        }
+
+        // Record CRUD operation if test has CRUD metadata
+        if (test.crudOperation && test.entityType) {
+          const resourceId = result.response.body
+            ? getResourceId(result.response.body)
+            : 'unknown';
+          recordCrudOperation(contextRef.current, {
+            entityType: test.entityType,
+            operation: test.crudOperation,
+            resourceId,
+            resourceName: getResourceName(result.response.body),
+            resourceCategory: test.resourceCategory || 'n/a',
+            success: result.status === 'passed',
+            timestamp: new Date().toISOString(),
+            duration: result.duration,
+            error: result.error?.message,
+          });
         }
 
         updateTestStatus(test.id, result.status);
@@ -215,6 +271,25 @@ export function useTestRunner() {
       `Test run ${run.status}: ${run.passedTests} passed, ${run.failedTests} failed, ${run.skippedTests} skipped (${passRate}% pass rate)`
     );
     log('info', `Total duration: ${(run.duration / 1000).toFixed(2)}s`);
+
+    // Generate CRUD report (for console/debugging)
+    const crudReportText = generateCrudReport(contextRef.current);
+    console.log(crudReportText); // Log full report to console
+    log('info', '--- CRUD TEST REPORT ---');
+    log('info', `Total CRUD Operations: ${contextRef.current.crudReport.totals.totalOperations}`);
+    log('info', `Successful: ${contextRef.current.crudReport.totals.successfulOperations}`);
+    log('info', `Failed: ${contextRef.current.crudReport.totals.failedOperations}`);
+    log('info', `Resources Created: ${contextRef.current.crudReport.totals.resourcesCreated}`);
+    log('info', `Resources Kept: ${contextRef.current.crudReport.totals.resourcesKept}`);
+    log('info', `Resources Deleted: ${contextRef.current.crudReport.totals.resourcesDeleted}`);
+
+    // IMPORTANT: Log external link URL prominently
+    if (contextRef.current.crudReport.externalLinkUrl) {
+      log('info', '========================================');
+      log('info', '*** EXTERNAL SHARING LINK FOR TESTING ***');
+      log('info', `URL: ${contextRef.current.crudReport.externalLinkUrl}`);
+      log('info', '========================================');
+    }
   }, [
     selectedTests,
     configuration,
@@ -240,7 +315,7 @@ export function useTestRunner() {
     clearTestResults();
     clearLogs();
     setCurrentRun(null);
-    contextRef.current = {};
+    contextRef.current = createEmptyTestContext();
     log('info', 'Tests reset');
   }, [updateTestStatus, clearTestResults, clearLogs, setCurrentRun, log]);
 
@@ -356,4 +431,39 @@ async function executeTest(
         },
     logs: [],
   };
+}
+
+// Helper function to extract resource ID from response
+function getResourceId(data: unknown): string {
+  if (!data || typeof data !== 'object') return 'unknown';
+
+  // Handle arrays (return first item's ID)
+  if (Array.isArray(data) && data.length > 0) {
+    return getResourceId(data[0]);
+  }
+
+  const obj = data as Record<string, unknown>;
+  return String(
+    obj.systemName ||
+    obj.code ||
+    obj.documentRecordCode ||
+    obj.id ||
+    obj.email ||
+    obj.token ||
+    obj.name ||
+    'unknown'
+  );
+}
+
+// Helper function to extract resource name from response
+function getResourceName(data: unknown): string | undefined {
+  if (!data || typeof data !== 'object') return undefined;
+
+  // Handle arrays (return first item's name)
+  if (Array.isArray(data) && data.length > 0) {
+    return getResourceName(data[0]);
+  }
+
+  const obj = data as Record<string, unknown>;
+  return obj.name as string | undefined;
 }

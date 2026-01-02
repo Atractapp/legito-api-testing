@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Search, Filter, Download, RefreshCw } from 'lucide-react';
+import { Search, Filter, Download, RefreshCw, ExternalLink, Link2, Copy, Check } from 'lucide-react';
 import { useState, useMemo } from 'react';
 
 export default function ResultsPage() {
@@ -22,6 +22,13 @@ export default function ResultsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const filteredResults = useMemo(() => {
     return testResults.filter((result) => {
@@ -52,6 +59,59 @@ export default function ResultsPage() {
     <div className="space-y-6">
       {/* Stats Overview */}
       <StatsCards stats={stats} currentRun={currentRun} />
+
+      {/* External Link Card - Show prominently if available */}
+      {currentRun?.externalLinkUrl && (
+        <Card className="border-2 border-green-500 bg-green-50 dark:bg-green-950/20">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <Link2 className="h-5 w-5 text-green-600" />
+              <CardTitle className="text-green-700 dark:text-green-400">
+                External Sharing Link Created
+              </CardTitle>
+            </div>
+            <CardDescription>
+              This link was created during the test run and can be used to access the document externally.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-3">
+              <code className="flex-1 px-4 py-3 bg-white dark:bg-gray-900 rounded-lg border text-sm font-mono break-all">
+                {currentRun.externalLinkUrl}
+              </code>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => copyToClipboard(currentRun.externalLinkUrl!)}
+                className="shrink-0"
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-4 w-4 mr-2 text-green-600" />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-4 w-4 mr-2" />
+                    Copy
+                  </>
+                )}
+              </Button>
+              <Button
+                variant="default"
+                size="sm"
+                asChild
+                className="shrink-0 bg-green-600 hover:bg-green-700"
+              >
+                <a href={currentRun.externalLinkUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Open Link
+                </a>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Results Table */}
       <Card>

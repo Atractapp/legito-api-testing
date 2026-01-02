@@ -67,7 +67,7 @@ const defaultConfiguration: TestConfiguration = {
   authToken: '',
   apiKey: process.env.NEXT_PUBLIC_LEGITO_API_KEY || '',
   privateKey: process.env.NEXT_PUBLIC_LEGITO_PRIVATE_KEY || '',
-  templateIds: ['10132'],
+  templateIds: ['64004'],
   documentIds: [],
   timeout: 30000,
   retryCount: 0,

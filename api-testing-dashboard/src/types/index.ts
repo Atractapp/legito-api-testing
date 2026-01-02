@@ -71,6 +71,8 @@ export interface TestRun {
   duration?: number;
   results: TestResult[];
   configuration: TestConfiguration;
+  // External sharing link URL (if created during test)
+  externalLinkUrl?: string;
 }
 
 export interface TestCategory {

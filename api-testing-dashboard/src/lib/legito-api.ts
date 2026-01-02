@@ -1,4 +1,5 @@
 // Legito API Client with JWT Authentication
+// Comprehensive CRUD Test Suite
 
 // Use local proxy to bypass CORS when running in browser
 const PROXY_BASE_URL = '/api/legito';
@@ -203,6 +204,10 @@ export interface LegitoTest {
   expectedStatus: number | number[];
   assertions: TestAssertion[];
   skipIf?: (context: TestContext) => boolean;
+  // CRUD tracking
+  crudOperation?: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | 'ANONYMIZE' | 'SHARE';
+  resourceCategory?: 'kept' | 'to-delete' | 'n/a';
+  entityType?: string;
 }
 
 export interface TestAssertion {
@@ -212,190 +217,1006 @@ export interface TestAssertion {
   expected?: unknown;
 }
 
-// Context for chaining tests together
+// ============================================================================
+// CRUD TRACKING TYPES
+// ============================================================================
+
+export interface CrudOperationRecord {
+  entityType: string;
+  operation: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | 'ANONYMIZE' | 'SHARE';
+  resourceId: string;
+  resourceName?: string;
+  resourceCategory: 'kept' | 'to-delete' | 'n/a';
+  success: boolean;
+  timestamp: string;
+  duration: number;
+  error?: string;
+}
+
+export interface CrudReportSummary {
+  operations: CrudOperationRecord[];
+  byEntity: Record<string, {
+    created: { kept: number; deleted: number };
+    read: number;
+    updated: number;
+    deleted: number;
+    anonymized: number;
+    shared: number;
+    errors: number;
+  }>;
+  totals: {
+    totalOperations: number;
+    successfulOperations: number;
+    failedOperations: number;
+    resourcesCreated: number;
+    resourcesKept: number;
+    resourcesDeleted: number;
+  };
+  // IMPORTANT: External link URL for easy access
+  externalLinkUrl?: string;
+}
+
+// ============================================================================
+// RESOURCE TRACKING
+// ============================================================================
+
+export interface TrackedResource<T = unknown> {
+  data: T;
+  createdAt: string;
+  keep: boolean;
+}
+
+export interface ResourcePair<T = unknown> {
+  kept: TrackedResource<T> | null;
+  toDelete: TrackedResource<T> | null;
+}
+
+// ============================================================================
+// CONTEXT FOR CHAINING TESTS
+// ============================================================================
+
+export interface ObjectRecordData {
+  id?: number;
+  systemName?: string;
+  name?: string;
+  properties?: Record<string, unknown>;
+}
+
+export interface DocumentData {
+  id?: number;
+  code?: string;
+  documentRecordId?: number;
+  documentRecordCode?: string;
+  name?: string;
+}
+
+export interface UserData {
+  id?: number;
+  email?: string;
+  name?: string;
+}
+
+export interface UserGroupData {
+  id?: number;
+  name?: string;
+}
+
+export interface ExternalLinkData {
+  id?: number;
+  token?: string;
+  code?: string;
+  hash?: string;
+  url?: string;
+  link?: string;
+  shareUrl?: string;
+  active?: boolean;
+}
+
 export interface TestContext {
-  // Store dynamic data from previous tests
-  templateSuiteId?: string;
-  templateElements?: unknown[];
-  createdLabel?: { id?: string; [key: string]: unknown };
-  createdPushConnection?: { id?: string; [key: string]: unknown };
-  permanentDocument?: { id?: string; code?: string; documentRecordId?: string; documentRecordCode?: string; [key: string]: unknown };
-  tempDocumentForDelete?: { id?: string; code?: string; documentRecordCode?: string; [key: string]: unknown };
-  documentElements?: unknown[];
+  // Reference data
+  objects?: unknown[];
   users?: unknown[];
   userGroups?: unknown[];
   workflows?: unknown[];
   documentRecords?: unknown[];
-  documentVersions?: unknown[];
-  objects?: unknown[];
-  firstObject?: { id?: string; [key: string]: unknown };
   templateSuites?: unknown[];
-  pushConnections?: unknown[];
-  createdDocRecordType?: { id?: string; [key: string]: unknown };
-  createdTemplateTag?: { id?: string; [key: string]: unknown };
-  createdObjectRecord?: { systemName?: string; [key: string]: unknown };
-  files?: unknown[];
-  // New context properties for CRUD tests
-  createdDocumentRecord?: { code?: string; [key: string]: unknown };
-  createdUser?: { id?: string; email?: string; [key: string]: unknown };
-  createdUserGroup?: { id?: string; [key: string]: unknown };
-  uploadedFile?: { id?: string; [key: string]: unknown };
-  createdUserShare?: unknown;
-  createdUserGroupShare?: unknown;
-  createdExternalLink?: { id?: string; [key: string]: unknown };
-  jsonIntegrationDocument?: unknown;
-  notificationSettings?: unknown;
-  comprehensiveDocument?: { code?: string; documentRecordId?: string; documentRecordCode?: string; [key: string]: unknown };
+  templateElements?: unknown[];
+  documentElements?: unknown[];
+
+  // Object Records (CRUD pair)
+  objectRecords: ResourcePair<ObjectRecordData>;
+  lastCreatedObjectRecordSystemName?: string;
+
+  // Documents (CRUD pair)
+  documents: ResourcePair<DocumentData>;
+
+  // Users (CRUD pair) - NEVER touch existing users
+  testUsers: ResourcePair<UserData>;
+
+  // User Groups (CRUD pair)
+  testUserGroups: ResourcePair<UserGroupData>;
+
+  // External Links (CRUD pair)
+  externalLinks: ResourcePair<ExternalLinkData>;
+
+  // Sharing
+  userShare?: unknown;
+  userGroupShare?: unknown;
+
+  // CRUD Report
+  crudReport: CrudReportSummary;
+
+  // Legacy compatibility
   [key: string]: unknown;
 }
 
-// Default template suite ID for tests
-export const DEFAULT_TEMPLATE_SUITE_ID = '10132';
-
-// Element type definitions from Legito API
-export type ElementType =
-  | 'Section' | 'Clause' | 'OwnClause' | 'Table' | 'TableCell'
-  | 'Text' | 'Textinput' | 'Date' | 'Selectbox' | 'ObjectRecordsSelectbox'
-  | 'Money' | 'Link' | 'ObjectLink' | 'HyperLink' | 'Question'
-  | 'ObjectRecordsQuestion' | 'Counter' | 'Title' | 'Calculation'
-  | 'Image' | 'RichText' | 'RepeatContainer' | 'TableOfContents' | 'Switcher';
-
-export interface TemplateElement {
-  id?: number;
-  name?: string;
-  uuid?: string;
-  type?: ElementType;
-  value?: unknown;
-  items?: Record<string, string>;
-  children?: TemplateElement[];
-  isRepeated?: boolean;
-  repeatIdentifier?: string;
-  parentId?: number;
+// Initialize empty context
+export function createEmptyTestContext(): TestContext {
+  return {
+    objectRecords: { kept: null, toDelete: null },
+    documents: { kept: null, toDelete: null },
+    testUsers: { kept: null, toDelete: null },
+    testUserGroups: { kept: null, toDelete: null },
+    externalLinks: { kept: null, toDelete: null },
+    crudReport: {
+      operations: [],
+      byEntity: {},
+      totals: {
+        totalOperations: 0,
+        successfulOperations: 0,
+        failedOperations: 0,
+        resourcesCreated: 0,
+        resourcesKept: 0,
+        resourcesDeleted: 0,
+      },
+    },
+  };
 }
 
-// Generate a value for an element based on its type
-export function generateElementValue(element: TemplateElement): unknown {
-  const type = element.type;
-  const name = element.name || '';
+// Record a CRUD operation
+export function recordCrudOperation(
+  context: TestContext,
+  operation: CrudOperationRecord
+): void {
+  context.crudReport.operations.push(operation);
 
-  switch (type) {
-    case 'Textinput':
-    case 'Text':
-      return `API Test Value for ${name} - ${Date.now()}`;
-
-    case 'Date':
-      return {
-        date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
-        monthByWord: true,
-      };
-
-    case 'Selectbox':
-    case 'Question':
-      // Select first available option from items
-      if (element.items) {
-        const keys = Object.keys(element.items);
-        return keys.length > 0 ? keys[0] : 'option0';
-      }
-      return 'option0';
-
-    case 'Money':
-      return {
-        number: '1000',
-        currency: 'USD',
-        wordsEnable: true,
-        text: 'one thousand',
-        textCurrency: 'US Dollars',
-      };
-
-    case 'Counter':
-      // Counter controls repeat count - return a number to trigger repeats
-      return '2'; // Will create 2 repetitions
-
-    case 'RichText':
-      return `<p>Rich text content for ${name}</p>`;
-
-    case 'Title':
-      return `Title: ${name}`;
-
-    case 'HyperLink':
-      return 'https://example.com/api-test';
-
-    case 'Calculation':
-      // Calculations are read-only, can't set value
-      return undefined;
-
-    case 'Image':
-      // Images require base64 data
-      return undefined;
-
-    case 'ObjectRecordsSelectbox':
-    case 'ObjectRecordsQuestion':
-      // These require valid object record IDs
-      return undefined;
-
-    default:
-      return undefined;
+  // Initialize entity summary if needed
+  if (!context.crudReport.byEntity[operation.entityType]) {
+    context.crudReport.byEntity[operation.entityType] = {
+      created: { kept: 0, deleted: 0 },
+      read: 0,
+      updated: 0,
+      deleted: 0,
+      anonymized: 0,
+      shared: 0,
+      errors: 0,
+    };
   }
-}
 
-// Build element data array from template elements
-export function buildElementData(elements: TemplateElement[]): Array<{ name: string; value: unknown }> {
-  const result: Array<{ name: string; value: unknown }> = [];
-  const processedNames = new Set<string>();
+  const summary = context.crudReport.byEntity[operation.entityType];
 
-  function processElement(element: TemplateElement) {
-    // Skip structural containers - they don't have editable values themselves
-    if (['Section', 'Clause', 'OwnClause', 'Table', 'TableCell', 'TableOfContents'].includes(element.type || '')) {
-      // But process their children
-      if (element.children && Array.isArray(element.children)) {
-        element.children.forEach(child => processElement(child));
-      }
-      return;
-    }
+  if (!operation.success) {
+    summary.errors++;
+    context.crudReport.totals.failedOperations++;
+  } else {
+    context.crudReport.totals.successfulOperations++;
 
-    // Handle RepeatContainer - process children with repeat context
-    if (element.type === 'RepeatContainer') {
-      if (element.children && Array.isArray(element.children)) {
-        element.children.forEach(child => processElement(child));
-      }
-      return;
-    }
-
-    // Skip elements without names
-    if (!element.name) return;
-
-    // Build the full element name including repeatIdentifier if present
-    // repeatIdentifier format: "uuid[0]" or "uuid[0]uuid2[1]" for nested repeats
-    let elementName = element.name;
-    if (element.isRepeated && element.repeatIdentifier) {
-      elementName = `${element.name}[${element.repeatIdentifier}]`;
-    }
-
-    // Skip if we already processed this exact element name
-    if (processedNames.has(elementName)) return;
-    processedNames.add(elementName);
-
-    // Generate value based on type, passing the full element for context (items for selects)
-    const value = generateElementValue(element);
-    if (value !== undefined) {
-      result.push({ name: elementName, value });
-    }
-
-    // Process children (for nested elements)
-    if (element.children && Array.isArray(element.children)) {
-      element.children.forEach(child => processElement(child));
+    switch (operation.operation) {
+      case 'CREATE':
+        if (operation.resourceCategory === 'kept') {
+          summary.created.kept++;
+          context.crudReport.totals.resourcesKept++;
+        } else {
+          summary.created.deleted++;
+        }
+        context.crudReport.totals.resourcesCreated++;
+        break;
+      case 'READ':
+        summary.read++;
+        break;
+      case 'UPDATE':
+        summary.updated++;
+        break;
+      case 'DELETE':
+        summary.deleted++;
+        context.crudReport.totals.resourcesDeleted++;
+        break;
+      case 'ANONYMIZE':
+        summary.anonymized++;
+        break;
+      case 'SHARE':
+        summary.shared++;
+        break;
     }
   }
 
-  elements.forEach(element => processElement(element));
-  return result;
+  context.crudReport.totals.totalOperations++;
 }
 
 // ============================================================================
-// COMPREHENSIVE LEGITO API TESTS - ALL ENDPOINTS
+// CONSTANTS FROM TEMPLATE-REFERENCE.md
 // ============================================================================
+
+// Template Suite
+export const TEMPLATE_SUITE_ID = 64004;
+
+// Object: Testing Object
+export const TESTING_OBJECT_ID = 935;
+
+// Object Property SystemNames
+export const OBJECT_PROPERTY_SYSTEM_NAMES = {
+  name: 'a6c58533-e21f-48b2-8389-d0ae954d28e2',
+  date: 'fffd692c-87a9-41bf-9bc1-0e9868d9a1ab',
+  address: 'bfb218ce-59d7-46eb-b775-04f87bfd84a2',
+  numerical: '8b0de562-386c-4004-abb8-0acb0d553380',
+  financialValue: '3f2ebeea-d87c-45ad-a59e-d681dd8d3903',
+  user: '01f1b2ef-e8bf-47a0-acb3-6c1629a9545f',
+};
+
+// Element UUIDs for Document 1
+export const ELEMENT_UUIDS = {
+  docName: '682b388c-d37d-4b20-8a5f-8ea90f598428',
+  name: 'c596812a-bf43-4381-9a24-888247665824',
+  date: '6302bd16-ec5e-461d-8e8b-17b7186510d6',
+  switcher: '7c734db3-7a43-4750-8eae-52d49eaec9be',
+  option: 'e65f0c64-a6f9-41a5-be5f-c508ed7029fc',
+  multiOption: 'eaa0016e-4b8c-4735-9ff4-dbb464458dbd',
+  singleChoice: 'c7ce9cfd-54d5-4351-8d18-d9a65e4ecff1',
+  multiChoice: '9c39e564-af7a-4f27-8a2e-43e3c1709dea',
+  testingObjectName: 'f16b51cf-d3ac-4e7c-b349-c7390ec31841',
+  value: 'ecc4575b-dbb1-4081-9aee-bf92b725107d',
+};
+
+// Option/Select Values (UUIDs)
+export const OPTION_VALUES = {
+  // option (Question single): B
+  optionB: '6df8e483-31a9-4f66-a96a-3ca10ffa56a7',
+  // multi-option (Question multi): B, D
+  multiOptionB: '2261e6fe-f68a-44c1-aec2-73e4156f582c',
+  multiOptionD: 'fcee8ee4-636e-4ed6-9576-7389691ace4f',
+  // single-choice (Select single): 2
+  singleChoice2: '3a8bc084-0316-421a-b202-90622f89670b',
+  // multi-choice (Select multi): 3, 4
+  multiChoice3: '48d93b60-a8be-40c6-b00d-5a9f5904148a',
+  multiChoice4: '202f5757-934a-4729-92e1-413a9e552cb1',
+};
+
+// User ID for object records
+export const USER_ID = 44641;
+
+// Currency ID (CZK)
+export const CURRENCY_CZK = 3;
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+// Get current date formatted
+export function getCurrentDateFormatted(): string {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const year = now.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
+// Get current date ISO format
+export function getCurrentDateISO(): string {
+  const now = new Date();
+  return now.toISOString().split('T')[0] + 'T00:00:00+01:00';
+}
+
+// Build Document 1 element data
+// NOTE: testing-object-name expects Object Record ID (integer), not systemName!
+// Clauses (a, b, c, d, e) are turned on by setting visible: true
+export function buildDocument1ElementData(objectRecordId: number | null): Array<{ name: string; value?: unknown; visible?: boolean }> {
+  const currentDate = getCurrentDateFormatted();
+  const currentDateISO = getCurrentDateISO();
+
+  const elements: Array<{ name: string; value?: unknown; visible?: boolean }> = [
+    // Document fields
+    { name: 'doc-name', value: `My Test Document ${currentDate}` },
+    { name: 'name', value: 'John Doe' },
+    { name: 'date', value: { date: currentDateISO.split('T')[0], monthByWord: true } },
+    { name: 'switcher', value: true },
+    { name: 'option', value: OPTION_VALUES.optionB },
+    { name: 'multi-option', value: [OPTION_VALUES.multiOptionB, OPTION_VALUES.multiOptionD] },
+    { name: 'single-choice', value: OPTION_VALUES.singleChoice2 },
+    { name: 'multi-choice', value: [OPTION_VALUES.multiChoice3, OPTION_VALUES.multiChoice4] },
+    { name: 'value', value: { number: '12345', currency: CURRENCY_CZK } },
+    // Clauses - turn them all on (visible)
+    { name: 'a', visible: true },
+    { name: 'b', visible: true },
+    { name: 'c', visible: true },
+    { name: 'd', visible: true },
+    { name: 'e', visible: true },
+  ];
+
+  // Only include testing-object-name if we have a valid object record ID
+  if (objectRecordId !== null && objectRecordId > 0) {
+    elements.push({ name: 'testing-object-name', value: objectRecordId });
+  }
+
+  return elements;
+}
+
+// Build Object Record properties
+export function buildObjectRecordProperties(name: string, address: string, numerical: number, financialValue: number): Array<{ systemName: string; value: unknown }> {
+  return [
+    { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.name, value: name },
+    { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.date, value: getCurrentDateISO() },
+    { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.address, value: address },
+    { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.numerical, value: numerical },
+    { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.financialValue, value: { value: financialValue, currencyId: CURRENCY_CZK } },
+    { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.user, value: USER_ID },
+  ];
+}
+
+// ============================================================================
+// COMPREHENSIVE LEGITO API TESTS - ALL CRUD OPERATIONS
+// ============================================================================
+
 export const LEGITO_TESTS: LegitoTest[] = [
-  // ==================== SYSTEM INFO ====================
+  // ==================== PHASE 1: OBJECT RECORDS (RUN FIRST) ====================
+
+  // 1.1 Create Object Record #1 (KEPT - will be used in document)
+  {
+    id: 'object-record-create-kept',
+    name: 'POST /object-record/{objectId} (Record 1 - KEPT)',
+    description: 'Creates Object Record #1 - kept for document template reference',
+    category: 'Object Records',
+    endpoint: '/object-record/{objectId}',
+    method: 'POST',
+    dynamicEndpoint: (ctx) => `/object-record/${ctx.objectId || TESTING_OBJECT_ID}`,
+    dynamicBody: () => ({
+      properties: buildObjectRecordProperties(
+        `API-Test-Record-KEPT-${Date.now()}`,
+        'Test City, Kept Street 1',
+        1001,
+        50000
+      ),
+    }),
+    setsContext: 'objectRecordKept',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has systemName', type: 'hasField', field: 'systemName' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'kept',
+    entityType: 'ObjectRecord',
+  },
+
+  // 1.2 Create Object Record #2 (TO DELETE)
+  {
+    id: 'object-record-create-delete',
+    name: 'POST /object-record/{objectId} (Record 2 - for DELETE)',
+    description: 'Creates Object Record #2 - will be updated then deleted',
+    category: 'Object Records',
+    endpoint: '/object-record/{objectId}',
+    method: 'POST',
+    dynamicEndpoint: (ctx) => `/object-record/${ctx.objectId || TESTING_OBJECT_ID}`,
+    dynamicBody: () => ({
+      properties: buildObjectRecordProperties(
+        `API-Test-Record-DELETE-${Date.now()}`,
+        'Delete City, Temporary Ave 99',
+        9999,
+        1
+      ),
+    }),
+    setsContext: 'objectRecordToDelete',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has systemName', type: 'hasField', field: 'systemName' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'to-delete',
+    entityType: 'ObjectRecord',
+  },
+
+  // 1.3 Update Object Record #2
+  {
+    id: 'object-record-update',
+    name: 'PUT /object-record/{systemName} (Update Record 2)',
+    description: 'Updates Object Record #2 before deletion',
+    category: 'Object Records',
+    usesContext: ['objectRecordToDelete'],
+    dynamicEndpoint: (ctx) => {
+      const rec = ctx.objectRecordToDelete as ObjectRecordData | undefined;
+      return `/object-record/${rec?.systemName || 'unknown'}`;
+    },
+    endpoint: '/object-record/{systemName}',
+    method: 'PUT',
+    dynamicBody: () => ({
+      properties: [
+        { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.name, value: `API-Test-Record-UPDATED-${Date.now()}` },
+        { systemName: OBJECT_PROPERTY_SYSTEM_NAMES.address, value: 'Updated Address - About to be deleted' },
+      ],
+    }),
+    expectedStatus: [200, 204],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'UPDATE',
+    resourceCategory: 'to-delete',
+    entityType: 'ObjectRecord',
+  },
+
+  // 1.4 Delete Object Record #2
+  {
+    id: 'object-record-delete',
+    name: 'DELETE /object-record/{systemName} (Delete Record 2)',
+    description: 'Deletes Object Record #2',
+    category: 'Object Records',
+    usesContext: ['objectRecordToDelete'],
+    dynamicEndpoint: (ctx) => {
+      const rec = ctx.objectRecordToDelete as ObjectRecordData | undefined;
+      return `/object-record/${rec?.systemName || 'unknown'}`;
+    },
+    endpoint: '/object-record/{systemName}',
+    method: 'DELETE',
+    expectedStatus: [200, 204],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'DELETE',
+    resourceCategory: 'to-delete',
+    entityType: 'ObjectRecord',
+  },
+
+  // ==================== PHASE 2: USERS ====================
+
+  // 2.1 Get user list first
+  {
+    id: 'user-list',
+    name: 'GET /user',
+    description: 'Returns user list for reference',
+    category: 'Users',
+    endpoint: '/user',
+    method: 'GET',
+    expectedStatus: 200,
+    setsContext: 'users',
+    assertions: [
+      { name: 'Returns 200 OK', type: 'status' },
+      { name: 'Returns array', type: 'isArray' },
+    ],
+    crudOperation: 'READ',
+    resourceCategory: 'n/a',
+    entityType: 'User',
+  },
+
+  // 2.2 Create User #1 (KEPT)
+  {
+    id: 'user-create-kept',
+    name: 'POST /user (User 1 - KEPT)',
+    description: 'Creates User #1 - kept for document sharing',
+    category: 'Users',
+    endpoint: '/user',
+    method: 'POST',
+    dynamicBody: () => ({
+      email: `api-test-user-kept-${Date.now()}@test.legito.com`,
+      name: 'API Test User KEPT',
+      position: 'API Tester (Kept)',
+      timezone: 'Europe/Prague',
+    }),
+    setsContext: 'userKept',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has user ID', type: 'hasField', field: 'id' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'kept',
+    entityType: 'User',
+  },
+
+  // 2.3 Create User #2 (TO DELETE)
+  {
+    id: 'user-create-delete',
+    name: 'POST /user (User 2 - for DELETE)',
+    description: 'Creates User #2 - will be updated then deleted',
+    category: 'Users',
+    endpoint: '/user',
+    method: 'POST',
+    dynamicBody: () => ({
+      email: `api-test-user-delete-${Date.now()}@test.legito.com`,
+      name: 'API Test User DELETE',
+      position: 'API Tester (To Delete)',
+      timezone: 'Europe/Prague',
+    }),
+    setsContext: 'userToDelete',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has user ID', type: 'hasField', field: 'id' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'to-delete',
+    entityType: 'User',
+  },
+
+  // 2.4 Update User #2
+  {
+    id: 'user-update',
+    name: 'PUT /user/{id} (Update User 2)',
+    description: 'Updates User #2 before deletion',
+    category: 'Users',
+    usesContext: ['userToDelete'],
+    skipIf: (ctx) => {
+      // Skip if user wasn't created successfully (no valid ID)
+      const user = ctx.userToDelete as UserData | undefined;
+      return !user?.id;
+    },
+    dynamicEndpoint: (ctx) => {
+      const user = ctx.userToDelete as UserData | undefined;
+      return `/user/${user?.id}`;
+    },
+    endpoint: '/user/{id}',
+    method: 'PUT',
+    dynamicBody: () => ({
+      name: `API-Test-User-UPDATED-${Date.now()}`,
+      position: 'Updated Position (About to delete)',
+    }),
+    expectedStatus: [200, 204],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'UPDATE',
+    resourceCategory: 'to-delete',
+    entityType: 'User',
+  },
+
+  // 2.5 Delete User #2
+  {
+    id: 'user-delete',
+    name: 'DELETE /user/{id} (Delete User 2)',
+    description: 'Deletes User #2',
+    category: 'Users',
+    usesContext: ['userToDelete'],
+    skipIf: (ctx) => {
+      // Skip if user wasn't created successfully (no valid ID)
+      const user = ctx.userToDelete as UserData | undefined;
+      return !user?.id;
+    },
+    dynamicEndpoint: (ctx) => {
+      const user = ctx.userToDelete as UserData | undefined;
+      return `/user/${user?.id}`;
+    },
+    endpoint: '/user/{id}',
+    method: 'DELETE',
+    expectedStatus: [200, 204],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'DELETE',
+    resourceCategory: 'to-delete',
+    entityType: 'User',
+  },
+
+  // ==================== PHASE 3: USER GROUPS ====================
+
+  // 3.1 Get user group list
+  {
+    id: 'user-group-list',
+    name: 'GET /user-group',
+    description: 'Returns user group list for reference',
+    category: 'User Groups',
+    endpoint: '/user-group',
+    method: 'GET',
+    expectedStatus: 200,
+    setsContext: 'userGroups',
+    assertions: [
+      { name: 'Returns 200 OK', type: 'status' },
+      { name: 'Returns array', type: 'isArray' },
+    ],
+    crudOperation: 'READ',
+    resourceCategory: 'n/a',
+    entityType: 'UserGroup',
+  },
+
+  // 3.2 Create User Group #1 (KEPT)
+  {
+    id: 'user-group-create-kept',
+    name: 'POST /user-group (Group 1 - KEPT)',
+    description: 'Creates User Group #1 - kept for document sharing',
+    category: 'User Groups',
+    endpoint: '/user-group',
+    method: 'POST',
+    dynamicBody: () => ({
+      name: `API-Test-Group-KEPT-${Date.now()}`,
+    }),
+    setsContext: 'userGroupKept',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has group ID', type: 'hasField', field: 'id' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'kept',
+    entityType: 'UserGroup',
+  },
+
+  // 3.3 Create User Group #2 (TO DELETE)
+  {
+    id: 'user-group-create-delete',
+    name: 'POST /user-group (Group 2 - for DELETE)',
+    description: 'Creates User Group #2 - will be updated then deleted',
+    category: 'User Groups',
+    endpoint: '/user-group',
+    method: 'POST',
+    dynamicBody: () => ({
+      name: `API-Test-Group-DELETE-${Date.now()}`,
+    }),
+    setsContext: 'userGroupToDelete',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has group ID', type: 'hasField', field: 'id' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'to-delete',
+    entityType: 'UserGroup',
+  },
+
+  // 3.4 Update User Group #2
+  {
+    id: 'user-group-update',
+    name: 'PUT /user-group/{id} (Update Group 2)',
+    description: 'Updates User Group #2 before deletion',
+    category: 'User Groups',
+    usesContext: ['userGroupToDelete'],
+    skipIf: (ctx) => {
+      const group = ctx.userGroupToDelete as UserGroupData | undefined;
+      return !group?.id;
+    },
+    dynamicEndpoint: (ctx) => {
+      const group = ctx.userGroupToDelete as UserGroupData | undefined;
+      return `/user-group/${group?.id}`;
+    },
+    endpoint: '/user-group/{id}',
+    method: 'PUT',
+    dynamicBody: () => ({
+      name: `API-Test-Group-UPDATED-${Date.now()}`,
+    }),
+    expectedStatus: [200, 204],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'UPDATE',
+    resourceCategory: 'to-delete',
+    entityType: 'UserGroup',
+  },
+
+  // 3.5 Delete User Group #2
+  {
+    id: 'user-group-delete',
+    name: 'DELETE /user-group/{id} (Delete Group 2)',
+    description: 'Deletes User Group #2',
+    category: 'User Groups',
+    usesContext: ['userGroupToDelete'],
+    skipIf: (ctx) => {
+      const group = ctx.userGroupToDelete as UserGroupData | undefined;
+      return !group?.id;
+    },
+    dynamicEndpoint: (ctx) => {
+      const group = ctx.userGroupToDelete as UserGroupData | undefined;
+      return `/user-group/${group?.id}`;
+    },
+    endpoint: '/user-group/{id}',
+    method: 'DELETE',
+    expectedStatus: [200, 204],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'DELETE',
+    resourceCategory: 'to-delete',
+    entityType: 'UserGroup',
+  },
+
+  // ==================== PHASE 4: DOCUMENTS ====================
+
+  // 4.1 Create Document #1 (KEPT) with all element values
+  {
+    id: 'document-create-kept',
+    name: 'POST /document-version/data/{templateSuiteId} (Document 1 - KEPT)',
+    description: 'Creates Document #1 with ALL element values filled - kept for sharing and testing',
+    category: 'Documents',
+    endpoint: '/document-version/data/{templateSuiteId}',
+    method: 'POST',
+    usesContext: ['objectRecordKept'],
+    dynamicEndpoint: (ctx) => `/document-version/data/${ctx.templateSuiteId || TEMPLATE_SUITE_ID}`,
+    dynamicBody: (ctx) => {
+      const objRec = ctx.objectRecordKept as ObjectRecordData | undefined;
+      // Use object record ID (integer), not systemName!
+      const objectRecordId = objRec?.id ?? null;
+      return buildDocument1ElementData(objectRecordId);
+    },
+    setsContext: 'documentKept',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has document code', type: 'hasField', field: 'code' },
+      { name: 'Has document record code', type: 'hasField', field: 'documentRecordCode' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'kept',
+    entityType: 'Document',
+  },
+
+  // 4.2 Create Document #2 "Document for delete"
+  {
+    id: 'document-create-delete',
+    name: 'POST /document-version/data/{templateSuiteId} (Document 2 - for DELETE)',
+    description: 'Creates Document #2 "Document for delete" - will be updated, deleted, anonymized',
+    category: 'Documents',
+    endpoint: '/document-version/data/{templateSuiteId}',
+    method: 'POST',
+    dynamicEndpoint: (ctx) => `/document-version/data/${ctx.templateSuiteId || TEMPLATE_SUITE_ID}`,
+    body: [
+      { name: 'doc-name', value: 'Document for delete' },
+      { name: 'name', value: 'Delete Test User' },
+    ],
+    setsContext: 'documentToDelete',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Has document code', type: 'hasField', field: 'code' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'to-delete',
+    entityType: 'Document',
+  },
+
+  // 4.3 Update Document #2
+  {
+    id: 'document-update',
+    name: 'PUT /document-version/data/{documentRecordCode} (Update Document 2)',
+    description: 'Updates Document #2 before deletion',
+    category: 'Documents',
+    usesContext: ['documentToDelete'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.documentToDelete as DocumentData | undefined;
+      return `/document-version/data/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/document-version/data/{documentRecordCode}',
+    method: 'PUT',
+    body: [
+      { name: 'doc-name', value: 'Document for delete - UPDATED' },
+      { name: 'name', value: 'Updated Name Before Delete' },
+    ],
+    expectedStatus: [200, 201, 400, 404, 422],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+    crudOperation: 'UPDATE',
+    resourceCategory: 'to-delete',
+    entityType: 'Document',
+  },
+
+  // 4.4 Delete Document #2
+  {
+    id: 'document-delete',
+    name: 'DELETE /document-record/{code} (Delete Document 2)',
+    description: 'Deletes Document Record #2',
+    category: 'Documents',
+    usesContext: ['documentToDelete'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.documentToDelete as DocumentData | undefined;
+      return `/document-record/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/document-record/{code}',
+    method: 'DELETE',
+    expectedStatus: [200, 204, 404],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+    crudOperation: 'DELETE',
+    resourceCategory: 'to-delete',
+    entityType: 'Document',
+  },
+
+  // 4.5 Anonymize Document #2
+  {
+    id: 'document-anonymize',
+    name: 'GET /document-record/anonymize/{code} (Anonymize Document 2)',
+    description: 'Anonymizes Document Record #2 after deletion',
+    category: 'Documents',
+    usesContext: ['documentToDelete'],
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.documentToDelete as DocumentData | undefined;
+      return `/document-record/anonymize/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/document-record/anonymize/{code}',
+    method: 'GET',
+    expectedStatus: [200, 404, 400],
+    assertions: [
+      { name: 'Returns response', type: 'status' },
+    ],
+    crudOperation: 'ANONYMIZE',
+    resourceCategory: 'to-delete',
+    entityType: 'Document',
+  },
+
+  // ==================== PHASE 5: EXTERNAL SHARING LINKS ====================
+
+  // 5.1 Create External Link #1 (KEPT) - URL MUST BE RETURNED
+  // API expects array format: [{ active, type, permission, useMax }]
+  {
+    id: 'external-link-create-kept',
+    name: 'POST /share/external-link/{code} (Link 1 - KEPT)',
+    description: 'Creates External Link #1 - KEPT, URL will be returned in results!',
+    category: 'External Links',
+    usesContext: ['documentKept'],
+    skipIf: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      return !doc?.documentRecordCode;
+    },
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      return `/share/external-link/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/share/external-link/{code}',
+    method: 'POST',
+    body: [
+      {
+        active: true,
+        type: 'document',
+        permission: 'EDIT',
+        useMax: 0,
+      },
+    ],
+    setsContext: 'externalLinkKept',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+      { name: 'Returns array', type: 'isArray' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'kept',
+    entityType: 'ExternalLink',
+  },
+
+  // 5.2 Create External Link #2 (TO DELETE)
+  {
+    id: 'external-link-create-delete',
+    name: 'POST /share/external-link/{code} (Link 2 - for DELETE)',
+    description: 'Creates External Link #2 - will be deleted',
+    category: 'External Links',
+    usesContext: ['documentKept'],
+    skipIf: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      return !doc?.documentRecordCode;
+    },
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      return `/share/external-link/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/share/external-link/{code}',
+    method: 'POST',
+    body: [
+      {
+        active: true,
+        type: 'document',
+        permission: 'READ',
+        useMax: 1,
+      },
+    ],
+    setsContext: 'externalLinkToDelete',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'CREATE',
+    resourceCategory: 'to-delete',
+    entityType: 'ExternalLink',
+  },
+
+  // 5.3 Delete External Link #2
+  {
+    id: 'external-link-delete',
+    name: 'DELETE /share/external-link/{id} (Delete Link 2)',
+    description: 'Deletes External Link #2',
+    category: 'External Links',
+    usesContext: ['externalLinkToDelete'],
+    skipIf: (ctx) => {
+      const links = ctx.externalLinkToDelete as ExternalLinkData[] | ExternalLinkData | undefined;
+      const link = Array.isArray(links) ? links[0] : links;
+      return !link?.id;
+    },
+    dynamicEndpoint: (ctx) => {
+      const links = ctx.externalLinkToDelete as ExternalLinkData[] | ExternalLinkData | undefined;
+      const link = Array.isArray(links) ? links[0] : links;
+      return `/share/external-link/${link?.id || '1'}`;
+    },
+    endpoint: '/share/external-link/{id}',
+    method: 'DELETE',
+    expectedStatus: [200, 204],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'DELETE',
+    resourceCategory: 'to-delete',
+    entityType: 'ExternalLink',
+  },
+
+  // ==================== PHASE 6: DOCUMENT SHARING ====================
+
+  // 6.1 Share Document #1 to User #1 (KEPT)
+  {
+    id: 'share-user',
+    name: 'POST /share/user/{code} (Share to User 1)',
+    description: 'Shares Document #1 to User #1 (both kept)',
+    category: 'Document Sharing',
+    usesContext: ['documentKept', 'userKept'],
+    skipIf: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      const user = ctx.userKept as UserData | undefined;
+      return !doc?.documentRecordCode || !user?.id;
+    },
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      return `/share/user/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/share/user/{code}',
+    method: 'POST',
+    dynamicBody: (ctx) => {
+      const user = ctx.userKept as UserData | undefined;
+      return [
+        {
+          id: user?.id,
+          permission: 'EDIT',
+        },
+      ];
+    },
+    setsContext: 'userShare',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'SHARE',
+    resourceCategory: 'kept',
+    entityType: 'DocumentShare',
+  },
+
+  // 6.2 Share Document #1 to User Group #1 (KEPT)
+  {
+    id: 'share-user-group',
+    name: 'POST /share/user-group/{code} (Share to Group 1)',
+    description: 'Shares Document #1 to User Group #1 (both kept)',
+    category: 'Document Sharing',
+    usesContext: ['documentKept', 'userGroupKept'],
+    skipIf: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      const group = ctx.userGroupKept as UserGroupData | undefined;
+      return !doc?.documentRecordCode || !group?.id;
+    },
+    dynamicEndpoint: (ctx) => {
+      const doc = ctx.documentKept as DocumentData | undefined;
+      return `/share/user-group/${doc?.documentRecordCode || 'unknown'}`;
+    },
+    endpoint: '/share/user-group/{code}',
+    method: 'POST',
+    dynamicBody: (ctx) => {
+      const group = ctx.userGroupKept as UserGroupData | undefined;
+      return [
+        {
+          id: group?.id,
+        },
+      ];
+    },
+    setsContext: 'userGroupShare',
+    expectedStatus: [200, 201],
+    assertions: [
+      { name: 'Returns success', type: 'status' },
+    ],
+    crudOperation: 'SHARE',
+    resourceCategory: 'kept',
+    entityType: 'DocumentShare',
+  },
+
+  // ==================== REFERENCE DATA TESTS ====================
+
   {
     id: 'info-get',
     name: 'GET /info',
@@ -410,7 +1231,6 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== REFERENCE DATA ====================
   {
     id: 'country-list',
     name: 'GET /country',
@@ -424,6 +1244,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
+
   {
     id: 'currency-list',
     name: 'GET /currency',
@@ -437,6 +1258,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
+
   {
     id: 'language-list',
     name: 'GET /language',
@@ -450,6 +1272,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
+
   {
     id: 'timezone-list',
     name: 'GET /timezone',
@@ -463,73 +1286,22 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
+
   {
-    id: 'category-list',
-    name: 'GET /category',
-    description: 'Returns category list',
-    category: 'Reference Data',
-    endpoint: '/category',
+    id: 'template-suite-list',
+    name: 'GET /template-suite',
+    description: 'Returns a list of Template Suites',
+    category: 'Template Suites',
+    endpoint: '/template-suite',
     method: 'GET',
     expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'property-list',
-    name: 'GET /property',
-    description: 'Returns property list',
-    category: 'Reference Data',
-    endpoint: '/property',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'property-group-list',
-    name: 'GET /property-group',
-    description: 'Returns Property Group list',
-    category: 'Reference Data',
-    endpoint: '/property-group',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'advanced-style-list',
-    name: 'GET /advanced-style',
-    description: 'Returns Advanced Styles list',
-    category: 'Reference Data',
-    endpoint: '/advanced-style',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'event-list',
-    name: 'GET /event',
-    description: 'Returns Event list',
-    category: 'Reference Data',
-    endpoint: '/event',
-    method: 'GET',
-    expectedStatus: 200,
+    setsContext: 'templateSuites',
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
     ],
   },
 
-  // ==================== OBJECTS ====================
   {
     id: 'object-list',
     name: 'GET /object',
@@ -545,450 +1317,6 @@ export const LEGITO_TESTS: LegitoTest[] = [
     ],
   },
 
-  // ==================== OBJECT RECORDS (CRUD) ====================
-  {
-    id: 'object-record-list',
-    name: 'GET /object-record/{objectId}',
-    description: 'Returns Object Record list for first object',
-    category: 'Object Records',
-    usesContext: ['objects'],
-    dynamicEndpoint: (ctx) => {
-      const objs = ctx.objects as unknown[];
-      if (Array.isArray(objs) && objs.length > 0) {
-        const first = objs[0] as { id?: string };
-        ctx.firstObject = first;
-        return `/object-record/${first.id}`;
-      }
-      return '/object-record/unknown';
-    },
-    endpoint: '/object-record/{objectId}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.objects) || ctx.objects.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'object-record-create',
-    name: 'POST /object-record/{objectId}',
-    description: 'Creates new Object Record',
-    category: 'Object Records',
-    usesContext: ['objects'],
-    dynamicEndpoint: (ctx) => {
-      const objs = ctx.objects as unknown[];
-      if (Array.isArray(objs) && objs.length > 0) {
-        const first = objs[0] as { id?: string };
-        return `/object-record/${first.id}`;
-      }
-      return '/object-record/unknown';
-    },
-    endpoint: '/object-record/{objectId}',
-    method: 'POST',
-    // ObjectRecord schema: properties array with systemName and value
-    body: {
-      properties: [
-        {
-          systemName: 'api-test-property',
-          value: `API-Test-ObjectRecord-${Date.now()}`,
-        },
-      ],
-    },
-    setsContext: 'createdObjectRecord',
-    expectedStatus: [200, 201, 400, 422],
-    skipIf: (ctx) => !Array.isArray(ctx.objects) || ctx.objects.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'object-record-update',
-    name: 'PUT /object-record/{systemName}',
-    description: 'Updates existing Object Record',
-    category: 'Object Records',
-    usesContext: ['createdObjectRecord'],
-    dynamicEndpoint: (ctx) => {
-      // Try to get systemName from response - could be at root or nested
-      const rec = ctx.createdObjectRecord as { systemName?: string; data?: { systemName?: string } };
-      const systemName = rec?.systemName || rec?.data?.systemName || 'test-object-record';
-      return `/object-record/${systemName}`;
-    },
-    endpoint: '/object-record/{systemName}',
-    method: 'PUT',
-    dynamicBody: () => ({
-      name: `API-Test-ObjectRecord-Updated-${Date.now()}`,
-    }),
-    expectedStatus: [200, 204, 400, 404, 422],
-    // Don't skip - run anyway to see actual behavior
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'object-record-delete',
-    name: 'DELETE /object-record/{systemName}',
-    description: 'Removes Object Record (cleanup)',
-    category: 'Object Records',
-    usesContext: ['createdObjectRecord'],
-    dynamicEndpoint: (ctx) => {
-      const rec = ctx.createdObjectRecord as { systemName?: string; data?: { systemName?: string } };
-      const systemName = rec?.systemName || rec?.data?.systemName || 'test-object-record';
-      return `/object-record/${systemName}`;
-    },
-    endpoint: '/object-record/{systemName}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 400, 404],
-    // Don't skip - run anyway to see actual behavior
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== LABELS (CRUD) ====================
-  {
-    id: 'label-list',
-    name: 'GET /label',
-    description: 'Returns list of labels',
-    category: 'Labels',
-    endpoint: '/label',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'label-create',
-    name: 'POST /label',
-    description: 'Creates new Label',
-    category: 'Labels',
-    endpoint: '/label',
-    method: 'POST',
-    body: {
-      name: `API-Test-Label-${Date.now()}`,
-      color: '#FF5733',
-    },
-    setsContext: 'createdLabel',
-    expectedStatus: [200, 201],
-    assertions: [
-      { name: 'Returns success', type: 'status' },
-      { name: 'Has ID', type: 'hasField', field: 'id' },
-    ],
-  },
-  {
-    id: 'label-delete',
-    name: 'DELETE /label/{labelId}',
-    description: 'Removes the Label (cleanup)',
-    category: 'Labels',
-    usesContext: ['createdLabel'],
-    dynamicEndpoint: (ctx) => `/label/${ctx.createdLabel?.id || 'unknown'}`,
-    endpoint: '/label/{labelId}',
-    method: 'DELETE',
-    expectedStatus: [200, 204],
-    skipIf: (ctx) => !ctx.createdLabel?.id,
-    assertions: [
-      { name: 'Returns success', type: 'status' },
-    ],
-  },
-
-  // ==================== TEMPLATE SUITES ====================
-  {
-    id: 'template-suite-list',
-    name: 'GET /template-suite',
-    description: 'Returns a list of Template Suites',
-    category: 'Template Suites',
-    endpoint: '/template-suite',
-    method: 'GET',
-    expectedStatus: 200,
-    setsContext: 'templateSuites',
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-      { name: 'Has data', type: 'hasData' },
-    ],
-  },
-
-  // ==================== TEMPLATE TAGS (CRUD) ====================
-  {
-    id: 'template-tag-list',
-    name: 'GET /template-tag',
-    description: 'Returns a list of Template Tags',
-    category: 'Template Tags',
-    endpoint: '/template-tag',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'template-tag-create',
-    name: 'POST /template-tag',
-    description: 'Creates new Template Tag',
-    category: 'Template Tags',
-    endpoint: '/template-tag',
-    method: 'POST',
-    body: {
-      name: `API-Test-Tag-${Date.now()}`,
-    },
-    setsContext: 'createdTemplateTag',
-    expectedStatus: [200, 201, 400],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== USERS (CRUD) ====================
-  {
-    id: 'user-list',
-    name: 'GET /user',
-    description: 'Returns user list',
-    category: 'Users',
-    endpoint: '/user',
-    method: 'GET',
-    expectedStatus: 200,
-    setsContext: 'users',
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-      { name: 'Has data', type: 'hasData' },
-    ],
-  },
-  {
-    id: 'user-create',
-    name: 'POST /user',
-    description: 'Creates a new user with default permissions',
-    category: 'Users',
-    endpoint: '/user',
-    method: 'POST',
-    // User schema: email, name, position, timezone, customIdentifier
-    body: {
-      email: `api-test-user-${Date.now()}@test.legito.com`,
-      name: 'API Test User',
-      position: 'API Tester',
-      timezone: 'Europe/Prague',
-    },
-    setsContext: 'createdUser',
-    expectedStatus: [200, 201, 400, 409, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-update',
-    name: 'PUT /user/{userIdOrEmail}',
-    description: 'Updates user details',
-    category: 'Users',
-    usesContext: ['createdUser', 'users'],
-    dynamicEndpoint: (ctx) => {
-      // Try created user first, fallback to first existing user
-      const user = ctx.createdUser as { id?: string; email?: string; data?: { id?: string; email?: string } };
-      const users = ctx.users as Array<{ id?: string; email?: string }>;
-      const id = user?.id || user?.email || user?.data?.id || user?.data?.email ||
-        (Array.isArray(users) && users.length > 0 ? users[0].id : 'test-user');
-      return `/user/${id}`;
-    },
-    endpoint: '/user/{userIdOrEmail}',
-    method: 'PUT',
-    dynamicBody: () => ({
-      name: `API-Updated-User-${Date.now()}`,
-      position: 'Updated Position',
-    }),
-    expectedStatus: [200, 204, 400, 404, 422],
-    // Don't skip - run with fallback
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-permission-get',
-    name: 'GET /user/permission/{userIdOrEmail}',
-    description: 'Returns list of user permissions for first user',
-    category: 'Users',
-    usesContext: ['users'],
-    dynamicEndpoint: (ctx) => {
-      const users = ctx.users as unknown[];
-      if (Array.isArray(users) && users.length > 0) {
-        const first = users[0] as { id?: string };
-        return `/user/permission/${first.id}`;
-      }
-      return '/user/permission/1'; // fallback
-    },
-    endpoint: '/user/permission/{userIdOrEmail}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    // Don't skip
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-permission-update',
-    name: 'PUT /user/permission/{userIdOrEmail}',
-    description: 'Adds a user permission',
-    category: 'Users',
-    usesContext: ['createdUser', 'users'],
-    dynamicEndpoint: (ctx) => {
-      const user = ctx.createdUser as { id?: string; email?: string; data?: { id?: string; email?: string } };
-      const users = ctx.users as Array<{ id?: string; email?: string }>;
-      const id = user?.id || user?.email || user?.data?.id || user?.data?.email ||
-        (Array.isArray(users) && users.length > 0 ? users[0].id : 'test-user');
-      return `/user/permission/${id}`;
-    },
-    endpoint: '/user/permission/{userIdOrEmail}',
-    method: 'PUT',
-    body: {
-      permission: 'document.read',
-    },
-    expectedStatus: [200, 204, 400, 404, 422],
-    // Don't skip
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-delete',
-    name: 'DELETE /user/{userIdOrEmail}',
-    description: 'Removes user (cleanup)',
-    category: 'Users',
-    usesContext: ['createdUser'],
-    dynamicEndpoint: (ctx) => {
-      const user = ctx.createdUser as { id?: string; email?: string; data?: { id?: string; email?: string } };
-      const id = user?.id || user?.email || user?.data?.id || user?.data?.email || 'test-user-cleanup';
-      return `/user/${id}`;
-    },
-    endpoint: '/user/{userIdOrEmail}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 400, 404],
-    // Don't skip
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== USER GROUPS (CRUD) ====================
-  {
-    id: 'user-group-list',
-    name: 'GET /user-group',
-    description: 'Returns user group list',
-    category: 'User Groups',
-    endpoint: '/user-group',
-    method: 'GET',
-    expectedStatus: 200,
-    setsContext: 'userGroups',
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'user-group-create',
-    name: 'POST /user-group',
-    description: 'Inserts new user group',
-    category: 'User Groups',
-    endpoint: '/user-group',
-    method: 'POST',
-    body: {
-      name: `API-Test-Group-${Date.now()}`,
-    },
-    setsContext: 'createdUserGroup',
-    expectedStatus: [200, 201, 400, 409, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-group-update',
-    name: 'PUT /user-group/{userGroupId}',
-    description: 'Updates existing user group',
-    category: 'User Groups',
-    usesContext: ['createdUserGroup'],
-    dynamicEndpoint: (ctx) => {
-      const group = ctx.createdUserGroup as { id?: string };
-      return `/user-group/${group?.id || 'unknown'}`;
-    },
-    endpoint: '/user-group/{userGroupId}',
-    method: 'PUT',
-    dynamicBody: () => ({
-      name: `API-Test-Group-Updated-${Date.now()}`,
-    }),
-    expectedStatus: [200, 204, 400, 404, 422],
-    skipIf: (ctx) => !ctx.createdUserGroup?.id,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-group-add-user',
-    name: 'POST /user-group/user/{userGroupId}',
-    description: 'Adds user to user group',
-    category: 'User Groups',
-    usesContext: ['createdUserGroup', 'users'],
-    dynamicEndpoint: (ctx) => {
-      const group = ctx.createdUserGroup as { id?: string };
-      return `/user-group/user/${group?.id || 'unknown'}`;
-    },
-    endpoint: '/user-group/user/{userGroupId}',
-    method: 'POST',
-    dynamicBody: (ctx) => {
-      const users = ctx.users as unknown[];
-      if (Array.isArray(users) && users.length > 0) {
-        const first = users[0] as { id?: string; email?: string };
-        return { userIdOrEmail: first.id || first.email };
-      }
-      return { userIdOrEmail: 'unknown' };
-    },
-    expectedStatus: [200, 201, 400, 404, 409, 422],
-    skipIf: (ctx) => !ctx.createdUserGroup?.id || !Array.isArray(ctx.users) || ctx.users.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-group-remove-user',
-    name: 'DELETE /user-group/user/{userGroupId}/{userIdOrEmail}',
-    description: 'Removes user from department',
-    category: 'User Groups',
-    usesContext: ['createdUserGroup', 'users'],
-    dynamicEndpoint: (ctx) => {
-      const group = ctx.createdUserGroup as { id?: string };
-      const users = ctx.users as unknown[];
-      if (Array.isArray(users) && users.length > 0) {
-        const first = users[0] as { id?: string };
-        return `/user-group/user/${group?.id || 'unknown'}/${first.id}`;
-      }
-      return '/user-group/user/unknown/unknown';
-    },
-    endpoint: '/user-group/user/{userGroupId}/{userIdOrEmail}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 404],
-    skipIf: (ctx) => !ctx.createdUserGroup?.id || !Array.isArray(ctx.users) || ctx.users.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'user-group-delete',
-    name: 'DELETE /user-group/{userGroupId}',
-    description: 'Removes user group (cleanup)',
-    category: 'User Groups',
-    usesContext: ['createdUserGroup'],
-    dynamicEndpoint: (ctx) => {
-      const group = ctx.createdUserGroup as { id?: string };
-      return `/user-group/${group?.id || 'unknown'}`;
-    },
-    endpoint: '/user-group/{userGroupId}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 404],
-    skipIf: (ctx) => !ctx.createdUserGroup?.id,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== WORKFLOWS ====================
   {
     id: 'workflow-list',
     name: 'GET /workflow',
@@ -1003,30 +1331,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
       { name: 'Returns array', type: 'isArray' },
     ],
   },
-  {
-    id: 'workflow-revision-get',
-    name: 'GET /workflow/revision/{workflowRevisionId}',
-    description: 'Returns schema of Workflow Revision for first workflow',
-    category: 'Workflows',
-    usesContext: ['workflows'],
-    dynamicEndpoint: (ctx) => {
-      const wfs = ctx.workflows as unknown[];
-      if (Array.isArray(wfs) && wfs.length > 0) {
-        const first = wfs[0] as { id?: string };
-        return `/workflow/revision/${first.id}`;
-      }
-      return '/workflow/revision/1'; // fallback
-    },
-    endpoint: '/workflow/revision/{workflowRevisionId}',
-    method: 'GET',
-    // Note: 400 can occur due to server-side bugs (null type field)
-    expectedStatus: [200, 400, 404, 500],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
 
-  // ==================== DOCUMENT RECORDS (CRUD) ====================
   {
     id: 'document-record-list',
     name: 'GET /document-record',
@@ -1039,738 +1344,6 @@ export const LEGITO_TESTS: LegitoTest[] = [
     assertions: [
       { name: 'Returns 200 OK', type: 'status' },
       { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'document-record-create',
-    name: 'POST /document-record',
-    description: 'Creates new Document Record',
-    category: 'Document Records',
-    endpoint: '/document-record',
-    method: 'POST',
-    body: {
-      name: `API-Test-DocRecord-${Date.now()}`,
-      templateSuiteId: 10132,
-    },
-    setsContext: 'createdDocumentRecord',
-    expectedStatus: [200, 201, 400, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'document-record-update',
-    name: 'PUT /document-record/{code}',
-    description: 'Updates existing Document Record',
-    category: 'Document Records',
-    usesContext: ['createdDocumentRecord'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.createdDocumentRecord as { code?: string };
-      return `/document-record/${doc?.code || 'unknown'}`;
-    },
-    endpoint: '/document-record/{code}',
-    method: 'PUT',
-    dynamicBody: (ctx) => ({
-      name: `API-Test-DocRecord-Updated-${Date.now()}`,
-    }),
-    expectedStatus: [200, 204, 400, 404, 422],
-    skipIf: (ctx) => !ctx.createdDocumentRecord?.code,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'document-record-anonymize',
-    name: 'GET /document-record/anonymize/{code}',
-    description: 'Anonymize Document Record (test with first doc)',
-    category: 'Document Records',
-    usesContext: ['documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { code?: string };
-        return `/document-record/anonymize/${first.code}`;
-      }
-      return '/document-record/anonymize/unknown';
-    },
-    endpoint: '/document-record/anonymize/{code}',
-    method: 'GET',
-    expectedStatus: [200, 404, 400],
-    skipIf: (ctx) => !Array.isArray(ctx.documentRecords) || ctx.documentRecords.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== DOCUMENT RECORD TYPES (CRUD) ====================
-  {
-    id: 'document-record-type-list',
-    name: 'GET /document-record-type',
-    description: 'Returns list of Document Record Types',
-    category: 'Document Record Types',
-    endpoint: '/document-record-type',
-    method: 'GET',
-    expectedStatus: 200,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'document-record-type-create',
-    name: 'POST /document-record-type',
-    description: 'Creates new Document Record Type',
-    category: 'Document Record Types',
-    endpoint: '/document-record-type',
-    method: 'POST',
-    body: {
-      name: `API-Test-DocType-${Date.now()}`,
-    },
-    setsContext: 'createdDocRecordType',
-    expectedStatus: [200, 201, 400],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'document-record-type-update',
-    name: 'PUT /document-record-type/{documentRecordTypeId}',
-    description: 'Updates the Document Record Type',
-    category: 'Document Record Types',
-    usesContext: ['createdDocRecordType'],
-    dynamicEndpoint: (ctx) => `/document-record-type/${ctx.createdDocRecordType?.id || 'unknown'}`,
-    endpoint: '/document-record-type/{documentRecordTypeId}',
-    method: 'PUT',
-    dynamicBody: (ctx) => ({
-      name: `API-Test-DocType-Updated-${Date.now()}`,
-    }),
-    expectedStatus: [200, 204, 400, 404],
-    skipIf: (ctx) => !ctx.createdDocRecordType?.id,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'document-record-type-delete',
-    name: 'DELETE /document-record-type/{documentRecordTypeId}',
-    description: 'Removes the Document Record Type (cleanup)',
-    category: 'Document Record Types',
-    usesContext: ['createdDocRecordType'],
-    dynamicEndpoint: (ctx) => `/document-record-type/${ctx.createdDocRecordType?.id || 'unknown'}`,
-    endpoint: '/document-record-type/{documentRecordTypeId}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 404],
-    skipIf: (ctx) => !ctx.createdDocRecordType?.id,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== DOCUMENT VERSIONS ====================
-  {
-    id: 'document-version-create',
-    name: 'POST /document-version/data/{templateSuiteId}',
-    description: 'Creates new Document Record from template 10132 (KEPT)',
-    category: 'Document Versions',
-    endpoint: '/document-version/data/10132',
-    method: 'POST',
-    body: [
-      { name: 'client_name', value: 'API Test Client Corp' },
-      { name: 'contractor_name', value: 'API Test Contractor Ltd' },
-    ],
-    setsContext: 'permanentDocument',
-    expectedStatus: [200, 201],
-    assertions: [
-      { name: 'Returns success', type: 'status' },
-      { name: 'Has document code', type: 'hasField', field: 'code' },
-      { name: 'Has document record ID', type: 'hasField', field: 'documentRecordId' },
-    ],
-  },
-  {
-    id: 'document-version-get-data',
-    name: 'GET /document-version/data/{code}',
-    description: 'Returns Elements data from created document (template structure)',
-    category: 'Document Versions',
-    usesContext: ['permanentDocument'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { code?: string };
-      return `/document-version/data/${doc?.code || 'unknown'}`;
-    },
-    endpoint: '/document-version/data/{code}',
-    method: 'GET',
-    expectedStatus: 200,
-    skipIf: (ctx) => !ctx.permanentDocument?.code,
-    setsContext: 'documentElements',
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array of elements', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'document-version-create-comprehensive',
-    name: 'POST /document-version/data/{templateSuiteId} (Comprehensive)',
-    description: 'Creates document with ALL element types filled based on template',
-    category: 'Document Versions',
-    usesContext: ['documentElements'],
-    endpoint: '/document-version/data/10132',
-    method: 'POST',
-    dynamicBody: (ctx) => {
-      // Build comprehensive data from template elements we discovered
-      const elements = ctx.documentElements as TemplateElement[] | undefined;
-      if (elements && Array.isArray(elements)) {
-        const data = buildElementData(elements);
-        // Log what we're sending for debugging
-        console.log(`Creating comprehensive document with ${data.length} element values`);
-        return data;
-      }
-      // Fallback if no elements in context
-      return [
-        { name: 'client_name', value: 'Comprehensive Test Client' },
-        { name: 'contractor_name', value: 'Comprehensive Test Contractor' },
-      ];
-    },
-    setsContext: 'comprehensiveDocument',
-    expectedStatus: [200, 201, 400, 422],
-    skipIf: (ctx) => !Array.isArray(ctx.documentElements) || ctx.documentElements.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-      { name: 'Has document code', type: 'hasField', field: 'code' },
-    ],
-  },
-  {
-    id: 'document-version-get-comprehensive',
-    name: 'GET /document-version/data/{code} (Verify Comprehensive)',
-    description: 'Verifies comprehensive document has all elements filled',
-    category: 'Document Versions',
-    usesContext: ['comprehensiveDocument'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.comprehensiveDocument as { code?: string };
-      return `/document-version/data/${doc?.code || 'unknown'}`;
-    },
-    endpoint: '/document-version/data/{code}',
-    method: 'GET',
-    expectedStatus: 200,
-    skipIf: (ctx) => !ctx.comprehensiveDocument?.code,
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array of elements', type: 'isArray' },
-      { name: 'Has filled elements', type: 'arrayNotEmpty' },
-    ],
-  },
-  {
-    id: 'document-version-download',
-    name: 'GET /document-version/download/{code}/pdf',
-    description: 'Downloads document as PDF (base64 encoded)',
-    category: 'Document Versions',
-    usesContext: ['permanentDocument'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { code?: string };
-      return `/document-version/download/${doc?.code || 'unknown'}/pdf`;
-    },
-    endpoint: '/document-version/download/{code}/{format}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !ctx.permanentDocument?.code,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'document-version-update',
-    name: 'PUT /document-version/data/{documentRecordcode}',
-    description: 'Updates document with comprehensive element data (all types)',
-    category: 'Document Versions',
-    usesContext: ['permanentDocument', 'documentElements'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { documentRecordCode?: string };
-      return `/document-version/data/${doc?.documentRecordCode || 'unknown'}`;
-    },
-    endpoint: '/document-version/data/{documentRecordcode}',
-    method: 'PUT',
-    dynamicBody: (ctx) => {
-      // Use document elements from context to generate comprehensive data
-      const elements = ctx.documentElements as TemplateElement[] | undefined;
-      if (elements && Array.isArray(elements)) {
-        return buildElementData(elements);
-      }
-      // Fallback to basic update
-      return [
-        { name: 'client_name', value: `API Test Client Updated - ${Date.now()}` },
-      ];
-    },
-    expectedStatus: [200, 201, 400, 404, 422],
-    skipIf: (ctx) => !ctx.permanentDocument?.documentRecordCode,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'document-version-json-integration',
-    name: 'POST /document-version/json-integration',
-    description: 'Maps json data to new document (all element types)',
-    category: 'Document Versions',
-    endpoint: '/document-version/json-integration',
-    method: 'POST',
-    usesContext: ['documentElements'],
-    dynamicBody: (ctx) => {
-      // Build comprehensive data from template elements
-      const elements = ctx.documentElements as TemplateElement[] | undefined;
-      const data: Record<string, unknown> = {};
-
-      if (elements && Array.isArray(elements)) {
-        const elementData = buildElementData(elements);
-        elementData.forEach(item => {
-          data[item.name] = item.value;
-        });
-      } else {
-        // Fallback
-        data['client_name'] = 'JSON Integration Test Client';
-        data['contractor_name'] = 'JSON Integration Test Contractor';
-      }
-
-      return {
-        templateSuiteId: 10132,
-        data,
-      };
-    },
-    setsContext: 'jsonIntegrationDocument',
-    expectedStatus: [200, 201, 400, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'document-version-create-for-delete',
-    name: 'POST /document-version/data/{templateSuiteId} (for DELETE test)',
-    description: 'Creates temporary Document for DELETE test',
-    category: 'Document Versions',
-    endpoint: '/document-version/data/10132',
-    method: 'POST',
-    body: [
-      { name: 'client_name', value: 'TEMP - Delete Test Document' },
-    ],
-    setsContext: 'tempDocumentForDelete',
-    expectedStatus: [200, 201],
-    assertions: [
-      { name: 'Returns success', type: 'status' },
-      { name: 'Has document record code', type: 'hasField', field: 'documentRecordCode' },
-    ],
-  },
-  {
-    id: 'document-record-delete',
-    name: 'DELETE /document-record/{code}',
-    description: 'Removes the temporary Document Record (cleanup)',
-    category: 'Document Versions',
-    usesContext: ['tempDocumentForDelete'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.tempDocumentForDelete as { documentRecordCode?: string };
-      return `/document-record/${doc?.documentRecordCode || 'unknown'}`;
-    },
-    endpoint: '/document-record/{code}',
-    method: 'DELETE',
-    expectedStatus: [200, 204],
-    skipIf: (ctx) => !ctx.tempDocumentForDelete?.documentRecordCode,
-    assertions: [
-      { name: 'Returns success', type: 'status' },
-    ],
-  },
-
-  // ==================== FILES (CRUD) ====================
-  {
-    id: 'file-list',
-    name: 'GET /file/{documentRecordCode}',
-    description: 'Returns files related to Document Record',
-    category: 'Files',
-    usesContext: ['documentRecords', 'permanentDocument'],
-    dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      const permDoc = ctx.permanentDocument as { documentRecordCode?: string };
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { code?: string };
-        return `/file/${first.code}`;
-      }
-      // Fallback to permanent document
-      return `/file/${permDoc?.documentRecordCode || 'test-doc'}`;
-    },
-    endpoint: '/file/{documentRecordCode}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    setsContext: 'files',
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'file-upload',
-    name: 'POST /file/{documentRecordCode}',
-    description: 'Uploads external file into Document Record',
-    category: 'Files',
-    usesContext: ['permanentDocument', 'documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { documentRecordCode?: string };
-      const docs = ctx.documentRecords as Array<{ code?: string }>;
-      const code = doc?.documentRecordCode ||
-        (Array.isArray(docs) && docs.length > 0 ? docs[0].code : 'test-doc');
-      return `/file/${code}`;
-    },
-    endpoint: '/file/{documentRecordCode}',
-    method: 'POST',
-    // FileWithData schema: name, data (base64 with MIME prefix)
-    body: {
-      name: 'api-test-file.txt',
-      data: 'data:text/plain;base64,QVBJIFRlc3QgRmlsZSBDb250ZW50',
-    },
-    setsContext: 'uploadedFile',
-    expectedStatus: [200, 201, 400, 404, 415, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'file-download',
-    name: 'GET /file/download/{fileId}',
-    description: 'Downloads external file',
-    category: 'Files',
-    usesContext: ['uploadedFile', 'files'],
-    dynamicEndpoint: (ctx) => {
-      const file = ctx.uploadedFile as { id?: string; data?: { id?: string } };
-      const files = ctx.files as Array<{ id?: string }>;
-      const id = file?.id || file?.data?.id ||
-        (Array.isArray(files) && files.length > 0 ? files[0].id : '1');
-      return `/file/download/${id}`;
-    },
-    endpoint: '/file/download/{fileId}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'file-delete',
-    name: 'DELETE /file/{fileId}',
-    description: 'Removes external file from Document Record',
-    category: 'Files',
-    usesContext: ['uploadedFile'],
-    dynamicEndpoint: (ctx) => {
-      const file = ctx.uploadedFile as { id?: string; data?: { id?: string } };
-      const id = file?.id || file?.data?.id || 'test-file';
-      return `/file/${id}`;
-    },
-    endpoint: '/file/{fileId}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 400, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== PUSH CONNECTIONS (Webhooks) ====================
-  {
-    id: 'push-connection-list',
-    name: 'GET /push-connection',
-    description: 'Returns Push Connection list',
-    category: 'Push Connections',
-    endpoint: '/push-connection',
-    method: 'GET',
-    expectedStatus: 200,
-    setsContext: 'pushConnections',
-    assertions: [
-      { name: 'Returns 200 OK', type: 'status' },
-      { name: 'Returns array', type: 'isArray' },
-    ],
-  },
-  {
-    id: 'push-connection-create',
-    name: 'POST /push-connection',
-    description: 'Creates new Push Connection',
-    category: 'Push Connections',
-    endpoint: '/push-connection',
-    method: 'POST',
-    // PushConnection schema: name (required), url (required), enabled, eventTypes, templateSuiteAll
-    body: {
-      name: `API-Test-Webhook-${Date.now()}`,
-      url: 'https://webhook.site/test-legito-api',
-      enabled: false,
-      eventTypes: ['DocumentRecordCreated', 'DocumentRecordUpdated'],
-      templateSuiteAll: true,
-      documentRecordTypeAll: true,
-    },
-    setsContext: 'createdPushConnection',
-    expectedStatus: [200, 201, 400],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'push-connection-delete',
-    name: 'DELETE /push-connection/{pushConnectionId}',
-    description: 'Removes Push connection (cleanup)',
-    category: 'Push Connections',
-    usesContext: ['createdPushConnection'],
-    dynamicEndpoint: (ctx) => `/push-connection/${ctx.createdPushConnection?.id || 'unknown'}`,
-    endpoint: '/push-connection/{pushConnectionId}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 404],
-    skipIf: (ctx) => !ctx.createdPushConnection?.id,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== SHARING (CRUD) ====================
-  {
-    id: 'share-get',
-    name: 'GET /share/{code}',
-    description: 'Returns share lists for Document Record',
-    category: 'Sharing',
-    usesContext: ['documentRecords', 'permanentDocument'],
-    dynamicEndpoint: (ctx) => {
-      const docs = ctx.documentRecords as unknown[];
-      const permDoc = ctx.permanentDocument as { documentRecordCode?: string };
-      if (Array.isArray(docs) && docs.length > 0) {
-        const first = docs[0] as { code?: string };
-        return `/share/${first.code}`;
-      }
-      return `/share/${permDoc?.documentRecordCode || 'test-doc'}`;
-    },
-    endpoint: '/share/{code}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-user-create',
-    name: 'POST /share/user/{code}',
-    description: 'Creates a user share for document record',
-    category: 'Sharing',
-    usesContext: ['permanentDocument', 'users', 'documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { documentRecordCode?: string };
-      const docs = ctx.documentRecords as Array<{ code?: string }>;
-      const code = doc?.documentRecordCode ||
-        (Array.isArray(docs) && docs.length > 0 ? docs[0].code : 'test-doc');
-      return `/share/user/${code}`;
-    },
-    endpoint: '/share/user/{code}',
-    method: 'POST',
-    // ShareUser schema: array of [{id or email, permission: LIST|READ|EDIT|MANAGE}]
-    dynamicBody: (ctx) => {
-      const users = ctx.users as unknown[];
-      if (Array.isArray(users) && users.length > 0) {
-        const first = users[0] as { id?: number; email?: string };
-        return [
-          {
-            id: first.id,
-            permission: 'READ',
-          },
-        ];
-      }
-      return [{ email: 'test@legito.com', permission: 'READ' }];
-    },
-    setsContext: 'createdUserShare',
-    expectedStatus: [200, 201, 400, 404, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-user-delete',
-    name: 'DELETE /share/user/{code}/{userIdOrEmail}',
-    description: 'Removes the user share from Document record',
-    category: 'Sharing',
-    usesContext: ['permanentDocument', 'users', 'documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { documentRecordCode?: string };
-      const docs = ctx.documentRecords as Array<{ code?: string }>;
-      const users = ctx.users as Array<{ id?: string }>;
-      const code = doc?.documentRecordCode ||
-        (Array.isArray(docs) && docs.length > 0 ? docs[0].code : 'test-doc');
-      const userId = Array.isArray(users) && users.length > 0 ? users[0].id : '1';
-      return `/share/user/${code}/${userId}`;
-    },
-    endpoint: '/share/user/{code}/{userIdOrEmail}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 400, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-user-group-create',
-    name: 'POST /share/user-group/{code}',
-    description: 'Creates a user group share for document record',
-    category: 'Sharing',
-    usesContext: ['permanentDocument', 'userGroups', 'documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { documentRecordCode?: string };
-      const docs = ctx.documentRecords as Array<{ code?: string }>;
-      const code = doc?.documentRecordCode ||
-        (Array.isArray(docs) && docs.length > 0 ? docs[0].code : 'test-doc');
-      return `/share/user-group/${code}`;
-    },
-    endpoint: '/share/user-group/{code}',
-    method: 'POST',
-    // ShareUserGroup schema: array of [{id}]
-    dynamicBody: (ctx) => {
-      const groups = ctx.userGroups as unknown[];
-      if (Array.isArray(groups) && groups.length > 0) {
-        const first = groups[0] as { id?: number };
-        return [{ id: first.id }];
-      }
-      return [{ id: 1 }];
-    },
-    setsContext: 'createdUserGroupShare',
-    expectedStatus: [200, 201, 400, 404, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-user-group-delete',
-    name: 'DELETE /share/user-group/{code}/{userGroupId}',
-    description: 'Removes the user group share from Document record',
-    category: 'Sharing',
-    usesContext: ['permanentDocument', 'userGroups', 'documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { documentRecordCode?: string };
-      const docs = ctx.documentRecords as Array<{ code?: string }>;
-      const groups = ctx.userGroups as Array<{ id?: string }>;
-      const code = doc?.documentRecordCode ||
-        (Array.isArray(docs) && docs.length > 0 ? docs[0].code : 'test-doc');
-      const groupId = Array.isArray(groups) && groups.length > 0 ? groups[0].id : '1';
-      return `/share/user-group/${code}/${groupId}`;
-    },
-    endpoint: '/share/user-group/{code}/{userGroupId}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 400, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-external-link-create',
-    name: 'POST /share/external-link/{code}',
-    description: 'Creates an External link for Document Record',
-    category: 'Sharing',
-    usesContext: ['permanentDocument', 'documentRecords'],
-    dynamicEndpoint: (ctx) => {
-      const doc = ctx.permanentDocument as { documentRecordCode?: string };
-      const docs = ctx.documentRecords as Array<{ code?: string }>;
-      const code = doc?.documentRecordCode ||
-        (Array.isArray(docs) && docs.length > 0 ? docs[0].code : 'test-doc');
-      return `/share/external-link/${code}`;
-    },
-    endpoint: '/share/external-link/{code}',
-    method: 'POST',
-    // ExternalLink schema: array of [{active, type, permission, useMax}]
-    body: [
-      {
-        active: true,
-        type: 'document',
-        permission: 'READ',
-        useMax: 0,
-      },
-    ],
-    setsContext: 'createdExternalLink',
-    expectedStatus: [200, 201, 400, 404, 422],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-external-link-update',
-    name: 'PUT /share/external-link/{externalLinkId}',
-    description: 'Updates an External link',
-    category: 'Sharing',
-    usesContext: ['createdExternalLink'],
-    dynamicEndpoint: (ctx) => {
-      const link = ctx.createdExternalLink as { id?: string; data?: { id?: string } };
-      const id = link?.id || link?.data?.id || '1';
-      return `/share/external-link/${id}`;
-    },
-    endpoint: '/share/external-link/{externalLinkId}',
-    method: 'PUT',
-    body: {
-      expiresAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    expectedStatus: [200, 204, 400, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'share-external-link-delete',
-    name: 'DELETE /share/external-link/{externalLinkId}',
-    description: 'Deactivates and removes the External Link',
-    category: 'Sharing',
-    usesContext: ['createdExternalLink'],
-    dynamicEndpoint: (ctx) => {
-      const link = ctx.createdExternalLink as { id?: string; data?: { id?: string } };
-      const id = link?.id || link?.data?.id || '1';
-      return `/share/external-link/${id}`;
-    },
-    endpoint: '/share/external-link/{externalLinkId}',
-    method: 'DELETE',
-    expectedStatus: [200, 204, 400, 404],
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-
-  // ==================== NOTIFICATION SETTINGS ====================
-  {
-    id: 'notification-setting-get',
-    name: 'GET /notification-setting/{userIdOrEmail}',
-    description: 'Returns user notification settings',
-    category: 'Notification Settings',
-    usesContext: ['users'],
-    dynamicEndpoint: (ctx) => {
-      const users = ctx.users as unknown[];
-      if (Array.isArray(users) && users.length > 0) {
-        const first = users[0] as { id?: string };
-        return `/notification-setting/${first.id}`;
-      }
-      return '/notification-setting/unknown';
-    },
-    endpoint: '/notification-setting/{userIdOrEmail}',
-    method: 'GET',
-    expectedStatus: [200, 404],
-    skipIf: (ctx) => !Array.isArray(ctx.users) || ctx.users.length === 0,
-    setsContext: 'notificationSettings',
-    assertions: [
-      { name: 'Returns response', type: 'status' },
-    ],
-  },
-  {
-    id: 'notification-setting-update',
-    name: 'PUT /notification-setting/{userIdOrEmail}',
-    description: 'Updates user notification settings',
-    category: 'Notification Settings',
-    usesContext: ['users'],
-    dynamicEndpoint: (ctx) => {
-      const users = ctx.users as unknown[];
-      if (Array.isArray(users) && users.length > 0) {
-        const first = users[0] as { id?: string };
-        return `/notification-setting/${first.id}`;
-      }
-      return '/notification-setting/unknown';
-    },
-    endpoint: '/notification-setting/{userIdOrEmail}',
-    method: 'PUT',
-    // NotificationSetting schema: objects with web/email properties (Newer|My|Shared)
-    body: {
-      changeOwner: { web: 'Newer', email: 'My' },
-      share: { web: 'Shared', email: 'Newer' },
-      fileUpload: { web: 'Shared', email: 'Newer' },
-      newDocumentVersion: { web: 'Shared', email: 'Newer' },
-    },
-    expectedStatus: [200, 201, 204, 400, 404, 422],
-    skipIf: (ctx) => !Array.isArray(ctx.users) || ctx.users.length === 0,
-    assertions: [
-      { name: 'Returns response', type: 'status' },
     ],
   },
 ];
@@ -1855,4 +1428,78 @@ export function runAssertion(
     default:
       return { passed: false, message: 'Unknown assertion type' };
   }
+}
+
+// Generate CRUD Report as formatted text
+export function generateCrudReport(context: TestContext): string {
+  const { crudReport } = context;
+
+  let report = `
+================================================================================
+                     LEGITO API CRUD TEST REPORT
+================================================================================
+Generated: ${new Date().toISOString()}
+
+================================================================================
+                           SUMMARY
+================================================================================
+Total Operations:    ${crudReport.totals.totalOperations}
+Successful:          ${crudReport.totals.successfulOperations}
+Failed:              ${crudReport.totals.failedOperations}
+Resources Created:   ${crudReport.totals.resourcesCreated}
+Resources Kept:      ${crudReport.totals.resourcesKept}
+Resources Deleted:   ${crudReport.totals.resourcesDeleted}
+`;
+
+  // IMPORTANT: External Link URL
+  if (crudReport.externalLinkUrl) {
+    report += `
+================================================================================
+             *** EXTERNAL SHARING LINK (for testing) ***
+================================================================================
+URL: ${crudReport.externalLinkUrl}
+================================================================================
+`;
+  }
+
+  report += `
+================================================================================
+                      BY ENTITY TYPE
+================================================================================
+`;
+
+  for (const [entityType, summary] of Object.entries(crudReport.byEntity)) {
+    report += `
+${entityType}:
+  - Created (Kept):    ${summary.created.kept}
+  - Created (Deleted): ${summary.created.deleted}
+  - Read:              ${summary.read}
+  - Updated:           ${summary.updated}
+  - Deleted:           ${summary.deleted}
+  - Anonymized:        ${summary.anonymized}
+  - Shared:            ${summary.shared}
+  - Errors:            ${summary.errors}
+`;
+  }
+
+  report += `
+================================================================================
+                      OPERATION TIMELINE
+================================================================================
+`;
+
+  for (const op of crudReport.operations) {
+    const status = op.success ? 'OK' : `FAIL: ${op.error}`;
+    const category = op.resourceCategory !== 'n/a' ? ` [${op.resourceCategory}]` : '';
+    report += `[${op.timestamp}] ${op.entityType} | ${op.operation}${category} | ${op.resourceId || 'N/A'} | ${status} (${op.duration}ms)
+`;
+  }
+
+  report += `
+================================================================================
+                          END OF REPORT
+================================================================================
+`;
+
+  return report;
 }
