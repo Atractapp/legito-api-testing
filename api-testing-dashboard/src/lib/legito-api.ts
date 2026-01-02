@@ -484,8 +484,8 @@ export const OPTION_VALUES = {
 // User ID for object records
 export const USER_ID = 44641;
 
-// Currency ID (CZK)
-export const CURRENCY_CZK = 3;
+// Currency IDs: CZK=1, GBP=2, USD=3, EUR=4
+export const CURRENCY_CZK = 1;
 
 // ============================================================================
 // HELPER FUNCTIONS
