@@ -22,7 +22,6 @@
       "value": "@environment"
     }
   ],
-  "envPrefix": "NEXT_PUBLIC_",
   "headers": [
     {
       "source": "/api/:path*",
