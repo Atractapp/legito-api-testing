@@ -16,6 +16,12 @@ import {
   type TestContext,
   type ExternalLinkData,
 } from '@/lib/legito-api';
+import {
+  saveTestRun,
+  saveTestResults,
+  updateHistoricalDataFromRun,
+  calculateDashboardStats,
+} from '@/lib/supabase';
 
 export function useTestRunner() {
   const {
@@ -28,6 +34,8 @@ export function useTestRunner() {
     updateTestStatus,
     clearTestResults,
     clearLogs,
+    setStats,
+    setHistoricalData,
   } = useTestStore();
 
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -295,6 +303,42 @@ export function useTestRunner() {
       log('info', `URL: ${contextRef.current.crudReport.externalLinkUrl}`);
       log('info', '========================================');
     }
+
+    // ========================================
+    // SAVE TO DATABASE
+    // ========================================
+    try {
+      log('info', 'Saving test run to database...');
+
+      // Save the test run
+      const savedRun = await saveTestRun(run);
+      if (savedRun) {
+        log('info', `Test run saved to database (ID: ${savedRun.id})`);
+
+        // Save all test results
+        const resultsToSave = run.results || [];
+        if (resultsToSave.length > 0) {
+          const resultsSaved = await saveTestResults(resultsToSave, run.id);
+          if (resultsSaved) {
+            log('info', `${resultsToSave.length} test results saved to database`);
+          }
+        }
+
+        // Update historical data
+        await updateHistoricalDataFromRun(run);
+        log('info', 'Historical data updated');
+
+        // Recalculate and update dashboard stats
+        const newStats = await calculateDashboardStats();
+        setStats(newStats);
+        log('info', 'Dashboard statistics updated');
+      } else {
+        log('warn', 'Failed to save test run to database (Supabase may not be configured)');
+      }
+    } catch (dbError) {
+      const errorMsg = dbError instanceof Error ? dbError.message : 'Unknown error';
+      log('warn', `Database save error: ${errorMsg}`);
+    }
   }, [
     selectedTests,
     configuration,
@@ -305,6 +349,8 @@ export function useTestRunner() {
     clearTestResults,
     clearLogs,
     log,
+    setStats,
+    setHistoricalData,
   ]);
 
   const stopTests = useCallback(() => {

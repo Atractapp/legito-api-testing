@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { RunControls, StatusFilter } from '@/components/test-runner/run-controls';
 import { TestCategoryList } from '@/components/test-runner/test-category-list';
 import { LiveLogs, TestProgressLog } from '@/components/test-runner/live-logs';
@@ -10,10 +11,29 @@ import { useTestRunner } from '@/hooks/use-test-runner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { calculateDashboardStats, getHistoricalData } from '@/lib/supabase';
 
 export default function TestRunnerPage() {
-  const { currentRun, stats, testResults } = useTestStore();
+  const { currentRun, stats, testResults, setStats, setHistoricalData } = useTestStore();
   const { runTests, stopTests, resetTests } = useTestRunner();
+
+  // Load stats from database on mount
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const dbStats = await calculateDashboardStats();
+        setStats(dbStats);
+
+        const histData = await getHistoricalData(30);
+        if (histData.length > 0) {
+          setHistoricalData(histData);
+        }
+      } catch (error) {
+        console.error('Error loading dashboard stats:', error);
+      }
+    }
+    loadStats();
+  }, [setStats, setHistoricalData]);
 
   const passed = testResults.filter((r) => r.status === 'passed').length;
   const failed = testResults.filter((r) => r.status === 'failed').length;

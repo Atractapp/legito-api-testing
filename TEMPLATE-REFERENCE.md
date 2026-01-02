@@ -202,6 +202,50 @@ POST /object-record/935
 | GET | `/document-version/data/{code}` | Get document elements |
 | GET | `/object-record/935` | Get object records |
 | POST | `/object-record/935` | Create new object record |
+| GET | `/user` | List all users |
+| POST | `/user` | Create user(s) - **expects ARRAY** |
+| PUT | `/user/{id}` | Update user |
+| DELETE | `/user/{id}` | Delete user |
+
+---
+
+## API Format Notes
+
+### POST /user - User Creation
+
+**IMPORTANT:** POST /user expects an **ARRAY** of users, not a single object!
+
+Request format:
+```json
+[
+  {
+    "email": "user@example.com",
+    "name": "User Name",
+    "caption": "Position/Title",
+    "timezone": "Europe/Prague"
+  }
+]
+```
+
+Response format (returns array of created users):
+```json
+[
+  {
+    "id": 12345,
+    "email": "user@example.com",
+    "name": "User Name",
+    "customIdentifier": null,
+    "created": "2026-01-02T22:11:54+01:00",
+    "position": null,
+    "timezone": "Europe/Prague",
+    "sessionExpiration": 7200,
+    "sessionDestroy": 0,
+    "customData": null
+  }
+]
+```
+
+Note: The request uses `caption` but response returns `position` (which may be null).
 
 ---
 

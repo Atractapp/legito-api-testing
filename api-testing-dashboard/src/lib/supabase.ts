@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { TestRun, TestResult, TestConfiguration, HistoricalData } from '@/types';
+import type { TestRun, TestResult, TestConfiguration, HistoricalData, DashboardStats } from '@/types';
 
 // These will be set via environment variables
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -9,6 +9,46 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
+
+// ============================================================================
+// UTILITY FUNCTIONS: snake_case <-> camelCase transformations
+// ============================================================================
+
+function toSnakeCase(str: string): string {
+  return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+}
+
+function toCamelCase(str: string): string {
+  return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
+function transformKeysToSnake<T extends Record<string, unknown>>(obj: T): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const key of Object.keys(obj)) {
+    const snakeKey = toSnakeCase(key);
+    const value = obj[key];
+    if (value && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Date)) {
+      result[snakeKey] = transformKeysToSnake(value as Record<string, unknown>);
+    } else {
+      result[snakeKey] = value;
+    }
+  }
+  return result;
+}
+
+function transformKeysToCamel<T>(obj: Record<string, unknown>): T {
+  const result: Record<string, unknown> = {};
+  for (const key of Object.keys(obj)) {
+    const camelKey = toCamelCase(key);
+    const value = obj[key];
+    if (value && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Date)) {
+      result[camelKey] = transformKeysToCamel(value as Record<string, unknown>);
+    } else {
+      result[camelKey] = value;
+    }
+  }
+  return result as T;
+}
 
 // Database types for Supabase tables
 export interface Database {
@@ -40,11 +80,18 @@ export interface Database {
 
 // Test Runs
 export async function saveTestRun(run: TestRun): Promise<TestRun | null> {
-  if (!supabase) return null;
+  if (!supabase) {
+    console.log('[Supabase] Client not initialized, skipping save');
+    return null;
+  }
+
+  // Transform to snake_case for DB, exclude results array (stored separately)
+  const { results, ...runWithoutResults } = run;
+  const dbRun = transformKeysToSnake(runWithoutResults as unknown as Record<string, unknown>);
 
   const { data, error } = await supabase
     .from('test_runs')
-    .upsert(run)
+    .upsert(dbRun)
     .select()
     .single();
 
@@ -53,7 +100,8 @@ export async function saveTestRun(run: TestRun): Promise<TestRun | null> {
     return null;
   }
 
-  return data;
+  console.log('[Supabase] Test run saved:', data?.id);
+  return data ? transformKeysToCamel<TestRun>(data) : null;
 }
 
 export async function getTestRuns(limit = 50): Promise<TestRun[]> {
@@ -62,7 +110,7 @@ export async function getTestRuns(limit = 50): Promise<TestRun[]> {
   const { data, error } = await supabase
     .from('test_runs')
     .select('*')
-    .order('startTime', { ascending: false })
+    .order('start_time', { ascending: false })
     .limit(limit);
 
   if (error) {
@@ -70,7 +118,7 @@ export async function getTestRuns(limit = 50): Promise<TestRun[]> {
     return [];
   }
 
-  return data || [];
+  return (data || []).map(row => transformKeysToCamel<TestRun>(row));
 }
 
 export async function getTestRunById(id: string): Promise<TestRun | null> {
@@ -87,16 +135,21 @@ export async function getTestRunById(id: string): Promise<TestRun | null> {
     return null;
   }
 
-  return data;
+  return data ? transformKeysToCamel<TestRun>(data) : null;
 }
 
 // Test Results
-export async function saveTestResult(result: TestResult): Promise<TestResult | null> {
+export async function saveTestResult(result: TestResult, testRunId: string): Promise<TestResult | null> {
   if (!supabase) return null;
+
+  const dbResult = {
+    ...transformKeysToSnake(result as unknown as Record<string, unknown>),
+    test_run_id: testRunId,
+  };
 
   const { data, error } = await supabase
     .from('test_results')
-    .insert(result)
+    .insert(dbResult)
     .select()
     .single();
 
@@ -105,7 +158,28 @@ export async function saveTestResult(result: TestResult): Promise<TestResult | n
     return null;
   }
 
-  return data;
+  return data ? transformKeysToCamel<TestResult>(data) : null;
+}
+
+export async function saveTestResults(results: TestResult[], testRunId: string): Promise<boolean> {
+  if (!supabase || results.length === 0) return false;
+
+  const dbResults = results.map(result => ({
+    ...transformKeysToSnake(result as unknown as Record<string, unknown>),
+    test_run_id: testRunId,
+  }));
+
+  const { error } = await supabase
+    .from('test_results')
+    .insert(dbResults);
+
+  if (error) {
+    console.error('Error saving test results:', error);
+    return false;
+  }
+
+  console.log(`[Supabase] Saved ${results.length} test results for run ${testRunId}`);
+  return true;
 }
 
 export async function getTestResults(runId: string): Promise<TestResult[]> {
@@ -114,7 +188,7 @@ export async function getTestResults(runId: string): Promise<TestResult[]> {
   const { data, error } = await supabase
     .from('test_results')
     .select('*')
-    .eq('testRunId', runId)
+    .eq('test_run_id', runId)
     .order('timestamp', { ascending: true });
 
   if (error) {
@@ -122,7 +196,7 @@ export async function getTestResults(runId: string): Promise<TestResult[]> {
     return [];
   }
 
-  return data || [];
+  return (data || []).map(row => transformKeysToCamel<TestResult>(row));
 }
 
 // Configurations
@@ -226,10 +300,10 @@ export function subscribeToTestRun(
         event: 'INSERT',
         schema: 'public',
         table: 'test_results',
-        filter: `testRunId=eq.${runId}`,
+        filter: `test_run_id=eq.${runId}`,
       },
       (payload) => {
-        callback(payload.new as TestResult);
+        callback(transformKeysToCamel<TestResult>(payload.new as Record<string, unknown>));
       }
     )
     .subscribe();
@@ -240,6 +314,163 @@ export function subscribeToTestRun(
 export function unsubscribeFromTestRun(runId: string) {
   if (!supabase) return;
   supabase.removeChannel(supabase.channel(`test_run_${runId}`));
+}
+
+// ============================================================================
+// STATISTICS CALCULATION
+// ============================================================================
+
+export async function calculateDashboardStats(): Promise<DashboardStats> {
+  const defaultStats: DashboardStats = {
+    totalTestRuns: 0,
+    totalTests: 0,
+    avgPassRate: 0,
+    avgDuration: 0,
+    lastRunTime: undefined,
+    recentTrend: 'stable',
+    todayRuns: 0,
+    weeklyRuns: 0,
+  };
+
+  if (!supabase) return defaultStats;
+
+  try {
+    // Get today's date boundaries
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7).toISOString();
+
+    // Get all test runs for stats
+    const { data: runs, error } = await supabase
+      .from('test_runs')
+      .select('*')
+      .order('start_time', { ascending: false });
+
+    if (error || !runs || runs.length === 0) {
+      return defaultStats;
+    }
+
+    const totalTestRuns = runs.length;
+    const totalTests = runs.reduce((sum, run) => sum + (run.total_tests || 0), 0);
+
+    // Calculate average pass rate
+    const passRates = runs.map(run => {
+      const total = run.total_tests || 0;
+      const passed = run.passed_tests || 0;
+      return total > 0 ? (passed / total) * 100 : 0;
+    });
+    const avgPassRate = passRates.length > 0
+      ? passRates.reduce((a, b) => a + b, 0) / passRates.length
+      : 0;
+
+    // Calculate average duration
+    const durations = runs.filter(r => r.duration).map(r => r.duration);
+    const avgDuration = durations.length > 0
+      ? durations.reduce((a, b) => a + b, 0) / durations.length
+      : 0;
+
+    // Last run time
+    const lastRunTime = runs[0]?.start_time;
+
+    // Today's runs
+    const todayRuns = runs.filter(r => r.start_time >= todayStart).length;
+
+    // Weekly runs
+    const weeklyRuns = runs.filter(r => r.start_time >= weekStart).length;
+
+    // Calculate trend (compare recent 7 days vs previous 7 days)
+    const twoWeeksAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 14).toISOString();
+    const recentRuns = runs.filter(r => r.start_time >= weekStart);
+    const olderRuns = runs.filter(r => r.start_time >= twoWeeksAgo && r.start_time < weekStart);
+
+    const recentAvg = recentRuns.length > 0
+      ? recentRuns.reduce((sum, r) => sum + ((r.passed_tests || 0) / Math.max(r.total_tests || 1, 1)) * 100, 0) / recentRuns.length
+      : 0;
+    const olderAvg = olderRuns.length > 0
+      ? olderRuns.reduce((sum, r) => sum + ((r.passed_tests || 0) / Math.max(r.total_tests || 1, 1)) * 100, 0) / olderRuns.length
+      : 0;
+
+    let recentTrend: 'up' | 'down' | 'stable' = 'stable';
+    if (recentAvg > olderAvg + 5) recentTrend = 'up';
+    else if (recentAvg < olderAvg - 5) recentTrend = 'down';
+
+    return {
+      totalTestRuns,
+      totalTests,
+      avgPassRate: Math.round(avgPassRate * 10) / 10,
+      avgDuration: Math.round(avgDuration),
+      lastRunTime,
+      recentTrend,
+      todayRuns,
+      weeklyRuns,
+    };
+  } catch (error) {
+    console.error('Error calculating dashboard stats:', error);
+    return defaultStats;
+  }
+}
+
+// Update historical data after a test run
+export async function updateHistoricalDataFromRun(run: TestRun): Promise<boolean> {
+  if (!supabase) return false;
+
+  const date = new Date(run.startTime).toISOString().split('T')[0];
+  const passRate = run.totalTests > 0
+    ? Math.round((run.passedTests / run.totalTests) * 10000) / 100
+    : 0;
+
+  // Get existing data for this date
+  const { data: existing } = await supabase
+    .from('historical_data')
+    .select('*')
+    .eq('date', date)
+    .single();
+
+  if (existing) {
+    // Update existing record - aggregate with new run
+    const newTotal = existing.total_tests + run.totalTests;
+    const newPassed = existing.passed + run.passedTests;
+    const newFailed = existing.failed + run.failedTests;
+    const newPassRate = newTotal > 0 ? Math.round((newPassed / newTotal) * 10000) / 100 : 0;
+    const newAvgDuration = Math.round((existing.avg_duration + run.duration) / 2);
+
+    const { error } = await supabase
+      .from('historical_data')
+      .update({
+        total_tests: newTotal,
+        passed: newPassed,
+        failed: newFailed,
+        pass_rate: newPassRate,
+        avg_duration: newAvgDuration,
+      })
+      .eq('date', date);
+
+    if (error) {
+      console.error('Error updating historical data:', error);
+      return false;
+    }
+  } else {
+    // Insert new record
+    const { error } = await supabase
+      .from('historical_data')
+      .insert({
+        id: date,
+        date,
+        total_tests: run.totalTests,
+        passed: run.passedTests,
+        failed: run.failedTests,
+        pass_rate: passRate,
+        avg_duration: run.duration,
+      });
+
+    if (error) {
+      console.error('Error inserting historical data:', error);
+      return false;
+    }
+  }
+
+  console.log(`[Supabase] Historical data updated for ${date}`);
+  return true;
 }
 
 // Database initialization SQL (for reference)
