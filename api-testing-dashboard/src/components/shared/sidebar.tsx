@@ -12,12 +12,29 @@ import {
   Activity,
   ChevronLeft,
   ChevronRight,
+  Tags,
+  RefreshCw,
+  KeyRound,
+  LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useState } from 'react';
+import { AppSelector } from './app-selector';
+import { getAppFromPath } from '@/lib/apps-config';
 
-const navigation = [
+interface NavItem {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+const apiTesterNavigation: NavItem[] = [
   { name: 'Test Runner', href: '/', icon: Play },
   { name: 'Results', href: '/results', icon: BarChart3 },
   { name: 'Reports', href: '/reports', icon: FileText },
@@ -26,9 +43,29 @@ const navigation = [
   { name: 'Configuration', href: '/configuration', icon: Settings },
 ];
 
+const taggerNavigation: NavItem[] = [
+  { name: 'Tag Sync', href: '/tagger', icon: RefreshCw },
+  { name: 'Workspaces', href: '/tagger/workspaces', icon: KeyRound },
+  { name: 'Settings', href: '/tagger/settings', icon: Settings },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const currentApp = getAppFromPath(pathname);
+
+  const navigation =
+    currentApp === 'tagger' ? taggerNavigation : apiTesterNavigation;
+
+  const isActiveLink = (href: string) => {
+    if (currentApp === 'tagger') {
+      if (href === '/tagger') {
+        return pathname === '/tagger';
+      }
+      return pathname.startsWith(href);
+    }
+    return pathname === href;
+  };
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -38,27 +75,15 @@ export function Sidebar() {
           collapsed ? 'w-16' : 'w-64'
         )}
       >
-        {/* Logo/Brand */}
-        <div className="flex h-16 items-center justify-between border-b border-border px-4">
-          {!collapsed && (
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <Activity className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-semibold text-foreground">API Tester</span>
-            </div>
-          )}
-          {collapsed && (
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary mx-auto">
-              <Activity className="h-5 w-5 text-primary-foreground" />
-            </div>
-          )}
+        {/* App Selector */}
+        <div className="border-b border-border p-3">
+          <AppSelector collapsed={collapsed} />
         </div>
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1 px-2 py-4">
           {navigation.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = isActiveLink(item.href);
             const Icon = item.icon;
 
             const linkContent = (
