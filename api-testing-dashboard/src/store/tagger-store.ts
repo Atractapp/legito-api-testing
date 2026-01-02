@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { useShallow } from 'zustand/shallow';
 import type {
   LegitoCredentials,
   LegitoTag,
@@ -306,14 +307,14 @@ export const useTaggerStore = create<TaggerStore>()(
 );
 
 // Selector hooks
-export const useSourceWorkspace = () => useTaggerStore((state) => state.source);
-export const useTargetWorkspace = () => useTaggerStore((state) => state.target);
+export const useSourceWorkspace = () => useTaggerStore(useShallow((state) => state.source));
+export const useTargetWorkspace = () => useTaggerStore(useShallow((state) => state.target));
 export const useSyncStatus = () =>
-  useTaggerStore((state) => ({
+  useTaggerStore(useShallow((state) => ({
     status: state.syncStatus,
     progress: state.syncProgress,
     result: state.syncResult,
     error: state.syncError,
-  }));
+  })));
 export const useAnalysis = () => useTaggerStore((state) => state.analysis);
-export const useTaggerSettings = () => useTaggerStore((state) => state.settings);
+export const useTaggerSettings = () => useTaggerStore(useShallow((state) => state.settings));
