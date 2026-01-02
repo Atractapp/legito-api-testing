@@ -12,10 +12,10 @@ import type {
 } from '@/types/tagger';
 
 /**
- * Builds the base URL for a Legito region
+ * Builds the proxy URL for a Legito region
  */
 function getBaseUrl(region: string): string {
-  return `https://${region}.legito.com/api/v7`;
+  return `/api/tagger/${region}`;
 }
 
 /**
