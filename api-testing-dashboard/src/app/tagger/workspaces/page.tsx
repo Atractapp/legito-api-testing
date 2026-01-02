@@ -27,7 +27,7 @@ function ConnectionStatusIcon({ status }: { status: ConnectionStatus }) {
     error: { icon: XCircle, className: 'text-red-500' },
   };
 
-  const { icon: Icon, className } = config[status];
+  const { icon: Icon, className } = config[status] || config.disconnected;
   return <Icon className={cn('h-5 w-5', className)} />;
 }
 

@@ -59,7 +59,7 @@ function ConnectionStatusBadge({ status }: { status: ConnectionStatus }) {
     },
   };
 
-  const { icon: Icon, label, className } = config[status];
+  const { icon: Icon, label, className } = config[status] || config.disconnected;
 
   return (
     <Badge variant="outline" className={cn('gap-1.5', className)}>
