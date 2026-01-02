@@ -3,13 +3,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm ci",
   "framework": "nextjs",
-  "public": true,
-  "env": {
-    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
-    "NEXT_PUBLIC_API_BASE_URL": "@api_base_url",
-    "NEXT_PUBLIC_ENVIRONMENT": "@environment"
-  },
   "headers": [
     {
       "source": "/api/:path*",
