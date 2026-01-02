@@ -179,7 +179,12 @@ export function useTestRunner() {
         // Store context ONLY if test passed AND sets context
         // This prevents storing error responses that could be used by dependent tests
         if (test.setsContext && result.response.body && result.status === 'passed') {
-          contextRef.current[test.setsContext] = result.response.body;
+          // Unwrap single-element arrays (e.g., POST /user returns [{user}])
+          let dataToStore = result.response.body;
+          if (Array.isArray(dataToStore) && dataToStore.length === 1) {
+            dataToStore = dataToStore[0];
+          }
+          contextRef.current[test.setsContext] = dataToStore;
           log('debug', `Stored context: ${test.setsContext}`, test.id);
 
           // Extract external link URL if this is the kept external link

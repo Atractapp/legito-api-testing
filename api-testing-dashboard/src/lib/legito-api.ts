@@ -687,6 +687,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
   },
 
   // 2.2 Create User #1 (KEPT)
+  // NOTE: POST /user expects an ARRAY of users and returns ARRAY of created users
   {
     id: 'user-create-kept',
     name: 'POST /user (User 1 - KEPT)',
@@ -694,12 +695,12 @@ export const LEGITO_TESTS: LegitoTest[] = [
     category: 'Users',
     endpoint: '/user',
     method: 'POST',
-    dynamicBody: () => ({
+    dynamicBody: () => ([{
       email: `api-test-user-kept-${Date.now()}@test.legito.com`,
       name: 'API Test User KEPT',
-      position: 'API Tester (Kept)',
+      caption: 'API Tester (Kept)',
       timezone: 'Europe/Prague',
-    }),
+    }]),
     setsContext: 'userKept',
     expectedStatus: [200, 201],
     assertions: [
@@ -712,6 +713,7 @@ export const LEGITO_TESTS: LegitoTest[] = [
   },
 
   // 2.3 Create User #2 (TO DELETE)
+  // NOTE: POST /user expects an ARRAY of users and returns ARRAY of created users
   {
     id: 'user-create-delete',
     name: 'POST /user (User 2 - for DELETE)',
@@ -719,12 +721,12 @@ export const LEGITO_TESTS: LegitoTest[] = [
     category: 'Users',
     endpoint: '/user',
     method: 'POST',
-    dynamicBody: () => ({
+    dynamicBody: () => ([{
       email: `api-test-user-delete-${Date.now()}@test.legito.com`,
       name: 'API Test User DELETE',
-      position: 'API Tester (To Delete)',
+      caption: 'API Tester (To Delete)',
       timezone: 'Europe/Prague',
-    }),
+    }]),
     setsContext: 'userToDelete',
     expectedStatus: [200, 201],
     assertions: [
@@ -1400,11 +1402,16 @@ export function runAssertion(
       };
 
     case 'hasField':
+      // Handle array responses - check first element if array
+      let dataToCheck = response.data;
+      if (Array.isArray(response.data) && response.data.length > 0) {
+        dataToCheck = response.data[0];
+      }
       const hasField =
-        response.data !== null &&
-        typeof response.data === 'object' &&
+        dataToCheck !== null &&
+        typeof dataToCheck === 'object' &&
         assertion.field !== undefined &&
-        assertion.field in (response.data as Record<string, unknown>);
+        assertion.field in (dataToCheck as Record<string, unknown>);
       return {
         passed: hasField,
         message: hasField
