@@ -25,8 +25,9 @@ export interface WorkspaceConfig {
  * Tag as returned from Legito API
  */
 export interface LegitoTag {
-  id: string;
+  id: number;
   name: string;
+  system?: boolean;
   color?: string;
   description?: string;
   createdAt?: string;

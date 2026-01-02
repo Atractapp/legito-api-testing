@@ -130,7 +130,7 @@ export class TagsService {
   }
 
   /**
-   * Fetches all tags from the workspace
+   * Fetches all tags from the workspace (excludes system tags)
    */
   async getAllTags(): Promise<ApiResult<LegitoTag[]>> {
     const result = await this.client.get<LegitoTag[] | { data: LegitoTag[] }>('/template-tag');
@@ -140,8 +140,11 @@ export class TagsService {
     }
 
     // Handle both array response and wrapped response
-    const tags = Array.isArray(result.data) ? result.data : result.data.data || [];
-    return { success: true, data: tags };
+    const allTags = Array.isArray(result.data) ? result.data : result.data.data || [];
+
+    // Filter out system tags - only return user-created tags
+    const userTags = allTags.filter(tag => !tag.system);
+    return { success: true, data: userTags };
   }
 
   /**
