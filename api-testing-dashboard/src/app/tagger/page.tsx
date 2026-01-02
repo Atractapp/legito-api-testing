@@ -208,7 +208,7 @@ function WorkspaceForm({
           {workspace.connectionStatus === 'connected' && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Tags className="h-4 w-4" />
-              <span>{workspace.tags.length} tags found</span>
+              <span>{workspace.tags?.length ?? 0} tags found</span>
             </div>
           )}
         </div>
@@ -274,7 +274,7 @@ function SyncPanel() {
               source.connectionStatus === 'connected' ? 'default' : 'secondary'
             }
           >
-            {source.tags.length} tags
+            {source.tags?.length ?? 0} tags
           </Badge>
         </div>
         <ArrowRight className="h-5 w-5 text-muted-foreground" />
@@ -285,7 +285,7 @@ function SyncPanel() {
               target.connectionStatus === 'connected' ? 'default' : 'secondary'
             }
           >
-            {target.tags.length} tags
+            {target.tags?.length ?? 0} tags
           </Badge>
         </div>
       </div>

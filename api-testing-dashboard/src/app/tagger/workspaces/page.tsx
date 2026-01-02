@@ -97,7 +97,7 @@ function WorkspaceCard({ title, workspaceType, color }: WorkspaceCardProps) {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Badge variant="outline">{workspace.tags.length} tags</Badge>
+              <Badge variant="outline">{workspace.tags?.length ?? 0} tags</Badge>
               {workspace.lastFetched && (
                 <span className="text-xs text-muted-foreground">
                   Updated{' '}
