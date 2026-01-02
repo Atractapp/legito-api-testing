@@ -15,7 +15,7 @@ import type {
  * Builds the base URL for a Legito region
  */
 function getBaseUrl(region: string): string {
-  return `https://api.${region}.legito.com`;
+  return `https://${region}.legito.com/api/v7`;
 }
 
 /**

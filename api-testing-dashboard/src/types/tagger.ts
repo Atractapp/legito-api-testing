@@ -1,7 +1,7 @@
 /**
  * Legito workspace regions - affects base URL
  */
-export type LegitoRegion = 'eu' | 'us' | 'app';
+export type LegitoRegion = 'emea' | 'us' | 'ca' | 'apac' | 'quarterly';
 
 /**
  * Credentials for a single Legito workspace

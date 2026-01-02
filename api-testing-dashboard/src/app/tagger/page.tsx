@@ -102,7 +102,7 @@ function WorkspaceForm({
     workspace.credentials?.privateKey || ''
   );
   const [region, setRegion] = useState<LegitoRegion>(
-    workspace.credentials?.region || 'eu'
+    workspace.credentials?.region || 'emea'
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -174,9 +174,11 @@ function WorkspaceForm({
                   <SelectValue placeholder="Select region" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="eu">EU (Europe)</SelectItem>
+                  <SelectItem value="emea">EMEA (Europe)</SelectItem>
                   <SelectItem value="us">US (United States)</SelectItem>
-                  <SelectItem value="app">App (Global)</SelectItem>
+                  <SelectItem value="ca">CA (Canada)</SelectItem>
+                  <SelectItem value="apac">APAC (Asia Pacific)</SelectItem>
+                  <SelectItem value="quarterly">Quarterly</SelectItem>
                 </SelectContent>
               </Select>
             </div>
