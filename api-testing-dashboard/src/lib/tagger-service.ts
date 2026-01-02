@@ -217,6 +217,7 @@ export interface SyncOptions {
   delayMs?: number;
   onProgress?: (progress: SyncProgress) => void;
   dryRun?: boolean;
+  selectedTagIds?: Set<number>; // If provided, only sync these tags
 }
 
 /**
@@ -265,6 +266,7 @@ export class TaggerSyncService {
       delayMs = 100,
       onProgress,
       dryRun = false,
+      selectedTagIds,
     } = options;
 
     const startedAt = new Date();
@@ -298,6 +300,11 @@ export class TaggerSyncService {
       duplicateStrategy
     );
 
+    // Filter by selected tags if provided
+    const tagsToSync = selectedTagIds && selectedTagIds.size > 0
+      ? analysis.tagsToCreate.filter(tag => selectedTagIds.has(tag.id))
+      : analysis.tagsToCreate;
+
     // Early return for dry run
     if (dryRun) {
       return {
@@ -312,19 +319,19 @@ export class TaggerSyncService {
       };
     }
 
-    // Phase 4: Create non-duplicate tags
+    // Phase 4: Create selected non-duplicate tags
     onProgress?.({
       phase: 'creating',
       current: 0,
-      total: analysis.tagsToCreate.length,
-      message: `Creating ${analysis.tagsToCreate.length} tags...`,
+      total: tagsToSync.length,
+      message: `Creating ${tagsToSync.length} tags...`,
     });
 
     let created = 0;
     let failed = 0;
 
-    for (let i = 0; i < analysis.tagsToCreate.length; i += concurrency) {
-      const batch = analysis.tagsToCreate.slice(i, i + concurrency);
+    for (let i = 0; i < tagsToSync.length; i += concurrency) {
+      const batch = tagsToSync.slice(i, i + concurrency);
 
       const batchResults = await Promise.all(
         batch.map(async (sourceTag) => {
@@ -358,13 +365,13 @@ export class TaggerSyncService {
 
       onProgress?.({
         phase: 'creating',
-        current: Math.min(i + concurrency, analysis.tagsToCreate.length),
-        total: analysis.tagsToCreate.length,
+        current: Math.min(i + concurrency, tagsToSync.length),
+        total: tagsToSync.length,
         message: `Created ${created} tags, ${failed} failed...`,
       });
 
       // Rate limiting delay
-      if (i + concurrency < analysis.tagsToCreate.length && delayMs > 0) {
+      if (i + concurrency < tagsToSync.length && delayMs > 0) {
         await new Promise((resolve) => setTimeout(resolve, delayMs));
       }
     }

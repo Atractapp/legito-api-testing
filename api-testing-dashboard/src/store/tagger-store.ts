@@ -33,6 +33,9 @@ interface TaggerState {
   // Analysis state
   analysis: DuplicateAnalysisResult | null;
 
+  // Tag selection for sync (IDs of tags to copy)
+  selectedTagIds: Set<number>;
+
   // Sync state
   syncStatus: SyncStatus;
   syncProgress: SyncProgress | null;
@@ -64,6 +67,11 @@ interface TaggerActions {
   analyzeSync: () => Promise<DuplicateAnalysisResult>;
   clearAnalysis: () => void;
 
+  // Tag selection
+  toggleTagSelection: (tagId: number) => void;
+  selectAllTags: () => void;
+  deselectAllTags: () => void;
+
   // Sync operations
   executeSync: (dryRun?: boolean) => Promise<SyncResult>;
 
@@ -88,6 +96,7 @@ const initialState: TaggerState = {
   source: { ...initialWorkspaceState },
   target: { ...initialWorkspaceState },
   analysis: null,
+  selectedTagIds: new Set(),
   syncStatus: 'idle',
   syncProgress: null,
   syncResult: null,
@@ -222,7 +231,10 @@ export const useTaggerStore = create<TaggerStore>()(
             state.settings.duplicateStrategy
           );
 
-          set({ analysis, syncStatus: 'idle' });
+          // Auto-select all tags to create by default
+          const selectedIds = new Set(analysis.tagsToCreate.map(tag => tag.id));
+
+          set({ analysis, selectedTagIds: selectedIds, syncStatus: 'idle' });
           return analysis;
         } catch (error) {
           set({
@@ -234,7 +246,30 @@ export const useTaggerStore = create<TaggerStore>()(
       },
 
       clearAnalysis: () => {
-        set({ analysis: null, syncResult: null });
+        set({ analysis: null, syncResult: null, selectedTagIds: new Set() });
+      },
+
+      toggleTagSelection: (tagId: number) => {
+        set((state) => {
+          const newSet = new Set(state.selectedTagIds);
+          if (newSet.has(tagId)) {
+            newSet.delete(tagId);
+          } else {
+            newSet.add(tagId);
+          }
+          return { selectedTagIds: newSet };
+        });
+      },
+
+      selectAllTags: () => {
+        const analysis = get().analysis;
+        if (analysis) {
+          set({ selectedTagIds: new Set(analysis.tagsToCreate.map(tag => tag.id)) });
+        }
+      },
+
+      deselectAllTags: () => {
+        set({ selectedTagIds: new Set() });
       },
 
       executeSync: async (dryRun = false) => {
@@ -257,6 +292,7 @@ export const useTaggerStore = create<TaggerStore>()(
             concurrency: state.settings.concurrency,
             delayMs: state.settings.delayMs,
             dryRun,
+            selectedTagIds: state.selectedTagIds,
             onProgress: (progress) => {
               set({ syncProgress: progress });
             },
@@ -317,4 +353,5 @@ export const useSyncStatus = () =>
     error: state.syncError,
   })));
 export const useAnalysis = () => useTaggerStore((state) => state.analysis);
+export const useSelectedTagIds = () => useTaggerStore((state) => state.selectedTagIds);
 export const useTaggerSettings = () => useTaggerStore(useShallow((state) => state.settings));

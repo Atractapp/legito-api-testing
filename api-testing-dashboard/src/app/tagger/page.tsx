@@ -32,7 +32,9 @@ import {
   useTargetWorkspace,
   useSyncStatus,
   useAnalysis,
+  useSelectedTagIds,
 } from '@/store/tagger-store';
+import { Checkbox } from '@/components/ui/checkbox';
 import type { LegitoRegion, ConnectionStatus } from '@/types/tagger';
 
 function ConnectionStatusBadge({ status }: { status: ConnectionStatus }) {
@@ -222,7 +224,8 @@ function SyncPanel() {
   const analysis = useAnalysis();
   const source = useSourceWorkspace();
   const target = useTargetWorkspace();
-  const { analyzeSync, executeSync, clearAnalysis } = useTaggerStore();
+  const selectedTagIds = useSelectedTagIds();
+  const { analyzeSync, executeSync, clearAnalysis, toggleTagSelection, selectAllTags, deselectAllTags } = useTaggerStore();
 
   const canAnalyze =
     source.connectionStatus === 'connected' &&
@@ -294,12 +297,12 @@ function SyncPanel() {
       {analysis && (
         <div className="mb-6 p-4 border rounded-lg bg-muted/30">
           <h4 className="font-medium mb-3">Analysis Results</h4>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-3 gap-4 text-center mb-4">
             <div>
               <p className="text-2xl font-bold text-green-500">
-                {analysis.tagsToCreate.length}
+                {selectedTagIds.size}
               </p>
-              <p className="text-sm text-muted-foreground">Tags to Create</p>
+              <p className="text-sm text-muted-foreground">Selected to Copy</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-yellow-500">
@@ -311,24 +314,54 @@ function SyncPanel() {
             </div>
             <div>
               <p className="text-2xl font-bold text-muted-foreground">
-                {analysis.sourceTags.length}
+                {analysis.tagsToCreate.length}
               </p>
-              <p className="text-sm text-muted-foreground">Total Source</p>
+              <p className="text-sm text-muted-foreground">Available to Copy</p>
             </div>
           </div>
 
           {analysis.tagsToCreate.length > 0 && (
+            <div className="pt-4 border-t">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-medium">Select tags to copy:</p>
+                <div className="flex gap-2">
+                  <Button variant="ghost" size="sm" onClick={selectAllTags}>
+                    Select All
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={deselectAllTags}>
+                    Deselect All
+                  </Button>
+                </div>
+              </div>
+              <div className="max-h-48 overflow-y-auto space-y-2">
+                {analysis.tagsToCreate.map((tag) => (
+                  <label
+                    key={tag.id}
+                    className="flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 cursor-pointer"
+                  >
+                    <Checkbox
+                      checked={selectedTagIds.has(tag.id)}
+                      onCheckedChange={() => toggleTagSelection(tag.id)}
+                    />
+                    <span className="text-sm">{tag.name}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {analysis.duplicates.length > 0 && (
             <div className="mt-4 pt-4 border-t">
-              <p className="text-sm font-medium mb-2">Tags to be created:</p>
+              <p className="text-sm font-medium mb-2 text-yellow-500">Duplicates (will be skipped):</p>
               <div className="flex flex-wrap gap-2">
-                {analysis.tagsToCreate.slice(0, 10).map((tag) => (
-                  <Badge key={tag.id} variant="outline">
+                {analysis.duplicates.slice(0, 10).map((tag) => (
+                  <Badge key={tag.id} variant="secondary" className="text-yellow-600">
                     {tag.name}
                   </Badge>
                 ))}
-                {analysis.tagsToCreate.length > 10 && (
-                  <Badge variant="outline">
-                    +{analysis.tagsToCreate.length - 10} more
+                {analysis.duplicates.length > 10 && (
+                  <Badge variant="secondary">
+                    +{analysis.duplicates.length - 10} more
                   </Badge>
                 )}
               </div>
@@ -410,7 +443,7 @@ function SyncPanel() {
           onClick={handleSync}
           disabled={
             !analysis ||
-            analysis.tagsToCreate.length === 0 ||
+            selectedTagIds.size === 0 ||
             syncStatus === 'syncing'
           }
           className="flex-1"
@@ -423,7 +456,7 @@ function SyncPanel() {
           ) : (
             <>
               <Download className="h-4 w-4 mr-2" />
-              Copy Tags to Target
+              Copy {selectedTagIds.size} Tags to Target
             </>
           )}
         </Button>
