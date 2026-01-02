@@ -84,8 +84,9 @@ function WorkspaceForm({
   workspaceType,
   gradient,
 }: WorkspaceFormProps) {
-  const workspace =
-    workspaceType === 'source' ? useSourceWorkspace() : useTargetWorkspace();
+  const sourceWorkspace = useSourceWorkspace();
+  const targetWorkspace = useTargetWorkspace();
+  const workspace = workspaceType === 'source' ? sourceWorkspace : targetWorkspace;
   const {
     setSourceCredentials,
     setTargetCredentials,

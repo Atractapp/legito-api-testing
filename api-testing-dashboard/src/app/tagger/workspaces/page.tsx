@@ -38,8 +38,9 @@ interface WorkspaceCardProps {
 }
 
 function WorkspaceCard({ title, workspaceType, color }: WorkspaceCardProps) {
-  const workspace =
-    workspaceType === 'source' ? useSourceWorkspace() : useTargetWorkspace();
+  const sourceWorkspace = useSourceWorkspace();
+  const targetWorkspace = useTargetWorkspace();
+  const workspace = workspaceType === 'source' ? sourceWorkspace : targetWorkspace;
   const { clearCredentials, testConnection, fetchTags } = useTaggerStore();
 
   const hasCredentials = !!workspace.credentials;
