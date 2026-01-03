@@ -15,6 +15,9 @@ import {
   Tags,
   RefreshCw,
   KeyRound,
+  Plug,
+  Wrench,
+  MessageSquare,
   LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -49,18 +52,35 @@ const taggerNavigation: NavItem[] = [
   { name: 'Settings', href: '/tagger/settings', icon: Settings },
 ];
 
+const mcpNavigation: NavItem[] = [
+  { name: 'Dashboard', href: '/mcp', icon: Plug },
+  { name: 'AI Chat', href: '/mcp/chat', icon: MessageSquare },
+  { name: 'Workspaces', href: '/mcp/workspaces', icon: KeyRound },
+  { name: 'Tools', href: '/mcp/tools', icon: Wrench },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const currentApp = getAppFromPath(pathname);
 
   const navigation =
-    currentApp === 'tagger' ? taggerNavigation : apiTesterNavigation;
+    currentApp === 'tagger'
+      ? taggerNavigation
+      : currentApp === 'mcp'
+        ? mcpNavigation
+        : apiTesterNavigation;
 
   const isActiveLink = (href: string) => {
     if (currentApp === 'tagger') {
       if (href === '/tagger') {
         return pathname === '/tagger';
+      }
+      return pathname.startsWith(href);
+    }
+    if (currentApp === 'mcp') {
+      if (href === '/mcp') {
+        return pathname === '/mcp';
       }
       return pathname.startsWith(href);
     }
