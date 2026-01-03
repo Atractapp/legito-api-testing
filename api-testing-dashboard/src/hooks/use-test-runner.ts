@@ -26,7 +26,7 @@ import {
 export function useTestRunner() {
   const {
     selectedTests,
-    configuration,
+    activePreset,
     setCurrentRun,
     setIsRunning,
     addTestResult,
@@ -70,12 +70,43 @@ export function useTestRunner() {
     abortControllerRef.current = new AbortController();
     contextRef.current = createEmptyTestContext(); // Reset context with CRUD tracking
 
-    // Pass configuration values to context for dynamic tests
-    contextRef.current.templateSuiteId = configuration.templateIds?.[0] || '64004';
-    contextRef.current.objectId = '935'; // Testing Object ID
+    // Pass preset values to context for dynamic tests
+    contextRef.current.templateSuiteId = activePreset?.selectedTemplateIds?.[0] || '64004';
+    contextRef.current.objectId = activePreset?.selectedObjectIds?.[0] || '935';
     clearTestResults();
     clearLogs();
     setIsRunning(true);
+
+    // Get credentials from active preset
+    const apiKey = activePreset?.apiKey;
+    const privateKey = activePreset?.privateKey;
+    const baseUrl = activePreset?.baseUrl || 'https://api.legito.com/api/v7';
+    const timeout = activePreset?.timeout || 30000;
+
+    if (!activePreset || !apiKey || !privateKey) {
+      log('error', 'No preset selected or missing API credentials. Please select a test preset.');
+      setIsRunning(false);
+      return;
+    }
+
+    // Build a minimal configuration object for the TestRun (for backwards compatibility)
+    const runConfiguration = {
+      id: activePreset.id,
+      name: activePreset.name,
+      baseUrl,
+      authType: 'jwt' as const,
+      apiKey,
+      privateKey,
+      templateIds: activePreset.selectedTemplateIds,
+      documentIds: [],
+      timeout,
+      retryCount: activePreset.retryCount,
+      parallelExecution: activePreset.parallelExecution,
+      environment: 'production' as const,
+      headers: { 'Content-Type': 'application/json' },
+      createdAt: activePreset.createdAt,
+      updatedAt: activePreset.updatedAt,
+    };
 
     const run: TestRun = {
       id: `run-${Date.now()}`,
@@ -86,25 +117,13 @@ export function useTestRunner() {
       failedTests: 0,
       skippedTests: 0,
       results: [],
-      configuration,
+      configuration: runConfiguration,
     };
 
     setCurrentRun(run);
     log('info', `Starting test run with ${testsToRun.length} tests`);
-    log('info', `Target: Legito API v7 (https://emea.legito.com/api/v7)`);
-
-    // Generate JWT token
-    const apiKey = configuration.apiKey || process.env.NEXT_PUBLIC_LEGITO_API_KEY;
-    const privateKey = configuration.privateKey || process.env.NEXT_PUBLIC_LEGITO_PRIVATE_KEY;
-
-    if (!apiKey || !privateKey) {
-      log('error', 'Missing API credentials. Please configure API Key and Private Key.');
-      setIsRunning(false);
-      run.status = 'completed';
-      run.endTime = new Date().toISOString();
-      setCurrentRun(run);
-      return;
-    }
+    log('info', `Preset: ${activePreset.name} (${activePreset.region.toUpperCase()})`);
+    log('info', `Target: ${baseUrl}`);
 
     try {
       log('info', 'Generating JWT token...');
@@ -145,7 +164,7 @@ export function useTestRunner() {
           duration: 0,
           timestamp: new Date().toISOString(),
           request: {
-            url: `https://emea.legito.com/api/v7${test.endpoint}`,
+            url: `${baseUrl}${test.endpoint}`,
             method: test.method,
             headers: {},
           },
@@ -179,7 +198,8 @@ export function useTestRunner() {
           test,
           endpoint,
           jwtRef.current!,
-          configuration.timeout,
+          timeout,
+          baseUrl,
           contextRef.current,
           log
         );
@@ -341,7 +361,7 @@ export function useTestRunner() {
     }
   }, [
     selectedTests,
-    configuration,
+    activePreset,
     setCurrentRun,
     setIsRunning,
     addTestResult,
@@ -383,6 +403,7 @@ async function executeTest(
   resolvedEndpoint: string,
   jwt: string,
   timeout: number,
+  baseUrl: string,
   context: TestContext,
   log: (level: LogEntry['level'], message: string, testId?: string) => void
 ): Promise<TestResult> {
@@ -397,6 +418,7 @@ async function executeTest(
     body,
     jwt,
     timeout,
+    baseUrl,
   });
 
   const duration = Date.now() - startTime;
@@ -455,7 +477,7 @@ async function executeTest(
     duration,
     timestamp: new Date().toISOString(),
     request: {
-      url: `https://emea.legito.com/api/v7${resolvedEndpoint}`,
+      url: `${baseUrl}${resolvedEndpoint}`,
       method: test.method,
       headers: {
         'Content-Type': 'application/json',

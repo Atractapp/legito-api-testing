@@ -184,3 +184,118 @@ export interface TestFilter {
 
 export type SortField = 'name' | 'status' | 'duration' | 'lastRun' | 'category';
 export type SortOrder = 'asc' | 'desc';
+
+// =====================================================================
+// TEST PRESET TYPES (Workspace-Specific Test Configurations)
+// =====================================================================
+
+export type LegitoRegion = 'emea' | 'us' | 'ca' | 'apac' | 'quarterly';
+
+/**
+ * A saved test preset stored in Supabase
+ */
+export interface TestPreset {
+  id: string;
+  name: string;
+  description?: string;
+  region: LegitoRegion;
+  apiKey: string;
+  privateKey: string;
+  baseUrl: string;
+  timeout: number;
+  retryCount: number;
+  parallelExecution: boolean;
+  selectedTemplateIds: string[];
+  selectedObjectIds: string[];
+  customTests: GeneratedTest[];
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * A dynamically generated test case from workspace resources
+ */
+export interface GeneratedTest {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  endpoint: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  resourceType: 'template' | 'object' | 'document' | 'user' | 'userGroup';
+  resourceId: string | number;
+  bodyTemplate?: unknown;
+  expectedStatus: number[];
+  crudOperation?: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
+  assertions: number;
+  generatedAt: string;
+  generatedFrom: string;
+}
+
+/**
+ * Cached workspace resources from Legito API scan
+ */
+export interface WorkspaceResources {
+  id: string;
+  presetId?: string;
+  apiKeyHash: string;
+  region: LegitoRegion;
+  templates: TemplateResource[];
+  objects: ObjectResource[];
+  documents: DocumentResource[];
+  users: UserResource[];
+  userGroups: UserGroupResource[];
+  scannedAt: string;
+  scanStatus: 'pending' | 'scanning' | 'completed' | 'failed';
+  scanError?: string;
+}
+
+export interface TemplateResource {
+  id: number;
+  name: string;
+  description?: string;
+  elements: TemplateElement[];
+}
+
+export interface TemplateElement {
+  id: number;
+  name: string;
+  type: string;
+  uuid: string;
+  options?: { uuid: string; label: string }[];
+  objectId?: number;
+}
+
+export interface ObjectResource {
+  id: number;
+  name: string;
+  properties: ObjectProperty[];
+}
+
+export interface ObjectProperty {
+  id: number;
+  name: string;
+  systemName: string;
+  type: string;
+  isSystem?: boolean;
+}
+
+export interface DocumentResource {
+  id: number;
+  code: string;
+  name: string;
+  templateSuiteId: number;
+  createdAt: string;
+}
+
+export interface UserResource {
+  id: number;
+  email: string;
+  name: string;
+}
+
+export interface UserGroupResource {
+  id: number;
+  name: string;
+}

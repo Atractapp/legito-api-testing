@@ -3,7 +3,7 @@
 
 // Use local proxy to bypass CORS when running in browser
 const PROXY_BASE_URL = '/api/legito';
-const LEGITO_BASE_URL = 'https://emea.legito.com/api/v7';
+const DEFAULT_BASE_URL = 'https://api.legito.com/api/v7';
 
 interface JWTConfig {
   apiKey: string;
@@ -80,6 +80,7 @@ export async function legitoRequest<T = unknown>(
     body?: unknown;
     jwt: string;
     timeout?: number;
+    baseUrl?: string;
   }
 ): Promise<ApiResponse<T>> {
   const startTime = Date.now();
@@ -90,12 +91,18 @@ export async function legitoRequest<T = unknown>(
     // Use the proxy endpoint to bypass CORS
     const proxyUrl = `${PROXY_BASE_URL}${endpoint}`;
 
+    // Build request headers, including custom base URL for proxy
+    const requestHeaders: Record<string, string> = {
+      'Authorization': `Bearer ${options.jwt}`,
+      'Content-Type': 'application/json',
+    };
+    if (options.baseUrl) {
+      requestHeaders['X-Legito-BaseUrl'] = options.baseUrl;
+    }
+
     const response = await fetch(proxyUrl, {
       method: options.method || 'GET',
-      headers: {
-        'Authorization': `Bearer ${options.jwt}`,
-        'Content-Type': 'application/json',
-      },
+      headers: requestHeaders,
       body: options.body ? JSON.stringify(options.body) : undefined,
       signal: controller.signal,
     });
@@ -104,9 +111,9 @@ export async function legitoRequest<T = unknown>(
     const duration = Date.now() - startTime;
 
     // Get response headers
-    const headers: Record<string, string> = {};
+    const responseHeaders: Record<string, string> = {};
     response.headers.forEach((value, key) => {
-      headers[key] = value;
+      responseHeaders[key] = value;
     });
 
     // Parse the proxy response
@@ -120,7 +127,7 @@ export async function legitoRequest<T = unknown>(
         statusText: 'Network Error',
         error: 'Failed to parse proxy response',
         duration,
-        headers,
+        headers: responseHeaders,
       };
     }
 
@@ -132,7 +139,7 @@ export async function legitoRequest<T = unknown>(
         statusText: proxyData.statusText || 'Network Error',
         error: proxyData.error,
         duration: proxyData.duration || duration,
-        headers,
+        headers: responseHeaders,
       };
     }
 
@@ -160,7 +167,7 @@ export async function legitoRequest<T = unknown>(
       data: actualData,
       error,
       duration: proxyData.duration || duration,
-      headers,
+      headers: responseHeaders,
     };
   } catch (err) {
     clearTimeout(timeoutId);

@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { TestRun, TestResult, TestConfiguration, HistoricalData, DashboardStats } from '@/types';
+import type { TestRun, TestResult, TestConfiguration, HistoricalData, DashboardStats, TestPreset } from '@/types';
 
 // These will be set via environment variables
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -557,3 +557,217 @@ CREATE POLICY "Allow all for authenticated users" ON test_results FOR ALL USING 
 CREATE POLICY "Allow all for authenticated users" ON configurations FOR ALL USING (true);
 CREATE POLICY "Allow all for authenticated users" ON historical_data FOR ALL USING (true);
 `;
+
+// ============================================================================
+// TEST PRESETS (Workspace-Specific Test Configurations)
+// ============================================================================
+
+export async function saveTestPreset(preset: Omit<TestPreset, 'id' | 'createdAt' | 'updatedAt'> & { id?: string }): Promise<TestPreset | null> {
+  if (!supabase) {
+    console.log('[Supabase] Client not initialized, skipping preset save');
+    return null;
+  }
+
+  const now = new Date().toISOString();
+  const dbPreset = {
+    ...transformKeysToSnake(preset as unknown as Record<string, unknown>),
+    updated_at: now,
+    ...(preset.id ? {} : { created_at: now }),
+  };
+
+  const { data, error } = await supabase
+    .from('test_presets')
+    .upsert(dbPreset)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error saving test preset:', error);
+    return null;
+  }
+
+  console.log('[Supabase] Test preset saved:', data?.id);
+  return data ? transformKeysToCamel<TestPreset>(data) : null;
+}
+
+export async function getTestPresets(): Promise<TestPreset[]> {
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from('test_presets')
+    .select('*')
+    .order('is_default', { ascending: false })
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching test presets:', error);
+    return [];
+  }
+
+  return (data || []).map(row => transformKeysToCamel<TestPreset>(row));
+}
+
+export async function getTestPresetById(id: string): Promise<TestPreset | null> {
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from('test_presets')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error('Error fetching test preset:', error);
+    return null;
+  }
+
+  return data ? transformKeysToCamel<TestPreset>(data) : null;
+}
+
+export async function getDefaultTestPreset(): Promise<TestPreset | null> {
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from('test_presets')
+    .select('*')
+    .eq('is_default', true)
+    .single();
+
+  if (error) {
+    // No default preset yet
+    return null;
+  }
+
+  return data ? transformKeysToCamel<TestPreset>(data) : null;
+}
+
+export async function deleteTestPreset(id: string): Promise<boolean> {
+  if (!supabase) return false;
+
+  const { error } = await supabase
+    .from('test_presets')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error deleting test preset:', error);
+    return false;
+  }
+
+  console.log('[Supabase] Test preset deleted:', id);
+  return true;
+}
+
+export async function setDefaultPreset(id: string): Promise<boolean> {
+  if (!supabase) return false;
+
+  // First, unset all defaults
+  const { error: unsetError } = await supabase
+    .from('test_presets')
+    .update({ is_default: false })
+    .eq('is_default', true);
+
+  if (unsetError) {
+    console.error('Error unsetting default preset:', unsetError);
+    return false;
+  }
+
+  // Then set the new default
+  const { error: setError } = await supabase
+    .from('test_presets')
+    .update({ is_default: true })
+    .eq('id', id);
+
+  if (setError) {
+    console.error('Error setting default preset:', setError);
+    return false;
+  }
+
+  console.log('[Supabase] Default preset set:', id);
+  return true;
+}
+
+// Ensure the default "Legito Default Test" preset exists with correct credentials
+export async function ensureDefaultPreset(): Promise<TestPreset | null> {
+  if (!supabase) return null;
+
+  const DEFAULT_PRESET = {
+    name: 'Legito Default Test',
+    description: 'Default test preset for EMEA region with Testing API template',
+    region: 'emea' as const,
+    apiKey: 'c9494758-0f05-43b1-a24f-76be185b3fc3',
+    privateKey: '349668dd-7a88-4a2a-befd-f6ffe7e98b64',
+    baseUrl: 'https://api.legito.com/api/v7',
+    timeout: 30000,
+    retryCount: 0,
+    parallelExecution: false,
+    selectedTemplateIds: ['64004'],
+    selectedObjectIds: ['935'],
+    customTests: [],
+    isDefault: true,
+  };
+
+  // Check if default preset exists
+  const { data: existing } = await supabase
+    .from('test_presets')
+    .select('*')
+    .eq('is_default', true)
+    .single();
+
+  if (existing) {
+    // Update existing default preset with correct credentials
+    const { data, error } = await supabase
+      .from('test_presets')
+      .update({
+        api_key: DEFAULT_PRESET.apiKey,
+        private_key: DEFAULT_PRESET.privateKey,
+        base_url: DEFAULT_PRESET.baseUrl,
+        selected_template_ids: DEFAULT_PRESET.selectedTemplateIds,
+        selected_object_ids: DEFAULT_PRESET.selectedObjectIds,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', existing.id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating default preset:', error);
+      return null;
+    }
+
+    console.log('[Supabase] Default preset updated with correct credentials');
+    return transformKeysToCamel<TestPreset>(data);
+  }
+
+  // Create new default preset
+  const now = new Date().toISOString();
+  const { data, error } = await supabase
+    .from('test_presets')
+    .insert({
+      name: DEFAULT_PRESET.name,
+      description: DEFAULT_PRESET.description,
+      region: DEFAULT_PRESET.region,
+      api_key: DEFAULT_PRESET.apiKey,
+      private_key: DEFAULT_PRESET.privateKey,
+      base_url: DEFAULT_PRESET.baseUrl,
+      timeout: DEFAULT_PRESET.timeout,
+      retry_count: DEFAULT_PRESET.retryCount,
+      parallel_execution: DEFAULT_PRESET.parallelExecution,
+      selected_template_ids: DEFAULT_PRESET.selectedTemplateIds,
+      selected_object_ids: DEFAULT_PRESET.selectedObjectIds,
+      custom_tests: DEFAULT_PRESET.customTests,
+      is_default: DEFAULT_PRESET.isDefault,
+      created_at: now,
+      updated_at: now,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating default preset:', error);
+    return null;
+  }
+
+  console.log('[Supabase] Default preset created');
+  return transformKeysToCamel<TestPreset>(data);
+}

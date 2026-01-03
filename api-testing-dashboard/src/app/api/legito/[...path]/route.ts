@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const LEGITO_BASE_URL = 'https://emea.legito.com/api/v7';
+const DEFAULT_BASE_URL = 'https://api.legito.com/api/v7';
 
 export async function GET(
   request: NextRequest,
@@ -37,7 +37,10 @@ async function handleRequest(
 ) {
   const { path } = await paramsPromise;
   const endpoint = '/' + path.join('/');
-  const url = `${LEGITO_BASE_URL}${endpoint}${request.nextUrl.search}`;
+
+  // Allow custom base URL via header (for different regions)
+  const baseUrl = request.headers.get('X-Legito-BaseUrl') || DEFAULT_BASE_URL;
+  const url = `${baseUrl}${endpoint}${request.nextUrl.search}`;
 
   // Get authorization header from request
   const authHeader = request.headers.get('Authorization');

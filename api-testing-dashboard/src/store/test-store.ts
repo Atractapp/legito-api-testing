@@ -10,6 +10,7 @@ import type {
   TestFilter,
   DashboardStats,
   HistoricalData,
+  TestPreset,
 } from '@/types';
 import { LEGITO_TESTS } from '@/lib/legito-api';
 
@@ -30,6 +31,9 @@ interface TestStore {
   filter: TestFilter;
   isRunning: boolean;
   activeTab: string;
+
+  // Preset Management
+  activePreset: TestPreset | null;
 
   // Dashboard Stats
   stats: DashboardStats;
@@ -57,6 +61,7 @@ interface TestStore {
   updateTestStatus: (testId: string, status: TestCase['status']) => void;
   setStats: (stats: DashboardStats) => void;
   setHistoricalData: (data: HistoricalData[]) => void;
+  setActivePreset: (preset: TestPreset | null) => void;
 }
 
 const defaultConfiguration: TestConfiguration = {
@@ -145,6 +150,7 @@ export const useTestStore = create<TestStore>()(
       filter: {},
       isRunning: false,
       activeTab: 'runner',
+      activePreset: null,
       stats: defaultStats,
 
       // Actions
@@ -265,12 +271,14 @@ export const useTestStore = create<TestStore>()(
       setStats: (stats) => set({ stats }),
 
       setHistoricalData: (data) => set({ historicalData: data }),
+
+      setActivePreset: (preset) => set({ activePreset: preset }),
     }),
     {
       name: 'legito-api-test-dashboard',
       partialize: (state) => ({
-        configuration: state.configuration,
-        savedConfigurations: state.savedConfigurations,
+        // Persist only activePreset (replaces old configuration)
+        activePreset: state.activePreset,
         historicalData: state.historicalData,
       }),
     }

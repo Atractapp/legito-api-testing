@@ -1,16 +1,9 @@
 'use client';
 
-import { Play, Square, RefreshCw, Trash2, CheckSquare, XSquare } from 'lucide-react';
+import { Play, Square, RefreshCw, CheckSquare, XSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useTestStore } from '@/store/test-store';
-import { cn } from '@/lib/utils';
+import { PresetSelector } from './preset-selector';
 
 interface RunControlsProps {
   onRunTests: () => void;
@@ -25,10 +18,8 @@ export function RunControls({ onRunTests, onStopTests, onResetTests }: RunContro
     selectAll,
     deselectAll,
     isRunning,
-    configuration,
-    setConfiguration,
-    savedConfigurations,
-    loadConfiguration,
+    activePreset,
+    setActivePreset,
   } = useTestStore();
 
   const totalTests = categories.reduce((sum, cat) => sum + cat.tests.length, 0);
@@ -73,35 +64,12 @@ export function RunControls({ onRunTests, onStopTests, onResetTests }: RunContro
 
         <div className="flex-1" />
 
-        {/* Configuration Selector */}
-        <Select
-          value={configuration.id}
-          onValueChange={(id) => loadConfiguration(id)}
+        {/* Preset Selector */}
+        <PresetSelector
+          activePreset={activePreset}
+          onPresetChange={setActivePreset}
           disabled={isRunning}
-        >
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Select configuration" />
-          </SelectTrigger>
-          <SelectContent>
-            {savedConfigurations.map((config) => (
-              <SelectItem key={config.id} value={config.id}>
-                <div className="flex items-center gap-2">
-                  <span
-                    className={cn(
-                      'h-2 w-2 rounded-full',
-                      config.environment === 'production'
-                        ? 'bg-red-500'
-                        : config.environment === 'staging'
-                        ? 'bg-yellow-500'
-                        : 'bg-green-500'
-                    )}
-                  />
-                  {config.name}
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        />
       </div>
 
       {/* Selection Controls Row */}
