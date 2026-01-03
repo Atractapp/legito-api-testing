@@ -14,6 +14,8 @@ import {
   AlertCircle,
   RefreshCw,
   Wand2,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -58,6 +60,7 @@ export function WorkspaceScanner() {
   const [privateKey, setPrivateKey] = useState('');
   const [region, setRegion] = useState<LegitoRegion>('emea');
   const [presetName, setPresetName] = useState('');
+  const [showSecrets, setShowSecrets] = useState(false);
 
   // Scanning state
   const [isScanning, setIsScanning] = useState(false);
@@ -216,27 +219,51 @@ export function WorkspaceScanner() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="scan-apiKey">API Key</Label>
-              <Input
-                id="scan-apiKey"
-                type="password"
-                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                disabled={isScanning}
-                className="font-mono text-sm"
-              />
+              <div className="relative">
+                <Input
+                  id="scan-apiKey"
+                  type={showSecrets ? 'text' : 'password'}
+                  placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  disabled={isScanning}
+                  className="font-mono text-sm pr-10"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+                  onClick={() => setShowSecrets(!showSecrets)}
+                  disabled={isScanning}
+                >
+                  {showSecrets ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                </Button>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="scan-privateKey">Private Key</Label>
-              <Input
-                id="scan-privateKey"
-                type="password"
-                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-                value={privateKey}
-                onChange={(e) => setPrivateKey(e.target.value)}
-                disabled={isScanning}
-                className="font-mono text-sm"
-              />
+              <div className="relative">
+                <Input
+                  id="scan-privateKey"
+                  type={showSecrets ? 'text' : 'password'}
+                  placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  value={privateKey}
+                  onChange={(e) => setPrivateKey(e.target.value)}
+                  disabled={isScanning}
+                  className="font-mono text-sm pr-10"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+                  onClick={() => setShowSecrets(!showSecrets)}
+                  disabled={isScanning}
+                >
+                  {showSecrets ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                </Button>
+              </div>
             </div>
           </div>
 
