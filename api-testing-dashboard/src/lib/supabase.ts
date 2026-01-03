@@ -697,7 +697,7 @@ export async function ensureDefaultPreset(): Promise<TestPreset | null> {
     region: 'emea' as const,
     apiKey: 'c9494758-0f05-43b1-a24f-76be185b3fc3',
     privateKey: '349668dd-7a88-4a2a-befd-f6ffe7e98b64',
-    baseUrl: 'https://api.legito.com/api/v7',
+    baseUrl: 'https://emea.legito.com/api/v7',
     timeout: 30000,
     retryCount: 0,
     parallelExecution: false,

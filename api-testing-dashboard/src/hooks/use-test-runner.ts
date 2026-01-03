@@ -80,7 +80,7 @@ export function useTestRunner() {
     // Get credentials from active preset
     const apiKey = activePreset?.apiKey;
     const privateKey = activePreset?.privateKey;
-    const baseUrl = activePreset?.baseUrl || 'https://api.legito.com/api/v7';
+    const baseUrl = activePreset?.baseUrl || 'https://emea.legito.com/api/v7';
     const timeout = activePreset?.timeout || 30000;
 
     if (!activePreset || !apiKey || !privateKey) {

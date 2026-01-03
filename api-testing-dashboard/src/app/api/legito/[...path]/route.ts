@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const DEFAULT_BASE_URL = 'https://api.legito.com/api/v7';
+const DEFAULT_BASE_URL = 'https://emea.legito.com/api/v7';
 
 export async function GET(
   request: NextRequest,

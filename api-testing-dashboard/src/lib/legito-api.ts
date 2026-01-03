@@ -3,7 +3,7 @@
 
 // Use local proxy to bypass CORS when running in browser
 const PROXY_BASE_URL = '/api/legito';
-const DEFAULT_BASE_URL = 'https://api.legito.com/api/v7';
+const DEFAULT_BASE_URL = 'https://emea.legito.com/api/v7';
 
 interface JWTConfig {
   apiKey: string;
