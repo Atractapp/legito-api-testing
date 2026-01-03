@@ -10,12 +10,14 @@ import {
   Users,
   UserCircle,
   Loader2,
-  Check,
   AlertCircle,
   RefreshCw,
   Wand2,
   Eye,
   EyeOff,
+  Plus,
+  Trash2,
+  Settings2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,11 +40,19 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { useTestStore } from '@/store/test-store';
 import { scanWorkspace, type ScanProgress } from '@/lib/workspace-service';
 import { generateTestsFromResources } from '@/lib/test-generator-service';
 import { saveTestPreset } from '@/lib/supabase';
-import type { WorkspaceResources, LegitoRegion, TestPreset } from '@/types';
+import type { WorkspaceResources, LegitoRegion, TestPreset, TemplateResource, TemplateElement } from '@/types';
 
 const regionOptions: { value: LegitoRegion; label: string; baseUrl: string }[] = [
   { value: 'emea', label: 'EMEA (Europe)', baseUrl: 'https://emea.legito.com/api/v7' },
@@ -51,6 +61,27 @@ const regionOptions: { value: LegitoRegion; label: string; baseUrl: string }[] =
   { value: 'apac', label: 'APAC (Asia Pacific)', baseUrl: 'https://apac.legito.com/api/v7' },
   { value: 'quarterly', label: 'Quarterly', baseUrl: 'https://quarterly.legito.com/api/v7' },
 ];
+
+const elementTypes = [
+  { value: 'text', label: 'Text' },
+  { value: 'number', label: 'Number' },
+  { value: 'date', label: 'Date' },
+  { value: 'boolean', label: 'Boolean (Switch)' },
+  { value: 'select', label: 'Select (Option UUID)' },
+  { value: 'money', label: 'Money (Amount + Currency)' },
+];
+
+interface ConfiguredElement {
+  id: string;
+  name: string;
+  type: string;
+  value: string;
+}
+
+interface TemplateConfig {
+  templateId: number;
+  elements: ConfiguredElement[];
+}
 
 export function WorkspaceScanner() {
   const { setActivePreset } = useTestStore();
@@ -73,6 +104,10 @@ export function WorkspaceScanner() {
   const [selectedObjects, setSelectedObjects] = useState<Set<number>>(new Set());
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['templates']));
 
+  // Element configuration
+  const [templateConfigs, setTemplateConfigs] = useState<Map<number, ConfiguredElement[]>>(new Map());
+  const [editingTemplate, setEditingTemplate] = useState<TemplateResource | null>(null);
+
   // Saving state
   const [isSaving, setIsSaving] = useState(false);
 
@@ -86,6 +121,7 @@ export function WorkspaceScanner() {
     setResources(null);
     setSelectedTemplates(new Set());
     setSelectedObjects(new Set());
+    setTemplateConfigs(new Map());
 
     try {
       const result = await scanWorkspace(
@@ -93,14 +129,6 @@ export function WorkspaceScanner() {
         setScanProgress
       );
       setResources(result);
-
-      // Auto-select first template and object
-      if (result.templates.length > 0) {
-        setSelectedTemplates(new Set([result.templates[0].id]));
-      }
-      if (result.objects.length > 0) {
-        setSelectedObjects(new Set([result.objects[0].id]));
-      }
 
       // Default preset name
       if (!presetName) {
@@ -150,13 +178,76 @@ export function WorkspaceScanner() {
     });
   };
 
+  const openElementEditor = (template: TemplateResource) => {
+    setEditingTemplate(template);
+  };
+
+  const getTemplateElements = (templateId: number): ConfiguredElement[] => {
+    return templateConfigs.get(templateId) || [];
+  };
+
+  const addElement = (templateId: number) => {
+    const newElement: ConfiguredElement = {
+      id: crypto.randomUUID(),
+      name: '',
+      type: 'text',
+      value: '',
+    };
+    setTemplateConfigs(prev => {
+      const next = new Map(prev);
+      const existing = next.get(templateId) || [];
+      next.set(templateId, [...existing, newElement]);
+      return next;
+    });
+  };
+
+  const updateElement = (templateId: number, elementId: string, field: keyof ConfiguredElement, value: string) => {
+    setTemplateConfigs(prev => {
+      const next = new Map(prev);
+      const elements = next.get(templateId) || [];
+      const updated = elements.map(el =>
+        el.id === elementId ? { ...el, [field]: value } : el
+      );
+      next.set(templateId, updated);
+      return next;
+    });
+  };
+
+  const removeElement = (templateId: number, elementId: string) => {
+    setTemplateConfigs(prev => {
+      const next = new Map(prev);
+      const elements = next.get(templateId) || [];
+      next.set(templateId, elements.filter(el => el.id !== elementId));
+      return next;
+    });
+  };
+
   const handleGeneratePreset = async () => {
     if (!resources || !presetName) return;
 
     setIsSaving(true);
     try {
+      // Build template resources with configured elements
+      const configuredTemplates: TemplateResource[] = resources.templates
+        .filter(t => selectedTemplates.has(t.id))
+        .map(t => ({
+          ...t,
+          elements: (templateConfigs.get(t.id) || []).map(el => ({
+            id: 0,
+            name: el.name,
+            type: el.type,
+            uuid: el.id,
+          })),
+        }));
+
+      const configuredResources: WorkspaceResources = {
+        ...resources,
+        templates: configuredTemplates,
+        objects: resources.objects.filter(o => selectedObjects.has(o.id)),
+      };
+
       // Generate tests from selected resources
-      const generatedTests = generateTestsFromResources(resources, {
+      const generatedTests = generateTestsFromResources(configuredResources, {
         selectedTemplateIds: Array.from(selectedTemplates),
         selectedObjectIds: Array.from(selectedObjects),
         generateDocumentTests: selectedTemplates.size > 0,
@@ -188,6 +279,7 @@ export function WorkspaceScanner() {
         setApiKey('');
         setPrivateKey('');
         setPresetName('');
+        setTemplateConfigs(new Map());
       }
     } catch (error) {
       console.error('Error saving preset:', error);
@@ -352,7 +444,7 @@ export function WorkspaceScanner() {
               <div>
                 <CardTitle>Found Resources</CardTitle>
                 <CardDescription>
-                  Select resources to include in your test preset
+                  Select resources and configure elements for document creation tests
                 </CardDescription>
               </div>
               <Badge variant="secondary">
@@ -380,22 +472,35 @@ export function WorkspaceScanner() {
                   </Badge>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pl-10 space-y-1">
-                  {resources.templates.map((template) => (
-                    <div
-                      key={template.id}
-                      className="flex items-center gap-2 py-1 px-2 hover:bg-muted/50 rounded cursor-pointer"
-                      onClick={() => toggleTemplate(template.id)}
-                    >
-                      <Checkbox
-                        checked={selectedTemplates.has(template.id)}
-                        onCheckedChange={() => toggleTemplate(template.id)}
-                      />
-                      <span className="text-sm">{template.name}</span>
-                      <Badge variant="secondary" className="ml-auto text-xs">
-                        {template.elements.length} elements
-                      </Badge>
-                    </div>
-                  ))}
+                  {resources.templates.map((template) => {
+                    const configuredElements = getTemplateElements(template.id);
+                    return (
+                      <div
+                        key={template.id}
+                        className="flex items-center gap-2 py-2 px-2 hover:bg-muted/50 rounded"
+                      >
+                        <Checkbox
+                          checked={selectedTemplates.has(template.id)}
+                          onCheckedChange={() => toggleTemplate(template.id)}
+                        />
+                        <span className="text-sm flex-1 truncate">{template.name || `Template ${template.id}`}</span>
+                        {configuredElements.length > 0 && (
+                          <Badge variant="secondary" className="text-xs">
+                            {configuredElements.length} elements
+                          </Badge>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => openElementEditor(template)}
+                          className="h-7 px-2"
+                        >
+                          <Settings2 className="h-3.5 w-3.5 mr-1" />
+                          Configure
+                        </Button>
+                      </div>
+                    );
+                  })}
                   {resources.templates.length === 0 && (
                     <p className="text-sm text-muted-foreground py-2">No templates found</p>
                   )}
@@ -431,9 +536,6 @@ export function WorkspaceScanner() {
                         onCheckedChange={() => toggleObject(object.id)}
                       />
                       <span className="text-sm">{object.name}</span>
-                      <Badge variant="secondary" className="ml-auto text-xs">
-                        {object.properties.length} props
-                      </Badge>
                     </div>
                   ))}
                   {resources.objects.length === 0 && (
@@ -442,7 +544,7 @@ export function WorkspaceScanner() {
                 </CollapsibleContent>
               </Collapsible>
 
-              {/* Documents */}
+              {/* Documents (info only) */}
               <Collapsible
                 open={expandedSections.has('documents')}
                 onOpenChange={() => toggleSection('documents')}
@@ -460,8 +562,8 @@ export function WorkspaceScanner() {
                   </Badge>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pl-10 space-y-1">
-                  {resources.documents.slice(0, 10).map((doc) => (
-                    <div key={doc.id} className="text-sm py-1 px-2 text-muted-foreground">
+                  {resources.documents.slice(0, 5).map((doc) => (
+                    <div key={doc.id} className="text-sm py-1 px-2 text-muted-foreground truncate">
                       {doc.name}
                     </div>
                   ))}
@@ -471,7 +573,7 @@ export function WorkspaceScanner() {
                 </CollapsibleContent>
               </Collapsible>
 
-              {/* Users */}
+              {/* Users (info only) */}
               <Collapsible
                 open={expandedSections.has('users')}
                 onOpenChange={() => toggleSection('users')}
@@ -489,18 +591,15 @@ export function WorkspaceScanner() {
                   </Badge>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pl-10 space-y-1">
-                  {resources.users.slice(0, 10).map((user) => (
+                  {resources.users.slice(0, 5).map((user) => (
                     <div key={user.id} className="text-sm py-1 px-2 text-muted-foreground">
                       {user.email}
                     </div>
                   ))}
-                  {resources.users.length === 0 && (
-                    <p className="text-sm text-muted-foreground py-2">No users found</p>
-                  )}
                 </CollapsibleContent>
               </Collapsible>
 
-              {/* User Groups */}
+              {/* User Groups (info only) */}
               <Collapsible
                 open={expandedSections.has('userGroups')}
                 onOpenChange={() => toggleSection('userGroups')}
@@ -537,7 +636,7 @@ export function WorkspaceScanner() {
                   Selected: {selectedTemplates.size} templates, {selectedObjects.size} objects
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Tests to generate: {selectedTemplates.size * 2 + selectedObjects.size * 4}
+                  Tests to generate: ~{selectedTemplates.size * 2 + selectedObjects.size * 4}
                 </div>
               </div>
 
@@ -558,7 +657,7 @@ export function WorkspaceScanner() {
                 ) : (
                   <>
                     <Wand2 className="h-4 w-4 mr-2" />
-                    Generate Preset with {selectedTemplates.size * 2 + selectedObjects.size * 4} Tests
+                    Generate Preset
                   </>
                 )}
               </Button>
@@ -566,6 +665,98 @@ export function WorkspaceScanner() {
           </CardContent>
         </Card>
       )}
+
+      {/* Element Editor Dialog */}
+      <Dialog open={!!editingTemplate} onOpenChange={(open) => !open && setEditingTemplate(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Configure Elements: {editingTemplate?.name || `Template ${editingTemplate?.id}`}</DialogTitle>
+            <DialogDescription>
+              Add element names and test values for document creation. Element names must match your template exactly.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            {editingTemplate && getTemplateElements(editingTemplate.id).map((element) => (
+              <div key={element.id} className="flex items-start gap-2 p-3 border rounded-lg">
+                <div className="flex-1 grid gap-2 md:grid-cols-3">
+                  <div>
+                    <Label className="text-xs">Element Name</Label>
+                    <Input
+                      placeholder="e.g., doc-name"
+                      value={element.name}
+                      onChange={(e) => updateElement(editingTemplate.id, element.id, 'name', e.target.value)}
+                      className="font-mono text-sm"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-xs">Type</Label>
+                    <Select
+                      value={element.type}
+                      onValueChange={(value) => updateElement(editingTemplate.id, element.id, 'type', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {elementTypes.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            {type.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label className="text-xs">Test Value</Label>
+                    <Input
+                      placeholder={
+                        element.type === 'date' ? 'YYYY-MM-DD' :
+                        element.type === 'boolean' ? 'true/false' :
+                        element.type === 'money' ? '1000' :
+                        'Value...'
+                      }
+                      value={element.value}
+                      onChange={(e) => updateElement(editingTemplate.id, element.id, 'value', e.target.value)}
+                    />
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeElement(editingTemplate.id, element.id)}
+                  className="text-destructive hover:text-destructive"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+
+            {editingTemplate && getTemplateElements(editingTemplate.id).length === 0 && (
+              <div className="text-center py-8 text-muted-foreground">
+                <Settings2 className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                <p>No elements configured yet.</p>
+                <p className="text-sm">Add elements to test document creation.</p>
+              </div>
+            )}
+
+            <Button
+              variant="outline"
+              onClick={() => editingTemplate && addElement(editingTemplate.id)}
+              className="w-full"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add Element
+            </Button>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingTemplate(null)}>
+              Done
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
