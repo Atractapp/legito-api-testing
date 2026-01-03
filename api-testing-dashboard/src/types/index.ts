@@ -228,9 +228,6 @@ export interface GeneratedTest {
   bodyTemplate?: unknown;
   expectedStatus: number[];
   crudOperation?: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
-  assertions: number;
-  generatedAt: string;
-  generatedFrom: string;
 }
 
 /**
@@ -240,7 +237,7 @@ export interface WorkspaceResources {
   id: string;
   presetId?: string;
   apiKeyHash: string;
-  region: LegitoRegion;
+  region: string;
   templates: TemplateResource[];
   objects: ObjectResource[];
   documents: DocumentResource[];
@@ -283,19 +280,26 @@ export interface ObjectProperty {
 
 export interface DocumentResource {
   id: number;
-  code: string;
   name: string;
-  templateSuiteId: number;
-  createdAt: string;
+  code?: string;
+  templateId?: number;
+  templateSuiteId?: number;
+  status?: string;
+  createdAt?: string;
 }
 
 export interface UserResource {
   id: number;
   email: string;
-  name: string;
+  firstName?: string;
+  lastName?: string;
+  name?: string;
+  role?: string;
 }
 
 export interface UserGroupResource {
   id: number;
   name: string;
+  description?: string;
+  memberCount?: number;
 }
