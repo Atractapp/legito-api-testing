@@ -39,15 +39,18 @@ export function PresetSelector({ activePreset, onPresetChange, disabled }: Prese
       setIsLoading(true);
       try {
         // Ensure default preset exists with correct credentials
-        await ensureDefaultPreset();
+        const updatedDefault = await ensureDefaultPreset();
 
         const loaded = await getTestPresets();
         setPresets(loaded);
 
-        // Auto-select default preset if none active
-        if (!activePreset && loaded.length > 0) {
+        // Always use fresh preset from database (fixes cached stale data)
+        if (loaded.length > 0) {
           const defaultPreset = loaded.find(p => p.isDefault) || loaded[0];
-          onPresetChange(defaultPreset);
+          // Force refresh if activePreset has wrong baseUrl or no preset selected
+          if (!activePreset || activePreset.baseUrl !== defaultPreset.baseUrl) {
+            onPresetChange(defaultPreset);
+          }
         }
       } catch (error) {
         console.error('Error loading presets:', error);
@@ -56,7 +59,7 @@ export function PresetSelector({ activePreset, onPresetChange, disabled }: Prese
       }
     }
     loadPresets();
-  }, [activePreset, onPresetChange]);
+  }, []);
 
   if (isLoading) {
     return (
