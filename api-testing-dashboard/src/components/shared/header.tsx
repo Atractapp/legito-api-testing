@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { User, Settings, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,15 +20,19 @@ interface HeaderProps {
   title?: string;
 }
 
-export function Header({ title = 'API Testing Dashboard' }: HeaderProps) {
+export function Header({ title }: HeaderProps) {
+  const pathname = usePathname();
   const { isRunning, currentRun } = useTestStore();
   const { user, logout } = useAuth();
+
+  // Determine title based on route
+  const displayTitle = title || (pathname?.startsWith('/tagger') ? 'Tag Sync' : 'API Testing Dashboard');
 
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       {/* Left: Title and Status */}
       <div className="flex items-center gap-4">
-        <h1 className="text-xl font-semibold text-foreground">{title}</h1>
+        <h1 className="text-xl font-semibold text-foreground">{displayTitle}</h1>
         {isRunning && currentRun && (
           <Badge variant="secondary" className="animate-pulse">
             <span className="mr-2 h-2 w-2 rounded-full bg-yellow-500 inline-block" />
