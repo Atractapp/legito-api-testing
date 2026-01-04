@@ -1,8 +1,6 @@
 'use client';
 
-import { useChat } from '@ai-sdk/react';
-import { TextStreamChatTransport } from 'ai';
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,6 +14,12 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 
 type AIProvider = 'openai' | 'anthropic' | 'google';
 
+interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 const providerLabels: Record<AIProvider, string> = {
   openai: 'OpenAI',
   anthropic: 'Anthropic (Claude)',
@@ -27,6 +31,9 @@ export default function McpChatPage() {
   const [aiApiKey, setAiApiKey] = useState('');
   const [showSettings, setShowSettings] = useState(true);
   const [inputValue, setInputValue] = useState('');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Get the default workspace credentials
@@ -34,10 +41,6 @@ export default function McpChatPage() {
   const workspacesList = getAllWorkspaces();
   const defaultEntry = workspacesList.find(entry => entry.workspace.isDefault) || workspacesList[0];
   const defaultWorkspace = defaultEntry?.workspace;
-
-  // Refs to hold current values for headers function
-  const settingsRef = useRef({ aiProvider, aiApiKey, defaultWorkspace });
-  settingsRef.current = { aiProvider, aiApiKey, defaultWorkspace };
 
   // Load saved API key from localStorage on mount
   useEffect(() => {
@@ -55,35 +58,6 @@ export default function McpChatPage() {
     localStorage.setItem('ai-provider', aiProvider);
   }, [aiApiKey, aiProvider]);
 
-  // Create transport with dynamic headers using ref for latest values
-  const transport = useMemo(() => {
-    return new TextStreamChatTransport({
-      api: '/api/chat',
-      headers: () => {
-        const { aiProvider, aiApiKey, defaultWorkspace } = settingsRef.current;
-        const headers: Record<string, string> = {
-          'X-AI-Provider': aiProvider,
-          'X-AI-API-Key': aiApiKey,
-        };
-
-        if (defaultWorkspace) {
-          headers['X-Legito-Key'] = defaultWorkspace.credentials.key;
-          headers['X-Legito-Private-Key'] = defaultWorkspace.credentials.privateKey;
-          headers['X-Legito-Region'] = defaultWorkspace.credentials.region;
-        }
-
-        return headers;
-      },
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only create transport once, headers function reads from ref
-
-  const { messages, sendMessage, status, error } = useChat({
-    transport,
-  });
-
-  const isLoading = status === 'streaming' || status === 'submitted';
-
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -94,11 +68,92 @@ export default function McpChatPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputValue.trim() || !hasCredentials) return;
+    if (!inputValue.trim() || !hasCredentials || isLoading) return;
 
-    const message = inputValue.trim();
+    const userMessage = inputValue.trim();
     setInputValue('');
-    await sendMessage({ text: message });
+    setError(null);
+
+    // Add user message
+    const userMsg: Message = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      content: userMessage,
+    };
+    setMessages(prev => [...prev, userMsg]);
+    setIsLoading(true);
+
+    try {
+      // Build headers
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'X-AI-Provider': aiProvider,
+        'X-AI-API-Key': aiApiKey,
+      };
+
+      if (defaultWorkspace) {
+        headers['X-Legito-Key'] = defaultWorkspace.credentials.key;
+        headers['X-Legito-Private-Key'] = defaultWorkspace.credentials.privateKey;
+        headers['X-Legito-Region'] = defaultWorkspace.credentials.region;
+      }
+
+      // Build messages for API
+      const apiMessages = [...messages, userMsg].map(m => ({
+        role: m.role,
+        content: m.content,
+      }));
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
+
+      // Read the stream
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No response body');
+      }
+
+      const decoder = new TextDecoder();
+      let assistantContent = '';
+
+      // Add empty assistant message that we'll update
+      const assistantMsgId = crypto.randomUUID();
+      setMessages(prev => [...prev, { id: assistantMsgId, role: 'assistant', content: '' }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        assistantContent += chunk;
+
+        // Update the assistant message with accumulated content
+        setMessages(prev =>
+          prev.map(m =>
+            m.id === assistantMsgId
+              ? { ...m, content: assistantContent }
+              : m
+          )
+        );
+      }
+
+      if (!assistantContent.trim()) {
+        // Remove empty assistant message if no content
+        setMessages(prev => prev.filter(m => m.id !== assistantMsgId));
+        setError('No response from AI. Check your API key and try again.');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -159,7 +214,7 @@ export default function McpChatPage() {
                       placeholder={`Enter your ${aiProvider === 'google' ? 'Gemini' : aiProvider === 'openai' ? 'OpenAI' : 'Anthropic'} API key`}
                     />
                     <p className="text-xs text-muted-foreground">
-                      Your API key is sent directly to the AI provider and not stored.
+                      Your API key is stored locally in your browser.
                     </p>
                   </div>
 
@@ -240,12 +295,7 @@ export default function McpChatPage() {
                       }`}
                     >
                       <div className="whitespace-pre-wrap text-sm">
-                        {message.parts?.map((part, i) => {
-                          if (part.type === 'text') {
-                            return <span key={i}>{part.text}</span>;
-                          }
-                          return null;
-                        })}
+                        {message.content || (message.role === 'assistant' && isLoading ? '' : message.content)}
                       </div>
                     </div>
                     {message.role === 'user' && (
@@ -256,7 +306,7 @@ export default function McpChatPage() {
                   </div>
                 ))}
 
-                {isLoading && (
+                {isLoading && messages[messages.length - 1]?.role === 'user' && (
                   <div className="flex gap-3">
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                       <Bot className="h-4 w-4 text-primary" />
@@ -270,7 +320,7 @@ export default function McpChatPage() {
                 {error && (
                   <Alert variant="destructive">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{error.message}</AlertDescription>
+                    <AlertDescription>{error}</AlertDescription>
                   </Alert>
                 )}
 
