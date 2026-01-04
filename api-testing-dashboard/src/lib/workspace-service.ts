@@ -229,6 +229,90 @@ async function fetchUserGroups(jwt: string, baseUrl: string): Promise<UserGroupR
 }
 
 /**
+ * Fetches elements for a specific template by finding an existing document
+ * and extracting element definitions from it.
+ *
+ * Legito API flow:
+ * 1. Find a document using this template: /document-record?templateSuiteId={id}
+ * 2. Get document version code from the document
+ * 3. Fetch elements from: /document-version/data/{documentVersionCode}
+ */
+export async function fetchTemplateElements(
+  credentials: ScanCredentials,
+  templateSuiteId: number
+): Promise<TemplateElement[]> {
+  const jwt = await generateJWT({ apiKey: credentials.apiKey, privateKey: credentials.privateKey });
+
+  // Step 1: Find a document using this template
+  const docsResponse = await legitoRequest<RawDocumentWithVersions[]>(
+    `/document-record?templateSuiteId=${templateSuiteId}&limit=5`,
+    { method: 'GET', jwt, baseUrl: credentials.baseUrl }
+  );
+
+  if (!docsResponse.success || !docsResponse.data) {
+    console.warn('No documents found for template:', templateSuiteId);
+    return [];
+  }
+
+  const docs = Array.isArray(docsResponse.data) ? docsResponse.data : [];
+
+  // Find a non-deleted document with document versions
+  const validDoc = docs.find(doc => !doc.deleted && (doc.documentVersions?.length ?? 0) > 0);
+  if (!validDoc || !validDoc.documentVersions || validDoc.documentVersions.length === 0) {
+    console.warn('No valid documents with versions found for template:', templateSuiteId);
+    return [];
+  }
+
+  // Get the latest document version code
+  const latestVersion = validDoc.documentVersions[0];
+  const docVersionCode = latestVersion.code;
+
+  // Step 2: Fetch elements from document version
+  const elementsResponse = await legitoRequest<RawElement[]>(
+    `/document-version/data/${docVersionCode}`,
+    { method: 'GET', jwt, baseUrl: credentials.baseUrl }
+  );
+
+  if (!elementsResponse.success || !elementsResponse.data) {
+    console.warn('Failed to fetch elements for document version:', docVersionCode);
+    return [];
+  }
+
+  const rawElements = Array.isArray(elementsResponse.data) ? elementsResponse.data : [];
+
+  // Filter to only input elements (those with a name and editable types)
+  const inputTypes = [
+    'TextInput', 'Date', 'Switcher', 'Question', 'Select',
+    'ObjectRecordsSelectbox', 'ObjectRecordsQuestion', 'Money',
+    'Counter', 'Calculation', 'RichText', 'Image'
+  ];
+
+  const elements: TemplateElement[] = rawElements
+    .filter(el => el.name && el.name.trim() !== '' && inputTypes.includes(el.type))
+    .map(el => ({
+      id: el.id,
+      name: el.name,
+      type: el.type,
+      uuid: el.uuid,
+      options: el.items ? Object.entries(el.items).map(([uuid, label]) => ({
+        uuid,
+        label: String(label)
+      })) : undefined,
+      objectId: el.objectId,
+    }));
+
+  // Remove duplicates (same name can appear multiple times if repeated in document)
+  const uniqueElements = elements.reduce((acc, el) => {
+    if (!acc.find(e => e.name === el.name)) {
+      acc.push(el);
+    }
+    return acc;
+  }, [] as TemplateElement[]);
+
+  return uniqueElements;
+}
+
+/**
  * Hashes an API key for storage (we don't store the actual key in workspace_resources)
  */
 async function hashApiKey(apiKey: string): Promise<string> {
@@ -259,6 +343,25 @@ interface RawDocument {
   status?: string;
   createdAt?: string;
   created_at?: string;
+}
+
+interface RawDocumentWithVersions extends RawDocument {
+  deleted?: boolean;
+  documentVersions?: {
+    id: number;
+    code: string;
+    templateSuiteId: number;
+  }[];
+}
+
+interface RawElement {
+  id: number;
+  name: string;
+  type: string;
+  uuid: string;
+  value?: unknown;
+  items?: Record<string, string>;
+  objectId?: number;
 }
 
 interface RawUser {

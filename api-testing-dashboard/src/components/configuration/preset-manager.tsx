@@ -63,9 +63,9 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useTestStore } from '@/store/test-store';
 import { getTestPresets, saveTestPreset, deleteTestPreset, ensureDefaultPreset } from '@/lib/supabase';
-import { scanWorkspace, type ScanProgress } from '@/lib/workspace-service';
+import { scanWorkspace, fetchTemplateElements, type ScanProgress, type ScanCredentials } from '@/lib/workspace-service';
 import { generateTestsFromResources } from '@/lib/test-generator-service';
-import type { TestPreset, LegitoRegion, WorkspaceResources, TemplateResource } from '@/types';
+import type { TestPreset, LegitoRegion, WorkspaceResources, TemplateResource, TemplateElement } from '@/types';
 
 const regionOptions: { value: LegitoRegion; label: string; baseUrl: string }[] = [
   { value: 'emea', label: 'EMEA (Europe)', baseUrl: 'https://emea.legito.com/api/v7' },
@@ -75,20 +75,30 @@ const regionOptions: { value: LegitoRegion; label: string; baseUrl: string }[] =
   { value: 'quarterly', label: 'Quarterly', baseUrl: 'https://quarterly.legito.com/api/v7' },
 ];
 
-const elementTypes = [
-  { value: 'text', label: 'Text' },
-  { value: 'number', label: 'Number' },
-  { value: 'date', label: 'Date' },
-  { value: 'boolean', label: 'Boolean (Switch)' },
-  { value: 'select', label: 'Select (Option UUID)' },
-  { value: 'money', label: 'Money (Amount + Currency)' },
-];
+// Map Legito element types to display labels
+const elementTypeLabels: Record<string, string> = {
+  TextInput: 'Text',
+  Date: 'Date',
+  Switcher: 'Switch (Boolean)',
+  Question: 'Question (Radio/Single)',
+  Select: 'Select (Dropdown)',
+  ObjectRecordsSelectbox: 'Object Select',
+  ObjectRecordsQuestion: 'Object Question',
+  Money: 'Money',
+  Counter: 'Counter',
+  Calculation: 'Calculation',
+  RichText: 'Rich Text',
+  Image: 'Image',
+};
 
 interface ConfiguredElement {
   id: string;
   name: string;
   type: string;
+  uuid: string;
   value: string;
+  options?: { uuid: string; label: string }[];
+  objectId?: number;
 }
 
 const emptyPreset: Omit<TestPreset, 'id' | 'createdAt' | 'updatedAt'> = {
@@ -126,6 +136,8 @@ export function PresetManager() {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['templates']));
   const [templateConfigs, setTemplateConfigs] = useState<Map<number, ConfiguredElement[]>>(new Map());
   const [editingTemplate, setEditingTemplate] = useState<TemplateResource | null>(null);
+  const [isLoadingElements, setIsLoadingElements] = useState(false);
+  const [fetchedElements, setFetchedElements] = useState<TemplateElement[]>([]);
 
   const loadPresets = useCallback(async () => {
     setIsLoading(true);
@@ -319,10 +331,12 @@ export function PresetManager() {
   };
 
   const addElement = (templateId: number) => {
+    const uuid = crypto.randomUUID();
     const newElement: ConfiguredElement = {
-      id: crypto.randomUUID(),
+      id: uuid,
       name: '',
-      type: 'text',
+      type: 'TextInput',
+      uuid: uuid,
       value: '',
     };
     setTemplateConfigs(prev => {
@@ -357,6 +371,51 @@ export function PresetManager() {
   const getProgressPercent = () => {
     if (!scanProgress) return 0;
     return Math.round((scanProgress.current / scanProgress.total) * 100);
+  };
+
+  // Open element editor and fetch elements from API
+  const openElementEditor = async (template: TemplateResource) => {
+    setEditingTemplate(template);
+    setFetchedElements([]);
+
+    if (!editingPreset?.apiKey || !editingPreset?.privateKey || !editingPreset?.baseUrl) {
+      return;
+    }
+
+    setIsLoadingElements(true);
+    try {
+      const credentials: ScanCredentials = {
+        apiKey: editingPreset.apiKey,
+        privateKey: editingPreset.privateKey,
+        baseUrl: editingPreset.baseUrl,
+        region: editingPreset.region || 'emea',
+      };
+      const elements = await fetchTemplateElements(credentials, template.id);
+      setFetchedElements(elements);
+
+      // Initialize config from fetched elements if not already configured
+      const existingConfig = templateConfigs.get(template.id) || [];
+      if (existingConfig.length === 0 && elements.length > 0) {
+        const initialConfig: ConfiguredElement[] = elements.map(el => ({
+          id: el.uuid,
+          name: el.name,
+          type: el.type,
+          uuid: el.uuid,
+          value: '',
+          options: el.options,
+          objectId: el.objectId,
+        }));
+        setTemplateConfigs(prev => {
+          const next = new Map(prev);
+          next.set(template.id, initialConfig);
+          return next;
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch template elements:', error);
+    } finally {
+      setIsLoadingElements(false);
+    }
   };
 
   const applyScannedResources = () => {
@@ -725,7 +784,7 @@ export function PresetManager() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  onClick={() => setEditingTemplate(template)}
+                                  onClick={() => openElementEditor(template)}
                                   className="h-7 px-2"
                                 >
                                   <Settings2 className="h-3.5 w-3.5" />
@@ -926,82 +985,109 @@ export function PresetManager() {
           <DialogHeader>
             <DialogTitle>Configure Elements: {editingTemplate?.name || `Template ${editingTemplate?.id}`}</DialogTitle>
             <DialogDescription>
-              Add element names and test values for document creation. Names must match your template exactly.
+              {isLoadingElements
+                ? 'Loading elements from API...'
+                : fetchedElements.length > 0
+                  ? `Found ${fetchedElements.length} elements. Set test values for each.`
+                  : 'No existing documents found. Elements must be configured manually.'}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
-            {editingTemplate && getTemplateElements(editingTemplate.id).map((element) => (
-              <div key={element.id} className="flex items-start gap-2 p-3 border rounded-lg">
-                <div className="flex-1 grid gap-2 md:grid-cols-3">
-                  <div>
-                    <Label className="text-xs">Element Name</Label>
-                    <Input
-                      placeholder="e.g., doc-name"
-                      value={element.name}
-                      onChange={(e) => updateElement(editingTemplate.id, element.id, 'name', e.target.value)}
-                      className="font-mono text-sm"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-xs">Type</Label>
-                    <Select
-                      value={element.type}
-                      onValueChange={(value) => updateElement(editingTemplate.id, element.id, 'type', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {elementTypes.map((type) => (
-                          <SelectItem key={type.value} value={type.value}>
-                            {type.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label className="text-xs">Test Value</Label>
-                    <Input
-                      placeholder={
-                        element.type === 'date' ? 'YYYY-MM-DD' :
-                        element.type === 'boolean' ? 'true/false' :
-                        element.type === 'money' ? '1000' :
-                        'Value...'
-                      }
-                      value={element.value}
-                      onChange={(e) => updateElement(editingTemplate.id, element.id, 'value', e.target.value)}
-                    />
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => removeElement(editingTemplate.id, element.id)}
-                  className="text-destructive hover:text-destructive"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+            {isLoadingElements ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
-            ))}
+            ) : (
+              <>
+                {editingTemplate && getTemplateElements(editingTemplate.id).map((element) => (
+                  <div key={element.id} className="p-3 border rounded-lg space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <code className="text-sm font-mono bg-muted px-2 py-0.5 rounded">{element.name}</code>
+                        <Badge variant="outline" className="text-xs">
+                          {elementTypeLabels[element.type] || element.type}
+                        </Badge>
+                      </div>
+                    </div>
 
-            {editingTemplate && getTemplateElements(editingTemplate.id).length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
-                <Settings2 className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                <p>No elements configured yet.</p>
-                <p className="text-sm">Add elements to test document creation.</p>
-              </div>
+                    {/* Value input based on element type */}
+                    <div className="pt-1">
+                      {(element.type === 'Question' || element.type === 'Select') && element.options && element.options.length > 0 ? (
+                        <Select
+                          value={element.value}
+                          onValueChange={(value) => updateElement(editingTemplate.id, element.id, 'value', value)}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select an option..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {element.options.map((opt) => (
+                              <SelectItem key={opt.uuid} value={opt.uuid}>
+                                {opt.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      ) : element.type === 'Switcher' ? (
+                        <div className="flex items-center gap-2">
+                          <Switch
+                            checked={element.value === 'true'}
+                            onCheckedChange={(checked) =>
+                              updateElement(editingTemplate.id, element.id, 'value', String(checked))
+                            }
+                          />
+                          <span className="text-sm text-muted-foreground">
+                            {element.value === 'true' ? 'Yes' : 'No'}
+                          </span>
+                        </div>
+                      ) : element.type === 'Date' ? (
+                        <Input
+                          type="date"
+                          value={element.value}
+                          onChange={(e) => updateElement(editingTemplate.id, element.id, 'value', e.target.value)}
+                        />
+                      ) : element.type === 'Money' ? (
+                        <div className="flex gap-2">
+                          <Input
+                            type="number"
+                            placeholder="Amount"
+                            value={element.value}
+                            onChange={(e) => updateElement(editingTemplate.id, element.id, 'value', e.target.value)}
+                            className="flex-1"
+                          />
+                          <Select defaultValue="USD">
+                            <SelectTrigger className="w-24">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="USD">USD</SelectItem>
+                              <SelectItem value="EUR">EUR</SelectItem>
+                              <SelectItem value="GBP">GBP</SelectItem>
+                              <SelectItem value="CZK">CZK</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      ) : (
+                        <Input
+                          placeholder={`Enter ${element.type === 'TextInput' ? 'text' : 'value'}...`}
+                          value={element.value}
+                          onChange={(e) => updateElement(editingTemplate.id, element.id, 'value', e.target.value)}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+                {editingTemplate && getTemplateElements(editingTemplate.id).length === 0 && !isLoadingElements && (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <AlertCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p>No elements found.</p>
+                    <p className="text-sm">Create a document from this template first to detect elements.</p>
+                  </div>
+                )}
+              </>
             )}
-
-            <Button
-              variant="outline"
-              onClick={() => editingTemplate && addElement(editingTemplate.id)}
-              className="w-full"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Element
-            </Button>
           </div>
 
           <DialogFooter>
