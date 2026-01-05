@@ -140,11 +140,7 @@ export default function McpChatPage() {
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
-
-        // AI SDK text stream format: each chunk is plain text
-        // Filter out any protocol markers if present
-        const cleanChunk = chunk.replace(/^0:/gm, '').replace(/^d:/gm, '');
-        assistantContent += cleanChunk;
+        assistantContent += chunk;
 
         // Update the assistant message with accumulated content
         setMessages(prev =>
