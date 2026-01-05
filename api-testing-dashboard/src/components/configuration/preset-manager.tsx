@@ -114,7 +114,8 @@ interface ConfiguredElement {
   value: string;
   options?: { uuid: string; label: string }[];
   objectId?: number;
-  visible?: boolean;  // For clause/section elements
+  visible?: boolean;  // Current visibility value (for clause/section elements)
+  isOptional?: boolean;  // True if this element's visibility can be toggled (from API)
 }
 
 const emptyPreset: Omit<TestPreset, 'id' | 'createdAt' | 'updatedAt'> = {
@@ -182,6 +183,7 @@ export function PresetManager() {
               const templateEl = template.elements?.find(e => e.name === name);
               // Check if this is a visibility element (stored as { __visible: boolean })
               const isVisibilityValue = typeof storedValue === 'object' && storedValue !== null && '__visible' in storedValue;
+              const isVisibilityType = templateEl?.type ? visibilityElementTypes.includes(templateEl.type) : false;
               return {
                 id: templateEl?.uuid || name,
                 name: name,
@@ -191,6 +193,8 @@ export function PresetManager() {
                 options: templateEl?.options,
                 objectId: templateEl?.objectId,
                 visible: isVisibilityValue ? (storedValue as { __visible: boolean }).__visible : undefined,
+                // Mark as optional if it was saved with visibility (meaning it was toggleable)
+                isOptional: isVisibilityValue || (isVisibilityType && templateEl?.visible !== undefined),
               };
             });
             restoredConfigs.set(test.config.templateSuiteId, elements);
@@ -275,9 +279,14 @@ export function PresetManager() {
             if (elements && elements.length > 0) {
               const elementValues: Record<string, unknown> = {};
               for (const el of elements) {
-                if (el.value && el.name) {
-                  // Use element NAME as key (API expects names, not UUIDs)
-                  elementValues[el.name] = el.value;
+                if (el.name) {
+                  // For optional visibility elements, store { __visible: boolean }
+                  if (el.isOptional && el.visible !== undefined) {
+                    elementValues[el.name] = { __visible: el.visible };
+                  } else if (el.value) {
+                    // Use element NAME as key (API expects names, not UUIDs)
+                    elementValues[el.name] = el.value;
+                  }
                 }
               }
               return {
@@ -499,8 +508,9 @@ export function PresetManager() {
           const elementValues: Record<string, unknown> = {};
           for (const el of elements) {
             if (el.name) {
-              // For visibility elements (clauses), store { __visible: boolean }
-              if (visibilityElementTypes.includes(el.type) && el.visible !== undefined) {
+              // For optional visibility elements (clauses), store { __visible: boolean }
+              // Only save visibility if the element is optional (can be toggled)
+              if (el.isOptional && el.visible !== undefined) {
                 elementValues[el.name] = { __visible: el.visible };
               } else if (el.value) {
                 // Use element NAME as key (API expects names, not UUIDs)
@@ -558,34 +568,57 @@ export function PresetManager() {
       }
 
       if (elements.length > 0) {
-        // Create a map of existing values by element name for quick lookup
+        // Create maps of existing values by element name for quick lookup
         const existingValuesByName = new Map<string, string>();
+        const existingVisibilityByName = new Map<string, boolean>();
 
         // First, add values from templateConfigs (current session)
         for (const el of existingConfig) {
-          if (el.name && el.value) {
-            existingValuesByName.set(el.name, el.value);
+          if (el.name) {
+            if (el.value) {
+              existingValuesByName.set(el.name, el.value);
+            }
+            if (el.visible !== undefined) {
+              existingVisibilityByName.set(el.name, el.visible);
+            }
           }
         }
 
         // Then, add values from saved preset (persisted to Supabase)
         // These take precedence if templateConfigs is empty
-        for (const [name, value] of Object.entries(savedElementValues)) {
-          if (!existingValuesByName.has(name) && value) {
-            existingValuesByName.set(name, String(value));
+        for (const [name, storedValue] of Object.entries(savedElementValues)) {
+          // Check if this is a visibility element (stored as { __visible: boolean })
+          if (typeof storedValue === 'object' && storedValue !== null && '__visible' in storedValue) {
+            if (!existingVisibilityByName.has(name)) {
+              existingVisibilityByName.set(name, (storedValue as { __visible: boolean }).__visible);
+            }
+          } else if (storedValue && !existingValuesByName.has(name)) {
+            existingValuesByName.set(name, String(storedValue));
           }
         }
 
         // Build merged config: all fetched elements with preserved values
-        const mergedConfig: ConfiguredElement[] = elements.map(el => ({
-          id: el.uuid,
-          name: el.name,
-          type: el.type,
-          uuid: el.uuid,
-          value: existingValuesByName.get(el.name) || '',  // Preserve existing value
-          options: el.options,
-          objectId: el.objectId,
-        }));
+        // An element is "optional" (can toggle visibility) only if:
+        // 1. It's a visibility element type (Clause, Section, etc.)
+        // 2. The API returned it with a 'visible' property defined (not undefined)
+        const mergedConfig: ConfiguredElement[] = elements.map(el => {
+          const isVisibilityType = visibilityElementTypes.includes(el.type);
+          // Only optional if the API explicitly returned a visible property
+          const isOptional = isVisibilityType && el.visible !== undefined;
+
+          return {
+            id: el.uuid,
+            name: el.name,
+            type: el.type,
+            uuid: el.uuid,
+            value: existingValuesByName.get(el.name) || '',  // Preserve existing value
+            options: el.options,
+            objectId: el.objectId,
+            // For optional visibility elements, restore saved visibility or use API default
+            visible: isOptional ? (existingVisibilityByName.get(el.name) ?? el.visible) : undefined,
+            isOptional,
+          };
+        });
 
         setTemplateConfigs(prev => {
           const next = new Map(prev);
@@ -1274,7 +1307,7 @@ export function PresetManager() {
                             </SelectContent>
                           </Select>
                         </div>
-                      ) : visibilityElementTypes.includes(element.type) ? (
+                      ) : element.isOptional ? (
                         <div className="flex items-center gap-2">
                           <Switch
                             checked={element.visible === true}
@@ -1285,6 +1318,10 @@ export function PresetManager() {
                           <span className="text-sm text-muted-foreground">
                             {element.visible === true ? 'Visible' : 'Hidden'}
                           </span>
+                        </div>
+                      ) : visibilityElementTypes.includes(element.type) ? (
+                        <div className="text-sm text-muted-foreground italic">
+                          Required clause (cannot toggle visibility)
                         </div>
                       ) : (
                         <Input
