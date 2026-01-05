@@ -21,6 +21,7 @@ export interface OperationDefinition {
     propertyValues?: boolean;
     useResultFrom?: boolean;
     sharePermission?: boolean;
+    returnExternalLink?: 'optional';  // Show checkbox for optional feature
   };
   // For operations that depend on previous test results
   needsResultFrom?: ApiOperation[];
@@ -255,7 +256,7 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     category: 'Sharing',
     method: 'POST',
     endpoint: '/share/external-link/{documentRecordCode}',
-    requiresConfig: { useResultFrom: true },
+    requiresConfig: { useResultFrom: true, returnExternalLink: 'optional' },
     needsResultFrom: ['CREATE_DOCUMENT'],
   },
   {
@@ -528,6 +529,10 @@ function buildShareBody(
 }
 
 function getContextKeyForOperation(test: ConfiguredTest): string {
+  // Special case: if returnExternalLink is enabled, use the key that the test runner checks
+  if (test.operation === 'CREATE_EXTERNAL_LINK' && test.config.returnExternalLink) {
+    return 'externalLinkKept';
+  }
   const opId = test.operation.toLowerCase().replace(/_/g, '-');
   return `${opId}-${test.id}`;
 }

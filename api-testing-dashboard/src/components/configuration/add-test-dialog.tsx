@@ -5,6 +5,7 @@ import { Plus, FileText, Database, Users, UsersRound, Share2, MoreHorizontal } f
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -59,6 +60,7 @@ export function AddTestDialog({
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
   const [selectedObjectId, setSelectedObjectId] = useState<string>('');
   const [selectedResultFrom, setSelectedResultFrom] = useState<string>('');
+  const [returnExternalLink, setReturnExternalLink] = useState<boolean>(true);
 
   const operationsByCategory = useMemo(() => getOperationsByCategory(), []);
   const categories = Object.keys(operationsByCategory);
@@ -113,6 +115,11 @@ export function AddTestDialog({
       }
     }
 
+    // Add external link return option
+    if (selectedOperation === 'CREATE_EXTERNAL_LINK' && returnExternalLink) {
+      newTest.config.returnExternalLink = true;
+    }
+
     onAddTest(newTest);
     resetForm();
     onOpenChange(false);
@@ -123,6 +130,7 @@ export function AddTestDialog({
     setSelectedTemplateId('');
     setSelectedObjectId('');
     setSelectedResultFrom('');
+    setReturnExternalLink(true);
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -307,6 +315,23 @@ export function AddTestDialog({
                       <p className="text-xs text-muted-foreground">
                         This operation uses the result from a previous test
                       </p>
+                    </div>
+                  )}
+
+                  {/* External Link Return Option */}
+                  {selectedOpDef.requiresConfig.returnExternalLink === 'optional' && (
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="returnExternalLink"
+                        checked={returnExternalLink}
+                        onCheckedChange={(checked) => setReturnExternalLink(checked === true)}
+                      />
+                      <label
+                        htmlFor="returnExternalLink"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Return external link URL in results
+                      </label>
                     </div>
                   )}
 

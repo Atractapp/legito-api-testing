@@ -265,6 +265,9 @@ export interface ConfiguredTest {
 
     // For sharing operations
     sharePermission?: 'VIEW' | 'EDIT' | 'ADMIN';
+
+    // For external link operations
+    returnExternalLink?: boolean;  // Show the external link URL in results
   };
 }
 
