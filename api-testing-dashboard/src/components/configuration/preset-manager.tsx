@@ -74,6 +74,7 @@ const regionOptions: { value: LegitoRegion; label: string; baseUrl: string }[] =
   { value: 'ca', label: 'CA (Canada)', baseUrl: 'https://ca.legito.com/api/v7' },
   { value: 'apac', label: 'APAC (Asia Pacific)', baseUrl: 'https://apac.legito.com/api/v7' },
   { value: 'quarterly', label: 'Quarterly', baseUrl: 'https://quarterly.legito.com/api/v7' },
+  { value: 'nde-migrations', label: 'NDE Migrations', baseUrl: 'https://nde-migrations.legito.com/api/v7' },
 ];
 
 // Map Legito element types to display labels

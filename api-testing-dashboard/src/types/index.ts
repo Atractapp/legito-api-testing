@@ -189,7 +189,7 @@ export type SortOrder = 'asc' | 'desc';
 // TEST PRESET TYPES (Workspace-Specific Test Configurations)
 // =====================================================================
 
-export type LegitoRegion = 'emea' | 'us' | 'ca' | 'apac' | 'quarterly';
+export type LegitoRegion = 'emea' | 'us' | 'ca' | 'apac' | 'quarterly' | 'nde-migrations';
 
 /**
  * All available API operations that can be added to a test suite
@@ -197,7 +197,6 @@ export type LegitoRegion = 'emea' | 'us' | 'ca' | 'apac' | 'quarterly';
 export type ApiOperation =
   // Templates/Documents
   | 'GET_TEMPLATE_SUITES'
-  | 'GET_TEMPLATE_SUITE'
   | 'CREATE_DOCUMENT'
   | 'READ_DOCUMENT'
   | 'UPDATE_DOCUMENT'
@@ -205,26 +204,20 @@ export type ApiOperation =
   | 'ANONYMIZE_DOCUMENT'
   | 'GET_DOCUMENT_RECORDS'
   // Document Versions
-  | 'GET_DOCUMENT_VERSION'
   | 'DOWNLOAD_DOCUMENT'
-  | 'CLONE_DOCUMENT'
-  | 'COMPARE_DOCUMENTS'
   // Objects
   | 'GET_OBJECTS'
-  | 'GET_OBJECT'
   | 'CREATE_OBJECT_RECORD'
   | 'READ_OBJECT_RECORD'
   | 'UPDATE_OBJECT_RECORD'
   | 'DELETE_OBJECT_RECORD'
   // Users
   | 'GET_USERS'
-  | 'GET_USER'
   | 'CREATE_USER'
   | 'UPDATE_USER'
   | 'DELETE_USER'
   // User Groups
   | 'GET_USER_GROUPS'
-  | 'GET_USER_GROUP'
   | 'CREATE_USER_GROUP'
   | 'UPDATE_USER_GROUP'
   | 'DELETE_USER_GROUP'
@@ -234,22 +227,24 @@ export type ApiOperation =
   | 'DOWNLOAD_FILE'
   | 'DELETE_FILE'
   // Sharing
+  | 'GET_DOCUMENT_SHARES'
   | 'CREATE_EXTERNAL_LINK'
+  | 'UPDATE_EXTERNAL_LINK'
   | 'DELETE_EXTERNAL_LINK'
-  | 'LIST_EXTERNAL_LINKS'
   | 'SHARE_TO_USER'
   | 'SHARE_TO_USER_GROUP'
-  | 'LIST_DOCUMENT_SHARES'
   | 'REMOVE_USER_SHARE'
-  // Tags
-  | 'LIST_TAGS'
-  | 'CREATE_TAG'
-  | 'GET_TAG'
-  | 'DELETE_TAG'
+  | 'REMOVE_USER_GROUP_SHARE'
+  // Labels
+  | 'LIST_LABELS'
+  | 'CREATE_LABEL'
+  | 'DELETE_LABEL'
+  // Template Tags
+  | 'LIST_TEMPLATE_TAGS'
+  | 'CREATE_TEMPLATE_TAG'
   // Push Connections
   | 'GET_PUSH_CONNECTIONS'
   | 'CREATE_PUSH_CONNECTION'
-  | 'TEST_PUSH_CONNECTION'
   | 'DELETE_PUSH_CONNECTION'
   // Workflows
   | 'GET_WORKFLOWS'
@@ -305,16 +300,12 @@ export interface ConfiguredTest {
     downloadFormat?: 'pdf' | 'docx' | 'pdfa' | 'htm' | 'rtf' | 'xml' | 'odt' | 'txt';
     returnFileContent?: boolean;  // Return base64 content in results
 
-    // For tag operations
-    tagName?: string;
-    tagColor?: string;
-    tagId?: number;
+    // For label operations
+    labelName?: string;
+    labelId?: number;
 
     // For push connection operations
-    webhookCorrelationId?: string;  // Auto-generated if not provided
     eventTypes?: string[];          // ['DocumentRecordCreated', etc.]
-    verifyWebhook?: boolean;        // Wait and verify webhook arrives
-    webhookTimeoutMs?: number;      // Default 30000
   };
 }
 

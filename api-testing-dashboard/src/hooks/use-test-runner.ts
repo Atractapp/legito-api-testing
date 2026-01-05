@@ -22,8 +22,6 @@ import {
   saveTestResults,
   updateHistoricalDataFromRun,
   calculateDashboardStats,
-  pollForWebhook,
-  cleanupWebhooks,
 } from '@/lib/supabase';
 
 export function useTestRunner() {
@@ -285,39 +283,6 @@ export function useTestRunner() {
 
         updateTestStatus(test.id, result.status);
         addTestResult(result);
-
-        // Handle webhook verification for push connection tests
-        if (test.webhookConfig?.verifyWebhook && result.status === 'passed') {
-          log('info', `Waiting for webhook verification (${test.webhookConfig.webhookTimeoutMs || 30000}ms timeout)...`, test.id);
-
-          try {
-            // Get the correlation ID from the push connection body
-            const pushBody = test.body as { _correlationId?: string } | undefined;
-            const correlationId = test.webhookConfig.webhookCorrelationId || pushBody?._correlationId;
-
-            if (correlationId) {
-              const webhookPayload = await pollForWebhook(
-                correlationId,
-                test.webhookConfig.webhookTimeoutMs || 30000
-              );
-
-              if (webhookPayload) {
-                log('info', `✓ Webhook received! Event: ${webhookPayload.eventType}`, test.id);
-                log('debug', `Webhook payload: ${JSON.stringify(webhookPayload.payload)}`, test.id);
-              } else {
-                log('error', `✗ Webhook not received within timeout`, test.id);
-                result.status = 'failed';
-                result.error = {
-                  message: 'Webhook not received within timeout period',
-                };
-              }
-            } else {
-              log('warn', 'No correlation ID found for webhook verification', test.id);
-            }
-          } catch (webhookError) {
-            log('error', `Webhook verification error: ${webhookError instanceof Error ? webhookError.message : 'Unknown'}`, test.id);
-          }
-        }
 
         if (result.status === 'passed') {
           run.passedTests++;

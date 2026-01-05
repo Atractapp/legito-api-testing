@@ -28,6 +28,7 @@ const regionLabels: Record<LegitoRegion, string> = {
   ca: 'CA',
   apac: 'APAC',
   quarterly: 'Quarterly',
+  'nde-migrations': 'NDE Migrations',
 };
 
 export function PresetSelector({ activePreset, onPresetChange, disabled }: PresetSelectorProps) {

@@ -26,15 +26,13 @@ export interface OperationDefinition {
     returnExternalLink?: 'optional';
     // File operations
     fileUpload?: boolean;
-    downloadFormat?: 'optional';
+    downloadFormat?: boolean | 'optional';
     returnFileContent?: 'optional';
-    // Tag operations
-    tagName?: boolean;
-    tagColor?: 'optional';
-    tagId?: boolean;
+    // Label operations
+    labelName?: boolean;
+    labelId?: boolean;
     // Push connection operations
     eventTypes?: 'optional';
-    verifyWebhook?: 'optional';
   };
   // For operations that depend on previous test results
   needsResultFrom?: ApiOperation[];
@@ -53,15 +51,6 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     method: 'GET',
     endpoint: '/template-suite',
     requiresConfig: {},
-  },
-  {
-    id: 'GET_TEMPLATE_SUITE',
-    name: 'Get Template Suite Details',
-    description: 'Retrieve details of a specific template suite',
-    category: 'Documents',
-    method: 'GET',
-    endpoint: '/template-suite/{templateSuiteId}',
-    requiresConfig: { templateSuiteId: true },
   },
   {
     id: 'CREATE_DOCUMENT',
@@ -107,8 +96,8 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     name: 'Anonymize Document',
     description: 'Anonymize document data (GDPR compliance)',
     category: 'Documents',
-    method: 'PUT',
-    endpoint: '/document-record/anonymize/{documentRecordCode}',
+    method: 'GET',
+    endpoint: '/document-record/anonymize/{code}',
     requiresConfig: { useResultFrom: true },
     needsResultFrom: ['CREATE_DOCUMENT'],
   },
@@ -133,21 +122,12 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     requiresConfig: {},
   },
   {
-    id: 'GET_OBJECT',
-    name: 'Get Object Details',
-    description: 'Retrieve details of a specific object definition',
-    category: 'Objects',
-    method: 'GET',
-    endpoint: '/object/{objectId}',
-    requiresConfig: { objectId: true },
-  },
-  {
     id: 'CREATE_OBJECT_RECORD',
     name: 'Create Object Record',
     description: 'Create a new object record with property values',
     category: 'Objects',
     method: 'POST',
-    endpoint: '/object-record',
+    endpoint: '/object-record/{objectId}',
     requiresConfig: { objectId: true, propertyValues: true },
   },
   {
@@ -287,8 +267,8 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     name: 'Share to User',
     description: 'Share a document with a specific user',
     category: 'Sharing',
-    method: 'PUT',
-    endpoint: '/share/user/{documentRecordCode}',
+    method: 'POST',
+    endpoint: '/share/user/{code}',
     requiresConfig: { useResultFrom: true, sharePermission: true },
     needsResultFrom: ['CREATE_DOCUMENT', 'CREATE_USER'],
   },
@@ -297,51 +277,21 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     name: 'Share to User Group',
     description: 'Share a document with a user group',
     category: 'Sharing',
-    method: 'PUT',
-    endpoint: '/share/user-group/{documentRecordCode}',
+    method: 'POST',
+    endpoint: '/share/user-group/{code}',
     requiresConfig: { useResultFrom: true, sharePermission: true },
     needsResultFrom: ['CREATE_DOCUMENT', 'CREATE_USER_GROUP'],
   },
 
   // ============ Document Versions ============
   {
-    id: 'GET_DOCUMENT_VERSION',
-    name: 'Get Document Version',
-    description: 'Get document version details',
-    category: 'Documents',
-    method: 'GET',
-    endpoint: '/document-version/{documentRecordCode}',
-    requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['CREATE_DOCUMENT'],
-  },
-  {
     id: 'DOWNLOAD_DOCUMENT',
     name: 'Download Document',
     description: 'Download document in specified format (PDF, DOCX, etc.)',
     category: 'Documents',
     method: 'GET',
-    endpoint: '/document-version/download/{documentRecordCode}',
-    requiresConfig: { useResultFrom: true, downloadFormat: 'optional', returnFileContent: 'optional' },
-    needsResultFrom: ['CREATE_DOCUMENT'],
-  },
-  {
-    id: 'CLONE_DOCUMENT',
-    name: 'Clone Document',
-    description: 'Create a copy of an existing document',
-    category: 'Documents',
-    method: 'POST',
-    endpoint: '/document-version/clone/{documentRecordCode}',
-    requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['CREATE_DOCUMENT'],
-  },
-  {
-    id: 'COMPARE_DOCUMENTS',
-    name: 'Compare Documents',
-    description: 'Compare two document versions',
-    category: 'Documents',
-    method: 'POST',
-    endpoint: '/document-version/compare',
-    requiresConfig: { useResultFrom: true },
+    endpoint: '/document-version/download/{code}/{format}',
+    requiresConfig: { useResultFrom: true, downloadFormat: true },
     needsResultFrom: ['CREATE_DOCUMENT'],
   },
 
@@ -390,24 +340,24 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
 
   // ============ Sharing (extended) ============
   {
-    id: 'LIST_EXTERNAL_LINKS',
-    name: 'List External Links',
-    description: 'List all external sharing links for a document',
+    id: 'GET_DOCUMENT_SHARES',
+    name: 'Get Document Shares',
+    description: 'Get all shares (users, groups, external links) for a document',
     category: 'Sharing',
     method: 'GET',
-    endpoint: '/share/external-link/{documentRecordCode}',
+    endpoint: '/share/{code}',
     requiresConfig: { useResultFrom: true },
     needsResultFrom: ['CREATE_DOCUMENT'],
   },
   {
-    id: 'LIST_DOCUMENT_SHARES',
-    name: 'List Document Shares',
-    description: 'List all user shares for a document',
+    id: 'UPDATE_EXTERNAL_LINK',
+    name: 'Update External Link',
+    description: 'Update an existing external sharing link',
     category: 'Sharing',
-    method: 'GET',
-    endpoint: '/share/user/{documentRecordCode}',
+    method: 'PUT',
+    endpoint: '/share/external-link/{externalLinkId}',
     requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['CREATE_DOCUMENT'],
+    needsResultFrom: ['CREATE_EXTERNAL_LINK'],
   },
   {
     id: 'REMOVE_USER_SHARE',
@@ -415,9 +365,19 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     description: 'Remove a user share from a document',
     category: 'Sharing',
     method: 'DELETE',
-    endpoint: '/share/user/{documentRecordCode}/{userId}',
+    endpoint: '/share/user/{code}/{userIdOrEmail}',
     requiresConfig: { useResultFrom: true },
     needsResultFrom: ['SHARE_TO_USER'],
+  },
+  {
+    id: 'REMOVE_USER_GROUP_SHARE',
+    name: 'Remove User Group Share',
+    description: 'Remove a user group share from a document',
+    category: 'Sharing',
+    method: 'DELETE',
+    endpoint: '/share/user-group/{code}/{userGroupId}',
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['SHARE_TO_USER_GROUP'],
   },
 
   // ============ Workflows ============
@@ -432,13 +392,93 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
   },
   {
     id: 'GET_WORKFLOW',
-    name: 'Get Workflow Details',
-    description: 'Get details of a specific workflow',
+    name: 'Get Workflow Revision',
+    description: 'Get schema of a specific workflow revision',
     category: 'Workflows',
     method: 'GET',
-    endpoint: '/workflow/{workflowId}',
+    endpoint: '/workflow/revision/{workflowRevisionId}',
     requiresConfig: { useResultFrom: true },
     needsResultFrom: ['GET_WORKFLOWS'],
+  },
+
+  // ============ Labels ============
+  {
+    id: 'LIST_LABELS',
+    name: 'List Labels',
+    description: 'Retrieve list of all labels',
+    category: 'Other',
+    method: 'GET',
+    endpoint: '/label',
+    requiresConfig: {},
+  },
+  {
+    id: 'CREATE_LABEL',
+    name: 'Create Label',
+    description: 'Create a new label',
+    category: 'Other',
+    method: 'POST',
+    endpoint: '/label',
+    requiresConfig: {},
+  },
+  {
+    id: 'DELETE_LABEL',
+    name: 'Delete Label',
+    description: 'Remove a label',
+    category: 'Other',
+    method: 'DELETE',
+    endpoint: '/label/{labelId}',
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['CREATE_LABEL'],
+  },
+
+  // ============ Template Tags ============
+  {
+    id: 'LIST_TEMPLATE_TAGS',
+    name: 'List Template Tags',
+    description: 'Retrieve list of all template tags',
+    category: 'Other',
+    method: 'GET',
+    endpoint: '/template-tag',
+    requiresConfig: {},
+  },
+  {
+    id: 'CREATE_TEMPLATE_TAG',
+    name: 'Create Template Tag',
+    description: 'Create a new template tag',
+    category: 'Other',
+    method: 'POST',
+    endpoint: '/template-tag',
+    requiresConfig: {},
+  },
+
+  // ============ Push Connections ============
+  {
+    id: 'GET_PUSH_CONNECTIONS',
+    name: 'List Push Connections',
+    description: 'Retrieve list of all webhook push connections',
+    category: 'Other',
+    method: 'GET',
+    endpoint: '/push-connection',
+    requiresConfig: {},
+  },
+  {
+    id: 'CREATE_PUSH_CONNECTION',
+    name: 'Create Push Connection',
+    description: 'Create a webhook subscription for events',
+    category: 'Other',
+    method: 'POST',
+    endpoint: '/push-connection',
+    requiresConfig: {},
+  },
+  {
+    id: 'DELETE_PUSH_CONNECTION',
+    name: 'Delete Push Connection',
+    description: 'Remove a push connection',
+    category: 'Other',
+    method: 'DELETE',
+    endpoint: '/push-connection/{pushConnectionId}',
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['CREATE_PUSH_CONNECTION'],
   },
 ];
 
@@ -546,14 +586,6 @@ export function configuredTestToLegitoTest(
     assertions: [
       { name: 'Returns expected status', type: 'status' as const },
     ],
-    // Webhook verification config for TEST_PUSH_CONNECTION
-    webhookConfig: test.operation === 'TEST_PUSH_CONNECTION' && test.config.verifyWebhook
-      ? {
-          verifyWebhook: true,
-          webhookCorrelationId: test.config.webhookCorrelationId,
-          webhookTimeoutMs: test.config.webhookTimeoutMs || 30000,
-        }
-      : undefined,
   };
 }
 
@@ -622,23 +654,36 @@ function buildDynamicEndpoint(
 
         if (result) {
           // Replace placeholders based on what's in the result
+          // Document-related placeholders
           if (result.documentRecordCode) {
             endpoint = endpoint.replace('{documentRecordCode}', String(result.documentRecordCode));
+            endpoint = endpoint.replace('{code}', String(result.documentRecordCode));
           }
+          if (result.code) {
+            endpoint = endpoint.replace('{code}', String(result.code));
+          }
+          // Object record placeholder
           if (result.systemName) {
             endpoint = endpoint.replace('{systemName}', String(result.systemName));
           }
+          // ID-based placeholders
           if (result.id) {
             endpoint = endpoint.replace('{userId}', String(result.id));
+            endpoint = endpoint.replace('{userIdOrEmail}', String(result.id));
             endpoint = endpoint.replace('{userGroupId}', String(result.id));
             endpoint = endpoint.replace('{externalLinkId}', String(result.id));
             endpoint = endpoint.replace('{fileId}', String(result.id));
-            endpoint = endpoint.replace('{tagId}', String(result.id));
+            endpoint = endpoint.replace('{labelId}', String(result.id));
             endpoint = endpoint.replace('{pushConnectionId}', String(result.id));
-            endpoint = endpoint.replace('{workflowId}', String(result.id));
+            endpoint = endpoint.replace('{workflowRevisionId}', String(result.id));
           }
         }
       }
+    }
+
+    // Handle download format
+    if (test.config.downloadFormat) {
+      endpoint = endpoint.replace('{format}', test.config.downloadFormat);
     }
 
     return endpoint;
@@ -700,9 +745,9 @@ function getExpectedStatus(operation: ApiOperation): number[] {
     case 'CREATE_USER_GROUP':
     case 'CREATE_EXTERNAL_LINK':
     case 'UPLOAD_FILE':
-    case 'CREATE_TAG':
+    case 'CREATE_LABEL':
+    case 'CREATE_TEMPLATE_TAG':
     case 'CREATE_PUSH_CONNECTION':
-    case 'CLONE_DOCUMENT':
       return [200, 201];
     case 'DELETE_DOCUMENT':
     case 'DELETE_OBJECT_RECORD':
@@ -710,9 +755,10 @@ function getExpectedStatus(operation: ApiOperation): number[] {
     case 'DELETE_USER_GROUP':
     case 'DELETE_EXTERNAL_LINK':
     case 'DELETE_FILE':
-    case 'DELETE_TAG':
+    case 'DELETE_LABEL':
     case 'DELETE_PUSH_CONNECTION':
     case 'REMOVE_USER_SHARE':
+    case 'REMOVE_USER_GROUP_SHARE':
       return [200, 204];
     default:
       return [200];
@@ -720,25 +766,24 @@ function getExpectedStatus(operation: ApiOperation): number[] {
 }
 
 function getCrudOperation(operation: ApiOperation): 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | undefined {
-  if (operation.startsWith('CREATE_') || operation === 'UPLOAD_FILE' || operation === 'CLONE_DOCUMENT') return 'CREATE';
-  if (operation.startsWith('GET_') || operation.startsWith('READ_') || operation.startsWith('LIST_') || operation === 'DOWNLOAD_DOCUMENT') return 'READ';
-  if (operation.startsWith('UPDATE_') || operation === 'ANONYMIZE_DOCUMENT' || operation === 'TEST_PUSH_CONNECTION') return 'UPDATE';
-  if (operation.startsWith('DELETE_') || operation === 'REMOVE_USER_SHARE') return 'DELETE';
+  if (operation.startsWith('CREATE_') || operation === 'UPLOAD_FILE') return 'CREATE';
+  if (operation.startsWith('GET_') || operation.startsWith('READ_') || operation.startsWith('LIST_') || operation === 'DOWNLOAD_DOCUMENT' || operation === 'ANONYMIZE_DOCUMENT') return 'READ';
+  if (operation.startsWith('UPDATE_')) return 'UPDATE';
+  if (operation.startsWith('DELETE_') || operation === 'REMOVE_USER_SHARE' || operation === 'REMOVE_USER_GROUP_SHARE') return 'DELETE';
   if (operation.startsWith('SHARE_')) return 'UPDATE';
-  if (operation === 'COMPARE_DOCUMENTS') return 'READ';
   return undefined;
 }
 
 function getEntityType(operation: ApiOperation): string {
-  if (operation.includes('DOCUMENT') || operation.includes('TEMPLATE')) return 'Document';
+  if (operation.includes('DOCUMENT') || operation.includes('TEMPLATE_TAG')) return 'Document';
   if (operation.includes('OBJECT')) return 'ObjectRecord';
   if (operation.includes('USER_GROUP')) return 'UserGroup';
   if (operation.includes('USER')) return 'User';
   if (operation.includes('EXTERNAL_LINK')) return 'ExternalLink';
   if (operation.includes('SHARE')) return 'Share';
   if (operation.includes('FILE')) return 'File';
-  if (operation.includes('TAG')) return 'Tag';
-  if (operation.includes('PUSH') || operation.includes('WEBHOOK')) return 'PushConnection';
+  if (operation.includes('LABEL')) return 'Label';
+  if (operation.includes('PUSH')) return 'PushConnection';
   if (operation.includes('WORKFLOW')) return 'Workflow';
   return 'Unknown';
 }
