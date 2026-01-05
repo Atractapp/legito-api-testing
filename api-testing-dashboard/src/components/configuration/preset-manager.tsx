@@ -521,13 +521,35 @@ export function PresetManager() {
       setFetchedElements(elements);
 
       // Merge fetched elements with existing configured values
+      // Check BOTH templateConfigs AND editingPreset.configuredTests for saved values
       const existingConfig = templateConfigs.get(template.id) || [];
+
+      // Also check if there are saved values in configuredTests
+      const savedElementValues: Record<string, unknown> = {};
+      if (editingPreset?.configuredTests) {
+        for (const test of editingPreset.configuredTests) {
+          if (test.config.templateSuiteId === template.id && test.config.elementValues) {
+            Object.assign(savedElementValues, test.config.elementValues);
+          }
+        }
+      }
+
       if (elements.length > 0) {
         // Create a map of existing values by element name for quick lookup
         const existingValuesByName = new Map<string, string>();
+
+        // First, add values from templateConfigs (current session)
         for (const el of existingConfig) {
           if (el.name && el.value) {
             existingValuesByName.set(el.name, el.value);
+          }
+        }
+
+        // Then, add values from saved preset (persisted to Supabase)
+        // These take precedence if templateConfigs is empty
+        for (const [name, value] of Object.entries(savedElementValues)) {
+          if (!existingValuesByName.has(name) && value) {
+            existingValuesByName.set(name, String(value));
           }
         }
 
