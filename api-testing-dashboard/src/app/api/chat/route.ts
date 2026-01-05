@@ -67,31 +67,31 @@ function buildLegitoTools(client: LegitoMcpClient) {
   return {
     // ============ DOCUMENT OPERATIONS ============
     createDocument: tool({
-      description: 'Create a new document from a template suite. Returns the new document record code.',
+      description: 'Create a new document from a template suite ID. Only provide elements the user specified - skip optional ones.',
       inputSchema: z.object({
-        templateSuiteId: z.number().describe('Template suite ID to create document from'),
+        templateSuiteId: z.number().describe('Template suite ID (e.g. 64004)'),
         elements: z.array(z.object({
-          code: z.string().describe('Element code/identifier'),
-          value: z.unknown().describe('Element value'),
-        })).describe('Document elements/fields to populate'),
+          name: z.string().describe('Element system name/code'),
+          value: z.unknown().optional().describe('Element value'),
+        })).optional().default([]).describe('Only include elements user provided'),
       }),
       execute: async (params) => {
-        const result = await client.createDocument(params.templateSuiteId, params.elements);
+        const result = await client.createDocument(params.templateSuiteId, params.elements || []);
         return unwrapResult(result);
       },
     }),
 
     updateDocument: tool({
-      description: 'Update an existing document with new element values',
+      description: 'Update an existing document. Only provide elements to change.',
       inputSchema: z.object({
         documentRecordCode: z.string().describe('Document record code to update'),
         elements: z.array(z.object({
-          code: z.string().describe('Element code/identifier'),
-          value: z.unknown().describe('Element value'),
-        })).describe('Document elements/fields to update'),
+          name: z.string().describe('Element system name/code'),
+          value: z.unknown().optional().describe('Element value'),
+        })).optional().default([]).describe('Only include elements to update'),
       }),
       execute: async (params) => {
-        const result = await client.updateDocument(params.documentRecordCode, params.elements);
+        const result = await client.updateDocument(params.documentRecordCode, params.elements || []);
         return unwrapResult(result);
       },
     }),
@@ -190,12 +190,12 @@ function buildLegitoTools(client: LegitoMcpClient) {
       inputSchema: z.object({
         objectId: z.number().describe('Object definition ID'),
         properties: z.array(z.object({
-          code: z.string().describe('Property code'),
-          value: z.unknown().describe('Property value'),
-        })).describe('Object properties'),
+          name: z.string().describe('Property name/code'),
+          value: z.unknown().optional().describe('Property value'),
+        })).optional().default([]).describe('Object properties'),
       }),
       execute: async (params) => {
-        const result = await client.createObjectRecord(params.objectId, params.properties);
+        const result = await client.createObjectRecord(params.objectId, params.properties || []);
         return unwrapResult(result);
       },
     }),
@@ -205,12 +205,12 @@ function buildLegitoTools(client: LegitoMcpClient) {
       inputSchema: z.object({
         systemName: z.string().describe('Object record system name'),
         properties: z.array(z.object({
-          code: z.string().describe('Property code'),
-          value: z.unknown().describe('Property value'),
-        })).describe('Object properties to update'),
+          name: z.string().describe('Property name/code'),
+          value: z.unknown().optional().describe('Property value'),
+        })).optional().default([]).describe('Properties to update'),
       }),
       execute: async (params) => {
-        const result = await client.updateObjectRecord(params.systemName, params.properties);
+        const result = await client.updateObjectRecord(params.systemName, params.properties || []);
         return unwrapResult(result);
       },
     }),
@@ -564,25 +564,28 @@ export async function POST(request: Request) {
     const legitoTools = client ? buildLegitoTools(client) : {};
 
     const systemPrompt = legitoCredentials
-      ? `You are a helpful AI assistant with FULL access to a Legito document management system. You have 37 tools available:
+      ? `You are a HELPFUL Legito assistant. Be proactive - TRY operations first, ask questions only if truly blocked.
 
-DOCUMENTS: createDocument, updateDocument, listDocuments, getDocument, getDocumentElements, deleteDocument, anonymizeDocument
-OBJECTS: listObjects, listObjectRecords, getObjectRecord, createObjectRecord, updateObjectRecord, deleteObjectRecord
-USERS: listUsers, getUser, createUsers, updateUser, deleteUser
-USER GROUPS: listUserGroups, getUserGroup, createUserGroup, updateUserGroup, deleteUserGroup
-SHARING: shareToUser, shareToGroup, createExternalLink, listExternalLinks, deleteExternalLink
-TEMPLATES: listTemplates, getTemplate
-TAGS: listTags, getTag, createTag
-WORKFLOWS: listWorkflows, getWorkflow
-REFERENCE DATA: getSystemInfo, listCountries, listCurrencies, listLanguages, listTimezones
+TOOLS: createDocument, updateDocument, listDocuments, getDocument, getDocumentElements, deleteDocument, anonymizeDocument, listObjects, listObjectRecords, getObjectRecord, createObjectRecord, updateObjectRecord, deleteObjectRecord, listUsers, getUser, createUsers, updateUser, deleteUser, listUserGroups, getUserGroup, createUserGroup, updateUserGroup, deleteUserGroup, shareToUser, shareToGroup, createExternalLink, listExternalLinks, deleteExternalLink, listTemplates, getTemplate, listTags, getTag, createTag, listWorkflows, getWorkflow, getSystemInfo, listCountries, listCurrencies, listLanguages, listTimezones
 
-USE THE TOOLS to perform any requested action. To create a document:
-1. Use listTemplates to find available templates
-2. Use getTemplate to see required elements
-3. Use createDocument with templateSuiteId and elements array
+SMART BEHAVIORS - FOLLOW THESE:
 
-Always be helpful and provide clear responses. Format data nicely using lists or tables.`
-      : `You are a helpful AI assistant. To access Legito data, the user needs to configure their Legito API credentials in the MCP Workspaces settings.`;
+1. DOCUMENTS: When listing, prefer non-archived. If archived docs exist, mention: "Found X archived docs, want those too?"
+
+2. TEMPLATE ELEMENTS: When user asks for elements from a template suite (like ID 64004), call getTemplate for EACH template in that suite and combine ALL elements. Never ask "which template" - get them all.
+
+3. CREATE DOCUMENTS: Use the Template Suite ID directly (e.g. 64004). Only include elements user specified with {name, value}. Skip optional elements - API handles defaults.
+
+4. TRY FIRST: Execute operations with available info. Don't ask for confirmation or list requirements.
+
+5. NO LECTURES: If user says "template 64004", use it as templateSuiteId. Don't explain terminology.
+
+6. CONCISE: Short responses. Use tables for data. Skip explanations unless asked.
+
+7. ELEMENT FORMAT: Elements use {name: "element_code", value: "..."} - NOT "code".
+
+Example: "Create doc from template 64004, name John Doe" → createDocument(templateSuiteId=64004, elements=[{name:"name", value:"John Doe"}])`
+      : `You are a helpful AI assistant. To access Legito data, configure your Legito API credentials in MCP Workspaces settings.`;
 
     const model = getModel(provider, aiApiKey);
 

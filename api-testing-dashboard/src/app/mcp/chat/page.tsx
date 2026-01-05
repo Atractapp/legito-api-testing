@@ -176,8 +176,8 @@ export default function McpChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-full p-6 gap-4">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col h-full p-6 gap-4 overflow-hidden">
+      <div className="flex items-center justify-between shrink-0">
         <div>
           <h1 className="text-2xl font-bold">AI Chat</h1>
           <p className="text-muted-foreground">
@@ -194,9 +194,9 @@ export default function McpChatPage() {
         </Button>
       </div>
 
-      <div className="flex gap-4 flex-1 min-h-0">
+      <div className="flex gap-4 flex-1 min-h-0 overflow-hidden">
         {/* Conversation Sidebar */}
-        <Card className="w-64 shrink-0 flex flex-col">
+        <Card className="w-64 shrink-0 flex flex-col overflow-hidden">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg">Chats</CardTitle>
@@ -338,8 +338,8 @@ export default function McpChatPage() {
         )}
 
         {/* Chat Panel */}
-        <Card className="flex-1 flex flex-col min-h-0">
-          <CardContent className="flex-1 flex flex-col p-4 min-h-0">
+        <Card className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          <CardContent className="flex-1 flex flex-col p-4 min-h-0 overflow-hidden">
             <ScrollArea className="flex-1 pr-4">
               <div className="space-y-4">
                 {messages.length === 0 && (
@@ -370,13 +370,13 @@ export default function McpChatPage() {
                       </div>
                     )}
                     <div
-                      className={`max-w-[70%] rounded-lg px-4 py-2 ${
+                      className={`max-w-[70%] rounded-lg px-4 py-2 overflow-hidden ${
                         message.role === 'user'
                           ? 'bg-primary text-primary-foreground'
                           : 'bg-muted'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap text-sm">
+                      <div className="whitespace-pre-wrap text-sm break-words overflow-wrap-anywhere">
                         {message.content || (message.id === streamingMessageId ? '' : message.content)}
                       </div>
                     </div>
