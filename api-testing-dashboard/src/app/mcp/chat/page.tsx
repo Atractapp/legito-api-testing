@@ -8,17 +8,12 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Send, Bot, User, Settings, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Send, Bot, User, Settings, Loader2, AlertCircle, Eye, EyeOff, Plus, Trash2, MessageSquare } from 'lucide-react';
 import { useMcpStore } from '@/store/mcp-store';
+import { useChatStore, useConversations, useActiveMessages } from '@/store/chat-store';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 type AIProvider = 'openai' | 'anthropic' | 'google';
-
-interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-}
 
 const providerLabels: Record<AIProvider, string> = {
   openai: 'OpenAI',
@@ -27,14 +22,30 @@ const providerLabels: Record<AIProvider, string> = {
 };
 
 export default function McpChatPage() {
-  const [aiProvider, setAiProvider] = useState<AIProvider>('google');
-  const [aiApiKey, setAiApiKey] = useState('');
+  // Chat store
+  const {
+    activeConversationId,
+    aiProvider,
+    aiApiKey,
+    createConversation,
+    deleteConversation,
+    setActiveConversation,
+    addMessage,
+    updateMessage,
+    setAiProvider,
+    setAiApiKey,
+  } = useChatStore();
+
+  const conversations = useConversations();
+  const messages = useActiveMessages();
+
+  // Local UI state
   const [showApiKey, setShowApiKey] = useState(false);
-  const [showSettings, setShowSettings] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Get the default workspace credentials
@@ -43,21 +54,20 @@ export default function McpChatPage() {
   const defaultEntry = workspacesList.find(entry => entry.workspace.isDefault) || workspacesList[0];
   const defaultWorkspace = defaultEntry?.workspace;
 
-  // Load saved API key from localStorage on mount
+  // Load API key from localStorage on mount (for security, not persisted in store)
   useEffect(() => {
     const savedKey = localStorage.getItem('ai-api-key');
-    const savedProvider = localStorage.getItem('ai-provider') as AIProvider | null;
-    if (savedKey) setAiApiKey(savedKey);
-    if (savedProvider) setAiProvider(savedProvider);
-  }, []);
+    if (savedKey && !aiApiKey) {
+      setAiApiKey(savedKey);
+    }
+  }, [aiApiKey, setAiApiKey]);
 
   // Save API key to localStorage when changed
   useEffect(() => {
     if (aiApiKey) {
       localStorage.setItem('ai-api-key', aiApiKey);
     }
-    localStorage.setItem('ai-provider', aiProvider);
-  }, [aiApiKey, aiProvider]);
+  }, [aiApiKey]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -67,6 +77,10 @@ export default function McpChatPage() {
   const hasCredentials = aiApiKey.length > 0;
   const hasLegitoCredentials = !!defaultWorkspace;
 
+  const handleNewChat = () => {
+    createConversation();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() || !hasCredentials || isLoading) return;
@@ -75,13 +89,8 @@ export default function McpChatPage() {
     setInputValue('');
     setError(null);
 
-    // Add user message
-    const userMsg: Message = {
-      id: crypto.randomUUID(),
-      role: 'user',
-      content: userMessage,
-    };
-    setMessages(prev => [...prev, userMsg]);
+    // Add user message to store
+    addMessage({ role: 'user', content: userMessage });
     setIsLoading(true);
 
     try {
@@ -98,8 +107,9 @@ export default function McpChatPage() {
         headers['X-Legito-Region'] = defaultWorkspace.credentials.region;
       }
 
-      // Build messages for API
-      const apiMessages = [...messages, userMsg].map(m => ({
+      // Get fresh messages from store after adding user message
+      const currentMessages = useChatStore.getState().getActiveMessages();
+      const apiMessages = currentMessages.map(m => ({
         role: m.role,
         content: m.content,
       }));
@@ -131,9 +141,13 @@ export default function McpChatPage() {
       const decoder = new TextDecoder();
       let assistantContent = '';
 
-      // Add empty assistant message that we'll update
-      const assistantMsgId = crypto.randomUUID();
-      setMessages(prev => [...prev, { id: assistantMsgId, role: 'assistant', content: '' }]);
+      // Add empty assistant message
+      addMessage({ role: 'assistant', content: '' });
+
+      // Get the ID of the just-added message
+      const latestMessages = useChatStore.getState().getActiveMessages();
+      const assistantMsgId = latestMessages[latestMessages.length - 1]?.id;
+      setStreamingMessageId(assistantMsgId || null);
 
       while (true) {
         const { done, value } = await reader.read();
@@ -143,24 +157,21 @@ export default function McpChatPage() {
         assistantContent += chunk;
 
         // Update the assistant message with accumulated content
-        setMessages(prev =>
-          prev.map(m =>
-            m.id === assistantMsgId
-              ? { ...m, content: assistantContent }
-              : m
-          )
-        );
+        if (assistantMsgId) {
+          updateMessage(assistantMsgId, assistantContent);
+        }
       }
 
+      setStreamingMessageId(null);
+
       if (!assistantContent.trim()) {
-        // Remove empty assistant message if no content
-        setMessages(prev => prev.filter(m => m.id !== assistantMsgId));
         setError('No response from AI. Check your API key and try again.');
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setIsLoading(false);
+      setStreamingMessageId(null);
     }
   };
 
@@ -184,6 +195,53 @@ export default function McpChatPage() {
       </div>
 
       <div className="flex gap-4 flex-1 min-h-0">
+        {/* Conversation Sidebar */}
+        <Card className="w-64 shrink-0 flex flex-col">
+          <CardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-lg">Chats</CardTitle>
+              <Button size="sm" variant="outline" onClick={handleNewChat}>
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="flex-1 p-0 overflow-hidden">
+            <ScrollArea className="h-full">
+              <div className="px-4 pb-4 space-y-1">
+                {conversations.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    No chats yet. Start a new one!
+                  </p>
+                ) : (
+                  conversations.map((conv) => (
+                    <div
+                      key={conv.id}
+                      className={`group flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-muted ${
+                        conv.id === activeConversationId ? 'bg-muted' : ''
+                      }`}
+                      onClick={() => setActiveConversation(conv.id)}
+                    >
+                      <MessageSquare className="h-4 w-4 shrink-0 text-muted-foreground" />
+                      <span className="flex-1 text-sm truncate">{conv.title}</span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteConversation(conv.id);
+                        }}
+                      >
+                        <Trash2 className="h-3 w-3 text-muted-foreground" />
+                      </Button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </ScrollArea>
+          </CardContent>
+        </Card>
+
         {/* Settings Panel */}
         {showSettings && (
           <Card className="w-80 shrink-0">
@@ -319,7 +377,7 @@ export default function McpChatPage() {
                       }`}
                     >
                       <div className="whitespace-pre-wrap text-sm">
-                        {message.content || (message.role === 'assistant' && isLoading ? '' : message.content)}
+                        {message.content || (message.id === streamingMessageId ? '' : message.content)}
                       </div>
                     </div>
                     {message.role === 'user' && (
