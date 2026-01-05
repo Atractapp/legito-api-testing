@@ -1,7 +1,28 @@
 ---
-description: Create a pull request
+description: Create a pull request (with conflict check)
 allowed-tools: Bash(git:*), Bash(gh:*)
 ---
+
+## Pre-PR Checklist
+
+### 1. Verify Your Changes Only
+!`git status --short`
+
+**CRITICAL:** Ensure you're only including YOUR changes, not files from other Claude terminals.
+
+### 2. Check for Conflicts with Base Branch
+```bash
+git fetch origin
+git diff origin/master --stat
+```
+
+If conflicts exist, resolve them first with `git pull --rebase origin master`.
+
+### 3. Code Review
+Run `/review` or manually verify:
+- [ ] Code follows project standards
+- [ ] Tests pass
+- [ ] No sensitive data exposed
 
 ## Context
 - Current branch: !`git branch --show-current`
@@ -11,8 +32,8 @@ allowed-tools: Bash(git:*), Bash(gh:*)
 
 ## Steps
 
-1. **Check if branch is pushed:**
-   - If not, push with `git push -u origin <branch>`
+1. **Ensure branch is pushed:**
+   - If not pushed, run `git push -u origin <branch>`
 
 2. **Create PR with gh CLI:**
    ```

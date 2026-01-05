@@ -1,14 +1,32 @@
 ---
-description: Create a git commit with conventional format
-allowed-tools: Bash(git:*)
+description: Create a git commit with conventional format (includes review + conflict check)
+allowed-tools: Bash(git:*), Bash(npm:*)
 ---
 
-## Context
-- Current status: !`git status --short`
-- Staged changes: !`git diff --cached --stat`
-- Recent commits: !`git log --oneline -5`
+## Pre-Commit Checklist
 
-Create a conventional commit message for the staged changes.
+### 1. Verify Own Files Only
+Check which files are modified:
+!`git status --short`
+
+**CRITICAL:** Only stage files YOU created/modified in THIS session. If you see files you didn't touch, DO NOT stage them - they belong to another Claude terminal.
+
+### 2. Check for Remote Changes
+!`git fetch origin && git status -uno`
+
+If remote has new commits, run `git pull --rebase` first to avoid conflicts.
+
+### 3. Code Review
+Review the changes you're about to commit:
+!`git diff --cached --stat`
+
+Verify:
+- [ ] Code follows project standards
+- [ ] No debug code or console.logs left
+- [ ] No sensitive data exposed
+- [ ] Tests pass for changed code
+
+### 4. Create Commit
 
 **Format:** `type(scope): description`
 
@@ -26,4 +44,11 @@ Create a conventional commit message for the staged changes.
 3. Don't end with a period
 4. Add body if changes need explanation
 
-Stage any unstaged changes if appropriate, then commit and show the result.
+### 5. Post-Commit
+After committing, check if push is safe:
+```bash
+git fetch origin && git status
+```
+
+If ahead of origin with no conflicts, push is safe.
+If conflicts detected, resolve them carefully - NEVER delete code from other terminals.

@@ -45,3 +45,25 @@
 - Never commit `.env` files with real credentials
 - Run `npm run lint:fix && npm run format` before committing
 - Tests are sharded in CI (4-way parallel for integration tests)
+
+## Multi-Claude Workflow Rules
+
+This project uses multiple Claude Code terminals in parallel. Follow these rules strictly:
+
+### Commit/Push Rules
+1. **Only commit YOUR own work** - Only stage and commit files YOU created or modified in THIS terminal session
+2. **Never commit others' files** - If you see modified files you didn't touch, leave them unstaged
+3. **Code review required** - Review all changes with `/review` before committing
+4. **Check for conflicts** - Always run `git fetch && git status` before committing to check for remote changes
+
+### Merge Conflict Resolution
+1. Always `git pull --rebase` before pushing
+2. If conflicts exist, resolve them carefully - NEVER delete code from other terminals
+3. When in doubt, ask the user before resolving conflicts
+4. After resolving, verify the merged code still works
+
+### Deployment Rules
+1. Run `/review` before any deployment
+2. Ensure all tests pass: `npm run test:smoke`
+3. Check for pending changes from other terminals
+4. Coordinate with user if multiple deployments are pending
