@@ -215,6 +215,12 @@ export interface LegitoTest {
   crudOperation?: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | 'ANONYMIZE' | 'SHARE';
   resourceCategory?: 'kept' | 'to-delete' | 'n/a';
   entityType?: string;
+  // Webhook verification (for push connection tests)
+  webhookConfig?: {
+    verifyWebhook?: boolean;
+    webhookCorrelationId?: string;
+    webhookTimeoutMs?: number;
+  };
 }
 
 export interface TestAssertion {

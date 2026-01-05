@@ -203,6 +203,12 @@ export type ApiOperation =
   | 'UPDATE_DOCUMENT'
   | 'DELETE_DOCUMENT'
   | 'ANONYMIZE_DOCUMENT'
+  | 'GET_DOCUMENT_RECORDS'
+  // Document Versions
+  | 'GET_DOCUMENT_VERSION'
+  | 'DOWNLOAD_DOCUMENT'
+  | 'CLONE_DOCUMENT'
+  | 'COMPARE_DOCUMENTS'
   // Objects
   | 'GET_OBJECTS'
   | 'GET_OBJECT'
@@ -212,22 +218,42 @@ export type ApiOperation =
   | 'DELETE_OBJECT_RECORD'
   // Users
   | 'GET_USERS'
+  | 'GET_USER'
   | 'CREATE_USER'
   | 'UPDATE_USER'
   | 'DELETE_USER'
   // User Groups
   | 'GET_USER_GROUPS'
+  | 'GET_USER_GROUP'
   | 'CREATE_USER_GROUP'
   | 'UPDATE_USER_GROUP'
   | 'DELETE_USER_GROUP'
+  // Files
+  | 'LIST_FILES'
+  | 'UPLOAD_FILE'
+  | 'GET_FILE'
+  | 'DELETE_FILE'
   // Sharing
   | 'CREATE_EXTERNAL_LINK'
   | 'DELETE_EXTERNAL_LINK'
+  | 'LIST_EXTERNAL_LINKS'
   | 'SHARE_TO_USER'
   | 'SHARE_TO_USER_GROUP'
-  // Other
+  | 'LIST_DOCUMENT_SHARES'
+  | 'REMOVE_USER_SHARE'
+  // Tags
+  | 'LIST_TAGS'
+  | 'CREATE_TAG'
+  | 'GET_TAG'
+  | 'DELETE_TAG'
+  // Push Connections
+  | 'GET_PUSH_CONNECTIONS'
+  | 'CREATE_PUSH_CONNECTION'
+  | 'TEST_PUSH_CONNECTION'
+  | 'DELETE_PUSH_CONNECTION'
+  // Workflows
   | 'GET_WORKFLOWS'
-  | 'GET_DOCUMENT_RECORDS';
+  | 'GET_WORKFLOW';
 
 /**
  * A user-configured test in their custom test suite
@@ -268,6 +294,27 @@ export interface ConfiguredTest {
 
     // For external link operations
     returnExternalLink?: boolean;  // Show the external link URL in results
+
+    // For file operations
+    fileBase64?: string;          // Base64-encoded file content
+    fileName?: string;            // e.g., "test-document.pdf"
+    mimeType?: string;            // e.g., "application/pdf"
+    useTestFile?: boolean;        // Use default test file (small PDF)
+
+    // For download operations
+    downloadFormat?: 'pdf' | 'docx' | 'pdfa' | 'htm' | 'rtf' | 'xml' | 'odt' | 'txt';
+    returnFileContent?: boolean;  // Return base64 content in results
+
+    // For tag operations
+    tagName?: string;
+    tagColor?: string;
+    tagId?: number;
+
+    // For push connection operations
+    webhookCorrelationId?: string;  // Auto-generated if not provided
+    eventTypes?: string[];          // ['DocumentRecordCreated', etc.]
+    verifyWebhook?: boolean;        // Wait and verify webhook arrives
+    webhookTimeoutMs?: number;      // Default 30000
   };
 }
 

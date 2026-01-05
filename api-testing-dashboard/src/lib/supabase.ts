@@ -556,7 +556,117 @@ CREATE POLICY "Allow all for authenticated users" ON test_runs FOR ALL USING (tr
 CREATE POLICY "Allow all for authenticated users" ON test_results FOR ALL USING (true);
 CREATE POLICY "Allow all for authenticated users" ON configurations FOR ALL USING (true);
 CREATE POLICY "Allow all for authenticated users" ON historical_data FOR ALL USING (true);
+
+-- Webhook Payloads table (for push connection testing)
+CREATE TABLE IF NOT EXISTS webhook_payloads (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  correlation_id TEXT NOT NULL,
+  event_type TEXT,
+  payload JSONB NOT NULL,
+  headers JSONB,
+  received_at TIMESTAMPTZ DEFAULT NOW(),
+  processed BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_webhook_correlation ON webhook_payloads(correlation_id);
+CREATE INDEX IF NOT EXISTS idx_webhook_processed ON webhook_payloads(processed);
+
+ALTER TABLE webhook_payloads ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow all for webhook_payloads" ON webhook_payloads FOR ALL USING (true);
 `;
+
+// ============================================================================
+// WEBHOOK HELPER FUNCTIONS (for push connection testing)
+// ============================================================================
+
+export interface WebhookPayload {
+  id: string;
+  correlationId: string;
+  eventType?: string;
+  payload: Record<string, unknown>;
+  headers?: Record<string, string>;
+  receivedAt: string;
+  processed: boolean;
+}
+
+/**
+ * Poll for a webhook payload with the given correlation ID.
+ * Returns the first unprocessed webhook found within the timeout period.
+ */
+export async function pollForWebhook(
+  correlationId: string,
+  timeoutMs: number = 30000,
+  pollIntervalMs: number = 1000
+): Promise<WebhookPayload | null> {
+  if (!supabase) return null;
+
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < timeoutMs) {
+    const { data } = await supabase
+      .from('webhook_payloads')
+      .select('*')
+      .eq('correlation_id', correlationId)
+      .eq('processed', false)
+      .order('received_at', { ascending: false })
+      .limit(1);
+
+    if (data && data.length > 0) {
+      const webhook = data[0];
+
+      // Mark as processed
+      await supabase
+        .from('webhook_payloads')
+        .update({ processed: true })
+        .eq('id', webhook.id);
+
+      return {
+        id: webhook.id,
+        correlationId: webhook.correlation_id,
+        eventType: webhook.event_type,
+        payload: webhook.payload,
+        headers: webhook.headers,
+        receivedAt: webhook.received_at,
+        processed: true,
+      };
+    }
+
+    // Wait before polling again
+    await new Promise(resolve => setTimeout(resolve, pollIntervalMs));
+  }
+
+  return null; // Timeout
+}
+
+/**
+ * Clean up webhook payloads for a given correlation ID.
+ */
+export async function cleanupWebhooks(correlationId: string): Promise<boolean> {
+  if (!supabase) return false;
+
+  const { error } = await supabase
+    .from('webhook_payloads')
+    .delete()
+    .eq('correlation_id', correlationId);
+
+  if (error) {
+    console.error('Error cleaning up webhooks:', error);
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Generate a webhook URL for a test run.
+ */
+export function getWebhookUrl(correlationId: string): string {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ||
+                  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` :
+                  'http://localhost:3000';
+  return `${baseUrl}/api/webhook/legito/${correlationId}`;
+}
 
 // ============================================================================
 // TEST PRESETS (Workspace-Specific Test Configurations)
