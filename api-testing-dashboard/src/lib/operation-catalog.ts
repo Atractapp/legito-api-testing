@@ -5,12 +5,8 @@
 import type { ApiOperation, ConfiguredTest } from '@/types';
 import type { LegitoTest, TestContext } from './legito-api';
 
-// Test file for file upload operations (minimal valid PDF)
-export const TEST_PDF_BASE64 = 'JVBERi0xLjQKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFszIDAgUl0KL0NvdW50IDEKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj4KZW5kb2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovUmVzb3VyY2VzIDw8Pj4KL0NvbnRlbnRzIDQgMCBSCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9MZW5ndGggNDQKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAgNzAwIFRkCihBUEkgVGVzdCBGaWxlKSBUagpFVAplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA1CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMDAwMDU4IDAwMDAwIG4gCjAwMDAwMDAxNDUgMDAwMDAgbiAKMDAwMDAwMDI0NCAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDUKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjMzNwolJUVPRgo=';
-export const TEST_PDF_FILENAME = 'api-test-file.pdf';
-export const TEST_PDF_MIMETYPE = 'application/pdf';
-
-export type OperationCategory = 'Documents' | 'Objects' | 'Users' | 'User Groups' | 'Sharing' | 'Files' | 'Tags' | 'Push Connections' | 'Workflows' | 'Other';
+// NOTE: Files, Tags, and Push Connections endpoints don't exist in Legito API v7
+export type OperationCategory = 'Documents' | 'Objects' | 'Users' | 'User Groups' | 'Sharing' | 'Workflows' | 'Other';
 
 export interface OperationDefinition {
   id: ApiOperation;
@@ -350,125 +346,8 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     needsResultFrom: ['CREATE_DOCUMENT'],
   },
 
-  // ============ Files ============
-  {
-    id: 'LIST_FILES',
-    name: 'List Files',
-    description: 'List all uploaded files',
-    category: 'Files',
-    method: 'GET',
-    endpoint: '/file',
-    requiresConfig: {},
-  },
-  {
-    id: 'UPLOAD_FILE',
-    name: 'Upload File',
-    description: 'Upload a file (base64 encoded)',
-    category: 'Files',
-    method: 'POST',
-    endpoint: '/file',
-    requiresConfig: { fileUpload: true },
-  },
-  {
-    id: 'GET_FILE',
-    name: 'Get File',
-    description: 'Get file details by ID',
-    category: 'Files',
-    method: 'GET',
-    endpoint: '/file/{fileId}',
-    requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['UPLOAD_FILE'],
-  },
-  {
-    id: 'DELETE_FILE',
-    name: 'Delete File',
-    description: 'Delete an uploaded file',
-    category: 'Files',
-    method: 'DELETE',
-    endpoint: '/file/{fileId}',
-    requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['UPLOAD_FILE'],
-  },
-
-  // ============ Tags ============
-  {
-    id: 'LIST_TAGS',
-    name: 'List Tags',
-    description: 'List all available tags',
-    category: 'Tags',
-    method: 'GET',
-    endpoint: '/tag',
-    requiresConfig: {},
-  },
-  {
-    id: 'CREATE_TAG',
-    name: 'Create Tag',
-    description: 'Create a new tag with name and color',
-    category: 'Tags',
-    method: 'POST',
-    endpoint: '/tag',
-    requiresConfig: { tagName: true, tagColor: 'optional' },
-  },
-  {
-    id: 'GET_TAG',
-    name: 'Get Tag',
-    description: 'Get tag details by ID',
-    category: 'Tags',
-    method: 'GET',
-    endpoint: '/tag/{tagId}',
-    requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['CREATE_TAG'],
-  },
-  {
-    id: 'DELETE_TAG',
-    name: 'Delete Tag',
-    description: 'Delete a tag',
-    category: 'Tags',
-    method: 'DELETE',
-    endpoint: '/tag/{tagId}',
-    requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['CREATE_TAG'],
-  },
-
-  // ============ Push Connections ============
-  {
-    id: 'GET_PUSH_CONNECTIONS',
-    name: 'List Push Connections',
-    description: 'List all webhook/push connections',
-    category: 'Push Connections',
-    method: 'GET',
-    endpoint: '/push-connection',
-    requiresConfig: {},
-  },
-  {
-    id: 'CREATE_PUSH_CONNECTION',
-    name: 'Create Push Connection',
-    description: 'Create a new webhook endpoint for event notifications',
-    category: 'Push Connections',
-    method: 'POST',
-    endpoint: '/push-connection',
-    requiresConfig: { eventTypes: 'optional' },
-  },
-  {
-    id: 'TEST_PUSH_CONNECTION',
-    name: 'Test Push Connection',
-    description: 'Send a test event to verify webhook is working',
-    category: 'Push Connections',
-    method: 'POST',
-    endpoint: '/push-connection/{pushConnectionId}/test',
-    requiresConfig: { useResultFrom: true, verifyWebhook: 'optional' },
-    needsResultFrom: ['CREATE_PUSH_CONNECTION'],
-  },
-  {
-    id: 'DELETE_PUSH_CONNECTION',
-    name: 'Delete Push Connection',
-    description: 'Delete a push connection',
-    category: 'Push Connections',
-    method: 'DELETE',
-    endpoint: '/push-connection/{pushConnectionId}',
-    requiresConfig: { useResultFrom: true },
-    needsResultFrom: ['CREATE_PUSH_CONNECTION'],
-  },
+  // NOTE: Files, Tags, and Push Connections endpoints don't exist in Legito API v7
+  // They were removed after testing showed 404 errors
 
   // ============ Sharing (extended) ============
   {
@@ -594,12 +473,6 @@ export function configuredTestToLegitoTest(
   } else if (test.operation === 'SHARE_TO_USER' || test.operation === 'SHARE_TO_USER_GROUP') {
     // Will be built dynamically
     dynamicBody = buildShareBody(test, allTests);
-  } else if (test.operation === 'UPLOAD_FILE') {
-    body = buildFileUploadBody(test.config);
-  } else if (test.operation === 'CREATE_TAG') {
-    body = buildTagBody(test.config);
-  } else if (test.operation === 'CREATE_PUSH_CONNECTION') {
-    body = buildPushConnectionBody(test.config);
   }
 
   // Determine context key for storing results
@@ -689,47 +562,6 @@ function buildUserGroupBody(config: ConfiguredTest['config']): unknown {
   return {
     name: config.userGroupName || `Test Group ${timestamp}`,
     description: 'Created by API test',
-  };
-}
-
-function buildFileUploadBody(config: ConfiguredTest['config']): unknown {
-  // Use test file or custom file
-  const content = config.useTestFile ? TEST_PDF_BASE64 : config.fileBase64;
-  const name = config.fileName || TEST_PDF_FILENAME;
-  const mimeType = config.mimeType || TEST_PDF_MIMETYPE;
-
-  return {
-    content,
-    name,
-    mimeType,
-  };
-}
-
-function buildTagBody(config: ConfiguredTest['config']): unknown {
-  const timestamp = Date.now();
-  return {
-    name: config.tagName || `Test Tag ${timestamp}`,
-    color: config.tagColor || '#3B82F6', // Default blue
-  };
-}
-
-function buildPushConnectionBody(config: ConfiguredTest['config']): unknown {
-  const timestamp = Date.now();
-  const correlationId = config.webhookCorrelationId || `test-${timestamp}`;
-
-  // Construct the webhook URL using environment variables or defaults
-  const baseUrl = typeof window !== 'undefined'
-    ? window.location.origin
-    : (process.env.NEXT_PUBLIC_APP_URL ||
-       (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'));
-
-  return {
-    name: `API Test Push ${timestamp}`,
-    url: `${baseUrl}/api/webhook/legito/${correlationId}`,
-    eventTypes: config.eventTypes || ['DocumentRecordCreated', 'DocumentRecordUpdated'],
-    enabled: true,
-    // Store correlation ID in metadata for later retrieval
-    _correlationId: correlationId,
   };
 }
 

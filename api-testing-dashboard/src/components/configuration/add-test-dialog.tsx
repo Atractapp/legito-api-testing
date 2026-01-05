@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Plus, FileText, Database, Users, UsersRound, Share2, MoreHorizontal, File, Tag, Webhook, GitBranch } from 'lucide-react';
+import { Plus, FileText, Database, Users, UsersRound, Share2, MoreHorizontal, GitBranch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -45,9 +45,6 @@ const categoryIcons: Record<string, React.ReactNode> = {
   Users: <Users className="h-4 w-4" />,
   'User Groups': <UsersRound className="h-4 w-4" />,
   Sharing: <Share2 className="h-4 w-4" />,
-  Files: <File className="h-4 w-4" />,
-  Tags: <Tag className="h-4 w-4" />,
-  'Push Connections': <Webhook className="h-4 w-4" />,
   Workflows: <GitBranch className="h-4 w-4" />,
   Other: <MoreHorizontal className="h-4 w-4" />,
 };
@@ -65,8 +62,6 @@ export function AddTestDialog({
   const [selectedObjectId, setSelectedObjectId] = useState<string>('');
   const [selectedResultFrom, setSelectedResultFrom] = useState<string>('');
   const [returnExternalLink, setReturnExternalLink] = useState<boolean>(true);
-  const [useTestFile, setUseTestFile] = useState<boolean>(true);
-  const [verifyWebhook, setVerifyWebhook] = useState<boolean>(true);
 
   const operationsByCategory = useMemo(() => getOperationsByCategory(), []);
   const categories = Object.keys(operationsByCategory);
@@ -126,16 +121,6 @@ export function AddTestDialog({
       newTest.config.returnExternalLink = true;
     }
 
-    // Add file upload option
-    if (selectedOperation === 'UPLOAD_FILE' && useTestFile) {
-      newTest.config.useTestFile = true;
-    }
-
-    // Add webhook verification option
-    if (selectedOperation === 'TEST_PUSH_CONNECTION' && verifyWebhook) {
-      newTest.config.verifyWebhook = true;
-    }
-
     onAddTest(newTest);
     resetForm();
     onOpenChange(false);
@@ -147,8 +132,6 @@ export function AddTestDialog({
     setSelectedObjectId('');
     setSelectedResultFrom('');
     setReturnExternalLink(true);
-    setUseTestFile(true);
-    setVerifyWebhook(true);
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -350,50 +333,6 @@ export function AddTestDialog({
                       >
                         Return external link URL in results
                       </label>
-                    </div>
-                  )}
-
-                  {/* File Upload Option */}
-                  {selectedOpDef.requiresConfig.fileUpload && (
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="useTestFile"
-                          checked={useTestFile}
-                          onCheckedChange={(checked) => setUseTestFile(checked === true)}
-                        />
-                        <label
-                          htmlFor="useTestFile"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Use default test file (small PDF)
-                        </label>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        A minimal valid PDF will be uploaded for testing purposes
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Webhook Verification Option */}
-                  {selectedOpDef.requiresConfig.verifyWebhook === 'optional' && (
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="verifyWebhook"
-                          checked={verifyWebhook}
-                          onCheckedChange={(checked) => setVerifyWebhook(checked === true)}
-                        />
-                        <label
-                          htmlFor="verifyWebhook"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Verify webhook is received
-                        </label>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Wait and verify that the push connection webhook arrives at our endpoint
-                      </p>
                     </div>
                   )}
 
