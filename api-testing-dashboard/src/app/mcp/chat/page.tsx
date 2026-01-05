@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Send, Bot, User, Settings, Loader2, AlertCircle } from 'lucide-react';
+import { Send, Bot, User, Settings, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { useMcpStore } from '@/store/mcp-store';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -29,6 +29,7 @@ const providerLabels: Record<AIProvider, string> = {
 export default function McpChatPage() {
   const [aiProvider, setAiProvider] = useState<AIProvider>('google');
   const [aiApiKey, setAiApiKey] = useState('');
+  const [showApiKey, setShowApiKey] = useState(false);
   const [showSettings, setShowSettings] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -110,8 +111,15 @@ export default function McpChatPage() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}`);
+        const text = await response.text();
+        let errorMessage = `HTTP ${response.status}`;
+        try {
+          const errorData = JSON.parse(text);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = text || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
 
       // Read the stream
@@ -132,7 +140,11 @@ export default function McpChatPage() {
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
-        assistantContent += chunk;
+
+        // AI SDK text stream format: each chunk is plain text
+        // Filter out any protocol markers if present
+        const cleanChunk = chunk.replace(/^0:/gm, '').replace(/^d:/gm, '');
+        assistantContent += cleanChunk;
 
         // Update the assistant message with accumulated content
         setMessages(prev =>
@@ -207,12 +219,28 @@ export default function McpChatPage() {
 
                   <div className="space-y-2">
                     <Label>API Key</Label>
-                    <Input
-                      type="password"
-                      value={aiApiKey}
-                      onChange={(e) => setAiApiKey(e.target.value)}
-                      placeholder={`Enter your ${aiProvider === 'google' ? 'Gemini' : aiProvider === 'openai' ? 'OpenAI' : 'Anthropic'} API key`}
-                    />
+                    <div className="relative">
+                      <Input
+                        type={showApiKey ? 'text' : 'password'}
+                        value={aiApiKey}
+                        onChange={(e) => setAiApiKey(e.target.value)}
+                        placeholder={`Enter your ${aiProvider === 'google' ? 'Gemini' : aiProvider === 'openai' ? 'OpenAI' : 'Anthropic'} API key`}
+                        className="pr-10"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                        onClick={() => setShowApiKey(!showApiKey)}
+                      >
+                        {showApiKey ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </Button>
+                    </div>
                     <p className="text-xs text-muted-foreground">
                       Your API key is stored locally in your browser.
                     </p>
