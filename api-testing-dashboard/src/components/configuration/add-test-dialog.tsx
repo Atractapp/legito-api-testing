@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Plus, FileText, Database, Users, UsersRound, Share2, MoreHorizontal, GitBranch } from 'lucide-react';
+import { Plus, FileText, Database, Users, UsersRound, Share2, MoreHorizontal, GitBranch, File } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -45,6 +45,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
   Users: <Users className="h-4 w-4" />,
   'User Groups': <UsersRound className="h-4 w-4" />,
   Sharing: <Share2 className="h-4 w-4" />,
+  Files: <File className="h-4 w-4" />,
   Workflows: <GitBranch className="h-4 w-4" />,
   Other: <MoreHorizontal className="h-4 w-4" />,
 };

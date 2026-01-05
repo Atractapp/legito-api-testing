@@ -231,7 +231,7 @@ export type ApiOperation =
   // Files
   | 'LIST_FILES'
   | 'UPLOAD_FILE'
-  | 'GET_FILE'
+  | 'DOWNLOAD_FILE'
   | 'DELETE_FILE'
   // Sharing
   | 'CREATE_EXTERNAL_LINK'

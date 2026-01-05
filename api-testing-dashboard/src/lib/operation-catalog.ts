@@ -5,8 +5,7 @@
 import type { ApiOperation, ConfiguredTest } from '@/types';
 import type { LegitoTest, TestContext } from './legito-api';
 
-// NOTE: Files, Tags, and Push Connections endpoints don't exist in Legito API v7
-export type OperationCategory = 'Documents' | 'Objects' | 'Users' | 'User Groups' | 'Sharing' | 'Workflows' | 'Other';
+export type OperationCategory = 'Documents' | 'Objects' | 'Users' | 'User Groups' | 'Sharing' | 'Files' | 'Workflows' | 'Other';
 
 export interface OperationDefinition {
   id: ApiOperation;
@@ -346,8 +345,48 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     needsResultFrom: ['CREATE_DOCUMENT'],
   },
 
-  // NOTE: Files, Tags, and Push Connections endpoints don't exist in Legito API v7
-  // They were removed after testing showed 404 errors
+  // ============ Files ============
+  // File operations require a documentRecordCode (from CREATE_DOCUMENT)
+  {
+    id: 'LIST_FILES',
+    name: 'List Document Files',
+    description: 'List all external files attached to a document',
+    category: 'Files',
+    method: 'GET',
+    endpoint: '/file/{documentRecordCode}',
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['CREATE_DOCUMENT'],
+  },
+  {
+    id: 'UPLOAD_FILE',
+    name: 'Upload File to Document',
+    description: 'Upload an external file to a document record',
+    category: 'Files',
+    method: 'POST',
+    endpoint: '/file/{documentRecordCode}',
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['CREATE_DOCUMENT'],
+  },
+  {
+    id: 'DOWNLOAD_FILE',
+    name: 'Download File',
+    description: 'Download an external file by ID',
+    category: 'Files',
+    method: 'GET',
+    endpoint: '/file/download/{fileId}',
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['UPLOAD_FILE'],
+  },
+  {
+    id: 'DELETE_FILE',
+    name: 'Delete File',
+    description: 'Remove an external file from a document',
+    category: 'Files',
+    method: 'DELETE',
+    endpoint: '/file/{fileId}',
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['UPLOAD_FILE'],
+  },
 
   // ============ Sharing (extended) ============
   {
