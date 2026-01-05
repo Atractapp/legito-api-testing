@@ -280,11 +280,14 @@ export async function fetchTemplateElements(
 
   const rawElements = Array.isArray(elementsResponse.data) ? elementsResponse.data : [];
 
-  // Filter to only input elements (those with a name and editable types)
+  // Filter to only input elements and clause/section elements (those with a name and editable types)
   const inputTypes = [
     'TextInput', 'Date', 'Switcher', 'Question', 'Select',
     'ObjectRecordsSelectbox', 'ObjectRecordsQuestion', 'Money',
-    'Counter', 'Calculation', 'RichText', 'Image'
+    'Counter', 'Calculation', 'RichText', 'Image',
+    // Clause/section elements that can be shown/hidden
+    'Clause', 'ClauseCondition', 'Section', 'SectionCondition',
+    'ConditionalClause', 'ConditionalSection'
   ];
 
   const elements: TemplateElement[] = rawElements
@@ -299,6 +302,7 @@ export async function fetchTemplateElements(
         label: String(label)
       })) : undefined,
       objectId: el.objectId,
+      visible: el.visible,
     }));
 
   // Remove duplicates (same name can appear multiple times if repeated in document)
@@ -362,6 +366,7 @@ interface RawElement {
   value?: unknown;
   items?: Record<string, string>;
   objectId?: number;
+  visible?: boolean;
 }
 
 interface RawUser {

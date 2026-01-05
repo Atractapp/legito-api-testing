@@ -91,7 +91,20 @@ const elementTypeLabels: Record<string, string> = {
   Calculation: 'Calculation',
   RichText: 'Rich Text',
   Image: 'Image',
+  // Clause/section elements
+  Clause: 'Clause (Visibility)',
+  ClauseCondition: 'Clause Condition',
+  Section: 'Section (Visibility)',
+  SectionCondition: 'Section Condition',
+  ConditionalClause: 'Conditional Clause',
+  ConditionalSection: 'Conditional Section',
 };
+
+// Element types that use visible (true/false) instead of a value
+const visibilityElementTypes = [
+  'Clause', 'ClauseCondition', 'Section', 'SectionCondition',
+  'ConditionalClause', 'ConditionalSection'
+];
 
 interface ConfiguredElement {
   id: string;
@@ -101,6 +114,7 @@ interface ConfiguredElement {
   value: string;
   options?: { uuid: string; label: string }[];
   objectId?: number;
+  visible?: boolean;  // For clause/section elements
 }
 
 const emptyPreset: Omit<TestPreset, 'id' | 'createdAt' | 'updatedAt'> = {
@@ -164,16 +178,19 @@ export function PresetManager() {
         if (test.config.templateSuiteId && test.config.elementValues) {
           const template = preset.workspaceResources.templates.find(t => t.id === test.config.templateSuiteId);
           if (template) {
-            const elements: ConfiguredElement[] = Object.entries(test.config.elementValues).map(([name, value]) => {
+            const elements: ConfiguredElement[] = Object.entries(test.config.elementValues).map(([name, storedValue]) => {
               const templateEl = template.elements?.find(e => e.name === name);
+              // Check if this is a visibility element (stored as { __visible: boolean })
+              const isVisibilityValue = typeof storedValue === 'object' && storedValue !== null && '__visible' in storedValue;
               return {
                 id: templateEl?.uuid || name,
                 name: name,
                 type: templateEl?.type || 'TextInput',
                 uuid: templateEl?.uuid || name,
-                value: String(value || ''),
+                value: isVisibilityValue ? '' : String(storedValue || ''),
                 options: templateEl?.options,
                 objectId: templateEl?.objectId,
+                visible: isVisibilityValue ? (storedValue as { __visible: boolean }).__visible : undefined,
               };
             });
             restoredConfigs.set(test.config.templateSuiteId, elements);
@@ -439,7 +456,7 @@ export function PresetManager() {
     });
   };
 
-  const updateElement = (templateId: number, elementId: string, field: keyof ConfiguredElement, value: string) => {
+  const updateElement = (templateId: number, elementId: string, field: keyof ConfiguredElement, value: string | boolean) => {
     setTemplateConfigs(prev => {
       const next = new Map(prev);
       const elements = next.get(templateId) || [];
@@ -481,9 +498,14 @@ export function PresetManager() {
         if (elements && elements.length > 0) {
           const elementValues: Record<string, unknown> = {};
           for (const el of elements) {
-            if (el.value && el.name) {
-              // Use element NAME as key (API expects names, not UUIDs)
-              elementValues[el.name] = el.value;
+            if (el.name) {
+              // For visibility elements (clauses), store { __visible: boolean }
+              if (visibilityElementTypes.includes(el.type) && el.visible !== undefined) {
+                elementValues[el.name] = { __visible: el.visible };
+              } else if (el.value) {
+                // Use element NAME as key (API expects names, not UUIDs)
+                elementValues[el.name] = el.value;
+              }
             }
           }
           return {
@@ -1251,6 +1273,18 @@ export function PresetManager() {
                               <SelectItem value="CZK">CZK</SelectItem>
                             </SelectContent>
                           </Select>
+                        </div>
+                      ) : visibilityElementTypes.includes(element.type) ? (
+                        <div className="flex items-center gap-2">
+                          <Switch
+                            checked={element.visible === true}
+                            onCheckedChange={(checked) =>
+                              updateElement(editingTemplate.id, element.id, 'visible', checked)
+                            }
+                          />
+                          <span className="text-sm text-muted-foreground">
+                            {element.visible === true ? 'Visible' : 'Hidden'}
+                          </span>
                         </div>
                       ) : (
                         <Input

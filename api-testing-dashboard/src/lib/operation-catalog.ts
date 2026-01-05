@@ -594,12 +594,22 @@ export function configuredTestToLegitoTest(
 function buildDocumentBody(
   elementValues: Record<string, unknown>
 ): unknown {
-  // Body should be just an array of { name, value } objects
+  // Body should be just an array of { name, value } or { name, visible } objects
   // The templateSuiteId is already in the URL
-  const elements = Object.entries(elementValues).map(([name, value]) => ({
-    name,
-    value,
-  }));
+  const elements = Object.entries(elementValues).map(([name, value]) => {
+    // Check if this is a visibility element (stored as { __visible: boolean })
+    if (typeof value === 'object' && value !== null && '__visible' in value) {
+      return {
+        name,
+        visible: (value as { __visible: boolean }).__visible,
+      };
+    }
+    // Regular element with value
+    return {
+      name,
+      value,
+    };
+  });
 
   return elements;
 }

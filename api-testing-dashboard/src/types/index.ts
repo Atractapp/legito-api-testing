@@ -388,6 +388,7 @@ export interface TemplateElement {
   uuid: string;
   options?: { uuid: string; label: string }[];
   objectId?: number;
+  visible?: boolean;  // For clause/section elements that can be shown/hidden
 }
 
 export interface ObjectResource {
