@@ -141,6 +141,49 @@ export function PresetManager() {
   const [isLoadingElements, setIsLoadingElements] = useState(false);
   const [fetchedElements, setFetchedElements] = useState<TemplateElement[]>([]);
 
+  // Helper function to restore all state from a preset
+  const restoreStateFromPreset = useCallback((preset: TestPreset) => {
+    setEditingPreset(preset);
+
+    // Restore workspace resources
+    if (preset.workspaceResources) {
+      setResources(preset.workspaceResources);
+      setSelectedTemplates(new Set(preset.selectedTemplateIds?.map(Number).filter(n => !isNaN(n)) || []));
+      setSelectedObjects(new Set(preset.selectedObjectIds?.map(Number).filter(n => !isNaN(n)) || []));
+    } else {
+      setResources(null);
+      setSelectedTemplates(new Set());
+      setSelectedObjects(new Set());
+    }
+
+    // Restore templateConfigs from configuredTests elementValues
+    const restoredConfigs = new Map<number, ConfiguredElement[]>();
+    if (preset.configuredTests && preset.workspaceResources) {
+      for (const test of preset.configuredTests) {
+        if (test.config.templateSuiteId && test.config.elementValues) {
+          const template = preset.workspaceResources.templates.find(t => t.id === test.config.templateSuiteId);
+          if (template) {
+            const elements: ConfiguredElement[] = Object.entries(test.config.elementValues).map(([name, value]) => {
+              const templateEl = template.elements?.find(e => e.name === name);
+              return {
+                id: templateEl?.uuid || name,
+                name: name,
+                type: templateEl?.type || 'TextInput',
+                uuid: templateEl?.uuid || name,
+                value: String(value || ''),
+                options: templateEl?.options,
+                objectId: templateEl?.objectId,
+              };
+            });
+            restoredConfigs.set(test.config.templateSuiteId, elements);
+          }
+        }
+      }
+    }
+    setTemplateConfigs(restoredConfigs);
+    setScanError(null);
+  }, []);
+
   const loadPresets = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -152,13 +195,13 @@ export function PresetManager() {
       if (!activePreset && loaded.length > 0) {
         const defaultPreset = loaded.find(p => p.isDefault) || loaded[0];
         setActivePreset(defaultPreset);
-        setEditingPreset(defaultPreset);
+        restoreStateFromPreset(defaultPreset);
       } else if (activePreset) {
         // Refresh active preset from database
         const fresh = loaded.find(p => p.id === activePreset.id);
         if (fresh) {
           setActivePreset(fresh);
-          setEditingPreset(fresh);
+          restoreStateFromPreset(fresh);
         }
       }
     } catch (error) {
@@ -166,7 +209,7 @@ export function PresetManager() {
     } finally {
       setIsLoading(false);
     }
-  }, [activePreset, setActivePreset]);
+  }, [activePreset, setActivePreset, restoreStateFromPreset]);
 
   useEffect(() => {
     loadPresets();
@@ -176,22 +219,8 @@ export function PresetManager() {
     const preset = presets.find(p => p.id === presetId);
     if (preset) {
       setActivePreset(preset);
-      setEditingPreset(preset);
       setIsCreating(false);
-
-      // Restore state from saved preset
-      if (preset.workspaceResources) {
-        setResources(preset.workspaceResources);
-        // Restore selections from saved IDs
-        setSelectedTemplates(new Set(preset.selectedTemplateIds?.map(Number).filter(n => !isNaN(n)) || []));
-        setSelectedObjects(new Set(preset.selectedObjectIds?.map(Number).filter(n => !isNaN(n)) || []));
-      } else {
-        setResources(null);
-        setSelectedTemplates(new Set());
-        setSelectedObjects(new Set());
-      }
-      setTemplateConfigs(new Map());
-      setScanError(null);
+      restoreStateFromPreset(preset);
     }
   };
 
@@ -218,11 +247,48 @@ export function PresetManager() {
 
     setIsSaving(true);
     try {
-      const saved = await saveTestPreset(editingPreset as TestPreset);
+      // Sync element values to configuredTests before saving
+      // NOTE: We store by element NAME (not UUID) because the Legito API expects names
+      let presetToSave = editingPreset as TestPreset;
+      if (presetToSave.configuredTests && templateConfigs.size > 0) {
+        const updatedTests = presetToSave.configuredTests.map(test => {
+          if (test.config.templateSuiteId) {
+            const elements = templateConfigs.get(test.config.templateSuiteId);
+            if (elements && elements.length > 0) {
+              const elementValues: Record<string, unknown> = {};
+              for (const el of elements) {
+                if (el.value && el.name) {
+                  // Use element NAME as key (API expects names, not UUIDs)
+                  elementValues[el.name] = el.value;
+                }
+              }
+              return {
+                ...test,
+                config: {
+                  ...test.config,
+                  elementValues: Object.keys(elementValues).length > 0 ? elementValues : undefined,
+                },
+              };
+            }
+          }
+          return test;
+        });
+        presetToSave = { ...presetToSave, configuredTests: updatedTests };
+      }
+
+      const saved = await saveTestPreset(presetToSave);
       if (saved) {
-        await loadPresets();
+        // Set active preset first so loadPresets can find it
         setActivePreset(saved);
-        setEditingPreset(saved);
+        // Reload preset list from database
+        await ensureDefaultPreset();
+        const loaded = await getTestPresets();
+        setPresets(loaded);
+        // Restore state from the freshly saved preset
+        const fresh = loaded.find(p => p.id === saved.id);
+        if (fresh) {
+          restoreStateFromPreset(fresh);
+        }
         setIsCreating(false);
       }
     } catch (error) {
@@ -235,14 +301,15 @@ export function PresetManager() {
   const handleDelete = async (presetId: string) => {
     try {
       await deleteTestPreset(presetId);
-      await loadPresets();
+      // Reload presets from database
+      const loaded = await getTestPresets();
+      setPresets(loaded);
       // If we deleted the active preset, select another
       if (activePreset?.id === presetId) {
-        const remaining = presets.filter(p => p.id !== presetId);
-        if (remaining.length > 0) {
-          const defaultPreset = remaining.find(p => p.isDefault) || remaining[0];
+        if (loaded.length > 0) {
+          const defaultPreset = loaded.find(p => p.isDefault) || loaded[0];
           setActivePreset(defaultPreset);
-          setEditingPreset(defaultPreset);
+          restoreStateFromPreset(defaultPreset);
         }
       }
     } catch (error) {
@@ -402,6 +469,37 @@ export function PresetManager() {
     setEditingPreset(prev => prev ? { ...prev, configuredTests: tests } : prev);
   }, []);
 
+  // Sync templateConfigs to configuredTests elementValues
+  // NOTE: We store by element NAME (not UUID) because the Legito API expects names
+  const syncElementValuesToTests = useCallback(() => {
+    if (!editingPreset?.configuredTests) return;
+
+    const updatedTests = editingPreset.configuredTests.map(test => {
+      if (test.config.templateSuiteId) {
+        const elements = templateConfigs.get(test.config.templateSuiteId);
+        if (elements && elements.length > 0) {
+          const elementValues: Record<string, unknown> = {};
+          for (const el of elements) {
+            if (el.value && el.name) {
+              // Use element NAME as key (API expects names, not UUIDs)
+              elementValues[el.name] = el.value;
+            }
+          }
+          return {
+            ...test,
+            config: {
+              ...test.config,
+              elementValues: Object.keys(elementValues).length > 0 ? elementValues : undefined,
+            },
+          };
+        }
+      }
+      return test;
+    });
+
+    setEditingPreset(prev => prev ? { ...prev, configuredTests: updatedTests } : prev);
+  }, [editingPreset?.configuredTests, templateConfigs]);
+
   // Open element editor and fetch elements from API
   const openElementEditor = async (template: TemplateResource) => {
     setEditingTemplate(template);
@@ -422,21 +520,31 @@ export function PresetManager() {
       const elements = await fetchTemplateElements(credentials, template.id);
       setFetchedElements(elements);
 
-      // Initialize config from fetched elements if not already configured
+      // Merge fetched elements with existing configured values
       const existingConfig = templateConfigs.get(template.id) || [];
-      if (existingConfig.length === 0 && elements.length > 0) {
-        const initialConfig: ConfiguredElement[] = elements.map(el => ({
+      if (elements.length > 0) {
+        // Create a map of existing values by element name for quick lookup
+        const existingValuesByName = new Map<string, string>();
+        for (const el of existingConfig) {
+          if (el.name && el.value) {
+            existingValuesByName.set(el.name, el.value);
+          }
+        }
+
+        // Build merged config: all fetched elements with preserved values
+        const mergedConfig: ConfiguredElement[] = elements.map(el => ({
           id: el.uuid,
           name: el.name,
           type: el.type,
           uuid: el.uuid,
-          value: '',
+          value: existingValuesByName.get(el.name) || '',  // Preserve existing value
           options: el.options,
           objectId: el.objectId,
         }));
+
         setTemplateConfigs(prev => {
           const next = new Map(prev);
-          next.set(template.id, initialConfig);
+          next.set(template.id, mergedConfig);
           return next;
         });
       }
@@ -1028,7 +1136,12 @@ export function PresetManager() {
       )}
 
       {/* Element Editor Dialog */}
-      <Dialog open={!!editingTemplate} onOpenChange={(open) => !open && setEditingTemplate(null)}>
+      <Dialog open={!!editingTemplate} onOpenChange={(open) => {
+        if (!open) {
+          syncElementValuesToTests();
+          setEditingTemplate(null);
+        }
+      }}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Configure Elements: {editingTemplate?.name || `Template ${editingTemplate?.id}`}</DialogTitle>
@@ -1139,7 +1252,10 @@ export function PresetManager() {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditingTemplate(null)}>
+            <Button variant="outline" onClick={() => {
+              syncElementValuesToTests();
+              setEditingTemplate(null);
+            }}>
               Done
             </Button>
           </DialogFooter>
