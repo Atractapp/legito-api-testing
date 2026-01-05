@@ -6,7 +6,7 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createAnthropic } from '@ai-sdk/anthropic';
-import { streamText } from 'ai';
+import { generateText } from 'ai';
 
 // Allow streaming responses up to 60 seconds
 export const maxDuration = 60;
@@ -26,7 +26,7 @@ function getModel(provider: AIProvider, apiKey: string) {
     }
     case 'google': {
       const client = createGoogleGenerativeAI({ apiKey });
-      return client('gemini-1.5-flash');
+      return client('gemini-2.0-flash');
     }
     default:
       throw new Error(`Unknown provider: ${provider}`);
@@ -51,14 +51,14 @@ export async function POST(request: Request) {
 
     const model = getModel(provider, aiApiKey);
 
-    const result = streamText({
+    // Use generateText for non-streaming response (simpler, more reliable)
+    const { text } = await generateText({
       model,
       system: 'You are a helpful AI assistant. Be concise and helpful.',
       messages,
     });
 
-    // Return plain text stream instead of SSE format
-    return new Response(result.textStream, {
+    return new Response(text, {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     });
   } catch (error) {

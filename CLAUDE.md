@@ -50,6 +50,11 @@
 
 This project uses multiple Claude Code terminals in parallel. Follow these rules strictly:
 
+### CRITICAL: File Ownership Rules
+1. **NEVER modify files you didn't create** - If a build fails due to errors in files you didn't create, DO NOT fix them. Report the error to the user and wait.
+2. **Only touch YOUR files** - Each terminal owns specific files. If you see errors in other files, leave them alone.
+3. **If build fails due to other files** - Tell the user which file has the error and wait for the other terminal to fix it.
+
 ### Commit/Push Rules
 1. **Only commit YOUR own work** - Only stage and commit files YOU created or modified in THIS terminal session
 2. **Never commit others' files** - If you see modified files you didn't touch, leave them unstaged
