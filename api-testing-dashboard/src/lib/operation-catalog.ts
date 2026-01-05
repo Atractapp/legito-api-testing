@@ -578,9 +578,9 @@ export function configuredTestToLegitoTest(
   let dynamicBody: ((ctx: TestContext) => unknown) | undefined = undefined;
 
   if (test.operation === 'CREATE_DOCUMENT' && test.config.elementValues) {
-    body = buildDocumentBody(test.config.elementValues, test.config.templateSuiteId);
+    body = buildDocumentBody(test.config.elementValues);
   } else if (test.operation === 'UPDATE_DOCUMENT' && test.config.elementValues) {
-    body = buildDocumentBody(test.config.elementValues, test.config.templateSuiteId);
+    body = buildDocumentBody(test.config.elementValues);
   } else if (test.operation === 'CREATE_OBJECT_RECORD' && test.config.objectId) {
     body = buildObjectRecordBody(test.config.objectId, test.config.objectName, test.config.propertyValues);
   } else if (test.operation === 'UPDATE_OBJECT_RECORD' && test.config.propertyValues) {
@@ -648,18 +648,16 @@ export function configuredTestToLegitoTest(
 // ============ Helper Functions ============
 
 function buildDocumentBody(
-  elementValues: Record<string, unknown>,
-  templateSuiteId?: number
+  elementValues: Record<string, unknown>
 ): unknown {
+  // Body should be just an array of { name, value } objects
+  // The templateSuiteId is already in the URL
   const elements = Object.entries(elementValues).map(([name, value]) => ({
     name,
     value,
   }));
 
-  return {
-    templateSuiteId,
-    data: elements,
-  };
+  return elements;
 }
 
 function buildObjectRecordBody(
