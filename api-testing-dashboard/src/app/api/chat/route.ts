@@ -159,6 +159,45 @@ function buildLegitoTools(client: LegitoMcpClient) {
         return unwrapResult(result);
       },
     }),
+
+    // External link/sharing tools
+    createExternalLink: tool({
+      description: 'Create an external sharing link for a document. Returns a URL that can be shared with external users.',
+      inputSchema: z.object({
+        documentCode: z.string().describe('Document record code'),
+        active: z.boolean().optional().default(true).describe('Whether the link is active'),
+        expiresAt: z.string().optional().describe('Expiration date in ISO format'),
+      }),
+      execute: async (params) => {
+        const result = await client.createExternalLink(params.documentCode, {
+          active: params.active,
+          expiresAt: params.expiresAt,
+        });
+        return unwrapResult(result);
+      },
+    }),
+
+    listExternalLinks: tool({
+      description: 'List all external sharing links for a document',
+      inputSchema: z.object({
+        documentCode: z.string().describe('Document record code'),
+      }),
+      execute: async (params) => {
+        const result = await client.listExternalLinks(params.documentCode);
+        return unwrapResult(result);
+      },
+    }),
+
+    deleteExternalLink: tool({
+      description: 'Delete an external sharing link',
+      inputSchema: z.object({
+        linkId: z.number().describe('External link ID to delete'),
+      }),
+      execute: async (params) => {
+        const result = await client.deleteExternalLink(params.linkId);
+        return unwrapResult(result);
+      },
+    }),
   };
 }
 
@@ -185,12 +224,14 @@ export async function POST(request: Request) {
 
     const systemPrompt = legitoCredentials
       ? `You are a helpful AI assistant with access to a Legito document management system. You can help users:
-- Search and list documents using the listDocuments tool
+- Search and list documents using listDocuments
 - Get document details with getDocument
-- List templates, users, tags, and workflows
+- Create external sharing links with createExternalLink
+- List external links for a document with listExternalLinks
+- List templates, users, user groups, tags, and workflows
 - Get system information
 
-When users ask about documents, users, templates, or data - USE THE TOOLS to fetch real information from their Legito workspace.
+When users ask about documents, users, templates, sharing, or data - USE THE TOOLS to fetch real information from their Legito workspace.
 Always be helpful and provide clear responses. Format data nicely using lists or tables.`
       : `You are a helpful AI assistant. To access Legito data, the user needs to configure their Legito API credentials in the MCP Workspaces settings.`;
 
