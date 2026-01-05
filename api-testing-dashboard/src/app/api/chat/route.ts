@@ -1,17 +1,38 @@
 /**
  * AI Chat API Route
  * Supports multiple AI providers (OpenAI, Anthropic Claude, Google Gemini)
+ * with Legito API tools
  */
 
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createAnthropic } from '@ai-sdk/anthropic';
-import { generateText } from 'ai';
+import { generateText, tool, stepCountIs } from 'ai';
+import { z } from 'zod';
+import { createLegitoMcpClient, LegitoMcpClient } from '@/lib/mcp/legito-mcp-client';
+import type { LegitoCredentials, McpRequestResult } from '@/types/mcp';
 
 // Allow streaming responses up to 60 seconds
 export const maxDuration = 60;
 
 type AIProvider = 'openai' | 'anthropic' | 'google';
+
+// Helper to get credentials from request headers
+function getLegitoCredentials(request: Request): LegitoCredentials | null {
+  const key = request.headers.get('X-Legito-Key');
+  const privateKey = request.headers.get('X-Legito-Private-Key');
+  const region = request.headers.get('X-Legito-Region') || 'emea';
+
+  if (!key || !privateKey) {
+    return null;
+  }
+
+  return {
+    key,
+    privateKey,
+    region: region as LegitoCredentials['region'],
+  };
+}
 
 // Get AI model based on provider
 function getModel(provider: AIProvider, apiKey: string) {
@@ -33,10 +54,119 @@ function getModel(provider: AIProvider, apiKey: string) {
   }
 }
 
+// Helper to unwrap MCP result for AI tools
+function unwrapResult<T>(result: McpRequestResult<T>): Record<string, unknown> {
+  if (result.success && result.data !== undefined) {
+    return { success: true, data: result.data };
+  }
+  return { success: false, error: result.error || 'Unknown error' };
+}
+
+// Build Legito tools for the AI
+function buildLegitoTools(client: LegitoMcpClient) {
+  return {
+    // Document tools
+    listDocuments: tool({
+      description: 'List all documents in the Legito workspace',
+      inputSchema: z.object({
+        search: z.string().optional().describe('Search query to filter documents'),
+        limit: z.number().optional().describe('Maximum number of results'),
+      }),
+      execute: async (params) => {
+        const result = await client.listDocumentRecords({ search: params.search, limit: params.limit });
+        return unwrapResult(result);
+      },
+    }),
+
+    getDocument: tool({
+      description: 'Get details of a specific document by its code',
+      inputSchema: z.object({
+        code: z.string().describe('Document record code'),
+      }),
+      execute: async (params) => {
+        const result = await client.getDocumentRecord(params.code);
+        return unwrapResult(result);
+      },
+    }),
+
+    // Template tools
+    listTemplates: tool({
+      description: 'List all available template suites for creating documents',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.listTemplateSuites();
+        return unwrapResult(result);
+      },
+    }),
+
+    // User tools
+    listUsers: tool({
+      description: 'List all users in the Legito workspace',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.listUsers();
+        return unwrapResult(result);
+      },
+    }),
+
+    getUser: tool({
+      description: 'Get details of a specific user by ID',
+      inputSchema: z.object({
+        id: z.number().describe('User ID'),
+      }),
+      execute: async (params) => {
+        const result = await client.getUser(params.id);
+        return unwrapResult(result);
+      },
+    }),
+
+    // Tag tools
+    listTags: tool({
+      description: 'List all template tags in the workspace',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.listTags();
+        return unwrapResult(result);
+      },
+    }),
+
+    // Reference data tools
+    getSystemInfo: tool({
+      description: 'Get Legito system information',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.getSystemInfo();
+        return unwrapResult(result);
+      },
+    }),
+
+    // Workflow tools
+    listWorkflows: tool({
+      description: 'List all workflows in the workspace',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.listWorkflows();
+        return unwrapResult(result);
+      },
+    }),
+
+    // User group tools
+    listUserGroups: tool({
+      description: 'List all user groups in the workspace',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.listUserGroups();
+        return unwrapResult(result);
+      },
+    }),
+  };
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const messages = body.messages || [];
+    const legitoCredentials = getLegitoCredentials(request);
 
     // Get AI provider settings from headers
     const provider = (request.headers.get('X-AI-Provider') || 'google') as AIProvider;
@@ -49,15 +179,31 @@ export async function POST(request: Request) {
       );
     }
 
+    // Create Legito client if credentials provided
+    const client = legitoCredentials ? createLegitoMcpClient(legitoCredentials) : null;
+    const legitoTools = client ? buildLegitoTools(client) : {};
+
+    const systemPrompt = legitoCredentials
+      ? `You are a helpful AI assistant with access to a Legito document management system. You can help users:
+- Search and list documents using the listDocuments tool
+- Get document details with getDocument
+- List templates, users, tags, and workflows
+- Get system information
+
+When users ask about documents, users, templates, or data - USE THE TOOLS to fetch real information from their Legito workspace.
+Always be helpful and provide clear responses. Format data nicely using lists or tables.`
+      : `You are a helpful AI assistant. To access Legito data, the user needs to configure their Legito API credentials in the MCP Workspaces settings.`;
+
     const model = getModel(provider, aiApiKey);
 
-    // Use generateText for non-streaming response (simpler, more reliable)
-    // maxRetries: 0 to avoid burning quota on failed attempts
+    // Use generateText with tools
     const { text } = await generateText({
       model,
-      system: 'You are a helpful AI assistant. Be concise and helpful.',
+      system: systemPrompt,
       messages,
+      tools: legitoTools,
       maxRetries: 0,
+      stopWhen: stepCountIs(5), // Allow up to 5 tool calls
     });
 
     return new Response(text, {
