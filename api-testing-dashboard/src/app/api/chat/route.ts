@@ -26,7 +26,7 @@ function getModel(provider: AIProvider, apiKey: string) {
     }
     case 'google': {
       const client = createGoogleGenerativeAI({ apiKey });
-      return client('gemini-2.0-flash');
+      return client('models/gemini-2.0-flash');
     }
     default:
       throw new Error(`Unknown provider: ${provider}`);
@@ -52,10 +52,12 @@ export async function POST(request: Request) {
     const model = getModel(provider, aiApiKey);
 
     // Use generateText for non-streaming response (simpler, more reliable)
+    // maxRetries: 0 to avoid burning quota on failed attempts
     const { text } = await generateText({
       model,
       system: 'You are a helpful AI assistant. Be concise and helpful.',
       messages,
+      maxRetries: 0,
     });
 
     return new Response(text, {
