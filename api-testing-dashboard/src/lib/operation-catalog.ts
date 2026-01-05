@@ -552,6 +552,10 @@ export function configuredTestToLegitoTest(
   } else if (test.operation === 'SHARE_TO_USER' || test.operation === 'SHARE_TO_USER_GROUP') {
     // Will be built dynamically
     dynamicBody = buildShareBody(test, allTests);
+  } else if (test.operation === 'CREATE_PUSH_CONNECTION') {
+    body = buildPushConnectionBody(test.config);
+  } else if (test.operation === 'CREATE_LABEL') {
+    body = buildLabelBody(test.config);
   }
 
   // Determine context key for storing results
@@ -643,6 +647,40 @@ function buildUserGroupBody(config: ConfiguredTest['config']): unknown {
   return {
     name: config.userGroupName || `Test Group ${timestamp}`,
     description: 'Created by API test',
+  };
+}
+
+function buildPushConnectionBody(config: ConfiguredTest['config']): unknown {
+  const timestamp = Date.now();
+  // Use the app's webhook endpoint or a test webhook service
+  // The webhook URL can be configured in the test config
+  const webhookUrl = config.webhookUrl ||
+    `https://api-testing-dashboard.vercel.app/api/webhook/legito/test-${timestamp}`;
+
+  return {
+    name: config.pushConnectionName || `Test Push Connection ${timestamp}`,
+    url: webhookUrl,
+    enabled: true,
+    headers: [],
+    eventTypes: config.eventTypes || [
+      'DocumentRecordCreated',
+      'DocumentRecordUpdated',
+      'DocumentRecordDeleted',
+    ],
+    templateSuiteAll: true,
+    templateSuites: [],
+    documentRecordTypeAll: true,
+    documentRecordTypes: [],
+    attachFilesUploaded: false,
+    attachFilesGenerated: false,
+    fileTypes: ['pdf', 'docx'],
+  };
+}
+
+function buildLabelBody(config: ConfiguredTest['config']): unknown {
+  const timestamp = Date.now();
+  return {
+    name: config.labelName || `Test Label ${timestamp}`,
   };
 }
 

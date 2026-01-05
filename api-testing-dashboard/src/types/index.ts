@@ -306,6 +306,8 @@ export interface ConfiguredTest {
 
     // For push connection operations
     eventTypes?: string[];          // ['DocumentRecordCreated', etc.]
+    webhookUrl?: string;            // URL for the webhook endpoint
+    pushConnectionName?: string;    // Name for the push connection
   };
 }
 
