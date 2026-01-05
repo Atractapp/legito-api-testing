@@ -273,9 +273,23 @@ export function PresetManager() {
       // NOTE: We store by element NAME (not UUID) because the Legito API expects names
       let presetToSave = editingPreset as TestPreset;
       if (presetToSave.configuredTests && templateConfigs.size > 0) {
-        const updatedTests = presetToSave.configuredTests.map(test => {
+        // Helper to get templateSuiteId for a test (direct or via useResultFrom)
+        const getTemplateIdForTest = (test: ConfiguredTest, allTests: ConfiguredTest[]): number | undefined => {
           if (test.config.templateSuiteId) {
-            const elements = templateConfigs.get(test.config.templateSuiteId);
+            return test.config.templateSuiteId;
+          }
+          // For UPDATE_DOCUMENT or similar, get from source test
+          if (test.config.useResultFrom) {
+            const sourceTest = allTests.find(t => t.id === test.config.useResultFrom);
+            return sourceTest?.config.templateSuiteId;
+          }
+          return undefined;
+        };
+
+        const updatedTests = presetToSave.configuredTests.map(test => {
+          const templateSuiteId = getTemplateIdForTest(test, presetToSave.configuredTests);
+          if (templateSuiteId) {
+            const elements = templateConfigs.get(templateSuiteId);
             if (elements && elements.length > 0) {
               const elementValues: Record<string, unknown> = {};
               for (const el of elements) {
@@ -501,9 +515,23 @@ export function PresetManager() {
   const syncElementValuesToTests = useCallback(() => {
     if (!editingPreset?.configuredTests) return;
 
-    const updatedTests = editingPreset.configuredTests.map(test => {
+    // Helper to get templateSuiteId for a test (direct or via useResultFrom)
+    const getTemplateIdForTest = (test: ConfiguredTest): number | undefined => {
       if (test.config.templateSuiteId) {
-        const elements = templateConfigs.get(test.config.templateSuiteId);
+        return test.config.templateSuiteId;
+      }
+      // For UPDATE_DOCUMENT or similar, get from source test
+      if (test.config.useResultFrom) {
+        const sourceTest = editingPreset.configuredTests?.find(t => t.id === test.config.useResultFrom);
+        return sourceTest?.config.templateSuiteId;
+      }
+      return undefined;
+    };
+
+    const updatedTests = editingPreset.configuredTests.map(test => {
+      const templateSuiteId = getTemplateIdForTest(test);
+      if (templateSuiteId) {
+        const elements = templateConfigs.get(templateSuiteId);
         if (elements && elements.length > 0) {
           const elementValues: Record<string, unknown> = {};
           for (const el of elements) {
@@ -1090,8 +1118,19 @@ export function PresetManager() {
                 workspaceResources={resources || undefined}
                 onConfigureElements={(test) => {
                   // Find the template from resources and open element editor
-                  if (test.config.templateSuiteId && resources) {
-                    const template = resources.templates.find(t => t.id === test.config.templateSuiteId);
+                  let templateSuiteId = test.config.templateSuiteId;
+
+                  // For UPDATE_DOCUMENT or other operations that use useResultFrom,
+                  // get the templateSuiteId from the source test (e.g., CREATE_DOCUMENT)
+                  if (!templateSuiteId && test.config.useResultFrom && editingPreset?.configuredTests) {
+                    const sourceTest = editingPreset.configuredTests.find(t => t.id === test.config.useResultFrom);
+                    if (sourceTest?.config.templateSuiteId) {
+                      templateSuiteId = sourceTest.config.templateSuiteId;
+                    }
+                  }
+
+                  if (templateSuiteId && resources) {
+                    const template = resources.templates.find(t => t.id === templateSuiteId);
                     if (template) {
                       openElementEditor(template);
                     }
