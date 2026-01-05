@@ -569,11 +569,32 @@ export async function saveTestPreset(preset: Omit<TestPreset, 'id' | 'createdAt'
   }
 
   const now = new Date().toISOString();
-  const dbPreset = {
-    ...transformKeysToSnake(preset as unknown as Record<string, unknown>),
+
+  // Manually build the DB object to ensure proper JSONB handling
+  const dbPreset: Record<string, unknown> = {
+    name: preset.name,
+    description: preset.description || null,
+    region: preset.region,
+    api_key: preset.apiKey,
+    private_key: preset.privateKey,
+    base_url: preset.baseUrl,
+    timeout: preset.timeout,
+    retry_count: preset.retryCount,
+    parallel_execution: preset.parallelExecution,
+    selected_template_ids: preset.selectedTemplateIds || [],
+    selected_object_ids: preset.selectedObjectIds || [],
+    custom_tests: preset.customTests || [],
+    configured_tests: preset.configuredTests || [],
+    workspace_resources: preset.workspaceResources || null,
+    is_default: preset.isDefault,
     updated_at: now,
-    ...(preset.id ? {} : { created_at: now }),
   };
+
+  if (preset.id) {
+    dbPreset.id = preset.id;
+  } else {
+    dbPreset.created_at = now;
+  }
 
   const { data, error } = await supabase
     .from('test_presets')
@@ -587,7 +608,31 @@ export async function saveTestPreset(preset: Omit<TestPreset, 'id' | 'createdAt'
   }
 
   console.log('[Supabase] Test preset saved:', data?.id);
-  return data ? transformKeysToCamel<TestPreset>(data) : null;
+  return data ? transformPresetFromDb(data) : null;
+}
+
+// Helper to transform preset from DB format to TypeScript format
+function transformPresetFromDb(row: Record<string, unknown>): TestPreset {
+  return {
+    id: row.id as string,
+    name: row.name as string,
+    description: row.description as string | undefined,
+    region: row.region as TestPreset['region'],
+    apiKey: row.api_key as string,
+    privateKey: row.private_key as string,
+    baseUrl: row.base_url as string,
+    timeout: row.timeout as number,
+    retryCount: row.retry_count as number,
+    parallelExecution: row.parallel_execution as boolean,
+    selectedTemplateIds: (row.selected_template_ids as string[]) || [],
+    selectedObjectIds: (row.selected_object_ids as string[]) || [],
+    customTests: (row.custom_tests as TestPreset['customTests']) || [],
+    configuredTests: (row.configured_tests as TestPreset['configuredTests']) || [],
+    workspaceResources: row.workspace_resources as TestPreset['workspaceResources'] | undefined,
+    isDefault: row.is_default as boolean,
+    createdAt: row.created_at as string,
+    updatedAt: row.updated_at as string,
+  };
 }
 
 export async function getTestPresets(): Promise<TestPreset[]> {
@@ -604,7 +649,7 @@ export async function getTestPresets(): Promise<TestPreset[]> {
     return [];
   }
 
-  return (data || []).map(row => transformKeysToCamel<TestPreset>(row));
+  return (data || []).map(row => transformPresetFromDb(row as Record<string, unknown>));
 }
 
 export async function getTestPresetById(id: string): Promise<TestPreset | null> {
@@ -621,7 +666,7 @@ export async function getTestPresetById(id: string): Promise<TestPreset | null> 
     return null;
   }
 
-  return data ? transformKeysToCamel<TestPreset>(data) : null;
+  return data ? transformPresetFromDb(data as Record<string, unknown>) : null;
 }
 
 export async function getDefaultTestPreset(): Promise<TestPreset | null> {
@@ -638,7 +683,7 @@ export async function getDefaultTestPreset(): Promise<TestPreset | null> {
     return null;
   }
 
-  return data ? transformKeysToCamel<TestPreset>(data) : null;
+  return data ? transformPresetFromDb(data as Record<string, unknown>) : null;
 }
 
 export async function deleteTestPreset(id: string): Promise<boolean> {
@@ -704,6 +749,7 @@ export async function ensureDefaultPreset(): Promise<TestPreset | null> {
     selectedTemplateIds: ['64004'],
     selectedObjectIds: ['935'],
     customTests: [],
+    configuredTests: [],
     isDefault: true,
   };
 
@@ -736,7 +782,7 @@ export async function ensureDefaultPreset(): Promise<TestPreset | null> {
     }
 
     console.log('[Supabase] Default preset updated with correct credentials');
-    return transformKeysToCamel<TestPreset>(data);
+    return transformPresetFromDb(data as Record<string, unknown>);
   }
 
   // Create new default preset
@@ -756,6 +802,7 @@ export async function ensureDefaultPreset(): Promise<TestPreset | null> {
       selected_template_ids: DEFAULT_PRESET.selectedTemplateIds,
       selected_object_ids: DEFAULT_PRESET.selectedObjectIds,
       custom_tests: DEFAULT_PRESET.customTests,
+      configured_tests: DEFAULT_PRESET.configuredTests,
       is_default: DEFAULT_PRESET.isDefault,
       created_at: now,
       updated_at: now,
@@ -769,5 +816,5 @@ export async function ensureDefaultPreset(): Promise<TestPreset | null> {
   }
 
   console.log('[Supabase] Default preset created');
-  return transformKeysToCamel<TestPreset>(data);
+  return transformPresetFromDb(data as Record<string, unknown>);
 }

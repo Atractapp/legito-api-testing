@@ -65,7 +65,8 @@ import { useTestStore } from '@/store/test-store';
 import { getTestPresets, saveTestPreset, deleteTestPreset, ensureDefaultPreset } from '@/lib/supabase';
 import { scanWorkspace, fetchTemplateElements, type ScanProgress, type ScanCredentials } from '@/lib/workspace-service';
 import { generateTestsFromResources } from '@/lib/test-generator-service';
-import type { TestPreset, LegitoRegion, WorkspaceResources, TemplateResource, TemplateElement } from '@/types';
+import { TestSuiteBuilder } from './test-suite-builder';
+import type { TestPreset, LegitoRegion, WorkspaceResources, TemplateResource, TemplateElement, ConfiguredTest } from '@/types';
 
 const regionOptions: { value: LegitoRegion; label: string; baseUrl: string }[] = [
   { value: 'emea', label: 'EMEA (Europe)', baseUrl: 'https://emea.legito.com/api/v7' },
@@ -114,6 +115,7 @@ const emptyPreset: Omit<TestPreset, 'id' | 'createdAt' | 'updatedAt'> = {
   selectedTemplateIds: [],
   selectedObjectIds: [],
   customTests: [],
+  configuredTests: [],
   isDefault: false,
 };
 
@@ -176,12 +178,32 @@ export function PresetManager() {
       setActivePreset(preset);
       setEditingPreset(preset);
       setIsCreating(false);
+
+      // Restore state from saved preset
+      if (preset.workspaceResources) {
+        setResources(preset.workspaceResources);
+        // Restore selections from saved IDs
+        setSelectedTemplates(new Set(preset.selectedTemplateIds?.map(Number).filter(n => !isNaN(n)) || []));
+        setSelectedObjects(new Set(preset.selectedObjectIds?.map(Number).filter(n => !isNaN(n)) || []));
+      } else {
+        setResources(null);
+        setSelectedTemplates(new Set());
+        setSelectedObjects(new Set());
+      }
+      setTemplateConfigs(new Map());
+      setScanError(null);
     }
   };
 
   const handleCreateNew = () => {
     setIsCreating(true);
     setEditingPreset({ ...emptyPreset });
+    // Clear state for new preset
+    setResources(null);
+    setSelectedTemplates(new Set());
+    setSelectedObjects(new Set());
+    setTemplateConfigs(new Map());
+    setScanError(null);
   };
 
   const handleCancelCreate = () => {
@@ -282,6 +304,8 @@ export function PresetManager() {
         setScanProgress
       );
       setResources(result);
+      // Save resources to preset for persistence
+      setEditingPreset(prev => prev ? { ...prev, workspaceResources: result } : prev);
     } catch (error) {
       setScanError(error instanceof Error ? error.message : 'Failed to scan workspace');
     } finally {
@@ -372,6 +396,11 @@ export function PresetManager() {
     if (!scanProgress) return 0;
     return Math.round((scanProgress.current / scanProgress.total) * 100);
   };
+
+  // Handler for configured tests changes
+  const handleConfiguredTestsChange = useCallback((tests: ConfiguredTest[]) => {
+    setEditingPreset(prev => prev ? { ...prev, configuredTests: tests } : prev);
+  }, []);
 
   // Open element editor and fetch elements from API
   const openElementEditor = async (template: TemplateResource) => {
@@ -855,16 +884,35 @@ export function PresetManager() {
                   </>
                 )}
 
-                {/* Show generated tests count */}
-                {editingPreset.customTests && editingPreset.customTests.length > 0 && (
-                  <div className="p-3 bg-green-50 dark:bg-green-950 rounded-lg border border-green-200 dark:border-green-800">
-                    <p className="text-sm text-green-700 dark:text-green-300">
-                      {editingPreset.customTests.length} custom tests configured for this preset
+                {/* Show info for default preset */}
+                {editingPreset.isDefault && (
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
+                      This is the default preset. It uses the built-in 33 test suite.
+                      Create a new preset to build a custom test suite.
                     </p>
                   </div>
                 )}
               </CardContent>
             </Card>
+
+            {/* Test Suite Builder - only for non-default presets */}
+            {!editingPreset.isDefault && (
+              <TestSuiteBuilder
+                tests={editingPreset.configuredTests || []}
+                onTestsChange={handleConfiguredTestsChange}
+                workspaceResources={resources || undefined}
+                onConfigureElements={(test) => {
+                  // Find the template from resources and open element editor
+                  if (test.config.templateSuiteId && resources) {
+                    const template = resources.templates.find(t => t.id === test.config.templateSuiteId);
+                    if (template) {
+                      openElementEditor(template);
+                    }
+                  }
+                }}
+              />
+            )}
           </TabsContent>
 
           <TabsContent value="advanced">

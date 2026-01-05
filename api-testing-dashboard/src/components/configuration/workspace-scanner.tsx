@@ -268,6 +268,7 @@ export function WorkspaceScanner() {
         selectedTemplateIds: Array.from(selectedTemplates).map(String),
         selectedObjectIds: Array.from(selectedObjects).map(String),
         customTests: generatedTests,
+        configuredTests: [],
         isDefault: false,
       };
 

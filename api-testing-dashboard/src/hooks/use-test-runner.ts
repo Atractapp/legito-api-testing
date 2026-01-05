@@ -16,6 +16,7 @@ import {
   type TestContext,
   type ExternalLinkData,
 } from '@/lib/legito-api';
+import { convertConfiguredTestsToLegito } from '@/lib/operation-catalog';
 import {
   saveTestRun,
   saveTestResults,
@@ -56,10 +57,27 @@ export function useTestRunner() {
   );
 
   const runTests = useCallback(async () => {
-    // Get tests to run from LEGITO_TESTS based on selectedTests
-    const testsToRun = LEGITO_TESTS.filter((test) =>
-      selectedTests.includes(test.id)
-    );
+    // Determine which tests to run:
+    // - Default preset: use LEGITO_TESTS filtered by selectedTests
+    // - Custom preset with configuredTests: convert and use those
+    let testsToRun: LegitoTest[];
+    let isCustomPreset = false;
+
+    if (activePreset && !activePreset.isDefault && activePreset.configuredTests && activePreset.configuredTests.length > 0) {
+      // Custom preset - convert configured tests to LegitoTests
+      isCustomPreset = true;
+      const allConverted = convertConfiguredTestsToLegito(activePreset.configuredTests);
+      testsToRun = allConverted.filter((test) =>
+        selectedTests.includes(test.id)
+      );
+      console.log('[TestRunner] Using custom preset tests:', testsToRun.length, 'of', allConverted.length);
+    } else {
+      // Default preset or no configured tests - use LEGITO_TESTS
+      testsToRun = LEGITO_TESTS.filter((test) =>
+        selectedTests.includes(test.id)
+      );
+      console.log('[TestRunner] Using default LEGITO_TESTS:', testsToRun.length, 'of', LEGITO_TESTS.length);
+    }
 
     if (testsToRun.length === 0) {
       log('warn', 'No tests selected');
@@ -380,15 +398,25 @@ export function useTestRunner() {
   }, [setIsRunning, log]);
 
   const resetTests = useCallback(() => {
-    LEGITO_TESTS.forEach((test) => {
-      updateTestStatus(test.id, 'pending');
-    });
+    // Reset tests based on preset type
+    if (activePreset && !activePreset.isDefault && activePreset.configuredTests && activePreset.configuredTests.length > 0) {
+      // Custom preset - reset configured tests
+      const convertedTests = convertConfiguredTestsToLegito(activePreset.configuredTests);
+      convertedTests.forEach((test) => {
+        updateTestStatus(test.id, 'pending');
+      });
+    } else {
+      // Default preset - reset LEGITO_TESTS
+      LEGITO_TESTS.forEach((test) => {
+        updateTestStatus(test.id, 'pending');
+      });
+    }
     clearTestResults();
     clearLogs();
     setCurrentRun(null);
     contextRef.current = createEmptyTestContext();
     log('info', 'Tests reset');
-  }, [updateTestStatus, clearTestResults, clearLogs, setCurrentRun, log]);
+  }, [activePreset, updateTestStatus, clearTestResults, clearLogs, setCurrentRun, log]);
 
   return {
     runTests,

@@ -12,7 +12,8 @@ import type {
   HistoricalData,
   TestPreset,
 } from '@/types';
-import { LEGITO_TESTS } from '@/lib/legito-api';
+import { LEGITO_TESTS, type LegitoTest } from '@/lib/legito-api';
+import { convertConfiguredTestsToLegito, getOperationById } from '@/lib/operation-catalog';
 
 interface TestStore {
   // Test Data
@@ -96,11 +97,11 @@ const defaultStats: DashboardStats = {
   weeklyRuns: 0,
 };
 
-// Convert LEGITO_TESTS to TestCategory format, grouped by category
-function buildCategories(): TestCategory[] {
+// Convert tests to TestCategory format, grouped by category
+function buildCategories(tests: LegitoTest[] = LEGITO_TESTS): TestCategory[] {
   const categoryMap = new Map<string, TestCase[]>();
 
-  LEGITO_TESTS.forEach((test) => {
+  tests.forEach((test) => {
     const existing = categoryMap.get(test.category) || [];
     existing.push({
       id: test.id,
@@ -123,6 +124,10 @@ function buildCategories(): TestCategory[] {
     'Workflows': 'Workflow definitions and stages',
     'Documents': 'Document record operations',
     'Webhooks': 'Push connection/webhook operations',
+    'Objects': 'Object record operations',
+    'Sharing': 'Document sharing operations',
+    'User Groups': 'User group operations',
+    'Other': 'Miscellaneous operations',
   };
 
   return Array.from(categoryMap.entries()).map(([name, tests]) => ({
@@ -131,6 +136,22 @@ function buildCategories(): TestCategory[] {
     description: categoryDescriptions[name] || `${name} tests`,
     tests,
   }));
+}
+
+// Build categories from a preset (handles both default and custom presets)
+function buildCategoriesFromPreset(preset: TestPreset | null): TestCategory[] {
+  if (!preset) {
+    return buildCategories(LEGITO_TESTS);
+  }
+
+  // Default preset uses LEGITO_TESTS
+  if (preset.isDefault || !preset.configuredTests || preset.configuredTests.length === 0) {
+    return buildCategories(LEGITO_TESTS);
+  }
+
+  // Custom preset with configured tests
+  const convertedTests = convertConfiguredTestsToLegito(preset.configuredTests);
+  return buildCategories(convertedTests);
 }
 
 const legitoCategories = buildCategories();
@@ -272,7 +293,19 @@ export const useTestStore = create<TestStore>()(
 
       setHistoricalData: (data) => set({ historicalData: data }),
 
-      setActivePreset: (preset) => set({ activePreset: preset }),
+      setActivePreset: (preset) => {
+        // Rebuild categories based on preset type
+        const newCategories = buildCategoriesFromPreset(preset);
+
+        // Get all test IDs from new categories for selection
+        const allTestIds = newCategories.flatMap((c) => c.tests.map((t) => t.id));
+
+        set({
+          activePreset: preset,
+          categories: newCategories,
+          selectedTests: allTestIds, // Select all tests by default
+        });
+      },
     }),
     {
       name: 'legito-api-test-dashboard',

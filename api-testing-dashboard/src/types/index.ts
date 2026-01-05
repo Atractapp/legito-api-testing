@@ -192,6 +192,83 @@ export type SortOrder = 'asc' | 'desc';
 export type LegitoRegion = 'emea' | 'us' | 'ca' | 'apac' | 'quarterly';
 
 /**
+ * All available API operations that can be added to a test suite
+ */
+export type ApiOperation =
+  // Templates/Documents
+  | 'GET_TEMPLATE_SUITES'
+  | 'GET_TEMPLATE_SUITE'
+  | 'CREATE_DOCUMENT'
+  | 'READ_DOCUMENT'
+  | 'UPDATE_DOCUMENT'
+  | 'DELETE_DOCUMENT'
+  | 'ANONYMIZE_DOCUMENT'
+  // Objects
+  | 'GET_OBJECTS'
+  | 'GET_OBJECT'
+  | 'CREATE_OBJECT_RECORD'
+  | 'READ_OBJECT_RECORD'
+  | 'UPDATE_OBJECT_RECORD'
+  | 'DELETE_OBJECT_RECORD'
+  // Users
+  | 'GET_USERS'
+  | 'CREATE_USER'
+  | 'UPDATE_USER'
+  | 'DELETE_USER'
+  // User Groups
+  | 'GET_USER_GROUPS'
+  | 'CREATE_USER_GROUP'
+  | 'UPDATE_USER_GROUP'
+  | 'DELETE_USER_GROUP'
+  // Sharing
+  | 'CREATE_EXTERNAL_LINK'
+  | 'DELETE_EXTERNAL_LINK'
+  | 'SHARE_TO_USER'
+  | 'SHARE_TO_USER_GROUP'
+  // Other
+  | 'GET_WORKFLOWS'
+  | 'GET_DOCUMENT_RECORDS';
+
+/**
+ * A user-configured test in their custom test suite
+ */
+export interface ConfiguredTest {
+  id: string;
+  name: string;
+  operation: ApiOperation;
+  enabled: boolean;
+  order: number;
+
+  // Configuration based on operation type
+  config: {
+    // For template/document operations
+    templateSuiteId?: number;
+    templateName?: string;
+    elementValues?: Record<string, unknown>;
+
+    // For object operations
+    objectId?: number;
+    objectName?: string;
+    propertyValues?: Record<string, unknown>;
+
+    // For user operations
+    userId?: number;
+    userEmail?: string;
+    userName?: string;
+
+    // For user group operations
+    userGroupId?: number;
+    userGroupName?: string;
+
+    // For operations that need a resource from previous test
+    useResultFrom?: string;  // ID of another test to get resource from
+
+    // For sharing operations
+    sharePermission?: 'VIEW' | 'EDIT' | 'ADMIN';
+  };
+}
+
+/**
  * A saved test preset stored in Supabase
  */
 export interface TestPreset {
@@ -207,10 +284,18 @@ export interface TestPreset {
   parallelExecution: boolean;
   selectedTemplateIds: string[];
   selectedObjectIds: string[];
-  customTests: GeneratedTest[];
   isDefault: boolean;
   createdAt: string;
   updatedAt: string;
+
+  // User's custom test suite (for non-default presets)
+  configuredTests: ConfiguredTest[];
+
+  // Cached workspace resources (persists scan results)
+  workspaceResources?: WorkspaceResources;
+
+  // Legacy - only used by default preset
+  customTests: GeneratedTest[];
 }
 
 /**
