@@ -642,11 +642,17 @@ export function configuredTestToLegitoTest(
 
       // Get correlation ID from the push connection context using proper context key
       const contextKey = getContextKeyForOperation(sourceTest);
-      const pushConnection = ctx[contextKey] as { _correlationId?: string; url?: string } | undefined;
+      console.log('[VERIFY_WEBHOOK] Looking for context key:', contextKey);
+      console.log('[VERIFY_WEBHOOK] All context keys:', Object.keys(ctx));
+
+      const pushConnection = ctx[contextKey] as { _correlationId?: string; url?: string; id?: number } | undefined;
+      console.log('[VERIFY_WEBHOOK] Push connection context:', JSON.stringify(pushConnection));
+
       const correlationId = pushConnection?._correlationId || pushConnection?.url?.split('/').pop();
+      console.log('[VERIFY_WEBHOOK] Extracted correlation ID:', correlationId);
 
       if (!correlationId) {
-        return { success: false, error: `No correlation ID found in context[${contextKey}]` };
+        return { success: false, error: `No correlation ID found in context[${contextKey}]. Context value: ${JSON.stringify(pushConnection)}` };
       }
 
       // Wait for webhook with timeout
@@ -654,11 +660,14 @@ export function configuredTestToLegitoTest(
       const expectedEventType = test.config.expectedEventType;
 
       try {
-        const response = await fetch(
-          `/api/webhook/legito/${correlationId}?wait=${timeout}`,
-          { method: 'GET' }
-        );
+        const fetchUrl = `/api/webhook/legito/${correlationId}?wait=${timeout}`;
+        console.log('[VERIFY_WEBHOOK] Fetching:', fetchUrl);
+
+        const response = await fetch(fetchUrl, { method: 'GET' });
+        console.log('[VERIFY_WEBHOOK] Response status:', response.status);
+
         const data = await response.json();
+        console.log('[VERIFY_WEBHOOK] Response data:', JSON.stringify(data).substring(0, 500));
 
         if (!data.found) {
           return {
@@ -730,35 +739,91 @@ export function configuredTestToLegitoTest(
       console.log('[ParentLink] Linking child', createdDoc.documentRecordCode, 'to parent', parentResult.documentRecordId);
 
       // Call PUT /document-record/{code} to set parentDocumentRecordId
-      // Using the system property "related_document_records"
+      // The parentDocumentRecordId must be set via the properties array with the correct systemName
       try {
-        const response = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
-          method: 'PUT',
+        // First, fetch the document record to discover available properties
+        console.log('[ParentLink] Fetching document record to discover properties...');
+        const docResponse = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
+          method: 'GET',
           jwt,
           baseUrl,
-          body: {
+        });
+
+        if (docResponse.data) {
+          console.log('[ParentLink] Document record:', JSON.stringify(docResponse.data).substring(0, 2000));
+
+          // Look for related_document_records property in the response
+          const docData = docResponse.data as { properties?: Array<{ systemName?: string; systemType?: string; id?: number }> };
+          if (docData.properties) {
+            console.log('[ParentLink] Available properties:');
+            docData.properties.forEach((prop, i) => {
+              console.log(`  [${i}] systemName: ${prop.systemName}, systemType: ${prop.systemType}, id: ${prop.id}`);
+            });
+
+            // Find the related documents property
+            const relatedDocsProp = docData.properties.find(p =>
+              p.systemType === 'related_document_records' ||
+              p.systemName?.includes('related') ||
+              p.systemName?.includes('parent')
+            );
+
+            if (relatedDocsProp) {
+              console.log('[ParentLink] Found related docs property:', JSON.stringify(relatedDocsProp));
+            }
+          }
+        }
+
+        // Try using the properties array with the systemName
+        // Common systemNames: 'related_document_records', 'relatedDocuments', or template-specific
+        const possibleSystemNames = [
+          'related_document_records',
+          'relatedDocumentRecords',
+          'related-document-records',
+          'parent_document',
+          'parentDocument',
+        ];
+
+        // Try each possible systemName
+        for (const systemName of possibleSystemNames) {
+          const linkBody = {
             properties: [{
-              systemName: 'related_document_records',
+              systemName: systemName,
               value: {
                 parentDocumentRecordId: parentResult.documentRecordId,
               },
             }],
-          },
-        });
-
-        console.log('[ParentLink] API Response:', response.status, response.statusText);
-        if (response.data) {
-          console.log('[ParentLink] Response data:', JSON.stringify(response.data).substring(0, 500));
-        }
-
-        if (response.status >= 200 && response.status < 300) {
-          return { success: true };
-        } else {
-          return {
-            success: false,
-            error: `Failed to link parent: ${response.status} ${response.statusText} - ${JSON.stringify(response.data)}`,
           };
+          console.log('[ParentLink] Trying systemName:', systemName);
+
+          const response = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
+            method: 'PUT',
+            jwt,
+            baseUrl,
+            body: linkBody,
+          });
+
+          console.log('[ParentLink] Response:', response.status, response.statusText);
+
+          if (response.status >= 200 && response.status < 300) {
+            console.log('[ParentLink] Success with systemName:', systemName);
+            return { success: true };
+          }
+
+          // If it's not a "property doesn't exist" error, stop trying
+          const errorMsg = JSON.stringify(response.data || response.error || '');
+          if (!errorMsg.includes('does not exits') && !errorMsg.includes('does not exist')) {
+            console.log('[ParentLink] Different error, stopping:', errorMsg);
+            return {
+              success: false,
+              error: `Failed to link parent: ${response.status} - ${errorMsg}`,
+            };
+          }
         }
+
+        return {
+          success: false,
+          error: 'Could not find the correct Related Documents property systemName. Please check your template configuration.',
+        };
       } catch (err) {
         console.log('[ParentLink] Error:', err);
         return {
@@ -838,6 +903,9 @@ function buildPushConnectionBody(config: ConfiguredTest['config']): unknown {
   // Use the app's webhook endpoint with the correlation ID
   const webhookUrl = config.webhookUrl ||
     `https://api-testing-dashboard.vercel.app/api/webhook/legito/${correlationId}`;
+
+  console.log('[PushConnection] Generated correlation ID:', correlationId);
+  console.log('[PushConnection] Webhook URL:', webhookUrl);
 
   return {
     name: config.pushConnectionName || `Test Push Connection ${timestamp}`,

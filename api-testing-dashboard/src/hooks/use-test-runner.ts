@@ -233,17 +233,23 @@ export function useTestRunner() {
 
           // Special handling for push connections - preserve _correlationId from request body
           if (test.setsContext?.startsWith('create-push-connection') && test.body) {
+            console.log('[TestRunner] Push connection test.body:', JSON.stringify(test.body));
             const requestBody = test.body as { _correlationId?: string };
             if (requestBody._correlationId) {
               dataToStore = {
                 ...(typeof dataToStore === 'object' && dataToStore !== null ? dataToStore : {}),
                 _correlationId: requestBody._correlationId,
               };
-              log('debug', `Preserved correlation ID: ${requestBody._correlationId}`, test.id);
+              console.log('[TestRunner] Stored correlation ID:', requestBody._correlationId);
+              log('info', `Stored correlation ID: ${requestBody._correlationId}`, test.id);
+            } else {
+              console.log('[TestRunner] No _correlationId in test.body');
             }
           }
 
           contextRef.current[test.setsContext] = dataToStore;
+          console.log('[TestRunner] Stored to context key:', test.setsContext);
+          console.log('[TestRunner] Stored data:', JSON.stringify(dataToStore).substring(0, 500));
           log('debug', `Stored context: ${test.setsContext}`, test.id);
 
           // Extract external link URL if this is the kept external link

@@ -164,10 +164,14 @@ export async function saveTestResult(result: TestResult, testRunId: string): Pro
 export async function saveTestResults(results: TestResult[], testRunId: string): Promise<boolean> {
   if (!supabase || results.length === 0) return false;
 
-  const dbResults = results.map(result => ({
-    ...transformKeysToSnake(result as unknown as Record<string, unknown>),
-    test_run_id: testRunId,
-  }));
+  // Exclude 'logs' field as it may not exist in the database schema
+  const dbResults = results.map(result => {
+    const { logs, ...resultWithoutLogs } = result;
+    return {
+      ...transformKeysToSnake(resultWithoutLogs as unknown as Record<string, unknown>),
+      test_run_id: testRunId,
+    };
+  });
 
   const { error } = await supabase
     .from('test_results')
