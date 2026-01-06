@@ -629,12 +629,24 @@ export function configuredTestToLegitoTest(
       { name: 'Webhook received', type: 'status' as const },
     ];
     baseTest.internalTestHandler = async (ctx: TestContext) => {
-      // Get correlation ID from the push connection context
-      const pushConnection = ctx['create-push-connection'] as { _correlationId?: string; url?: string } | undefined;
+      // Find the push connection test from useResultFrom config
+      const sourceTestId = test.config.useResultFrom;
+      if (!sourceTestId) {
+        return { success: false, error: 'No source push connection test configured' };
+      }
+
+      const sourceTest = allTests.find(t => t.id === sourceTestId);
+      if (!sourceTest) {
+        return { success: false, error: `Source test not found: ${sourceTestId}` };
+      }
+
+      // Get correlation ID from the push connection context using proper context key
+      const contextKey = getContextKeyForOperation(sourceTest);
+      const pushConnection = ctx[contextKey] as { _correlationId?: string; url?: string } | undefined;
       const correlationId = pushConnection?._correlationId || pushConnection?.url?.split('/').pop();
 
       if (!correlationId) {
-        return { success: false, error: 'No correlation ID found from push connection' };
+        return { success: false, error: `No correlation ID found in context[${contextKey}]` };
       }
 
       // Wait for webhook with timeout
@@ -685,9 +697,17 @@ export function configuredTestToLegitoTest(
       jwt: string,
       baseUrl: string
     ) => {
-      // Get the created document's code
-      const createdDoc = result as { documentRecordCode?: string; documentRecordId?: number } | undefined;
+      console.log('[ParentLink] Starting parent document linking...');
+      console.log('[ParentLink] Result:', JSON.stringify(result).substring(0, 500));
+
+      // Get the created document's code - handle array response
+      let createdDoc = result as { documentRecordCode?: string; documentRecordId?: number } | undefined;
+      if (Array.isArray(result) && result.length > 0) {
+        createdDoc = result[0];
+      }
+
       if (!createdDoc?.documentRecordCode) {
+        console.log('[ParentLink] No documentRecordCode found in result');
         return { success: false, error: 'No documentRecordCode in created document' };
       }
 
@@ -698,11 +718,16 @@ export function configuredTestToLegitoTest(
       }
 
       const parentContextKey = getContextKeyForOperation(parentTest);
+      console.log('[ParentLink] Parent context key:', parentContextKey);
+      console.log('[ParentLink] Parent context:', JSON.stringify(ctx[parentContextKey]).substring(0, 500));
+
       const parentResult = ctx[parentContextKey] as { documentRecordId?: number } | undefined;
 
       if (!parentResult?.documentRecordId) {
-        return { success: false, error: 'Parent document ID not found in context' };
+        return { success: false, error: `Parent document ID not found in context[${parentContextKey}]` };
       }
+
+      console.log('[ParentLink] Linking child', createdDoc.documentRecordCode, 'to parent', parentResult.documentRecordId);
 
       // Call PUT /document-record/{code} to set parentDocumentRecordId
       // Using the system property "related_document_records"
@@ -721,15 +746,21 @@ export function configuredTestToLegitoTest(
           },
         });
 
+        console.log('[ParentLink] API Response:', response.status, response.statusText);
+        if (response.data) {
+          console.log('[ParentLink] Response data:', JSON.stringify(response.data).substring(0, 500));
+        }
+
         if (response.status >= 200 && response.status < 300) {
           return { success: true };
         } else {
           return {
             success: false,
-            error: `Failed to link parent: ${response.status} ${response.statusText}`,
+            error: `Failed to link parent: ${response.status} ${response.statusText} - ${JSON.stringify(response.data)}`,
           };
         }
       } catch (err) {
+        console.log('[ParentLink] Error:', err);
         return {
           success: false,
           error: err instanceof Error ? err.message : 'Failed to link parent document',

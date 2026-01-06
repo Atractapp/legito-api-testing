@@ -232,7 +232,7 @@ export function useTestRunner() {
           }
 
           // Special handling for push connections - preserve _correlationId from request body
-          if (test.setsContext === 'create-push-connection' && test.body) {
+          if (test.setsContext?.startsWith('create-push-connection') && test.body) {
             const requestBody = test.body as { _correlationId?: string };
             if (requestBody._correlationId) {
               dataToStore = {
