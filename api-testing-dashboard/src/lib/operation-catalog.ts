@@ -719,24 +719,44 @@ function buildDocumentMetadataBody(config: ConfiguredTest['config']): unknown {
 
 function buildFileUploadBody(config: ConfiguredTest['config']): unknown {
   // Build file upload body for Legito API
-  // POST /file/{documentRecordCode} expects: { name: string, content: string (base64) }
+  // POST /file/{documentRecordCode} expects:
+  // { fileName: string, attachment: boolean, data: "data:mime/type;base64,..." }
   const timestamp = Date.now();
 
   // Use provided filename or generate one
   const fileName = config.fileName || `test-file-${timestamp}.pdf`;
 
-  // Use provided content or a minimal test PDF
-  let content = config.fileBase64;
+  // Determine MIME type from filename
+  const ext = fileName.split('.').pop()?.toLowerCase() || 'pdf';
+  const mimeTypes: Record<string, string> = {
+    pdf: 'application/pdf',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    gif: 'image/gif',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    txt: 'text/plain',
+  };
+  const mimeType = mimeTypes[ext] || 'application/octet-stream';
 
-  if (!content && config.useTestFile !== false) {
+  // Use provided content or a minimal test PDF
+  let base64Content = config.fileBase64;
+
+  if (!base64Content && config.useTestFile !== false) {
     // Minimal valid PDF (creates a blank 1-page PDF)
-    content = 'JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjE5NAolJUVPRgo=';
+    base64Content = 'JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjE5NAolJUVPRgo=';
   }
 
-  // Return flat object - Legito API expects direct fields, not array
+  // Format as data URL: data:mime/type;base64,...
+  const dataUrl = `data:${mimeType};base64,${base64Content || ''}`;
+
   return {
-    name: fileName,
-    content: content || '',
+    fileName: fileName,
+    attachment: false,
+    data: dataUrl,
   };
 }
 
