@@ -47,10 +47,18 @@ export default function McpChatPage() {
   const [error, setError] = useState<string | null>(null);
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [storeHydrated, setStoreHydrated] = useState(false);
 
-  // Get the default workspace credentials
+  // Wait for store hydration
+  useEffect(() => {
+    const unsub = useMcpStore.persist.onFinishHydration(() => setStoreHydrated(true));
+    if (useMcpStore.persist.hasHydrated()) setStoreHydrated(true);
+    return () => unsub();
+  }, []);
+
+  // Get the default workspace credentials (only after hydration)
   const { getAllWorkspaces } = useMcpStore();
-  const workspacesList = getAllWorkspaces();
+  const workspacesList = storeHydrated ? getAllWorkspaces() : [];
   const defaultEntry = workspacesList.find(entry => entry.workspace.isDefault) || workspacesList[0];
   const defaultWorkspace = defaultEntry?.workspace;
 
@@ -340,7 +348,7 @@ export default function McpChatPage() {
         {/* Chat Panel */}
         <Card className="flex-1 flex flex-col min-h-0 overflow-hidden">
           <CardContent className="flex-1 flex flex-col p-4 min-h-0 overflow-hidden">
-            <ScrollArea className="flex-1 pr-4">
+            <div className="flex-1 overflow-y-auto pr-4">
               <div className="space-y-4">
                 {messages.length === 0 && (
                   <div className="text-center text-muted-foreground py-8">
@@ -408,7 +416,7 @@ export default function McpChatPage() {
 
                 <div ref={messagesEndRef} />
               </div>
-            </ScrollArea>
+            </div>
 
             {/* Input Area */}
             <form onSubmit={handleSubmit} className="flex gap-2 mt-4 pt-4 border-t">

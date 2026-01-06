@@ -655,8 +655,8 @@ export function configuredTestToLegitoTest(
         return { success: false, error: `No correlation ID found in context[${contextKey}]. Context value: ${JSON.stringify(pushConnection)}` };
       }
 
-      // Wait for webhook with timeout
-      const timeout = test.config.webhookTimeout || 15000; // Default 15 seconds
+      // Wait for webhook with timeout (Legito takes 30-40 seconds to send webhooks)
+      const timeout = test.config.webhookTimeout || 60000; // Default 60 seconds
       const expectedEventType = test.config.expectedEventType;
 
       try {

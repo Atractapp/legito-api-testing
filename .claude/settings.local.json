@@ -1,7 +1,22 @@
 {
   "permissions": {
     "allow": [
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(tree:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(npm install:*)",
+      "Bash(cat:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(git add:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd MCP Server and multi-provider AI Chat feature\n\n- Add MCP Server with 42 Legito API tools for Claude Desktop integration\n- Add AI Chat page with support for OpenAI, Anthropic, and Google providers\n- Use AI SDK v6 with proper tool definitions and streaming\n- Add workspace management for MCP credentials\n- Persist AI provider and API key in localStorage\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Add Claude Code configuration and workflow automation\n\n- Add CLAUDE.md with project context for AI assistance\n- Create 8 slash commands for common workflows:\n  - /commit: conventional commit creation\n  - /test-quick: smart test runner based on changed files\n  - /pr: pull request creation with gh CLI\n  - /review: self code review checklist\n  - /debug-test: test failure investigation\n  - /api-test: API test generation\n  - /supabase-query: database query helper\n  - /deploy: deployment workflow guide\n- Add test-debugger subagent for proactive test debugging\n- Configure team permissions in .claude/settings.json\n- Add PostToolUse hook for Prettier auto-formatting\n- Create GitHub Action for @claude mentions on PRs\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "WebFetch(domain:vercel.com)",
+      "Bash(git fetch:*)"
     ]
   }
 }

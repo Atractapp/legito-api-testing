@@ -341,3 +341,4 @@ export function getDefaultWorkspaceId(): string | undefined {
   );
   return defaultEntry?.[0] || state.activeWorkspaceId || Object.keys(state.workspaces)[0];
 }
+

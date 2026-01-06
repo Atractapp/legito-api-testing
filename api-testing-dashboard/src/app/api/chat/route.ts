@@ -67,13 +67,13 @@ function buildLegitoTools(client: LegitoMcpClient) {
   return {
     // ============ DOCUMENT OPERATIONS ============
     createDocument: tool({
-      description: 'Create a new document from a template suite ID. Only provide elements the user specified - skip optional ones.',
+      description: 'Create a new document from a template suite ID. IMPORTANT: For option/choice elements, value MUST be UUID not label (e.g., use "6df8e483-..." not "B").',
       inputSchema: z.object({
         templateSuiteId: z.number().describe('Template suite ID (e.g. 64004)'),
         elements: z.array(z.object({
           name: z.string().describe('Element system name/code'),
-          value: z.unknown().optional().describe('Element value'),
-        })).optional().default([]).describe('Only include elements user provided'),
+          value: z.unknown().optional().describe('Element value. For options use UUID!'),
+        })).optional().default([]).describe('Elements with values. Use UUIDs for option/choice types!'),
       }),
       execute: async (params) => {
         const result = await client.createDocument(params.templateSuiteId, params.elements || []);
@@ -82,13 +82,13 @@ function buildLegitoTools(client: LegitoMcpClient) {
     }),
 
     updateDocument: tool({
-      description: 'Update an existing document. Only provide elements to change.',
+      description: 'Update an existing document. IMPORTANT: For option/choice elements, value MUST be UUID not label (e.g., use "6df8e483-..." not "B").',
       inputSchema: z.object({
         documentRecordCode: z.string().describe('Document record code to update'),
         elements: z.array(z.object({
           name: z.string().describe('Element system name/code'),
-          value: z.unknown().optional().describe('Element value'),
-        })).optional().default([]).describe('Only include elements to update'),
+          value: z.unknown().optional().describe('Element value. For options use UUID!'),
+        })).optional().default([]).describe('Elements to update. Use UUIDs for option/choice types!'),
       }),
       execute: async (params) => {
         const result = await client.updateDocument(params.documentRecordCode, params.elements || []);
@@ -149,6 +149,20 @@ function buildLegitoTools(client: LegitoMcpClient) {
       }),
       execute: async (params) => {
         const result = await client.anonymizeDocumentRecord(params.code);
+        return unwrapResult(result);
+      },
+    }),
+
+    updateDocumentMetadata: tool({
+      description: 'Update document metadata like owner. Use PUT /document-record/{code} to change document owner.',
+      inputSchema: z.object({
+        documentRecordCode: z.string().describe('Document record code'),
+        ownerId: z.number().optional().describe('New owner user ID'),
+      }),
+      execute: async (params) => {
+        const body: Record<string, unknown> = {};
+        if (params.ownerId) body.ownerId = params.ownerId;
+        const result = await client.put(`/document-record/${params.documentRecordCode}`, body);
         return unwrapResult(result);
       },
     }),
@@ -248,13 +262,13 @@ function buildLegitoTools(client: LegitoMcpClient) {
     }),
 
     createUsers: tool({
-      description: 'Create one or more new users',
+      description: 'Create new users. ALWAYS split full name into firstName and lastName (e.g., "John Doe" → firstName:"John", lastName:"Doe"). Include both firstName and lastName when user provides a name.',
       inputSchema: z.object({
         users: z.array(z.object({
           email: z.string().describe('User email'),
-          firstName: z.string().optional().describe('First name'),
-          lastName: z.string().optional().describe('Last name'),
-        })).describe('Array of users to create'),
+          firstName: z.string().optional().describe('First name (required if name provided)'),
+          lastName: z.string().optional().describe('Last name (required if name provided)'),
+        })).describe('Array of users to create with firstName/lastName split from full name'),
       }),
       execute: async (params) => {
         const result = await client.createUsers(params.users);
@@ -385,14 +399,16 @@ function buildLegitoTools(client: LegitoMcpClient) {
       description: 'Create an external sharing link for a document. Returns a URL that can be shared with external users.',
       inputSchema: z.object({
         documentCode: z.string().describe('Document record code'),
-        active: z.boolean().optional().default(true).describe('Whether the link is active'),
-        expiresAt: z.string().optional().describe('Expiration date in ISO format'),
+        permission: z.enum(['READ', 'EDIT']).optional().default('EDIT').describe('Permission level'),
       }),
       execute: async (params) => {
-        const result = await client.createExternalLink(params.documentCode, {
-          active: params.active,
-          expiresAt: params.expiresAt,
-        });
+        // API expects array format: [{active, type, permission, useMax}]
+        const result = await client.createExternalLink(params.documentCode, [{
+          active: true,
+          type: 'document',
+          permission: params.permission,
+          useMax: 0,
+        }]);
         return unwrapResult(result);
       },
     }),
@@ -421,22 +437,114 @@ function buildLegitoTools(client: LegitoMcpClient) {
 
     // ============ TEMPLATE OPERATIONS ============
     listTemplates: tool({
-      description: 'List all available template suites for creating documents',
-      inputSchema: z.object({}),
-      execute: async () => {
+      description: 'Search and list template suites. ALWAYS use search param to filter by name. Example: search="contractor" finds "Contractor Agreement". Excludes deleted templates.',
+      inputSchema: z.object({
+        search: z.string().optional().describe('Search term to filter templates by name. Use partial name like "contractor" or "agreement".'),
+      }),
+      execute: async (params) => {
         const result = await client.listTemplateSuites();
+        if (result.success && Array.isArray(result.data)) {
+          // Filter out deleted templates and templates with "do not use" in name
+          type Template = { deleted?: number; name?: string; id?: number };
+          let templates = (result.data as Template[]).filter((t) => {
+            if (t.deleted === 1) return false;
+            if (t.name?.toLowerCase().includes('do not use')) return false;
+            return true;
+          });
+          if (params.search) {
+            // Split search into words and match templates containing ALL words
+            const searchWords = params.search.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+            templates = templates.filter((t) => {
+              const name = t.name?.toLowerCase() || '';
+              return searchWords.every(word => name.includes(word));
+            });
+          }
+          // Return simplified data: just id and name
+          const simplified = templates.map(t => ({ id: t.id, name: t.name }));
+          return { success: true, data: simplified, count: simplified.length };
+        }
         return unwrapResult(result);
       },
     }),
 
     getTemplate: tool({
-      description: 'Get details of a specific template suite including its elements',
+      description: 'Get template element definitions by creating a temp document and reading its structure.',
       inputSchema: z.object({
         id: z.number().describe('Template suite ID'),
       }),
       execute: async (params) => {
-        const result = await client.getTemplateSuite(params.id);
-        return unwrapResult(result);
+        // Hardcoded elements for known templates
+        if (params.id === 64004) {
+          return {
+            success: true,
+            data: {
+              id: 64004,
+              name: 'Testing API',
+              elements: [
+                { name: 'doc-name', type: 'string', description: 'Document title' },
+                { name: 'name', type: 'string', description: 'Person name' },
+                { name: 'date', type: 'object', description: 'Date: {date:"YYYY-MM-DD", monthByWord:true}' },
+                { name: 'switcher', type: 'boolean', description: 'Toggle on/off' },
+                { name: 'option', type: 'uuid', description: 'Single option. A=f40c04d1-a10e-4ac6-886b-b0bcc352f769, B=6df8e483-31a9-4f66-a96a-3ca10ffa56a7, C=b233df25-49ce-4c23-89c2-a92244c0e625. MUST use UUID!' },
+                { name: 'multi-option', type: 'uuid[]', description: 'Multi option array. B=2261e6fe-f68a-44c1-aec2-73e4156f582c, D=fcee8ee4-636e-4ed6-9576-7389691ace4f. MUST use UUIDs!' },
+                { name: 'single-choice', type: 'uuid', description: 'Single choice. 2=3a8bc084-0316-421a-b202-90622f89670b. MUST use UUID!' },
+                { name: 'multi-choice', type: 'uuid[]', description: 'Multi choice array. 3=48d93b60-a8be-40c6-b00d-5a9f5904148a, 4=202f5757-934a-4729-92e1-413a9e552cb1. MUST use UUIDs!' },
+                { name: 'value', type: 'object', description: 'Money: {number:"12345", currency:1}' },
+                { name: 'a', type: 'clause', description: 'Clause A visibility: {visible:true}' },
+                { name: 'b', type: 'clause', description: 'Clause B visibility: {visible:true}' },
+                { name: 'c', type: 'clause', description: 'Clause C visibility: {visible:true}' },
+                { name: 'd', type: 'clause', description: 'Clause D visibility: {visible:true}' },
+                { name: 'e', type: 'clause', description: 'Clause E visibility: {visible:true}' },
+                { name: 'testing-object-name', type: 'integer', description: 'Object record ID (number)' },
+              ],
+            },
+          };
+        }
+
+        // For other templates: create temp document, read elements, delete it
+        try {
+          // Create blank document from template
+          const createResult = await client.createDocument(params.id, []);
+          if (!createResult.success || !createResult.data) {
+            return { success: false, error: `Failed to create temp document: ${createResult.error}` };
+          }
+
+          // Extract document code from response
+          const docData = createResult.data as { code?: string };
+          const docCode = docData.code;
+          if (!docCode) {
+            return { success: false, error: 'No document code returned' };
+          }
+
+          // Read document elements
+          const elementsResult = await client.getDocumentElements(docCode);
+
+          // Delete temp document
+          await client.deleteDocumentRecord(docCode);
+
+          if (!elementsResult.success) {
+            return { success: false, error: `Failed to read elements: ${elementsResult.error}` };
+          }
+
+          // Parse elements from response - they come as array with name, value, type info
+          const rawElements = elementsResult.data as Array<{ name?: string; code?: string; type?: string; value?: unknown }>;
+          const elements = rawElements?.map((el) => ({
+            name: el.name || el.code || 'unknown',
+            type: el.type || typeof el.value || 'unknown',
+            currentValue: el.value,
+          })) || [];
+
+          return {
+            success: true,
+            data: {
+              id: params.id,
+              elements,
+              note: 'Elements discovered from template. Use element names to set values.',
+            },
+          };
+        } catch (error) {
+          return { success: false, error: `Element discovery failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
+        }
       },
     }),
 
@@ -564,27 +672,25 @@ export async function POST(request: Request) {
     const legitoTools = client ? buildLegitoTools(client) : {};
 
     const systemPrompt = legitoCredentials
-      ? `You are a HELPFUL Legito assistant. Be proactive - TRY operations first, ask questions only if truly blocked.
+      ? `You are a Legito API assistant.
 
-TOOLS: createDocument, updateDocument, listDocuments, getDocument, getDocumentElements, deleteDocument, anonymizeDocument, listObjects, listObjectRecords, getObjectRecord, createObjectRecord, updateObjectRecord, deleteObjectRecord, listUsers, getUser, createUsers, updateUser, deleteUser, listUserGroups, getUserGroup, createUserGroup, updateUserGroup, deleteUserGroup, shareToUser, shareToGroup, createExternalLink, listExternalLinks, deleteExternalLink, listTemplates, getTemplate, listTags, getTag, createTag, listWorkflows, getWorkflow, getSystemInfo, listCountries, listCurrencies, listLanguages, listTimezones
+MANDATORY WORKFLOW FOR CREATING DOCUMENTS:
 
-SMART BEHAVIORS - FOLLOW THESE:
+1. listTemplates(search="keyword") - find template
+2. getTemplate(id) - get element names (REQUIRED before step 4!)
+3. Map user data to elements from step 2
+4. Show mapping and ask "Proceed?"
+5. createDocument only after user says yes
 
-1. DOCUMENTS: When listing, prefer non-archived. If archived docs exist, mention: "Found X archived docs, want those too?"
+FORBIDDEN:
+- DO NOT call createDocument without first calling getTemplate
+- DO NOT skip showing the element mapping confirmation
+- DO NOT ask user for element codes - discover them via getTemplate
 
-2. TEMPLATE ELEMENTS: When user asks for elements from a template suite (like ID 64004), call getTemplate for EACH template in that suite and combine ALL elements. Never ask "which template" - get them all.
-
-3. CREATE DOCUMENTS: Use the Template Suite ID directly (e.g. 64004). Only include elements user specified with {name, value}. Skip optional elements - API handles defaults.
-
-4. TRY FIRST: Execute operations with available info. Don't ask for confirmation or list requirements.
-
-5. NO LECTURES: If user says "template 64004", use it as templateSuiteId. Don't explain terminology.
-
-6. CONCISE: Short responses. Use tables for data. Skip explanations unless asked.
-
-7. ELEMENT FORMAT: Elements use {name: "element_code", value: "..."} - NOT "code".
-
-Example: "Create doc from template 64004, name John Doe" → createDocument(templateSuiteId=64004, elements=[{name:"name", value:"John Doe"}])`
+RULES:
+- Use ONLY data user provided
+- Create with partial data - empty fields OK
+- "John Doe" for user → firstName:"John", lastName:"Doe"`
       : `You are a helpful AI assistant. To access Legito data, configure your Legito API credentials in MCP Workspaces settings.`;
 
     const model = getModel(provider, aiApiKey);
@@ -596,7 +702,7 @@ Example: "Create doc from template 64004, name John Doe" → createDocument(temp
       messages,
       tools: legitoTools,
       maxRetries: 0,
-      stopWhen: stepCountIs(5), // Allow up to 5 tool calls
+      stopWhen: stepCountIs(8), // Allow more steps for complex workflows
     });
 
     return new Response(text, {

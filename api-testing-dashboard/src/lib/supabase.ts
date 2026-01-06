@@ -164,14 +164,22 @@ export async function saveTestResult(result: TestResult, testRunId: string): Pro
 export async function saveTestResults(results: TestResult[], testRunId: string): Promise<boolean> {
   if (!supabase || results.length === 0) return false;
 
-  // Exclude 'logs' field as it may not exist in the database schema
-  const dbResults = results.map(result => {
-    const { logs, ...resultWithoutLogs } = result;
-    return {
-      ...transformKeysToSnake(resultWithoutLogs as unknown as Record<string, unknown>),
-      test_run_id: testRunId,
-    };
-  });
+  // Map TestResult fields to database columns
+  // DB columns: id, test_run_id, test_id, name, category, status, duration, error, request, response, assertions, created_at
+  const dbResults = results.map(result => ({
+    id: result.id,
+    test_run_id: testRunId,
+    test_id: result.testId,
+    name: result.testName,  // DB uses 'name', not 'test_name'
+    category: result.category,
+    status: result.status,
+    duration: result.duration,
+    error: result.error || null,
+    request: result.request,
+    response: result.response,
+    assertions: result.assertions,
+    // Note: 'timestamp' and 'logs' fields don't exist in DB schema
+  }));
 
   const { error } = await supabase
     .from('test_results')
