@@ -718,8 +718,8 @@ function buildDocumentMetadataBody(config: ConfiguredTest['config']): unknown {
 }
 
 function buildFileUploadBody(config: ConfiguredTest['config']): unknown {
-  // Build file upload body
-  // Legito API expects an array: [{ name: "filename", content: "base64data" }]
+  // Build file upload body for Legito API
+  // POST /file/{documentRecordCode} expects: { name: string, content: string (base64) }
   const timestamp = Date.now();
 
   // Use provided filename or generate one
@@ -733,11 +733,11 @@ function buildFileUploadBody(config: ConfiguredTest['config']): unknown {
     content = 'JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjE5NAolJUVPRgo=';
   }
 
-  // Return as array - Legito API expects array format for file uploads
-  return [{
+  // Return flat object - Legito API expects direct fields, not array
+  return {
     name: fileName,
     content: content || '',
-  }];
+  };
 }
 
 function buildDynamicEndpoint(
