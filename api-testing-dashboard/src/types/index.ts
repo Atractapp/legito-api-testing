@@ -200,6 +200,7 @@ export type ApiOperation =
   | 'CREATE_DOCUMENT'
   | 'READ_DOCUMENT'
   | 'UPDATE_DOCUMENT'
+  | 'UPDATE_DOCUMENT_METADATA'
   | 'DELETE_DOCUMENT'
   | 'ANONYMIZE_DOCUMENT'
   | 'GET_DOCUMENT_RECORDS'
@@ -308,6 +309,10 @@ export interface ConfiguredTest {
     eventTypes?: string[];          // ['DocumentRecordCreated', etc.]
     webhookUrl?: string;            // URL for the webhook endpoint
     pushConnectionName?: string;    // Name for the push connection
+
+    // For document metadata operations (owner)
+    ownerId?: number;               // User ID to set as document owner
+    ownerEmail?: string;            // Owner email (for display)
   };
 }
 

@@ -63,6 +63,7 @@ export function AddTestDialog({
   const [selectedObjectId, setSelectedObjectId] = useState<string>('');
   const [selectedResultFrom, setSelectedResultFrom] = useState<string>('');
   const [returnExternalLink, setReturnExternalLink] = useState<boolean>(true);
+  const [selectedOwnerId, setSelectedOwnerId] = useState<string>('');
 
   const operationsByCategory = useMemo(() => getOperationsByCategory(), []);
   const categories = Object.keys(operationsByCategory);
@@ -122,6 +123,16 @@ export function AddTestDialog({
       newTest.config.returnExternalLink = true;
     }
 
+    // Add owner selection for metadata operations
+    if (selectedOwnerId) {
+      const owner = workspaceResources?.users.find(u => u.id === Number(selectedOwnerId));
+      newTest.config.ownerId = Number(selectedOwnerId);
+      newTest.config.ownerEmail = owner?.email;
+      if (owner) {
+        newTest.name = `${selectedOpDef.name} (owner: ${owner.email})`;
+      }
+    }
+
     onAddTest(newTest);
     resetForm();
     onOpenChange(false);
@@ -133,6 +144,7 @@ export function AddTestDialog({
     setSelectedObjectId('');
     setSelectedResultFrom('');
     setReturnExternalLink(true);
+    setSelectedOwnerId('');
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -149,6 +161,7 @@ export function AddTestDialog({
     if (selectedOpDef.requiresConfig.templateSuiteId && !selectedTemplateId) return false;
     if (selectedOpDef.requiresConfig.objectId && !selectedObjectId) return false;
     if (selectedOpDef.requiresConfig.useResultFrom && !selectedResultFrom) return false;
+    if (selectedOpDef.requiresConfig.ownerId && !selectedOwnerId) return false;
 
     return true;
   };
@@ -316,6 +329,33 @@ export function AddTestDialog({
                       </Select>
                       <p className="text-xs text-muted-foreground">
                         This operation uses the result from a previous test
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Owner Selection (for metadata operations) */}
+                  {selectedOpDef.requiresConfig.ownerId && (
+                    <div className="space-y-2">
+                      <Label htmlFor="owner">New Owner *</Label>
+                      <Select value={selectedOwnerId} onValueChange={setSelectedOwnerId}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select new owner..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {workspaceResources?.users.map((user) => (
+                            <SelectItem key={user.id} value={String(user.id)}>
+                              {user.email} {user.firstName || user.lastName ? `(${[user.firstName, user.lastName].filter(Boolean).join(' ')})` : ''}
+                            </SelectItem>
+                          ))}
+                          {(!workspaceResources?.users || workspaceResources.users.length === 0) && (
+                            <SelectItem value="__no_users__" disabled>
+                              No users found. Scan workspace first.
+                            </SelectItem>
+                          )}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-muted-foreground">
+                        Set the document owner to this user
                       </p>
                     </div>
                   )}

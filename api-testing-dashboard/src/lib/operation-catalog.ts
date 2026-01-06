@@ -33,6 +33,8 @@ export interface OperationDefinition {
     labelId?: boolean;
     // Push connection operations
     eventTypes?: 'optional';
+    // Document metadata operations
+    ownerId?: boolean;
   };
   // For operations that depend on previous test results
   needsResultFrom?: ApiOperation[];
@@ -79,6 +81,16 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     method: 'PUT',
     endpoint: '/document-version/data/{documentRecordCode}',
     requiresConfig: { useResultFrom: true, elementValues: true },
+    needsResultFrom: ['CREATE_DOCUMENT'],
+  },
+  {
+    id: 'UPDATE_DOCUMENT_METADATA',
+    name: 'Update Document Metadata',
+    description: 'Update document record metadata (owner, name, etc.)',
+    category: 'Documents',
+    method: 'PUT',
+    endpoint: '/document-record/{documentRecordCode}',
+    requiresConfig: { useResultFrom: true, ownerId: true },
     needsResultFrom: ['CREATE_DOCUMENT'],
   },
   {
@@ -556,6 +568,8 @@ export function configuredTestToLegitoTest(
     body = buildPushConnectionBody(test.config);
   } else if (test.operation === 'CREATE_LABEL') {
     body = buildLabelBody(test.config);
+  } else if (test.operation === 'UPDATE_DOCUMENT_METADATA') {
+    body = buildDocumentMetadataBody(test.config);
   }
 
   // Determine context key for storing results
@@ -682,6 +696,23 @@ function buildLabelBody(config: ConfiguredTest['config']): unknown {
   return {
     name: config.labelName || `Test Label ${timestamp}`,
   };
+}
+
+function buildDocumentMetadataBody(config: ConfiguredTest['config']): unknown {
+  // Build document record metadata update body
+  // Only include fields that are set
+  const body: Record<string, unknown> = {};
+
+  if (config.ownerId) {
+    body.ownerId = config.ownerId;
+  }
+
+  // Can add more metadata fields here in future:
+  // - name (document name)
+  // - documentRecordTypeId
+  // - properties
+
+  return body;
 }
 
 function buildDynamicEndpoint(
