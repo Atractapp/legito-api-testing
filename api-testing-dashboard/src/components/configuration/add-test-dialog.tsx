@@ -383,12 +383,15 @@ export function AddTestDialog({
                   {selectedOperation === 'CREATE_DOCUMENT' && availableParentTests.length > 0 && (
                     <div className="space-y-2">
                       <Label htmlFor="parentTest">Link as Child of (Optional)</Label>
-                      <Select value={selectedParentTestId} onValueChange={setSelectedParentTestId}>
+                      <Select
+                        value={selectedParentTestId || '__none__'}
+                        onValueChange={(v) => setSelectedParentTestId(v === '__none__' ? '' : v)}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="None - create standalone document" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="">None - standalone document</SelectItem>
+                          <SelectItem value="__none__">None - standalone document</SelectItem>
                           {availableParentTests.map((test) => (
                             <SelectItem key={test.id} value={test.id}>
                               #{existingTests.indexOf(test) + 1}: {test.name}
