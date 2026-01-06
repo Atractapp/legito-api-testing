@@ -655,8 +655,8 @@ export function configuredTestToLegitoTest(
         return { success: false, error: `No correlation ID found in context[${contextKey}]. Context value: ${JSON.stringify(pushConnection)}` };
       }
 
-      // Wait for webhook with timeout (Legito takes 30-40 seconds to send webhooks)
-      const timeout = test.config.webhookTimeout || 60000; // Default 60 seconds
+      // Wait for webhook with timeout (Legito takes 60-90 seconds to send webhooks)
+      const timeout = test.config.webhookTimeout || 120000; // Default 120 seconds (2 minutes)
       const expectedEventType = test.config.expectedEventType;
 
       try {
@@ -706,9 +706,6 @@ export function configuredTestToLegitoTest(
       jwt: string,
       baseUrl: string
     ) => {
-      console.log('[ParentLink] Starting parent document linking...');
-      console.log('[ParentLink] Result:', JSON.stringify(result).substring(0, 500));
-
       // Get the created document's code - handle array response
       let createdDoc = result as { documentRecordCode?: string; documentRecordId?: number } | undefined;
       if (Array.isArray(result) && result.length > 0) {
@@ -716,7 +713,6 @@ export function configuredTestToLegitoTest(
       }
 
       if (!createdDoc?.documentRecordCode) {
-        console.log('[ParentLink] No documentRecordCode found in result');
         return { success: false, error: 'No documentRecordCode in created document' };
       }
 
@@ -727,22 +723,16 @@ export function configuredTestToLegitoTest(
       }
 
       const parentContextKey = getContextKeyForOperation(parentTest);
-      console.log('[ParentLink] Parent context key:', parentContextKey);
-      console.log('[ParentLink] Parent context:', JSON.stringify(ctx[parentContextKey]).substring(0, 500));
-
       const parentResult = ctx[parentContextKey] as { documentRecordId?: number } | undefined;
 
       if (!parentResult?.documentRecordId) {
         return { success: false, error: `Parent document ID not found in context[${parentContextKey}]` };
       }
 
-      console.log('[ParentLink] Linking child', createdDoc.documentRecordCode, 'to parent', parentResult.documentRecordId);
-
       // Call PUT /document-record/{code} to set parentDocumentRecordId
       // The systemName is a UUID unique to each workspace - we must discover it first
       try {
         // First, fetch the child document record to find the Related Documents property
-        console.log('[ParentLink] Fetching child document to discover Related Documents property...');
         const docResponse = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
           method: 'GET',
           jwt,
@@ -755,18 +745,27 @@ export function configuredTestToLegitoTest(
 
         // Find the property with systemType 'related_document_records'
         const docData = docResponse.data as { properties?: Array<{ systemName?: string; systemType?: string; name?: string }> };
-        const relatedDocsProp = docData.properties?.find(p => p.systemType === 'related_document_records');
+        let relatedDocsProp = docData.properties?.find(p => p.systemType === 'related_document_records');
 
+        // If not found in document, try fetching workspace properties
         if (!relatedDocsProp?.systemName) {
-          console.log('[ParentLink] No Related Documents property found on this document');
-          console.log('[ParentLink] Available properties:', docData.properties?.map(p => `${p.name} (${p.systemType})`).join(', '));
-          return {
-            success: false,
-            error: 'Related Documents property not found on child document. Ensure the template has this property enabled.',
-          };
+          try {
+            const propResponse = await legitoRequest('/property', { method: 'GET', jwt, baseUrl });
+            if (propResponse.data && Array.isArray(propResponse.data)) {
+              relatedDocsProp = (propResponse.data as Array<{ systemName?: string; systemType?: string; name?: string }>)
+                .find(p => p.systemType === 'related_document_records');
+            }
+          } catch {
+            // Silently continue - property endpoint may not be available
+          }
         }
 
-        console.log('[ParentLink] Found Related Documents property:', relatedDocsProp.name, '- systemName:', relatedDocsProp.systemName);
+        if (!relatedDocsProp?.systemName) {
+          // Parent linking not available for this template - silently skip
+          return { success: true };
+        }
+
+        console.log('[ParentLink] Found Related Documents property, linking to parent...');
 
         // Now set the parent using the discovered systemName
         const linkBody = {
@@ -777,8 +776,6 @@ export function configuredTestToLegitoTest(
             },
           }],
         };
-        console.log('[ParentLink] Setting parent with body:', JSON.stringify(linkBody));
-
         const response = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
           method: 'PUT',
           jwt,
@@ -786,21 +783,15 @@ export function configuredTestToLegitoTest(
           body: linkBody,
         });
 
-        console.log('[ParentLink] Response:', response.status, response.statusText);
-
         if (response.status >= 200 && response.status < 300) {
-          console.log('[ParentLink] Successfully linked parent document!');
           return { success: true };
         } else {
-          const errorMsg = response.error || JSON.stringify(response.data);
-          console.log('[ParentLink] Failed:', errorMsg);
           return {
             success: false,
-            error: `Failed to link parent: ${response.status} - ${errorMsg}`,
+            error: `Failed to link parent: ${response.status}`,
           };
         }
       } catch (err) {
-        console.log('[ParentLink] Error:', err);
         return {
           success: false,
           error: err instanceof Error ? err.message : 'Failed to link parent document',

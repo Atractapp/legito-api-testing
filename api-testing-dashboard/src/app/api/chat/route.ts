@@ -442,7 +442,9 @@ function buildLegitoTools(client: LegitoMcpClient) {
         search: z.string().optional().describe('Search term to filter templates by name. Use partial name like "contractor" or "agreement".'),
       }),
       execute: async (params) => {
+        console.log('[listTemplates] Called with search:', params.search);
         const result = await client.listTemplateSuites();
+        console.log('[listTemplates] API returned:', result.success, 'count:', Array.isArray(result.data) ? result.data.length : 'not array');
         if (result.success && Array.isArray(result.data)) {
           // Filter out deleted templates and templates with "do not use" in name
           type Template = { deleted?: number; name?: string; id?: number };
@@ -451,13 +453,20 @@ function buildLegitoTools(client: LegitoMcpClient) {
             if (t.name?.toLowerCase().includes('do not use')) return false;
             return true;
           });
+          console.log('[listTemplates] After filtering deleted/donotuse:', templates.length);
           if (params.search) {
             // Split search into words and match templates containing ALL words
             const searchWords = params.search.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+            console.log('[listTemplates] Search words:', searchWords);
             templates = templates.filter((t) => {
               const name = t.name?.toLowerCase() || '';
-              return searchWords.every(word => name.includes(word));
+              const matches = searchWords.every(word => name.includes(word));
+              if (name.includes('contractor')) {
+                console.log('[listTemplates] Checking:', name, '- matches:', matches);
+              }
+              return matches;
             });
+            console.log('[listTemplates] After search filter:', templates.length);
           }
           // Return simplified data: just id and name
           const simplified = templates.map(t => ({ id: t.id, name: t.name }));
