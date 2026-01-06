@@ -52,11 +52,19 @@ async function handleRequest(
     );
   }
 
+  // Check if this is a file upload endpoint (POST /file/{documentRecordCode})
+  const isFileUpload = method === 'POST' && endpoint.startsWith('/file/');
+
   // Prepare headers for Legito API
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Authorization': authHeader,
-    'Content-Type': 'application/json',
   };
+
+  // Only set Content-Type for non-file-upload requests
+  // For file uploads, we'll let FormData set the boundary
+  if (!isFileUpload) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   // Prepare fetch options
   const fetchOptions: RequestInit = {
@@ -69,10 +77,32 @@ async function handleRequest(
     try {
       const body = await request.text();
       if (body) {
-        fetchOptions.body = body;
+        if (isFileUpload) {
+          // Convert JSON body to FormData for file uploads
+          const jsonData = JSON.parse(body);
+          const formData = new FormData();
+
+          // Add file name
+          formData.append('name', jsonData.name || 'uploaded-file.pdf');
+
+          // Convert base64 content to Blob and add as file
+          if (jsonData.content) {
+            const binaryString = atob(jsonData.content);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            const blob = new Blob([bytes], { type: 'application/pdf' });
+            formData.append('file', blob, jsonData.name || 'uploaded-file.pdf');
+          }
+
+          fetchOptions.body = formData;
+        } else {
+          fetchOptions.body = body;
+        }
       }
     } catch {
-      // No body
+      // No body or parse error
     }
   }
 
