@@ -218,6 +218,8 @@ export interface LegitoTest {
   // Internal tests (e.g., webhook verification) that don't call Legito API
   isInternalTest?: boolean;
   internalTestHandler?: (context: TestContext) => Promise<{ success: boolean; data?: unknown; error?: string }>;
+  // Post-execution callback (e.g., for linking parent document after creation)
+  afterExecute?: (context: TestContext, result: unknown, jwt: string, baseUrl: string) => Promise<{ success: boolean; error?: string }>;
 }
 
 export interface TestAssertion {

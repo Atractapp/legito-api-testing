@@ -64,6 +64,7 @@ export function AddTestDialog({
   const [selectedResultFrom, setSelectedResultFrom] = useState<string>('');
   const [returnExternalLink, setReturnExternalLink] = useState<boolean>(true);
   const [selectedOwnerId, setSelectedOwnerId] = useState<string>('');
+  const [selectedParentTestId, setSelectedParentTestId] = useState<string>('');
 
   const operationsByCategory = useMemo(() => getOperationsByCategory(), []);
   const categories = Object.keys(operationsByCategory);
@@ -81,6 +82,12 @@ export function AddTestDialog({
       selectedOpDef.needsResultFrom?.includes(test.operation)
     );
   }, [selectedOpDef, existingTests]);
+
+  // Get CREATE_DOCUMENT tests that can be used as parent documents
+  const availableParentTests = useMemo(() => {
+    if (selectedOperation !== 'CREATE_DOCUMENT') return [];
+    return existingTests.filter(test => test.operation === 'CREATE_DOCUMENT');
+  }, [selectedOperation, existingTests]);
 
   const handleAdd = () => {
     if (!selectedOperation || !selectedOpDef) return;
@@ -133,6 +140,17 @@ export function AddTestDialog({
       }
     }
 
+    // Add parent document linking
+    if (selectedParentTestId) {
+      newTest.config.linkToParentTestId = selectedParentTestId;
+      const parentTest = existingTests.find(t => t.id === selectedParentTestId);
+      if (parentTest) {
+        const parentIndex = existingTests.indexOf(parentTest) + 1;
+        // Append to existing name or create new one
+        newTest.name = `${newTest.name} (child of #${parentIndex})`;
+      }
+    }
+
     onAddTest(newTest);
     resetForm();
     onOpenChange(false);
@@ -145,6 +163,7 @@ export function AddTestDialog({
     setSelectedResultFrom('');
     setReturnExternalLink(true);
     setSelectedOwnerId('');
+    setSelectedParentTestId('');
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -356,6 +375,29 @@ export function AddTestDialog({
                       </Select>
                       <p className="text-xs text-muted-foreground">
                         Set the document owner to this user
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Parent Document Linking (for CREATE_DOCUMENT) */}
+                  {selectedOperation === 'CREATE_DOCUMENT' && availableParentTests.length > 0 && (
+                    <div className="space-y-2">
+                      <Label htmlFor="parentTest">Link as Child of (Optional)</Label>
+                      <Select value={selectedParentTestId} onValueChange={setSelectedParentTestId}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="None - create standalone document" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">None - standalone document</SelectItem>
+                          {availableParentTests.map((test) => (
+                            <SelectItem key={test.id} value={test.id}>
+                              #{existingTests.indexOf(test) + 1}: {test.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-muted-foreground">
+                        Links this document as a child of the selected parent (Related Documents)
                       </p>
                     </div>
                   )}

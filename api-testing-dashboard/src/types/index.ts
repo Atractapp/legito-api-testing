@@ -319,6 +319,9 @@ export interface ConfiguredTest {
     // For document metadata operations (owner)
     ownerId?: number;               // User ID to set as document owner
     ownerEmail?: string;            // Owner email (for display)
+
+    // For parent document linking (Related Documents)
+    linkToParentTestId?: string;    // Test ID of parent CREATE_DOCUMENT test
   };
 }
 

@@ -4,6 +4,7 @@
 
 import type { ApiOperation, ConfiguredTest } from '@/types';
 import type { LegitoTest, TestContext } from './legito-api';
+import { legitoRequest } from './legito-api';
 
 export type OperationCategory = 'Documents' | 'Objects' | 'Users' | 'User Groups' | 'Sharing' | 'Files' | 'Workflows' | 'Other';
 
@@ -35,6 +36,8 @@ export interface OperationDefinition {
     eventTypes?: 'optional';
     // Document metadata operations
     ownerId?: boolean;
+    // Parent document linking (Related Documents)
+    linkToParentTestId?: 'optional';
   };
   // For operations that depend on previous test results
   needsResultFrom?: ApiOperation[];
@@ -61,7 +64,7 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     category: 'Documents',
     method: 'POST',
     endpoint: '/document-version/data/{templateSuiteId}',
-    requiresConfig: { templateSuiteId: true, elementValues: true },
+    requiresConfig: { templateSuiteId: true, elementValues: true, linkToParentTestId: 'optional' },
   },
   {
     id: 'READ_DOCUMENT',
@@ -667,6 +670,69 @@ export function configuredTestToLegitoTest(
         return {
           success: false,
           error: err instanceof Error ? err.message : 'Failed to verify webhook'
+        };
+      }
+    };
+  }
+
+  // Special handling for CREATE_DOCUMENT with parent linking
+  if (test.operation === 'CREATE_DOCUMENT' && test.config.linkToParentTestId) {
+    const parentTestId = test.config.linkToParentTestId;
+
+    baseTest.afterExecute = async (
+      ctx: TestContext,
+      result: unknown,
+      jwt: string,
+      baseUrl: string
+    ) => {
+      // Get the created document's code
+      const createdDoc = result as { documentRecordCode?: string; documentRecordId?: number } | undefined;
+      if (!createdDoc?.documentRecordCode) {
+        return { success: false, error: 'No documentRecordCode in created document' };
+      }
+
+      // Find the parent test and get its result from context
+      const parentTest = allTests.find(t => t.id === parentTestId);
+      if (!parentTest) {
+        return { success: false, error: `Parent test not found: ${parentTestId}` };
+      }
+
+      const parentContextKey = getContextKeyForOperation(parentTest);
+      const parentResult = ctx[parentContextKey] as { documentRecordId?: number } | undefined;
+
+      if (!parentResult?.documentRecordId) {
+        return { success: false, error: 'Parent document ID not found in context' };
+      }
+
+      // Call PUT /document-record/{code} to set parentDocumentRecordId
+      // Using the system property "related_document_records"
+      try {
+        const response = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
+          method: 'PUT',
+          jwt,
+          baseUrl,
+          body: {
+            properties: [{
+              systemName: 'related_document_records',
+              value: {
+                parentDocumentRecordId: parentResult.documentRecordId,
+              },
+            }],
+          },
+        });
+
+        if (response.status >= 200 && response.status < 300) {
+          return { success: true };
+        } else {
+          return {
+            success: false,
+            error: `Failed to link parent: ${response.status} ${response.statusText}`,
+          };
+        }
+      } catch (err) {
+        return {
+          success: false,
+          error: err instanceof Error ? err.message : 'Failed to link parent document',
         };
       }
     };

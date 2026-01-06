@@ -276,6 +276,27 @@ export function useTestRunner() {
           }
         }
 
+        // Run afterExecute callback if test passed and has one (e.g., parent document linking)
+        if (test.afterExecute && result.status === 'passed' && result.response.body) {
+          log('info', `Running post-execution callback...`, test.id);
+          try {
+            const afterResult = await test.afterExecute(
+              contextRef.current,
+              result.response.body,
+              jwtRef.current!,
+              baseUrl
+            );
+            if (afterResult.success) {
+              log('info', `Post-execution callback succeeded`, test.id);
+            } else {
+              log('warn', `Post-execution callback failed: ${afterResult.error}`, test.id);
+              // Don't fail the test, just log the warning
+            }
+          } catch (afterError) {
+            log('warn', `Post-execution callback error: ${afterError instanceof Error ? afterError.message : 'Unknown error'}`, test.id);
+          }
+        }
+
         // Record CRUD operation if test has CRUD metadata
         if (test.crudOperation && test.entityType) {
           const resourceId = result.response.body
