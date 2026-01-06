@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// Initialize Supabase client - use service role key to bypass RLS
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+console.log('[Webhook] Supabase URL:', supabaseUrl?.substring(0, 30) + '...');
+console.log('[Webhook] Using service role key:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 interface WebhookPayload {
   eventType?: string;
@@ -42,31 +45,37 @@ export async function POST(
     });
 
     // Store the webhook in Supabase
+    console.log(`[Webhook POST] Storing webhook for correlation ID: ${correlationId}`);
+
+    const insertData = {
+      correlation_id: correlationId,
+      event_type: payload.eventType || 'unknown',
+      payload: payload,
+      headers: headers,
+      received_at: new Date().toISOString(),
+      processed: false,
+    };
+
     const { data, error } = await supabase
       .from('webhook_payloads')
-      .insert({
-        correlation_id: correlationId,
-        event_type: payload.eventType || 'unknown',
-        payload: payload,
-        headers: headers,
-        received_at: new Date().toISOString(),
-        processed: false,
-      })
+      .insert(insertData)
       .select()
       .single();
 
     if (error) {
-      console.error('Failed to store webhook payload:', error);
+      console.error('[Webhook POST] Failed to store webhook payload:', error);
+      console.error('[Webhook POST] Insert data was:', JSON.stringify(insertData).substring(0, 500));
       // Still return success to Legito so it doesn't retry
       return NextResponse.json(
-        { success: true, warning: 'Failed to store payload' },
+        { success: true, warning: 'Failed to store payload', error: error.message },
         { status: 200 }
       );
     }
 
-    console.log(`Webhook received for correlation ID: ${correlationId}`, {
-      eventType: payload.eventType,
+    console.log(`[Webhook POST] Successfully stored webhook:`, {
       id: data?.id,
+      correlationId: correlationId,
+      eventType: payload.eventType,
     });
 
     return NextResponse.json({
@@ -100,13 +109,17 @@ export async function GET(
     const limit = parseInt(url.searchParams.get('limit') || '10');
     const waitMs = parseInt(url.searchParams.get('wait') || '0');
 
+    console.log(`[Webhook GET] Looking for correlation ID: ${correlationId}, wait: ${waitMs}ms`);
+
     // If wait is specified, poll for the webhook
     if (waitMs > 0) {
       const startTime = Date.now();
       const pollInterval = 1000; // 1 second
+      let pollCount = 0;
 
       while (Date.now() - startTime < waitMs) {
-        const { data } = await supabase
+        pollCount++;
+        const { data, error } = await supabase
           .from('webhook_payloads')
           .select('*')
           .eq('correlation_id', correlationId)
@@ -114,7 +127,12 @@ export async function GET(
           .order('received_at', { ascending: false })
           .limit(1);
 
+        if (error) {
+          console.log(`[Webhook GET] Poll ${pollCount} - Supabase error:`, error);
+        }
+
         if (data && data.length > 0) {
+          console.log(`[Webhook GET] Poll ${pollCount} - Found webhook:`, data[0].id);
           // Mark as processed
           await supabase
             .from('webhook_payloads')
@@ -128,15 +146,31 @@ export async function GET(
           });
         }
 
+        // Log first poll and every 5th poll
+        if (pollCount === 1 || pollCount % 5 === 0) {
+          console.log(`[Webhook GET] Poll ${pollCount} - No webhook yet (${Date.now() - startTime}ms elapsed)`);
+        }
+
         // Wait before polling again
         await new Promise(resolve => setTimeout(resolve, pollInterval));
       }
+
+      // Timeout - check one more time without the processed filter to debug
+      const { data: allData, error: finalError } = await supabase
+        .from('webhook_payloads')
+        .select('id, correlation_id, processed, received_at')
+        .eq('correlation_id', correlationId)
+        .limit(5);
+
+      console.log(`[Webhook GET] Timeout - final check for ${correlationId}:`,
+        finalError ? `Error: ${finalError.message}` : `Found ${allData?.length || 0} records`, allData);
 
       // Timeout - no webhook received
       return NextResponse.json({
         success: true,
         found: false,
         message: `No webhook received within ${waitMs}ms`,
+        debug: { pollCount, allRecords: allData?.length || 0 },
       });
     }
 
