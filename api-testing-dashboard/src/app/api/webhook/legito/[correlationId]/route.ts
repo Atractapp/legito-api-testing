@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client - use service role key to bypass RLS
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-console.log('[Webhook] Supabase URL:', supabaseUrl?.substring(0, 30) + '...');
-console.log('[Webhook] Using service role key:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Create Supabase client for each request to ensure fresh connection
+function getSupabase(): SupabaseClient {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 interface WebhookPayload {
   eventType?: string;
@@ -56,6 +54,7 @@ export async function POST(
       processed: false,
     };
 
+    const supabase = getSupabase();
     const { data, error } = await supabase
       .from('webhook_payloads')
       .insert(insertData)
@@ -110,6 +109,8 @@ export async function GET(
     const waitMs = parseInt(url.searchParams.get('wait') || '0');
 
     console.log(`[Webhook GET] Looking for correlation ID: ${correlationId}, wait: ${waitMs}ms`);
+
+    const supabase = getSupabase();
 
     // If wait is specified, poll for the webhook
     if (waitMs > 0) {
@@ -216,6 +217,7 @@ export async function DELETE(
   try {
     const { correlationId } = await params;
 
+    const supabase = getSupabase();
     const { error, count } = await supabase
       .from('webhook_payloads')
       .delete()
