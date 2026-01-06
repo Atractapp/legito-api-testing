@@ -570,6 +570,8 @@ export function configuredTestToLegitoTest(
     body = buildLabelBody(test.config);
   } else if (test.operation === 'UPDATE_DOCUMENT_METADATA') {
     body = buildDocumentMetadataBody(test.config);
+  } else if (test.operation === 'UPLOAD_FILE') {
+    body = buildFileUploadBody(test.config);
   }
 
   // Determine context key for storing results
@@ -713,6 +715,28 @@ function buildDocumentMetadataBody(config: ConfiguredTest['config']): unknown {
   // - properties
 
   return body;
+}
+
+function buildFileUploadBody(config: ConfiguredTest['config']): unknown {
+  // Build file upload body
+  // Legito API expects: { name: "filename", content: "base64data" }
+  const timestamp = Date.now();
+
+  // Use provided filename or generate one
+  const fileName = config.fileName || `test-file-${timestamp}.pdf`;
+
+  // Use provided content or a minimal test PDF
+  let content = config.fileBase64;
+
+  if (!content && config.useTestFile !== false) {
+    // Minimal valid PDF (creates a blank 1-page PDF)
+    content = 'JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjE5NAolJUVPRgo=';
+  }
+
+  return {
+    name: fileName,
+    content: content || '',
+  };
 }
 
 function buildDynamicEndpoint(
