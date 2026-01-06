@@ -739,91 +739,66 @@ export function configuredTestToLegitoTest(
       console.log('[ParentLink] Linking child', createdDoc.documentRecordCode, 'to parent', parentResult.documentRecordId);
 
       // Call PUT /document-record/{code} to set parentDocumentRecordId
-      // The parentDocumentRecordId must be set via the properties array with the correct systemName
+      // The systemName is a UUID unique to each workspace - we must discover it first
       try {
-        // First, fetch the document record to discover available properties
-        console.log('[ParentLink] Fetching document record to discover properties...');
+        // First, fetch the child document record to find the Related Documents property
+        console.log('[ParentLink] Fetching child document to discover Related Documents property...');
         const docResponse = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
           method: 'GET',
           jwt,
           baseUrl,
         });
 
-        if (docResponse.data) {
-          console.log('[ParentLink] Document record:', JSON.stringify(docResponse.data).substring(0, 2000));
-
-          // Look for related_document_records property in the response
-          const docData = docResponse.data as { properties?: Array<{ systemName?: string; systemType?: string; id?: number }> };
-          if (docData.properties) {
-            console.log('[ParentLink] Available properties:');
-            docData.properties.forEach((prop, i) => {
-              console.log(`  [${i}] systemName: ${prop.systemName}, systemType: ${prop.systemType}, id: ${prop.id}`);
-            });
-
-            // Find the related documents property
-            const relatedDocsProp = docData.properties.find(p =>
-              p.systemType === 'related_document_records' ||
-              p.systemName?.includes('related') ||
-              p.systemName?.includes('parent')
-            );
-
-            if (relatedDocsProp) {
-              console.log('[ParentLink] Found related docs property:', JSON.stringify(relatedDocsProp));
-            }
-          }
+        if (!docResponse.data) {
+          return { success: false, error: 'Failed to fetch child document record' };
         }
 
-        // Try using the properties array with the systemName
-        // Common systemNames: 'related_document_records', 'relatedDocuments', or template-specific
-        const possibleSystemNames = [
-          'related_document_records',
-          'relatedDocumentRecords',
-          'related-document-records',
-          'parent_document',
-          'parentDocument',
-        ];
+        // Find the property with systemType 'related_document_records'
+        const docData = docResponse.data as { properties?: Array<{ systemName?: string; systemType?: string; name?: string }> };
+        const relatedDocsProp = docData.properties?.find(p => p.systemType === 'related_document_records');
 
-        // Try each possible systemName
-        for (const systemName of possibleSystemNames) {
-          const linkBody = {
-            properties: [{
-              systemName: systemName,
-              value: {
-                parentDocumentRecordId: parentResult.documentRecordId,
-              },
-            }],
+        if (!relatedDocsProp?.systemName) {
+          console.log('[ParentLink] No Related Documents property found on this document');
+          console.log('[ParentLink] Available properties:', docData.properties?.map(p => `${p.name} (${p.systemType})`).join(', '));
+          return {
+            success: false,
+            error: 'Related Documents property not found on child document. Ensure the template has this property enabled.',
           };
-          console.log('[ParentLink] Trying systemName:', systemName);
-
-          const response = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
-            method: 'PUT',
-            jwt,
-            baseUrl,
-            body: linkBody,
-          });
-
-          console.log('[ParentLink] Response:', response.status, response.statusText);
-
-          if (response.status >= 200 && response.status < 300) {
-            console.log('[ParentLink] Success with systemName:', systemName);
-            return { success: true };
-          }
-
-          // If it's not a "property doesn't exist" error, stop trying
-          const errorMsg = JSON.stringify(response.data || response.error || '');
-          if (!errorMsg.includes('does not exits') && !errorMsg.includes('does not exist')) {
-            console.log('[ParentLink] Different error, stopping:', errorMsg);
-            return {
-              success: false,
-              error: `Failed to link parent: ${response.status} - ${errorMsg}`,
-            };
-          }
         }
 
-        return {
-          success: false,
-          error: 'Could not find the correct Related Documents property systemName. Please check your template configuration.',
+        console.log('[ParentLink] Found Related Documents property:', relatedDocsProp.name, '- systemName:', relatedDocsProp.systemName);
+
+        // Now set the parent using the discovered systemName
+        const linkBody = {
+          properties: [{
+            systemName: relatedDocsProp.systemName,
+            value: {
+              parentDocumentRecordId: parentResult.documentRecordId,
+            },
+          }],
         };
+        console.log('[ParentLink] Setting parent with body:', JSON.stringify(linkBody));
+
+        const response = await legitoRequest(`/document-record/${createdDoc.documentRecordCode}`, {
+          method: 'PUT',
+          jwt,
+          baseUrl,
+          body: linkBody,
+        });
+
+        console.log('[ParentLink] Response:', response.status, response.statusText);
+
+        if (response.status >= 200 && response.status < 300) {
+          console.log('[ParentLink] Successfully linked parent document!');
+          return { success: true };
+        } else {
+          const errorMsg = response.error || JSON.stringify(response.data);
+          console.log('[ParentLink] Failed:', errorMsg);
+          return {
+            success: false,
+            error: `Failed to link parent: ${response.status} - ${errorMsg}`,
+          };
+        }
       } catch (err) {
         console.log('[ParentLink] Error:', err);
         return {
