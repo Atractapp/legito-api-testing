@@ -215,6 +215,9 @@ export interface LegitoTest {
   crudOperation?: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE' | 'ANONYMIZE' | 'SHARE';
   resourceCategory?: 'kept' | 'to-delete' | 'n/a';
   entityType?: string;
+  // Internal tests (e.g., webhook verification) that don't call Legito API
+  isInternalTest?: boolean;
+  internalTestHandler?: (context: TestContext) => Promise<{ success: boolean; data?: unknown; error?: string }>;
 }
 
 export interface TestAssertion {

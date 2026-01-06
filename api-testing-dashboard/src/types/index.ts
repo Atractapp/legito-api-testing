@@ -247,6 +247,7 @@ export type ApiOperation =
   | 'GET_PUSH_CONNECTIONS'
   | 'CREATE_PUSH_CONNECTION'
   | 'DELETE_PUSH_CONNECTION'
+  | 'VERIFY_WEBHOOK'
   // Workflows
   | 'GET_WORKFLOWS'
   | 'GET_WORKFLOW';
@@ -309,6 +310,11 @@ export interface ConfiguredTest {
     eventTypes?: string[];          // ['DocumentRecordCreated', etc.]
     webhookUrl?: string;            // URL for the webhook endpoint
     pushConnectionName?: string;    // Name for the push connection
+    correlationId?: string;         // Unique ID to match webhooks to tests
+
+    // For webhook verification
+    expectedEventType?: string;     // Event type to verify (e.g., 'DocumentRecordCreated')
+    webhookTimeout?: number;        // Timeout in ms to wait for webhook (default 10000)
 
     // For document metadata operations (owner)
     ownerId?: number;               // User ID to set as document owner

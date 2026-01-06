@@ -230,6 +230,19 @@ export function useTestRunner() {
           if (Array.isArray(dataToStore) && dataToStore.length === 1) {
             dataToStore = dataToStore[0];
           }
+
+          // Special handling for push connections - preserve _correlationId from request body
+          if (test.setsContext === 'create-push-connection' && test.body) {
+            const requestBody = test.body as { _correlationId?: string };
+            if (requestBody._correlationId) {
+              dataToStore = {
+                ...(typeof dataToStore === 'object' && dataToStore !== null ? dataToStore : {}),
+                _correlationId: requestBody._correlationId,
+              };
+              log('debug', `Preserved correlation ID: ${requestBody._correlationId}`, test.id);
+            }
+          }
+
           contextRef.current[test.setsContext] = dataToStore;
           log('debug', `Stored context: ${test.setsContext}`, test.id);
 
@@ -425,7 +438,7 @@ export function useTestRunner() {
   };
 }
 
-// Execute a single test against the real Legito API
+// Execute a single test against the real Legito API (or internal test handler)
 async function executeTest(
   test: LegitoTest,
   resolvedEndpoint: string,
@@ -436,6 +449,91 @@ async function executeTest(
   log: (level: LogEntry['level'], message: string, testId?: string) => void
 ): Promise<TestResult> {
   const startTime = Date.now();
+
+  // Handle internal tests (e.g., VERIFY_WEBHOOK) that don't call Legito API
+  if (test.isInternalTest && test.internalTestHandler) {
+    log('info', `Running internal test: ${test.name}`, test.id);
+
+    try {
+      const result = await test.internalTestHandler(context);
+      const duration = Date.now() - startTime;
+
+      const passed = result.success;
+      log('info', `Internal test result: ${passed ? 'SUCCESS' : 'FAILED'}`, test.id);
+      if (result.error) {
+        log('error', `Error: ${result.error}`, test.id);
+      }
+      if (result.data) {
+        log('debug', `Data: ${JSON.stringify(result.data).substring(0, 500)}`, test.id);
+      }
+
+      return {
+        id: `result-${Date.now()}-${test.id}`,
+        testId: test.id,
+        testName: test.name,
+        category: test.category,
+        status: passed ? 'passed' : 'failed',
+        duration,
+        timestamp: new Date().toISOString(),
+        request: {
+          url: resolvedEndpoint,
+          method: test.method,
+          headers: {},
+        },
+        response: {
+          status: passed ? 200 : 500,
+          statusText: passed ? 'OK' : 'Failed',
+          headers: {},
+          body: result.data || { error: result.error },
+          size: JSON.stringify(result.data || {}).length,
+        },
+        assertions: test.assertions.map(a => ({
+          name: a.name,
+          passed,
+          expected: 'success',
+          actual: passed ? 'success' : result.error,
+          message: passed ? 'Test passed' : result.error,
+        })),
+        error: passed ? undefined : {
+          message: result.error || 'Internal test failed',
+        },
+        logs: [],
+      };
+    } catch (err) {
+      const duration = Date.now() - startTime;
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      log('error', `Internal test error: ${errorMessage}`, test.id);
+
+      return {
+        id: `result-${Date.now()}-${test.id}`,
+        testId: test.id,
+        testName: test.name,
+        category: test.category,
+        status: 'failed',
+        duration,
+        timestamp: new Date().toISOString(),
+        request: {
+          url: resolvedEndpoint,
+          method: test.method,
+          headers: {},
+        },
+        response: {
+          status: 500,
+          statusText: 'Error',
+          headers: {},
+          body: { error: errorMessage },
+          size: 0,
+        },
+        assertions: [{
+          name: 'Internal test execution',
+          passed: false,
+          message: errorMessage,
+        }],
+        error: { message: errorMessage },
+        logs: [],
+      };
+    }
+  }
 
   // Resolve dynamic body if present
   const body = test.dynamicBody ? test.dynamicBody(context) : test.body;

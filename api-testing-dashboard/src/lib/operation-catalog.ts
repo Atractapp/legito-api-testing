@@ -492,6 +492,16 @@ export const OPERATION_CATALOG: OperationDefinition[] = [
     requiresConfig: { useResultFrom: true },
     needsResultFrom: ['CREATE_PUSH_CONNECTION'],
   },
+  {
+    id: 'VERIFY_WEBHOOK',
+    name: 'Verify Webhook Received',
+    description: 'Verify that a webhook was received from Legito push API',
+    category: 'Other',
+    method: 'GET',  // Internal verification, not a Legito API call
+    endpoint: '/api/webhook/legito/{correlationId}',  // Our internal endpoint
+    requiresConfig: { useResultFrom: true },
+    needsResultFrom: ['CREATE_PUSH_CONNECTION'],
+  },
 ];
 
 /**
@@ -582,7 +592,8 @@ export function configuredTestToLegitoTest(
     ? [getContextKeyFromTestId(test.config.useResultFrom, allTests)]
     : undefined;
 
-  return {
+  // Build the base test object
+  const baseTest: LegitoTest = {
     id: test.id,
     name: test.name,
     description: opDef.description,
@@ -607,6 +618,61 @@ export function configuredTestToLegitoTest(
       { name: 'Returns expected status', type: 'status' as const },
     ],
   };
+
+  // Special handling for VERIFY_WEBHOOK - internal test
+  if (test.operation === 'VERIFY_WEBHOOK') {
+    baseTest.isInternalTest = true;
+    baseTest.assertions = [
+      { name: 'Webhook received', type: 'status' as const },
+    ];
+    baseTest.internalTestHandler = async (ctx: TestContext) => {
+      // Get correlation ID from the push connection context
+      const pushConnection = ctx['create-push-connection'] as { _correlationId?: string; url?: string } | undefined;
+      const correlationId = pushConnection?._correlationId || pushConnection?.url?.split('/').pop();
+
+      if (!correlationId) {
+        return { success: false, error: 'No correlation ID found from push connection' };
+      }
+
+      // Wait for webhook with timeout
+      const timeout = test.config.webhookTimeout || 15000; // Default 15 seconds
+      const expectedEventType = test.config.expectedEventType;
+
+      try {
+        const response = await fetch(
+          `/api/webhook/legito/${correlationId}?wait=${timeout}`,
+          { method: 'GET' }
+        );
+        const data = await response.json();
+
+        if (!data.found) {
+          return {
+            success: false,
+            error: `No webhook received within ${timeout}ms`,
+            data
+          };
+        }
+
+        // Check event type if specified
+        if (expectedEventType && data.webhook?.event_type !== expectedEventType) {
+          return {
+            success: false,
+            error: `Expected event type '${expectedEventType}', got '${data.webhook?.event_type}'`,
+            data
+          };
+        }
+
+        return { success: true, data: data.webhook };
+      } catch (err) {
+        return {
+          success: false,
+          error: err instanceof Error ? err.message : 'Failed to verify webhook'
+        };
+      }
+    };
+  }
+
+  return baseTest;
 }
 
 // ============ Helper Functions ============
@@ -668,10 +734,13 @@ function buildUserGroupBody(config: ConfiguredTest['config']): unknown {
 
 function buildPushConnectionBody(config: ConfiguredTest['config']): unknown {
   const timestamp = Date.now();
-  // Use the app's webhook endpoint or a test webhook service
-  // The webhook URL can be configured in the test config
+  // Generate a unique correlation ID for this push connection
+  // This will be used to verify webhooks are received
+  const correlationId = config.correlationId || `webhook-${timestamp}-${Math.random().toString(36).substring(2, 8)}`;
+
+  // Use the app's webhook endpoint with the correlation ID
   const webhookUrl = config.webhookUrl ||
-    `https://api-testing-dashboard.vercel.app/api/webhook/legito/test-${timestamp}`;
+    `https://api-testing-dashboard.vercel.app/api/webhook/legito/${correlationId}`;
 
   return {
     name: config.pushConnectionName || `Test Push Connection ${timestamp}`,
@@ -690,6 +759,8 @@ function buildPushConnectionBody(config: ConfiguredTest['config']): unknown {
     attachFilesUploaded: false,
     attachFilesGenerated: false,
     fileTypes: ['pdf', 'docx'],
+    // Store correlation ID in response context for VERIFY_WEBHOOK
+    _correlationId: correlationId,
   };
 }
 
