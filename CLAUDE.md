@@ -21,6 +21,14 @@
 - Lint: `npm run lint:fix`
 - Format: `npm run format`
 
+## Legito API Reference
+
+**CRITICAL**: Always use the project's API documentation as the source of truth:
+- `api-testing-dashboard/docs/LEGITO-API-REFERENCE.md` - Quick reference for endpoints and schemas
+- `api-testing-dashboard/docs/legito-swagger.json` - Full OpenAPI 3.0 spec
+
+**Do NOT guess API formats or endpoints.** Always verify against these docs first before implementing any API calls.
+
 ## Code Standards
 - Use TypeScript strict mode
 - Follow existing path aliases (@src/, @tests/, etc.)
