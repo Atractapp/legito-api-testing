@@ -73,17 +73,23 @@ export async function GET(request: NextRequest) {
  * Upload a new training pair
  */
 export async function POST(request: NextRequest) {
+  console.log('[Training POST] Starting upload...');
   try {
     const supabase = getSupabase();
+    console.log('[Training POST] Supabase client created');
     const userId = request.headers.get('x-user-id') || 'default-user';
+    console.log('[Training POST] User ID:', userId);
 
     // Parse form data
+    console.log('[Training POST] Parsing form data...');
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const originalFile = formData.get('originalFile') as File;
     const annotatedFile = formData.get('annotatedFile') as File;
+    console.log('[Training POST] Form data:', { name, originalFile: originalFile?.name, annotatedFile: annotatedFile?.name });
 
     if (!name || !originalFile || !annotatedFile) {
+      console.log('[Training POST] Missing required fields');
       return NextResponse.json(
         { error: 'Missing required fields: name, originalFile, annotatedFile' },
         { status: 400 }
@@ -115,29 +121,36 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse documents
+    console.log('[Training POST] Parsing documents...');
     const [originalParsed, annotatedParsed] = await Promise.all([
       parseDocx(originalFile),
       parseDocx(annotatedFile),
     ]);
+    console.log('[Training POST] Documents parsed:', { originalLength: originalParsed.text.length, annotatedLength: annotatedParsed.text.length });
 
     // Extract patterns
     const pairId = crypto.randomUUID();
+    console.log('[Training POST] Extracting patterns for pair:', pairId);
     const { patterns, summary } = extractPatterns(
       originalParsed.text,
       annotatedParsed.text,
       pairId
     );
+    console.log('[Training POST] Patterns extracted:', patterns.length);
 
     // Upload files to storage
     const originalPath = getTrainingDocPath(userId, pairId, 'original');
     const annotatedPath = getTrainingDocPath(userId, pairId, 'annotated');
+    console.log('[Training POST] Uploading files to storage...', { originalPath, annotatedPath });
 
     await Promise.all([
       storageService.upload(originalFile, originalPath),
       storageService.upload(annotatedFile, annotatedPath),
     ]);
+    console.log('[Training POST] Files uploaded to storage');
 
     // Save training pair to database
+    console.log('[Training POST] Saving to database...');
     const { data: trainingPair, error: insertError } = await supabase
       .from('annotator_training_pairs')
       .insert({
@@ -155,12 +168,13 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (insertError) {
-      console.error('Failed to save training pair:', insertError);
+      console.error('[Training POST] Failed to save training pair:', insertError);
       return NextResponse.json(
-        { error: 'Failed to save training pair' },
+        { error: `Failed to save training pair: ${insertError.message}` },
         { status: 500 }
       );
     }
+    console.log('[Training POST] Training pair saved:', trainingPair?.id);
 
     // Save extracted patterns
     if (patterns.length > 0) {
@@ -206,7 +220,8 @@ export async function POST(request: NextRequest) {
       summary,
     });
   } catch (error) {
-    console.error('Training pair POST error:', error);
+    console.error('[Training POST] Error:', error);
+    console.error('[Training POST] Stack:', error instanceof Error ? error.stack : 'No stack');
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Internal server error' },
       { status: 500 }
