@@ -624,12 +624,36 @@ function escapeXml(text: string): string {
  * The exported annotated document shouldn't preserve this highlighting
  */
 function stripHighlighting(xml: string): string {
+  let result = xml;
+
   // Remove <w:highlight .../> self-closing tags
-  let result = xml.replace(/<w:highlight[^>]*\/>/g, '');
-  // Remove <w:highlight ...>...</w:highlight> paired tags (rare but possible)
-  result = result.replace(/<w:highlight[^>]*>.*?<\/w:highlight>/g, '');
-  // Also remove shading that might cause background colors
+  result = result.replace(/<w:highlight[^>]*\/>/g, '');
+  // Remove <w:highlight ...>...</w:highlight> paired tags ([\s\S]*? for multiline)
+  result = result.replace(/<w:highlight[^>]*>[\s\S]*?<\/w:highlight>/g, '');
+
+  // Remove <w:shd .../> self-closing tags (shading/background color)
   result = result.replace(/<w:shd[^>]*\/>/g, '');
+  // Remove <w:shd ...>...</w:shd> paired tags ([\s\S]*? for multiline)
+  result = result.replace(/<w:shd[^>]*>[\s\S]*?<\/w:shd>/g, '');
+
+  // Remove shading within paragraph properties <w:pPr>...<w:shd.../>...</w:pPr>
+  // This handles paragraph-level background colors
+  result = result.replace(/(<w:pPr[^>]*>)([\s\S]*?)(<w:shd[^>]*\/?>[\s\S]*?)(<\/w:pPr>)/g,
+    (match, start, before, shd, end) => {
+      // Remove w:shd elements from within pPr but keep everything else
+      const cleanedContent = (before + shd).replace(/<w:shd[^>]*\/?>/g, '');
+      return start + cleanedContent + end;
+    }
+  );
+
+  // Also remove shading within run properties <w:rPr>...<w:shd.../>...</w:rPr>
+  result = result.replace(/(<w:rPr[^>]*>)([\s\S]*?)(<w:shd[^>]*\/?>[\s\S]*?)(<\/w:rPr>)/g,
+    (match, start, before, shd, end) => {
+      const cleanedContent = (before + shd).replace(/<w:shd[^>]*\/?>/g, '');
+      return start + cleanedContent + end;
+    }
+  );
+
   return result;
 }
 

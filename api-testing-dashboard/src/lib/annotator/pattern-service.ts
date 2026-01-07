@@ -187,6 +187,99 @@ function detectPlaceholderType(text: string, annotationType: AnnotationType): 'D
 }
 
 /**
+ * Rule-based type detection from content and surrounding context
+ * Returns detected type or null to let AI decide
+ *
+ * This function analyzes the text and its context to determine
+ * the most appropriate annotation type based on patterns and keywords.
+ */
+export function detectTypeFromContent(
+  text: string,
+  contextBefore: string,
+  contextAfter: string
+): AnnotationType | null {
+  const fullContext = `${contextBefore} ${text} ${contextAfter}`.toLowerCase();
+  const textLower = text.toLowerCase();
+
+  // === DATE DETECTION ===
+  // Date patterns: DD.MM.YYYY, XX.XX.XXXX, DD/MM/YYYY, etc.
+  if (/\d{1,2}[.\/\-]\d{1,2}[.\/\-]\d{2,4}/.test(text)) return 'Date';
+  if (/\b(xx\.xx\.xxxx|dd\.mm\.yyyy|dd\/mm\/yyyy|mm\/dd\/yyyy)\b/i.test(text)) return 'Date';
+
+  // Month names (full or abbreviated)
+  if (/\b(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|oct|nov|dec)\b/i.test(text)) return 'Date';
+
+  // Date context keywords with placeholder text
+  const dateContextKeywords = /\b(dated?|as of|valid\s+(from|until|to)|effective|expires?|due\s*date|executed on|entered into on|starting|ending|commence|termination\s*date)\b/;
+  if (dateContextKeywords.test(fullContext) && (text.includes('X') || text.includes('_') || /\d/.test(text) || text === '')) {
+    return 'Date';
+  }
+
+  // === MONEY DETECTION ===
+  // Currency symbols
+  if (/[$€£¥]|Kč|\bCZK\b|\bEUR\b|\bUSD\b|\bGBP\b/.test(text)) return 'Money';
+
+  // Currency codes near the text
+  if (/\b(usd|eur|gbp|czk|chf|jpy|cad|aud)\b/i.test(text)) return 'Money';
+
+  // Money context keywords with numeric/placeholder patterns
+  const moneyContextKeywords = /\b(amount|price|sum|total|fee|cost|salary|wage|payment|rent|deposit|invoice|budget|balance|premium|rate|charge|compensation|remuneration)\b/;
+  if (moneyContextKeywords.test(fullContext)) {
+    // Check if text looks like an amount placeholder or number
+    if (/\d+[.,]?\d*/.test(text) || /xxx|0[,.]00|\[amount\]|_{2,}/i.test(text)) {
+      return 'Money';
+    }
+  }
+
+  // === SELECT DETECTION ===
+  // Explicit alternatives with / (but not URLs or paths)
+  if (text.includes('/') && !text.includes('http') && !text.includes('://')) {
+    const parts = text.split('/').map(p => p.trim());
+    if (parts.length >= 2 && parts.length <= 5 && parts.every(p => p.length < 30 && p.length > 0)) {
+      return 'Select';
+    }
+  }
+
+  // Yes/No patterns
+  if (/\b(yes|no|true|false|approve|reject|accept|decline)\b/i.test(textLower) && text.includes('/')) {
+    return 'Select';
+  }
+
+  // Select context keywords
+  if (/\b(choose|select|pick|circle|check)\s*(one|option|appropriate|from)/i.test(fullContext)) {
+    return 'Select';
+  }
+
+  // === LINK DETECTION (References to earlier-defined entities) ===
+  // Reference patterns for parties/entities
+  const referencePatterns = /\b(the\s+)(buyer|seller|lessee|lessor|landlord|tenant|employer|employee|contractor|client|party|parties|creditor|debtor|lender|borrower|licensor|licensee|provider|recipient|vendor|customer)\b/i;
+  if (referencePatterns.test(text)) {
+    // Check it's NOT in a definition context (e.g., "Name, Address (hereinafter the Buyer)")
+    const definitionContext = /\b(name|address|signature|represented by|with registered)\b/i;
+    if (!definitionContext.test(fullContext)) {
+      return 'Link';
+    }
+  }
+
+  // Referential phrases
+  if (/\b(aforementioned|hereinafter|referred\s+to|as\s+defined|see\s+section|above-mentioned|as\s+stated\s+above)\b/i.test(fullContext)) {
+    return 'Link';
+  }
+
+  // === CALCULATION DETECTION ===
+  if (/\b(total|sum|calculated|computed|aggregate)\s+(of|from|as)\b/i.test(fullContext)) {
+    return 'Calculation';
+  }
+  // Mathematical operators with numbers
+  if (/[+\-*÷×]/.test(text) && /\d/.test(text)) {
+    return 'Calculation';
+  }
+
+  // === No confident detection - let AI decide ===
+  return null;
+}
+
+/**
  * Count patterns by type
  */
 function countByType(

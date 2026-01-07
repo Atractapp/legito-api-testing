@@ -13,6 +13,7 @@ import type {
   AnnotationType,
   Annotation,
 } from '@/types/annotator';
+import { detectTypeFromContent } from './pattern-service';
 
 // ----------------------------------------------------------------------------
 // Types
@@ -83,6 +84,59 @@ You MUST use these exact annotation formats:
 7. For dates → Date
 8. For prices, amounts → Money
 9. Be consistent with similar content across the document
+
+## Semantic Type Detection Rules
+
+Analyze the CONTEXT around text to choose the correct annotation type:
+
+### TextInput Detection
+Use TextInput when:
+- Text is a placeholder: "____", "XXX", "[fill in]", "............"
+- Single capitalized words likely to vary: City, Name, Company, Address, Title
+- Proper nouns that will change per document
+- Text in quotation marks used as example data
+- Any variable text content (not dates, not money, not choices)
+
+### Date Detection
+Use Date when text:
+- Matches date patterns: DD.MM.YYYY, XX.XX.XXXX, DD/MM/YYYY, Month DD, YYYY
+- Contains month names: January, February, etc.
+- Is near context words: "date", "dated", "on the", "as of", "valid until", "effective from", "expires", "due"
+- Represents temporal information that will be filled in
+
+### Money Detection
+Use Money when text:
+- Contains currency symbols: $, €, £, Kč
+- Contains currency codes: USD, EUR, GBP, CZK
+- Is near financial context: "amount", "price", "sum", "total", "fee", "cost", "salary", "payment", "rent", "deposit"
+- Shows number patterns with decimals likely representing amounts: XXX.XX, 0,00
+
+### Link Detection (References)
+Use Link when:
+- Text references an entity defined EARLIER in the document (e.g., "the Buyer" when "Buyer" was already defined with their full details)
+- Uses referential phrases: "the aforementioned", "as defined above", "hereinafter", "referred to as"
+- Repeats a defined term that should link back to its definition
+- Creates cross-references between document sections
+
+### Select Detection
+Use Select with options when:
+- Text shows alternatives: "yes/no", "male/female", "approve/reject"
+- Contains "or" between limited options: "Option A or Option B"
+- Is a clear multiple-choice field
+- Context suggests a dropdown: "choose", "select one", "pick"
+
+### Calculation Detection
+Use Calculation when:
+- Text represents a computed value (sum of other fields)
+- Contains mathematical references: "total of", "sum of", "multiplied by"
+- Should auto-calculate from other document values
+
+### Type Priority (when ambiguous)
+1. Date (if temporal context exists)
+2. Money (if financial context exists)
+3. Link (if referencing earlier content)
+4. Select (if clear options exist)
+5. TextInput (default for variable text)
 
 ## Output Format
 
@@ -177,7 +231,11 @@ class ClaudeService {
 
       // Parse JSON response
       const parsed = this.parseResponse(textContent.text);
-      return parsed;
+
+      // Apply rule-based refinement to validate/improve annotation types
+      const refined = refineAnnotations(parsed, document);
+
+      return refined;
     } catch (error) {
       console.error('Claude API error:', error);
       throw error;
@@ -380,6 +438,127 @@ function normalizeAnnotation(raw: Record<string, unknown>): ClaudeAnnotationResp
       end: Number(position?.end) || 0,
     },
     confidence: Number(raw.confidence) || 0.5,
+  };
+}
+
+/**
+ * Post-process AI annotations to validate/refine types using rule-based detection
+ * This catches cases where the AI might have used a generic type when a more specific one applies
+ */
+function refineAnnotationType(
+  annotation: ClaudeAnnotationResponse['annotations'][0],
+  documentText: string
+): ClaudeAnnotationResponse['annotations'][0] {
+  // Extract context around the annotation position
+  const contextStart = Math.max(0, annotation.position.start - 100);
+  const contextEnd = Math.min(documentText.length, annotation.position.end + 100);
+  const contextBefore = documentText.substring(contextStart, annotation.position.start);
+  const contextAfter = documentText.substring(annotation.position.end, contextEnd);
+
+  // Use rule-based detection to validate/refine type
+  const detectedType = detectTypeFromContent(
+    annotation.original,
+    contextBefore,
+    contextAfter
+  );
+
+  // Override if rule-based detection found a more specific type
+  // TextInput is generic - prefer more specific types when detected
+  if (detectedType && annotation.type === 'TextInput') {
+    return {
+      ...annotation,
+      type: detectedType,
+      annotated: updateAnnotationText(annotation.annotated, detectedType),
+    };
+  }
+
+  // Also upgrade from Text to more specific types
+  if (detectedType && annotation.type === 'Text') {
+    return {
+      ...annotation,
+      type: detectedType,
+      annotated: updateAnnotationText(annotation.annotated, detectedType),
+    };
+  }
+
+  // Validate Money annotations contain numeric/currency patterns
+  if (annotation.type === 'Money') {
+    const hasMoneyIndicators = /[$€£¥]|Kč|\d|xxx|amount/i.test(
+      annotation.original + contextBefore + contextAfter
+    );
+    if (!hasMoneyIndicators) {
+      // Downgrade to TextInput if no money indicators
+      return {
+        ...annotation,
+        type: 'TextInput',
+        annotated: `[TextInput: ${extractLabelFromAnnotation(annotation.annotated) || annotation.original}]`,
+      };
+    }
+  }
+
+  // Validate Date annotations have temporal indicators
+  if (annotation.type === 'Date') {
+    const hasDateIndicators = /\d|xx|date|month|year|day/i.test(
+      annotation.original + contextBefore + contextAfter
+    );
+    if (!hasDateIndicators) {
+      // Downgrade to TextInput if no date indicators
+      return {
+        ...annotation,
+        type: 'TextInput',
+        annotated: `[TextInput: ${extractLabelFromAnnotation(annotation.annotated) || annotation.original}]`,
+      };
+    }
+  }
+
+  return annotation;
+}
+
+/**
+ * Update annotation text to match a new type
+ */
+function updateAnnotationText(currentAnnotation: string, newType: AnnotationType): string {
+  // Extract label from current annotation if it has one
+  const labelMatch = currentAnnotation.match(/^\[(?:TextInput|Text):\s*([^\]]+)\]$/);
+  if (labelMatch) {
+    const label = labelMatch[1];
+    // For types that use labels
+    if (newType === 'TextInput') {
+      return `[TextInput: ${label}]`;
+    }
+    // Simple types don't have labels
+    return `[${newType}]`;
+  }
+
+  // If current annotation is just [Type], convert to new type
+  if (/^\[(?:TextInput|Text|Date|Money|Link|Calculation)\]$/.test(currentAnnotation)) {
+    return `[${newType}]`;
+  }
+
+  // Default: return new type annotation
+  return `[${newType}]`;
+}
+
+/**
+ * Extract label from an annotation like [TextInput: Some Label]
+ */
+function extractLabelFromAnnotation(annotation: string): string | null {
+  const match = annotation.match(/^\[[^:]+:\s*([^\]]+)\]$/);
+  return match ? match[1].trim() : null;
+}
+
+/**
+ * Apply refinement to all annotations in a response
+ */
+function refineAnnotations(
+  response: ClaudeAnnotationResponse,
+  documentText: string
+): ClaudeAnnotationResponse {
+  return {
+    ...response,
+    annotations: response.annotations.map((ann) =>
+      refineAnnotationType(ann, documentText)
+    ),
   };
 }
 
