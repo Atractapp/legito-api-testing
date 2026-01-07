@@ -322,15 +322,41 @@ export async function generateAnnotatedDocxPreservingFormat(
     throw new Error('Invalid DOCX: word/document.xml not found');
   }
 
+  // Sort replacements by original text length (longest first)
+  // This prevents shorter matches from consuming parts of longer matches
+  const sortedReplacements = [...replacements].sort(
+    (a, b) => b.original.length - a.original.length
+  );
+
+  // Filter out duplicates and already-annotated text
+  const uniqueReplacements = sortedReplacements.filter((r, index) => {
+    // Skip if original text is already an annotation (prevents nesting)
+    if (r.original.startsWith('[') && r.original.includes(']')) {
+      return false;
+    }
+    // Skip duplicates (same original text)
+    return sortedReplacements.findIndex(x => x.original === r.original) === index;
+  });
+
+  // Track which text segments have been replaced (by storing replaced strings)
+  const replacedTexts = new Set<string>();
+
   // Apply replacements to the XML content
   let modifiedXml = documentXml;
 
-  for (const { original, replacement } of replacements) {
-    // Escape special XML characters in the replacement
-    const escapedReplacement = escapeXml(replacement);
+  for (const { original, replacement } of uniqueReplacements) {
+    // Skip if we've already replaced this exact text
+    if (replacedTexts.has(original)) {
+      continue;
+    }
 
-    // Find and replace text - this handles text that might be split across runs
-    modifiedXml = replaceTextInDocxXml(modifiedXml, original, escapedReplacement);
+    const escapedReplacement = escapeXml(replacement);
+    const result = replaceTextInDocxXmlSafe(modifiedXml, original, escapedReplacement);
+
+    if (result !== modifiedXml) {
+      modifiedXml = result;
+      replacedTexts.add(original);
+    }
   }
 
   // Put the modified document.xml back
@@ -346,79 +372,149 @@ export async function generateAnnotatedDocxPreservingFormat(
 }
 
 /**
- * Replace text in DOCX XML while handling text split across multiple w:t elements
- *
- * In DOCX, a single word like "Hello" might be split like:
- * <w:r><w:t>Hel</w:t></w:r><w:r><w:t>lo</w:t></w:r>
- *
- * This function handles such cases by working with the full text content.
+ * Escape special regex characters in a string
  */
-function replaceTextInDocxXml(xml: string, searchText: string, replacement: string): string {
-  // First, try simple replacement (text not split across runs)
-  // Escape special regex characters in search text
-  const escapedSearch = searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function escapeRegexChars(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
-  // Try direct replacement within w:t elements
-  const simplePattern = new RegExp(
+/**
+ * Safe text replacement in DOCX XML
+ * Handles both simple replacements and text split across runs
+ * Does NOT return early - processes all occurrences
+ */
+function replaceTextInDocxXmlSafe(
+  xml: string,
+  searchText: string,
+  replacement: string
+): string {
+  const escapedSearch = escapeRegexChars(searchText);
+
+  // Strategy 1: Direct replacement within single <w:t> elements
+  const singleRunPattern = new RegExp(
     `(<w:t[^>]*>)([^<]*?)(${escapedSearch})([^<]*?)(</w:t>)`,
     'g'
   );
 
-  let modified = xml.replace(simplePattern, `$1$2${replacement}$4$5`);
+  let modified = xml.replace(singleRunPattern, `$1$2${replacement}$4$5`);
 
-  // If simple replacement worked, return
-  if (modified !== xml) {
-    return modified;
+  // Strategy 2: Handle text split across runs (if simple replacement didn't find anything)
+  if (modified === xml) {
+    modified = replaceAcrossRuns(xml, searchText, replacement);
   }
 
-  // Handle text split across multiple w:t elements
-  // This is more complex - we need to find paragraphs containing the text
-  // and reconstruct them
+  return modified;
+}
 
-  // Extract all text from w:t elements, find matches, and replace
+/**
+ * Handle text replacement when the search text is split across multiple <w:t> elements
+ * Preserves the XML structure better than the previous implementation
+ */
+function replaceAcrossRuns(
+  xml: string,
+  searchText: string,
+  replacement: string
+): string {
   const paragraphPattern = /<w:p[^>]*>[\s\S]*?<\/w:p>/g;
 
-  modified = xml.replace(paragraphPattern, (paragraph) => {
-    // Extract all text content from this paragraph
-    const textParts: Array<{ text: string; fullMatch: string }> = [];
+  return xml.replace(paragraphPattern, (paragraph) => {
+    // Extract all text elements with their positions
+    const textElements: Array<{
+      fullMatch: string;
+      text: string;
+      index: number;
+    }> = [];
+
     const textPattern = /<w:t[^>]*>([^<]*)<\/w:t>/g;
     let match;
 
     while ((match = textPattern.exec(paragraph)) !== null) {
-      textParts.push({ text: match[1], fullMatch: match[0] });
+      textElements.push({
+        fullMatch: match[0],
+        text: match[1],
+        index: match.index
+      });
     }
 
-    // Combine all text
-    const fullText = textParts.map(p => p.text).join('');
-
-    // Check if this paragraph contains our search text
-    if (!fullText.includes(searchText)) {
+    if (textElements.length === 0) {
       return paragraph;
     }
 
-    // Replace in the combined text
-    const newFullText = fullText.split(searchText).join(replacement);
+    // Combine all text
+    const combinedText = textElements.map(e => e.text).join('');
 
-    // Now we need to redistribute the new text back into the original structure
-    // For simplicity, we'll put all text into the first w:t element and clear others
-    let firstTextReplaced = false;
+    // Check if this paragraph contains our search text
+    const searchIndex = combinedText.indexOf(searchText);
+    if (searchIndex === -1) {
+      return paragraph;
+    }
+
+    // Calculate the new combined text after replacement
+    const newCombinedText =
+      combinedText.substring(0, searchIndex) +
+      replacement +
+      combinedText.substring(searchIndex + searchText.length);
+
+    // Redistribute text back into the original elements
+    // Key improvement: we preserve the element structure and just update text content
     let result = paragraph;
+    let charOffset = 0;
+    let newTextOffset = 0;
 
-    // Replace text content in w:t elements
-    result = paragraph.replace(textPattern, (fullMatch, textContent) => {
-      if (!firstTextReplaced) {
-        firstTextReplaced = true;
-        // Put all the new text in the first w:t element
-        return fullMatch.replace(textContent, newFullText);
+    for (let i = 0; i < textElements.length; i++) {
+      const elem = textElements[i];
+      const elemStart = charOffset;
+      const elemEnd = charOffset + elem.text.length;
+      charOffset = elemEnd;
+
+      // Determine what portion of the new text should go in this element
+      let newElemText = '';
+
+      if (newTextOffset < newCombinedText.length) {
+        // Calculate how much text this element should now hold
+        // We try to maintain proportional distribution
+        if (i === textElements.length - 1) {
+          // Last element gets all remaining text
+          newElemText = newCombinedText.substring(newTextOffset);
+        } else {
+          // Non-last elements get their proportional share
+          // But we need to be careful around the replacement boundary
+          const originalShare = elem.text.length;
+          const lengthDiff = replacement.length - searchText.length;
+
+          // Check if this element contains part of the search text
+          const searchStart = combinedText.indexOf(searchText);
+          const searchEnd = searchStart + searchText.length;
+
+          if (elemEnd <= searchStart || elemStart >= searchEnd) {
+            // Element is completely outside the search range - keep same length
+            newElemText = newCombinedText.substring(newTextOffset, newTextOffset + originalShare);
+            newTextOffset += originalShare;
+          } else if (elemStart <= searchStart && elemEnd >= searchEnd) {
+            // Element completely contains the search text
+            newElemText = newCombinedText.substring(newTextOffset, newTextOffset + originalShare + lengthDiff);
+            newTextOffset += originalShare + lengthDiff;
+          } else {
+            // Element partially overlaps - distribute proportionally
+            const overlapStart = Math.max(elemStart, searchStart);
+            const overlapEnd = Math.min(elemEnd, searchEnd);
+            const overlapLength = overlapEnd - overlapStart;
+            const adjustedLength = originalShare + (lengthDiff * overlapLength / searchText.length);
+            newElemText = newCombinedText.substring(newTextOffset, newTextOffset + Math.round(adjustedLength));
+            newTextOffset += Math.round(adjustedLength);
+          }
+        }
       }
-      // Clear subsequent w:t elements
-      return fullMatch.replace(textContent, '');
-    });
+
+      // Replace in the paragraph
+      // Be careful to escape XML entities
+      const escapedNewText = escapeXml(newElemText);
+      const newElem = elem.fullMatch.replace(`>${elem.text}<`, `>${escapedNewText}<`);
+      result = result.replace(elem.fullMatch, newElem);
+    }
 
     return result;
   });
-
-  return modified;
 }
 
 /**
