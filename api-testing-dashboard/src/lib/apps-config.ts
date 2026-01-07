@@ -1,6 +1,6 @@
-import { Activity, Tags, Plug, LucideIcon } from 'lucide-react';
+import { Activity, Tags, Plug, Sparkles, LucideIcon } from 'lucide-react';
 
-export type AppId = 'api-tester' | 'tagger' | 'mcp';
+export type AppId = 'api-tester' | 'tagger' | 'mcp' | 'annotator';
 
 export interface AppDefinition {
   id: AppId;
@@ -32,6 +32,13 @@ export const APPS: Record<AppId, AppDefinition> = {
     description: 'MCP interface for AI assistants',
     basePath: '/mcp',
   },
+  'annotator': {
+    id: 'annotator',
+    name: 'Smart Annotator',
+    icon: Sparkles,
+    description: 'AI-powered document annotation learning',
+    basePath: '/annotator',
+  },
 };
 
 export const APP_LIST = Object.values(APPS);
@@ -42,6 +49,9 @@ export function getAppFromPath(pathname: string): AppId {
   }
   if (pathname.startsWith('/mcp')) {
     return 'mcp';
+  }
+  if (pathname.startsWith('/annotator')) {
+    return 'annotator';
   }
   return 'api-tester';
 }

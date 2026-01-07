@@ -1,0 +1,215 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import {
+  parseDocx,
+  extractPatterns,
+  storageService,
+  getTrainingDocPath,
+} from '@/lib/annotator';
+
+// Initialize Supabase client
+function getSupabase() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Supabase environment variables not configured');
+  }
+
+  return createClient(supabaseUrl, supabaseKey);
+}
+
+/**
+ * GET /api/annotator/training
+ * List all training pairs for the current user
+ */
+export async function GET(request: NextRequest) {
+  try {
+    const supabase = getSupabase();
+
+    // Get user from auth header or session (simplified for now)
+    const userId = request.headers.get('x-user-id') || 'default-user';
+
+    const { data: trainingPairs, error } = await supabase
+      .from('annotator_training_pairs')
+      .select('id, name, patterns_extracted, is_user_corrected, created_at')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Failed to fetch training pairs:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch training pairs' },
+        { status: 500 }
+      );
+    }
+
+    // Transform for frontend
+    const summaries = (trainingPairs || []).map((pair) => ({
+      id: pair.id,
+      name: pair.name,
+      patternsCount: Array.isArray(pair.patterns_extracted)
+        ? pair.patterns_extracted.length
+        : 0,
+      isUserCorrected: pair.is_user_corrected,
+      createdAt: pair.created_at,
+    }));
+
+    return NextResponse.json({
+      trainingPairs: summaries,
+      total: summaries.length,
+    });
+  } catch (error) {
+    console.error('Training pairs GET error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * POST /api/annotator/training
+ * Upload a new training pair
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const supabase = getSupabase();
+    const userId = request.headers.get('x-user-id') || 'default-user';
+
+    // Parse form data
+    const formData = await request.formData();
+    const name = formData.get('name') as string;
+    const originalFile = formData.get('originalFile') as File;
+    const annotatedFile = formData.get('annotatedFile') as File;
+
+    if (!name || !originalFile || !annotatedFile) {
+      return NextResponse.json(
+        { error: 'Missing required fields: name, originalFile, annotatedFile' },
+        { status: 400 }
+      );
+    }
+
+    // Validate file types
+    const validTypes = [
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/msword',
+    ];
+    if (
+      !validTypes.includes(originalFile.type) &&
+      !originalFile.name.endsWith('.docx')
+    ) {
+      return NextResponse.json(
+        { error: 'Original file must be a Word document (.docx)' },
+        { status: 400 }
+      );
+    }
+    if (
+      !validTypes.includes(annotatedFile.type) &&
+      !annotatedFile.name.endsWith('.docx')
+    ) {
+      return NextResponse.json(
+        { error: 'Annotated file must be a Word document (.docx)' },
+        { status: 400 }
+      );
+    }
+
+    // Parse documents
+    const [originalParsed, annotatedParsed] = await Promise.all([
+      parseDocx(originalFile),
+      parseDocx(annotatedFile),
+    ]);
+
+    // Extract patterns
+    const pairId = crypto.randomUUID();
+    const { patterns, summary } = extractPatterns(
+      originalParsed.text,
+      annotatedParsed.text,
+      pairId
+    );
+
+    // Upload files to storage
+    const originalPath = getTrainingDocPath(userId, pairId, 'original');
+    const annotatedPath = getTrainingDocPath(userId, pairId, 'annotated');
+
+    await Promise.all([
+      storageService.upload(originalFile, originalPath),
+      storageService.upload(annotatedFile, annotatedPath),
+    ]);
+
+    // Save training pair to database
+    const { data: trainingPair, error: insertError } = await supabase
+      .from('annotator_training_pairs')
+      .insert({
+        id: pairId,
+        user_id: userId,
+        name,
+        original_text: originalParsed.text,
+        annotated_text: annotatedParsed.text,
+        original_file_path: originalPath,
+        annotated_file_path: annotatedPath,
+        patterns_extracted: patterns,
+        is_user_corrected: false,
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error('Failed to save training pair:', insertError);
+      return NextResponse.json(
+        { error: 'Failed to save training pair' },
+        { status: 500 }
+      );
+    }
+
+    // Save extracted patterns
+    if (patterns.length > 0) {
+      const patternsToInsert = patterns.map((pattern) => ({
+        user_id: userId,
+        original_text: pattern.originalText,
+        annotated_text: pattern.annotatedText,
+        annotation_type: pattern.annotationType,
+        context_before: pattern.contextBefore,
+        context_after: pattern.contextAfter,
+        confidence: pattern.confidence,
+        usage_count: pattern.usageCount,
+        success_rate: pattern.successRate,
+        training_pair_id: pairId,
+      }));
+
+      const { error: patternsError } = await supabase
+        .from('annotator_patterns')
+        .insert(patternsToInsert);
+
+      if (patternsError) {
+        console.error('Failed to save patterns:', patternsError);
+        // Continue anyway - training pair is saved
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      trainingPair: {
+        id: trainingPair.id,
+        userId: trainingPair.user_id,
+        name: trainingPair.name,
+        originalText: trainingPair.original_text,
+        annotatedText: trainingPair.annotated_text,
+        originalFilePath: trainingPair.original_file_path,
+        annotatedFilePath: trainingPair.annotated_file_path,
+        patternsExtracted: trainingPair.patterns_extracted,
+        isUserCorrected: trainingPair.is_user_corrected,
+        sourceSessionId: trainingPair.source_session_id,
+        createdAt: trainingPair.created_at,
+      },
+      patternsExtracted: patterns.length,
+      summary,
+    });
+  } catch (error) {
+    console.error('Training pair POST error:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}

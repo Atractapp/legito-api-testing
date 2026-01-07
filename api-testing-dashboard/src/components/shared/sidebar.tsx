@@ -18,6 +18,9 @@ import {
   Plug,
   Wrench,
   MessageSquare,
+  Sparkles,
+  GraduationCap,
+  Wand2,
   LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -59,6 +62,13 @@ const mcpNavigation: NavItem[] = [
   { name: 'Tools', href: '/mcp/tools', icon: Wrench },
 ];
 
+const annotatorNavigation: NavItem[] = [
+  { name: 'Dashboard', href: '/annotator', icon: Sparkles },
+  { name: 'Train', href: '/annotator/train', icon: GraduationCap },
+  { name: 'Annotate', href: '/annotator/annotate', icon: Wand2 },
+  { name: 'Patterns', href: '/annotator/patterns', icon: Layers },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
@@ -69,7 +79,9 @@ export function Sidebar() {
       ? taggerNavigation
       : currentApp === 'mcp'
         ? mcpNavigation
-        : apiTesterNavigation;
+        : currentApp === 'annotator'
+          ? annotatorNavigation
+          : apiTesterNavigation;
 
   const isActiveLink = (href: string) => {
     if (currentApp === 'tagger') {
@@ -81,6 +93,12 @@ export function Sidebar() {
     if (currentApp === 'mcp') {
       if (href === '/mcp') {
         return pathname === '/mcp';
+      }
+      return pathname.startsWith(href);
+    }
+    if (currentApp === 'annotator') {
+      if (href === '/annotator') {
+        return pathname === '/annotator';
       }
       return pathname.startsWith(href);
     }
