@@ -53,24 +53,23 @@ export interface ExtractedAnnotation {
  * Parse DOCX file to extract text and paragraph structure
  */
 export async function parseDocx(file: File | Blob | Buffer): Promise<ParseResult> {
-  let arrayBuffer: ArrayBuffer;
+  let buffer: Buffer;
 
   if (file instanceof File || file instanceof Blob) {
-    arrayBuffer = await file.arrayBuffer();
+    const arrayBuffer = await file.arrayBuffer();
+    buffer = Buffer.from(arrayBuffer);
   } else {
-    // Buffer (Node.js) - create a fresh ArrayBuffer copy
-    const uint8 = new Uint8Array(file);
-    arrayBuffer = uint8.buffer.slice(uint8.byteOffset, uint8.byteOffset + uint8.byteLength) as ArrayBuffer;
+    buffer = file;
   }
 
-  // Extract text using mammoth
+  // Extract text using mammoth (use buffer for Node.js compatibility)
   const textResult = await mammoth.extractRawText({
-    arrayBuffer,
+    buffer,
   });
 
   // Extract HTML for reference (includes some formatting info)
   const htmlResult = await mammoth.convertToHtml({
-    arrayBuffer,
+    buffer,
   });
 
   // Parse text into paragraphs
