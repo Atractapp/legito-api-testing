@@ -292,6 +292,23 @@ export interface ListPatternsResponse {
 }
 
 // ----------------------------------------------------------------------------
+// Pattern Review Types
+// ----------------------------------------------------------------------------
+
+export interface PatternSuggestion {
+  id: string;
+  originalText: string;
+  annotatedText: string;
+  annotationType: AnnotationType;
+  contextBefore: string | null;
+  contextAfter: string | null;
+  confidence: number;
+  isAccepted: boolean;
+  isEdited: boolean;
+  editedAnnotatedText?: string;
+}
+
+// ----------------------------------------------------------------------------
 // Store Types
 // ----------------------------------------------------------------------------
 
@@ -306,6 +323,12 @@ export interface AnnotatorState {
   patternsLoading: boolean;
   patternsError: string | null;
   patternStats: PatternStats | null;
+
+  // Pending patterns (for review before saving)
+  pendingPatterns: PatternSuggestion[] | null;
+  pendingPatternsSource: 'training' | 'annotate' | null;
+  pendingTrainingPairId: string | null;
+  pendingSessionId: string | null;
 
   // Current session
   currentSession: AnnotationSession | null;
@@ -334,6 +357,18 @@ export interface AnnotatorActions {
   loadPatterns: () => Promise<void>;
   deletePattern: (id: string) => Promise<void>;
   selectPattern: (id: string | null) => void;
+
+  // Pending pattern actions (for review before saving)
+  setPendingPatterns: (
+    patterns: PatternSuggestion[],
+    source: 'training' | 'annotate',
+    sourceId: string
+  ) => void;
+  acceptPendingPattern: (id: string) => void;
+  rejectPendingPattern: (id: string) => void;
+  updatePendingPattern: (id: string, updates: Partial<PatternSuggestion>) => void;
+  confirmPendingPatterns: () => Promise<{ saved: number; updated: number }>;
+  clearPendingPatterns: () => void;
 
   // Session actions
   startAnnotationSession: (file: File) => Promise<AnnotationSession>;

@@ -3,11 +3,9 @@ import { createClient } from '@supabase/supabase-js';
 import {
   parseDocx,
   extractPatterns,
-  deduplicatePatterns,
   storageService,
   getTrainingDocPath,
 } from '@/lib/annotator';
-import type { Pattern, AnnotationType } from '@/types/annotator';
 
 // Initialize Supabase client
 function getSupabase() {
@@ -178,76 +176,22 @@ export async function POST(request: NextRequest) {
     }
     console.log('[Training POST] Training pair saved:', trainingPair?.id);
 
-    // Save extracted patterns with deduplication
-    if (patterns.length > 0) {
-      console.log('[Training POST] Deduplicating patterns...');
+    // DON'T auto-save patterns - return them for user review instead
+    // User will use /api/annotator/patterns/confirm to save approved patterns
+    console.log('[Training POST] Returning patterns for user review (NOT auto-saving)');
 
-      // Fetch existing patterns for this user
-      const { data: existingPatternsData } = await supabase
-        .from('annotator_patterns')
-        .select('*')
-        .eq('user_id', userId);
-
-      // Convert to Pattern type for deduplication
-      const existingPatterns: Pattern[] = (existingPatternsData || []).map((p) => ({
-        id: p.id,
-        userId: p.user_id,
-        originalText: p.original_text,
-        annotatedText: p.annotated_text,
-        annotationType: p.annotation_type as AnnotationType,
-        contextBefore: p.context_before,
-        contextAfter: p.context_after,
-        confidence: p.confidence,
-        usageCount: p.usage_count,
-        successRate: p.success_rate,
-        trainingPairId: p.training_pair_id,
-        createdAt: new Date(p.created_at),
-      }));
-
-      // Deduplicate - get patterns to add and patterns to update
-      const { toAdd, toUpdate } = deduplicatePatterns(existingPatterns, patterns);
-      console.log('[Training POST] Deduplication result:', {
-        newPatterns: toAdd.length,
-        existingToUpdate: toUpdate.length,
-        skippedDuplicates: patterns.length - toAdd.length,
-      });
-
-      // Insert only new patterns
-      if (toAdd.length > 0) {
-        const patternsToInsert = toAdd.map((pattern) => ({
-          user_id: userId,
-          original_text: pattern.originalText,
-          annotated_text: pattern.annotatedText,
-          annotation_type: pattern.annotationType,
-          context_before: pattern.contextBefore,
-          context_after: pattern.contextAfter,
-          confidence: pattern.confidence,
-          usage_count: pattern.usageCount,
-          success_rate: pattern.successRate,
-          training_pair_id: pairId,
-        }));
-
-        const { error: patternsError } = await supabase
-          .from('annotator_patterns')
-          .insert(patternsToInsert);
-
-        if (patternsError) {
-          console.error('Failed to save patterns:', patternsError);
-          // Continue anyway - training pair is saved
-        }
-      }
-
-      // Update existing similar patterns (increase usage count and confidence)
-      for (const update of toUpdate) {
-        await supabase
-          .from('annotator_patterns')
-          .update({
-            usage_count: update.updates.usageCount,
-            confidence: update.updates.confidence,
-          })
-          .eq('id', update.id);
-      }
-    }
+    // Convert patterns to PatternSuggestion format for frontend
+    const patternSuggestions = patterns.map((p, index) => ({
+      id: `pending_${pairId}_${index}`,
+      originalText: p.originalText,
+      annotatedText: p.annotatedText,
+      annotationType: p.annotationType,
+      contextBefore: p.contextBefore,
+      contextAfter: p.contextAfter,
+      confidence: p.confidence,
+      isAccepted: true, // Default to accepted
+      isEdited: false,
+    }));
 
     return NextResponse.json({
       success: true,
@@ -264,6 +208,8 @@ export async function POST(request: NextRequest) {
         sourceSessionId: trainingPair.source_session_id,
         createdAt: trainingPair.created_at,
       },
+      // New: Return pattern suggestions for user review
+      extractedPatterns: patternSuggestions,
       patternsExtracted: patterns.length,
       summary,
     });

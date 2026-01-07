@@ -22,9 +22,20 @@ import {
   Edit2,
   Save,
   FileText,
+  SkipForward,
 } from 'lucide-react';
-import { useAnnotatorStore, useCurrentSession } from '@/store/annotator-store';
-import { ANNOTATION_TYPE_LABELS, CONFIDENCE_THRESHOLDS, type AnnotationType } from '@/types/annotator';
+import {
+  useAnnotatorStore,
+  useCurrentSession,
+  usePendingPatterns,
+} from '@/store/annotator-store';
+import { PatternSuggestionCard } from '@/components/annotator/pattern-suggestion-card';
+import {
+  ANNOTATION_TYPE_LABELS,
+  CONFIDENCE_THRESHOLDS,
+  type AnnotationType,
+  type PatternSuggestion,
+} from '@/types/annotator';
 
 function getConfidenceColor(confidence: number): string {
   if (confidence >= CONFIDENCE_THRESHOLDS.high) return 'text-green-600 bg-green-100';
@@ -43,6 +54,8 @@ export default function AnnotatePage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
   const [saveAsPatterns, setSaveAsPatterns] = useState(true); // Default to saving patterns
+  const [isSavingPatterns, setIsSavingPatterns] = useState(false);
+  const [patternSaveSuccess, setPatternSaveSuccess] = useState<string | null>(null);
 
   const {
     startAnnotationSession,
@@ -51,9 +64,16 @@ export default function AnnotatePage() {
     rejectSuggestion,
     generateAnnotatedDocument,
     clearCurrentSession,
+    setPendingPatterns,
+    acceptPendingPattern,
+    rejectPendingPattern,
+    updatePendingPattern,
+    confirmPendingPatterns,
+    clearPendingPatterns,
   } = useAnnotatorStore();
 
   const { session, suggestions, loading, error } = useCurrentSession();
+  const { pendingPatterns, source: pendingSource } = usePendingPatterns();
 
   // File dropzone
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
@@ -78,11 +98,67 @@ export default function AnnotatePage() {
 
   const handleGenerate = async () => {
     try {
-      const url = await generateAnnotatedDocument(saveAsPatterns);
+      // Generate document WITHOUT auto-saving patterns
+      // We'll show pattern review UI if saveAsPatterns is checked
+      const url = await generateAnnotatedDocument(false);
       setDownloadUrl(url);
+      setPatternSaveSuccess(null);
+
+      // If saveAsPatterns is checked, set up pending patterns for review
+      if (saveAsPatterns && session) {
+        const acceptedSuggestions = suggestions.filter((s) => s.isAccepted);
+        if (acceptedSuggestions.length > 0) {
+          // Convert to PatternSuggestion format
+          const patternSuggestions: PatternSuggestion[] = acceptedSuggestions.map((s, index) => {
+            // Extract context from session input text
+            const inputText = session.inputText || '';
+            const contextLength = 100;
+            const contextBefore = inputText
+              .substring(Math.max(0, s.position.start - contextLength), s.position.start)
+              .trim();
+            const contextAfter = inputText
+              .substring(s.position.end, Math.min(inputText.length, s.position.end + contextLength))
+              .trim();
+
+            return {
+              id: `pending_annotate_${session.id}_${index}`,
+              originalText: s.originalText,
+              annotatedText: s.isEdited && s.editedText ? s.editedText : s.annotatedText,
+              annotationType: s.type,
+              contextBefore,
+              contextAfter,
+              confidence: s.confidence,
+              isAccepted: true,
+              isEdited: false,
+            };
+          });
+
+          setPendingPatterns(patternSuggestions, 'annotate', session.id);
+        }
+      }
     } catch (err) {
       console.error('Failed to generate document:', err);
     }
+  };
+
+  const handleSavePatterns = async () => {
+    if (!pendingPatterns || pendingPatterns.length === 0) return;
+
+    setIsSavingPatterns(true);
+    try {
+      const result = await confirmPendingPatterns();
+      setPatternSaveSuccess(
+        `Saved ${result.saved} new patterns${result.updated > 0 ? ` and updated ${result.updated} existing` : ''}.`
+      );
+    } catch (err) {
+      console.error('Failed to save patterns:', err);
+    } finally {
+      setIsSavingPatterns(false);
+    }
+  };
+
+  const handleSkipPatterns = () => {
+    clearPendingPatterns();
   };
 
   const handleEdit = (id: string, currentValue: string) => {
@@ -378,6 +454,78 @@ export default function AnnotatePage() {
                   </p>
                 </CardContent>
               </Card>
+
+              {/* Pattern Review Section - shown after generating if saveAsPatterns was checked */}
+              {downloadUrl && pendingPatterns && pendingPatterns.length > 0 && pendingSource === 'annotate' && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between">
+                      <span>Save as Patterns?</span>
+                      <Badge variant="secondary">
+                        {pendingPatterns.filter((p) => p.isAccepted).length} / {pendingPatterns.length}{' '}
+                        selected
+                      </Badge>
+                    </CardTitle>
+                    <CardDescription>
+                      Review which annotations to save as patterns for future documents.
+                      Context is shown around each pattern.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {patternSaveSuccess ? (
+                      <Alert className="border-green-500 bg-green-50 dark:bg-green-950">
+                        <Check className="h-4 w-4 text-green-500" />
+                        <AlertDescription className="text-green-700 dark:text-green-300">
+                          {patternSaveSuccess}
+                        </AlertDescription>
+                      </Alert>
+                    ) : (
+                      <>
+                        <ScrollArea className="h-[300px] pr-4">
+                          <div className="space-y-3">
+                            {pendingPatterns.map((pattern) => (
+                              <PatternSuggestionCard
+                                key={pattern.id}
+                                pattern={pattern}
+                                onAccept={() => acceptPendingPattern(pattern.id)}
+                                onReject={() => rejectPendingPattern(pattern.id)}
+                                onUpdate={(updates) => updatePendingPattern(pattern.id, updates)}
+                              />
+                            ))}
+                          </div>
+                        </ScrollArea>
+
+                        <div className="mt-4 flex gap-2">
+                          <Button
+                            onClick={handleSavePatterns}
+                            disabled={
+                              isSavingPatterns ||
+                              pendingPatterns.filter((p) => p.isAccepted).length === 0
+                            }
+                            className="flex-1"
+                          >
+                            {isSavingPatterns ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Saving...
+                              </>
+                            ) : (
+                              <>
+                                <Save className="mr-2 h-4 w-4" />
+                                Save {pendingPatterns.filter((p) => p.isAccepted).length} Patterns
+                              </>
+                            )}
+                          </Button>
+                          <Button variant="outline" onClick={handleSkipPatterns}>
+                            <SkipForward className="mr-2 h-4 w-4" />
+                            Skip
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
             </>
           )}
         </div>

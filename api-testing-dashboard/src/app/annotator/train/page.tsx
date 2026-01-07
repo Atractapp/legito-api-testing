@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Table,
   TableBody,
@@ -26,9 +27,16 @@ import {
   Trash2,
   GraduationCap,
   AlertCircle,
+  Save,
 } from 'lucide-react';
-import { useAnnotatorStore, useTrainingPairs } from '@/store/annotator-store';
+import {
+  useAnnotatorStore,
+  useTrainingPairs,
+  usePendingPatterns,
+} from '@/store/annotator-store';
+import { PatternSuggestionCard } from '@/components/annotator/pattern-suggestion-card';
 import { format } from 'date-fns';
+import type { PatternSuggestion } from '@/types/annotator';
 
 export default function TrainPage() {
   const [name, setName] = useState('');
@@ -37,9 +45,21 @@ export default function TrainPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<string | null>(null);
+  const [isSavingPatterns, setIsSavingPatterns] = useState(false);
 
-  const { uploadTrainingPair, deleteTrainingPair, loadTrainingPairs } = useAnnotatorStore();
+  const {
+    uploadTrainingPair,
+    deleteTrainingPair,
+    loadTrainingPairs,
+    setPendingPatterns,
+    acceptPendingPattern,
+    rejectPendingPattern,
+    updatePendingPattern,
+    confirmPendingPatterns,
+    clearPendingPatterns,
+  } = useAnnotatorStore();
   const { trainingPairs, loading, error } = useTrainingPairs();
+  const { pendingPatterns, source: pendingSource, trainingPairId } = usePendingPatterns();
 
   useEffect(() => {
     loadTrainingPairs();
@@ -91,13 +111,39 @@ export default function TrainPage() {
     setUploadSuccess(null);
 
     try {
-      const result = await uploadTrainingPair({
-        name,
-        originalFile,
-        annotatedFile,
+      // Upload returns extractedPatterns for review
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('originalFile', originalFile);
+      formData.append('annotatedFile', annotatedFile);
+
+      const response = await fetch('/api/annotator/training', {
+        method: 'POST',
+        body: formData,
       });
 
-      setUploadSuccess(`Successfully uploaded! Extracted ${result.patternsExtracted?.length || 0} patterns.`);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Upload failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Set pending patterns for review
+      if (data.extractedPatterns && data.extractedPatterns.length > 0) {
+        setPendingPatterns(
+          data.extractedPatterns as PatternSuggestion[],
+          'training',
+          data.trainingPair.id
+        );
+        setUploadSuccess(
+          `Training pair uploaded! Review ${data.extractedPatterns.length} extracted patterns below.`
+        );
+      } else {
+        setUploadSuccess('Training pair uploaded, but no patterns were extracted.');
+        // Reload training pairs since no review step
+        loadTrainingPairs();
+      }
 
       // Reset form
       setName('');
@@ -108,6 +154,31 @@ export default function TrainPage() {
     } finally {
       setIsUploading(false);
     }
+  };
+
+  const handleSavePatterns = async () => {
+    if (!pendingPatterns || pendingPatterns.length === 0) return;
+
+    setIsSavingPatterns(true);
+    try {
+      const result = await confirmPendingPatterns();
+      setUploadSuccess(
+        `Saved ${result.saved} new patterns${result.updated > 0 ? ` and updated ${result.updated} existing` : ''}.`
+      );
+      // Reload training pairs
+      loadTrainingPairs();
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Failed to save patterns');
+    } finally {
+      setIsSavingPatterns(false);
+    }
+  };
+
+  const handleDiscardPatterns = () => {
+    clearPendingPatterns();
+    setUploadSuccess(null);
+    // Reload training pairs
+    loadTrainingPairs();
   };
 
   const handleDelete = async (id: string) => {
@@ -274,6 +345,66 @@ export default function TrainPage() {
           </Button>
         </CardContent>
       </Card>
+
+      {/* Pattern Review Section - shown when patterns extracted from training */}
+      {pendingPatterns && pendingPatterns.length > 0 && pendingSource === 'training' && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>Review Extracted Patterns</span>
+              <Badge variant="secondary">
+                {pendingPatterns.filter((p) => p.isAccepted).length} / {pendingPatterns.length}{' '}
+                accepted
+              </Badge>
+            </CardTitle>
+            <CardDescription>
+              Review patterns extracted from the training documents. Accept or reject each pattern,
+              and edit the annotation text if needed. Context is shown around each pattern.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ScrollArea className="h-[400px] pr-4">
+              <div className="space-y-3">
+                {pendingPatterns.map((pattern) => (
+                  <PatternSuggestionCard
+                    key={pattern.id}
+                    pattern={pattern}
+                    onAccept={() => acceptPendingPattern(pattern.id)}
+                    onReject={() => rejectPendingPattern(pattern.id)}
+                    onUpdate={(updates) => updatePendingPattern(pattern.id, updates)}
+                  />
+                ))}
+              </div>
+            </ScrollArea>
+
+            <div className="mt-4 flex gap-2">
+              <Button
+                onClick={handleSavePatterns}
+                disabled={
+                  isSavingPatterns ||
+                  pendingPatterns.filter((p) => p.isAccepted).length === 0
+                }
+                className="flex-1"
+              >
+                {isSavingPatterns ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" />
+                    Save {pendingPatterns.filter((p) => p.isAccepted).length} Patterns
+                  </>
+                )}
+              </Button>
+              <Button variant="outline" onClick={handleDiscardPatterns}>
+                Discard All
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Separator />
 

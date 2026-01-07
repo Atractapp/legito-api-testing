@@ -12,6 +12,7 @@ import type {
   AnnotationSession,
   SessionSummary,
   AnnotationSuggestion,
+  PatternSuggestion,
 } from '@/types/annotator';
 
 // ----------------------------------------------------------------------------
@@ -29,6 +30,12 @@ const initialState: AnnotatorState = {
   patternsLoading: false,
   patternsError: null,
   patternStats: null,
+
+  // Pending patterns (for review before saving)
+  pendingPatterns: null,
+  pendingPatternsSource: null,
+  pendingTrainingPairId: null,
+  pendingSessionId: null,
 
   // Current session
   currentSession: null,
@@ -220,6 +227,125 @@ export const useAnnotatorStore = create<AnnotatorStore>()(
 
       selectPattern: (id: string | null) => {
         set({ selectedPatternId: id });
+      },
+
+      // ========================================================================
+      // Pending Pattern Actions (for review before saving)
+      // ========================================================================
+
+      setPendingPatterns: (
+        patterns: PatternSuggestion[],
+        source: 'training' | 'annotate',
+        sourceId: string
+      ) => {
+        set({
+          pendingPatterns: patterns,
+          pendingPatternsSource: source,
+          pendingTrainingPairId: source === 'training' ? sourceId : null,
+          pendingSessionId: source === 'annotate' ? sourceId : null,
+        });
+      },
+
+      acceptPendingPattern: (id: string) => {
+        set((state) => ({
+          pendingPatterns: state.pendingPatterns?.map((p) =>
+            p.id === id ? { ...p, isAccepted: true } : p
+          ) || null,
+        }));
+      },
+
+      rejectPendingPattern: (id: string) => {
+        set((state) => ({
+          pendingPatterns: state.pendingPatterns?.map((p) =>
+            p.id === id ? { ...p, isAccepted: false } : p
+          ) || null,
+        }));
+      },
+
+      updatePendingPattern: (id: string, updates: Partial<PatternSuggestion>) => {
+        set((state) => ({
+          pendingPatterns: state.pendingPatterns?.map((p) =>
+            p.id === id ? { ...p, ...updates, isEdited: true } : p
+          ) || null,
+        }));
+      },
+
+      confirmPendingPatterns: async () => {
+        const { pendingPatterns, pendingPatternsSource, pendingTrainingPairId, pendingSessionId } = get();
+
+        if (!pendingPatterns || pendingPatterns.length === 0) {
+          return { saved: 0, updated: 0 };
+        }
+
+        // Filter to only accepted patterns
+        const acceptedPatterns = pendingPatterns
+          .filter((p) => p.isAccepted)
+          .map((p) => ({
+            originalText: p.originalText,
+            annotatedText: p.isEdited && p.editedAnnotatedText ? p.editedAnnotatedText : p.annotatedText,
+            annotationType: p.annotationType,
+            contextBefore: p.contextBefore,
+            contextAfter: p.contextAfter,
+            confidence: p.confidence,
+          }));
+
+        if (acceptedPatterns.length === 0) {
+          // Clear pending and return
+          set({
+            pendingPatterns: null,
+            pendingPatternsSource: null,
+            pendingTrainingPairId: null,
+            pendingSessionId: null,
+          });
+          return { saved: 0, updated: 0 };
+        }
+
+        try {
+          const response = await fetch('/api/annotator/patterns/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              patterns: acceptedPatterns,
+              source: pendingPatternsSource,
+              trainingPairId: pendingTrainingPairId,
+              sessionId: pendingSessionId,
+            }),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `Failed to save patterns: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Clear pending patterns
+          set({
+            pendingPatterns: null,
+            pendingPatternsSource: null,
+            pendingTrainingPairId: null,
+            pendingSessionId: null,
+          });
+
+          // Reload patterns
+          get().loadPatterns();
+
+          return { saved: data.patternsSaved || 0, updated: data.patternsUpdated || 0 };
+        } catch (error) {
+          set({
+            patternsError: error instanceof Error ? error.message : 'Failed to save patterns',
+          });
+          throw error;
+        }
+      },
+
+      clearPendingPatterns: () => {
+        set({
+          pendingPatterns: null,
+          pendingPatternsSource: null,
+          pendingTrainingPairId: null,
+          pendingSessionId: null,
+        });
       },
 
       // ========================================================================
@@ -512,5 +638,15 @@ export const useAnnotatorStats = () =>
       patternsCount: state.patterns.length,
       sessionsCount: state.sessions.length,
       patternStats: state.patternStats,
+    }))
+  );
+
+export const usePendingPatterns = () =>
+  useAnnotatorStore(
+    useShallow((state) => ({
+      pendingPatterns: state.pendingPatterns,
+      source: state.pendingPatternsSource,
+      trainingPairId: state.pendingTrainingPairId,
+      sessionId: state.pendingSessionId,
     }))
   );
