@@ -379,27 +379,86 @@ function escapeRegexChars(str: string): string {
 }
 
 /**
+ * Normalize Unicode characters for comparison
+ * Converts fancy quotes, dashes, spaces to their ASCII equivalents
+ * This is crucial for matching DOCX content which often uses curly quotes
+ */
+function normalizeForComparison(text: string): string {
+  return text
+    // Normalize curly quotes to straight quotes
+    .replace(/[\u2018\u2019\u201A\u201B]/g, "'")  // ' ' ‚ ‛ → '
+    .replace(/[\u201C\u201D\u201E\u201F]/g, '"')  // " " „ ‟ → "
+    // Normalize dashes
+    .replace(/[\u2013\u2014\u2015]/g, '-')        // – — ― → -
+    // Normalize spaces
+    .replace(/[\u00A0\u2007\u202F]/g, ' ')        // non-breaking spaces → space
+    // Normalize other common characters
+    .replace(/\u2026/g, '...')                     // … → ...
+    .replace(/[\u2010\u2011\u2012]/g, '-');       // various hyphens → -
+}
+
+/**
  * Safe text replacement in DOCX XML
  * Handles both simple replacements and text split across runs
- * Does NOT return early - processes all occurrences
+ * Uses normalized comparison to handle curly quotes and special characters
  */
 function replaceTextInDocxXmlSafe(
   xml: string,
   searchText: string,
   replacement: string
 ): string {
-  const escapedSearch = escapeRegexChars(searchText);
+  // Normalize search text for comparison
+  const normalizedSearch = normalizeForComparison(searchText);
+  const escapedNormalizedSearch = escapeRegexChars(normalizedSearch);
 
   // Strategy 1: Direct replacement within single <w:t> elements
-  const singleRunPattern = new RegExp(
-    `(<w:t[^>]*>)([^<]*?)(${escapedSearch})([^<]*?)(</w:t>)`,
-    'g'
-  );
+  // We need to find matches using normalized comparison but replace in original
+  const textPattern = /<w:t[^>]*>([^<]*)<\/w:t>/g;
+  let modified = xml;
+  let hasMatch = false;
 
-  let modified = xml.replace(singleRunPattern, `$1$2${replacement}$4$5`);
+  // First, check if any single <w:t> element contains the search text (normalized)
+  modified = xml.replace(textPattern, (fullMatch, textContent) => {
+    const normalizedContent = normalizeForComparison(textContent);
+    const matchIndex = normalizedContent.indexOf(normalizedSearch);
+
+    if (matchIndex === -1) {
+      return fullMatch; // No match, keep original
+    }
+
+    hasMatch = true;
+
+    // Find the actual position in the original text
+    // We need to map the normalized position back to original
+    let originalIndex = 0;
+    let normalizedIndex = 0;
+    while (normalizedIndex < matchIndex && originalIndex < textContent.length) {
+      const origChar = textContent[originalIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedIndex += normChar.length;
+      originalIndex++;
+    }
+
+    // Calculate the end position
+    let originalEndIndex = originalIndex;
+    let normalizedEndIndex = normalizedIndex;
+    while (normalizedEndIndex < matchIndex + normalizedSearch.length && originalEndIndex < textContent.length) {
+      const origChar = textContent[originalEndIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedEndIndex += normChar.length;
+      originalEndIndex++;
+    }
+
+    // Build the new content
+    const before = textContent.substring(0, originalIndex);
+    const after = textContent.substring(originalEndIndex);
+    const newContent = before + replacement + after;
+
+    return fullMatch.replace(`>${textContent}<`, `>${escapeXml(newContent)}<`);
+  });
 
   // Strategy 2: Handle text split across runs (if simple replacement didn't find anything)
-  if (modified === xml) {
+  if (!hasMatch) {
     modified = replaceAcrossRuns(xml, searchText, replacement);
   }
 
@@ -409,6 +468,7 @@ function replaceTextInDocxXmlSafe(
 /**
  * Handle text replacement when the search text is split across multiple <w:t> elements
  * Preserves the XML structure better than the previous implementation
+ * Uses normalized comparison for Unicode characters (curly quotes, etc.)
  */
 function replaceAcrossRuns(
   xml: string,
@@ -416,6 +476,7 @@ function replaceAcrossRuns(
   replacement: string
 ): string {
   const paragraphPattern = /<w:p[^>]*>[\s\S]*?<\/w:p>/g;
+  const normalizedSearch = normalizeForComparison(searchText);
 
   return xml.replace(paragraphPattern, (paragraph) => {
     // Extract all text elements with their positions
@@ -443,17 +504,41 @@ function replaceAcrossRuns(
     // Combine all text
     const combinedText = textElements.map(e => e.text).join('');
 
-    // Check if this paragraph contains our search text
-    const searchIndex = combinedText.indexOf(searchText);
-    if (searchIndex === -1) {
+    // Check if this paragraph contains our search text (using normalized comparison)
+    const normalizedCombined = normalizeForComparison(combinedText);
+    const normalizedSearchIndex = normalizedCombined.indexOf(normalizedSearch);
+    if (normalizedSearchIndex === -1) {
       return paragraph;
+    }
+
+    // Map normalized position back to original position
+    let searchIndex = 0;
+    let normalizedIndex = 0;
+    while (normalizedIndex < normalizedSearchIndex && searchIndex < combinedText.length) {
+      const origChar = combinedText[searchIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedIndex += normChar.length;
+      searchIndex++;
+    }
+
+    // Find end position in original text
+    let searchEndIndex = searchIndex;
+    let normalizedEndIndex = normalizedIndex;
+    while (normalizedEndIndex < normalizedSearchIndex + normalizedSearch.length && searchEndIndex < combinedText.length) {
+      const origChar = combinedText[searchEndIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedEndIndex += normChar.length;
+      searchEndIndex++;
     }
 
     // Calculate the new combined text after replacement
     const newCombinedText =
       combinedText.substring(0, searchIndex) +
       replacement +
-      combinedText.substring(searchIndex + searchText.length);
+      combinedText.substring(searchEndIndex);
+
+    // Calculate actual search text length in original (for offset calculations below)
+    const actualSearchLength = searchEndIndex - searchIndex;
 
     // Redistribute text back into the original elements
     // Key improvement: we preserve the element structure and just update text content
@@ -480,11 +565,11 @@ function replaceAcrossRuns(
           // Non-last elements get their proportional share
           // But we need to be careful around the replacement boundary
           const originalShare = elem.text.length;
-          const lengthDiff = replacement.length - searchText.length;
+          const lengthDiff = replacement.length - actualSearchLength;
 
-          // Check if this element contains part of the search text
-          const searchStart = combinedText.indexOf(searchText);
-          const searchEnd = searchStart + searchText.length;
+          // Use the calculated search positions (already mapped from normalized)
+          const searchStart = searchIndex;
+          const searchEnd = searchEndIndex;
 
           if (elemEnd <= searchStart || elemStart >= searchEnd) {
             // Element is completely outside the search range - keep same length
@@ -499,7 +584,7 @@ function replaceAcrossRuns(
             const overlapStart = Math.max(elemStart, searchStart);
             const overlapEnd = Math.min(elemEnd, searchEnd);
             const overlapLength = overlapEnd - overlapStart;
-            const adjustedLength = originalShare + (lengthDiff * overlapLength / searchText.length);
+            const adjustedLength = originalShare + (lengthDiff * overlapLength / actualSearchLength);
             newElemText = newCombinedText.substring(newTextOffset, newTextOffset + Math.round(adjustedLength));
             newTextOffset += Math.round(adjustedLength);
           }
