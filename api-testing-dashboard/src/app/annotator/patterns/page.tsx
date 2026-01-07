@@ -298,6 +298,7 @@ export default function PatternsPage() {
                   <TableRow>
                     <TableHead>Original</TableHead>
                     <TableHead>Annotated</TableHead>
+                    <TableHead>Context</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>
                       <Button
@@ -343,6 +344,23 @@ export default function PatternsPage() {
                       </TableCell>
                       <TableCell className="font-mono text-sm max-w-[200px] truncate text-primary">
                         {pattern.annotatedText}
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground max-w-[250px]">
+                        <span className="font-mono">
+                          {pattern.contextBefore && (
+                            <span title={pattern.contextBefore}>
+                              ...{pattern.contextBefore.slice(-25)}
+                            </span>
+                          )}
+                          <span className="text-primary font-medium mx-1">
+                            [{pattern.originalText}]
+                          </span>
+                          {pattern.contextAfter && (
+                            <span title={pattern.contextAfter}>
+                              {pattern.contextAfter.slice(0, 25)}...
+                            </span>
+                          )}
+                        </span>
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline">

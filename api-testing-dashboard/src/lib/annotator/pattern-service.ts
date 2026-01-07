@@ -229,7 +229,18 @@ export function findPatternMatches(
     // Determine if originalText is a placeholder-like value
     const isPlaceholder = isPlaceholderText(pattern.originalText, pattern.annotationType);
 
-    if (isPlaceholder && pattern.contextBefore && pattern.contextAfter) {
+    // Enable smart matching if:
+    // 1. It's a placeholder (like "City", "XXX")
+    // 2. OR it has meaningful context (at least 10 chars before OR after)
+    const hasGoodContext =
+      (pattern.contextBefore?.length || 0) >= 10 ||
+      (pattern.contextAfter?.length || 0) >= 10;
+
+    const useSmartMatching =
+      (isPlaceholder || hasGoodContext) &&
+      (pattern.contextBefore || pattern.contextAfter);
+
+    if (useSmartMatching) {
       // Smart matching: find by context keywords + structural pattern
       const contextMatches = findByContextPattern(documentText, pattern);
 
@@ -336,7 +347,7 @@ function isPlaceholderText(text: string, annotationType: AnnotationType): boolea
 }
 
 /**
- * Find matches in document using context pattern (keywords) instead of exact text
+ * Find matches in document using context pattern (keywords + structure) instead of exact text
  * This enables matching "In City, on" → "In Paris, on"
  */
 function findByContextPattern(
@@ -350,13 +361,14 @@ function findByContextPattern(
   const afterKeywords = extractKeywords(pattern.contextAfter || '');
   const allKeywords = [...beforeKeywords, ...afterKeywords];
 
-  if (allKeywords.length === 0) return results;
-
   // Get placeholder type to know what kind of text to look for
   const placeholderType = detectPlaceholderType(pattern.originalText, pattern.annotationType);
 
+  // Get the last few chars of contextBefore and first few chars of contextAfter for structural matching
+  const contextBeforeSuffix = (pattern.contextBefore || '').slice(-15).trim().toLowerCase();
+  const contextAfterPrefix = (pattern.contextAfter || '').slice(0, 15).trim().toLowerCase();
+
   // Scan document for potential matches
-  // Look for positions where context keywords appear
   const words = documentText.split(/(\s+)/);
   let currentPos = 0;
 
@@ -368,33 +380,46 @@ function findByContextPattern(
     // Skip whitespace
     if (/^\s+$/.test(word)) continue;
 
-    // Check if this word could be a match based on context
+    // Skip already annotated text
+    if (word.startsWith('[') || word.endsWith(']')) continue;
+
+    // Get surrounding text for context checking
+    const textBefore = documentText.substring(Math.max(0, wordStart - 50), wordStart).toLowerCase();
+    const textAfter = documentText.substring(wordStart + word.length, Math.min(documentText.length, wordStart + word.length + 50)).toLowerCase();
+
+    // Check structural match: does the immediate context match?
+    let structuralScore = 0;
+    if (contextBeforeSuffix && textBefore.includes(contextBeforeSuffix)) {
+      structuralScore += 0.5;
+    }
+    if (contextAfterPrefix && textAfter.includes(contextAfterPrefix)) {
+      structuralScore += 0.5;
+    }
+
+    // Check keyword match
     const surroundingText = documentText.substring(
       Math.max(0, wordStart - 100),
       Math.min(documentText.length, wordStart + word.length + 100)
     );
-
-    // Count how many keywords are present in surrounding context
     const keywordsFound = allKeywords.filter(kw =>
       surroundingText.toLowerCase().includes(kw.toLowerCase())
     );
-
-    // Need at least 50% keyword match
     const keywordScore = allKeywords.length > 0 ? keywordsFound.length / allKeywords.length : 0;
 
-    if (keywordScore >= 0.5) {
+    // Combined score: structural match is worth more than keyword match
+    const combinedScore = structuralScore * 0.7 + keywordScore * 0.3;
+
+    // Match if good structural match OR good keyword match
+    if (combinedScore >= 0.3 || structuralScore >= 0.5 || keywordScore >= 0.6) {
       // Verify the word type matches what we're looking for
       const wordType = detectWordType(word);
 
       if (wordTypeMatches(wordType, placeholderType, pattern.annotationType)) {
-        // Don't match already annotated text
-        if (!word.startsWith('[') && !word.endsWith(']')) {
-          results.push({
-            position: { start: wordStart, end: wordStart + word.length },
-            text: word,
-            confidence: Math.min(0.9, pattern.confidence * keywordScore),
-          });
-        }
+        results.push({
+          position: { start: wordStart, end: wordStart + word.length },
+          text: word,
+          confidence: Math.min(0.9, pattern.confidence * Math.max(combinedScore, structuralScore, keywordScore * 0.8)),
+        });
       }
     }
   }
