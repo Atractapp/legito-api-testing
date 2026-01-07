@@ -340,7 +340,7 @@ export interface AnnotatorActions {
   updateSuggestion: (id: string, updates: Partial<AnnotationSuggestion>) => void;
   acceptSuggestion: (id: string) => void;
   rejectSuggestion: (id: string) => void;
-  generateAnnotatedDocument: () => Promise<string>;
+  generateAnnotatedDocument: (saveAsPatterns?: boolean) => Promise<string>;
   submitCorrection: (correctedFile: File) => Promise<void>;
   loadSessions: () => Promise<void>;
   clearCurrentSession: () => void;

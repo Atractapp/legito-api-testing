@@ -71,13 +71,27 @@ export function extractPatterns(
     });
   }
 
+  // Filter out invalid patterns
+  const validPatterns = patterns.filter((p) => {
+    // Skip if original text is same as annotated (no real replacement)
+    if (p.originalText === p.annotatedText) return false;
+
+    // Skip if original text is already an annotation format like [Date], [Money], etc.
+    if (/^\[.+\]$/.test(p.originalText)) return false;
+
+    // Skip if original text is empty or whitespace only
+    if (!p.originalText || !p.originalText.trim()) return false;
+
+    return true;
+  });
+
   // Calculate summary
   const summary = {
-    total: patterns.length,
-    byType: countByType(patterns),
+    total: validPatterns.length,
+    byType: countByType(validPatterns),
   };
 
-  return { patterns, summary };
+  return { patterns: validPatterns, summary };
 }
 
 /**

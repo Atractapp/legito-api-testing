@@ -297,7 +297,7 @@ export const useAnnotatorStore = create<AnnotatorStore>()(
         }));
       },
 
-      generateAnnotatedDocument: async (): Promise<string> => {
+      generateAnnotatedDocument: async (saveAsPatterns = false): Promise<string> => {
         const { currentSession, currentSuggestions } = get();
 
         if (!currentSession) {
@@ -327,6 +327,7 @@ export const useAnnotatorStore = create<AnnotatorStore>()(
             body: JSON.stringify({
               sessionId: currentSession.id,
               annotations: acceptedAnnotations,
+              saveAsPatterns,
             }),
           });
 

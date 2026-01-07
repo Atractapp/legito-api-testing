@@ -4,10 +4,11 @@ import {
   generateAnnotatedDocx,
   generateAnnotatedDocxPreservingFormat,
   applyAnnotationsToText,
+  deduplicatePatterns,
   storageService,
   getSessionDocPath,
 } from '@/lib/annotator';
-import type { Annotation } from '@/types/annotator';
+import type { Annotation, AnnotationType, Pattern } from '@/types/annotator';
 
 // Initialize Supabase client
 function getSupabase() {
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
     const supabase = getSupabase();
     const userId = request.headers.get('x-user-id') || 'default-user';
 
-    const { sessionId, annotations } = await request.json();
+    const { sessionId, annotations, saveAsPatterns } = await request.json();
 
     if (!sessionId) {
       return NextResponse.json(
@@ -139,12 +140,123 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Optionally save accepted annotations as patterns for future use
+    let patternsSaved = 0;
+    let patternsUpdated = 0;
+
+    if (saveAsPatterns && typedAnnotations.length > 0) {
+      console.log('[Generate] Saving accepted annotations as patterns...');
+
+      // Build patterns from accepted annotations
+      const newPatterns = typedAnnotations
+        .filter((ann) => {
+          // Skip if original text is same as annotated (no real replacement)
+          if (ann.originalText === ann.annotatedText) return false;
+          // Skip if original text is already an annotation format
+          if (/^\[.+\]$/.test(ann.originalText)) return false;
+          // Skip empty
+          if (!ann.originalText || !ann.originalText.trim()) return false;
+          return true;
+        })
+        .map((ann) => {
+          // Extract context from input text
+          const inputText = session.input_text || '';
+          const contextLength = 100;
+
+          const contextBefore = inputText
+            .substring(Math.max(0, ann.position.start - contextLength), ann.position.start)
+            .trim();
+          const contextAfter = inputText
+            .substring(ann.position.end, Math.min(inputText.length, ann.position.end + contextLength))
+            .trim();
+
+          return {
+            originalText: ann.originalText,
+            annotatedText: ann.annotatedText,
+            annotationType: ann.type,
+            contextBefore,
+            contextAfter,
+            confidence: 1.0,
+            usageCount: 1,
+            successRate: 1.0,
+            trainingPairId: null,
+          };
+        });
+
+      if (newPatterns.length > 0) {
+        // Fetch existing patterns for deduplication
+        const { data: existingPatternsData } = await supabase
+          .from('annotator_patterns')
+          .select('*')
+          .eq('user_id', userId);
+
+        // Convert to Pattern type
+        const existingPatterns: Pattern[] = (existingPatternsData || []).map((p) => ({
+          id: p.id,
+          userId: p.user_id,
+          originalText: p.original_text,
+          annotatedText: p.annotated_text,
+          annotationType: p.annotation_type as AnnotationType,
+          contextBefore: p.context_before,
+          contextAfter: p.context_after,
+          confidence: p.confidence,
+          usageCount: p.usage_count,
+          successRate: p.success_rate,
+          trainingPairId: p.training_pair_id,
+          createdAt: new Date(p.created_at),
+        }));
+
+        // Deduplicate
+        const { toAdd, toUpdate } = deduplicatePatterns(existingPatterns, newPatterns);
+
+        // Insert new patterns
+        if (toAdd.length > 0) {
+          const { error: insertError } = await supabase.from('annotator_patterns').insert(
+            toAdd.map((p) => ({
+              user_id: userId,
+              original_text: p.originalText,
+              annotated_text: p.annotatedText,
+              annotation_type: p.annotationType,
+              context_before: p.contextBefore,
+              context_after: p.contextAfter,
+              confidence: p.confidence,
+              usage_count: p.usageCount,
+              success_rate: p.successRate,
+              training_pair_id: p.trainingPairId,
+            }))
+          );
+
+          if (insertError) {
+            console.error('[Generate] Failed to insert patterns:', insertError);
+          } else {
+            patternsSaved = toAdd.length;
+          }
+        }
+
+        // Update existing similar patterns
+        for (const update of toUpdate) {
+          await supabase
+            .from('annotator_patterns')
+            .update({
+              usage_count: update.updates.usageCount,
+              confidence: update.updates.confidence,
+            })
+            .eq('id', update.id);
+          patternsUpdated++;
+        }
+
+        console.log('[Generate] Patterns saved:', patternsSaved, 'updated:', patternsUpdated);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       downloadUrl,
       outputFilePath: outputPath,
       annotatedText,
       annotationsApplied: typedAnnotations.length,
+      patternsSaved,
+      patternsUpdated,
     });
   } catch (error) {
     console.error('Generate POST error:', error);

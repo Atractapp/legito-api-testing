@@ -9,6 +9,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import {
   Upload,
   Wand2,
@@ -40,6 +42,7 @@ export default function AnnotatePage() {
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
+  const [saveAsPatterns, setSaveAsPatterns] = useState(true); // Default to saving patterns
 
   const {
     startAnnotationSession,
@@ -75,7 +78,7 @@ export default function AnnotatePage() {
 
   const handleGenerate = async () => {
     try {
-      const url = await generateAnnotatedDocument();
+      const url = await generateAnnotatedDocument(saveAsPatterns);
       setDownloadUrl(url);
     } catch (err) {
       console.error('Failed to generate document:', err);
@@ -331,6 +334,17 @@ export default function AnnotatePage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="saveAsPatterns"
+                      checked={saveAsPatterns}
+                      onCheckedChange={(checked) => setSaveAsPatterns(checked === true)}
+                    />
+                    <Label htmlFor="saveAsPatterns" className="text-sm cursor-pointer">
+                      Save accepted annotations as patterns for future documents
+                    </Label>
+                  </div>
+
                   <Button
                     onClick={handleGenerate}
                     disabled={loading || acceptedCount === 0}
