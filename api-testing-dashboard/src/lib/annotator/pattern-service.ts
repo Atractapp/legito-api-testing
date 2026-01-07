@@ -113,6 +113,66 @@ function getContextAfter(text: string, position: number, maxLength = 100): strin
 }
 
 /**
+ * Extract meaningful keywords from context
+ * These are structural words that indicate where annotations should be placed
+ */
+function extractKeywords(context: string): string[] {
+  if (!context) return [];
+
+  // Common structural keywords that indicate annotation positions
+  const structuralKeywords = [
+    // Prepositions and connectors
+    'in', 'on', 'at', 'by', 'to', 'from', 'of', 'for', 'with', 'between',
+    // Document-specific terms
+    'dated', 'signed', 'amount', 'sum', 'total', 'name', 'address', 'city',
+    'date', 'party', 'parties', 'agreement', 'contract', 'loan', 'payment',
+    'creditor', 'debtor', 'bank', 'account', 'iban', 'installment',
+    // Punctuation context (kept as is)
+    'the', '(', ')', '"', ',', ':', ';'
+  ];
+
+  const words = context.toLowerCase().split(/\s+/).filter(Boolean);
+  const keywords: string[] = [];
+
+  for (const word of words) {
+    const cleanWord = word.replace(/[.,;:()"\[\]]/g, '').trim();
+    if (cleanWord && structuralKeywords.includes(cleanWord)) {
+      keywords.push(cleanWord);
+    }
+  }
+
+  // Also keep punctuation patterns that indicate structure
+  if (context.includes(',')) keywords.push(',');
+  if (context.includes('(')) keywords.push('(');
+  if (context.includes(')')) keywords.push(')');
+  if (context.includes(':')) keywords.push(':');
+
+  return [...new Set(keywords)]; // Remove duplicates
+}
+
+/**
+ * Detect what type of placeholder the original text represents
+ * This helps match similar patterns even with different values
+ */
+function detectPlaceholderType(text: string, annotationType: AnnotationType): 'DATE' | 'AMOUNT' | 'TEXT' {
+  // Date patterns: DD.MM.YYYY, XX.XX.XXXX, DD/MM/YYYY, etc.
+  if (annotationType === 'Date' || /^\d{1,2}[./-]\d{1,2}[./-]\d{2,4}$/.test(text)) {
+    return 'DATE';
+  }
+  if (/^[XD]{1,2}[./-][XM]{1,2}[./-][XY]{2,4}$/i.test(text)) {
+    return 'DATE';
+  }
+
+  // Money patterns: XXX, numbers, amounts
+  if (annotationType === 'Money' || /^[X\d][X\d,.]*$/.test(text)) {
+    return 'AMOUNT';
+  }
+
+  // Everything else is variable text (names, cities, etc.)
+  return 'TEXT';
+}
+
+/**
  * Count patterns by type
  */
 function countByType(
@@ -141,6 +201,8 @@ function countByType(
 
 /**
  * Find where patterns should be applied in a document
+ * Uses smart matching: for placeholder-like patterns, matches by context keywords
+ * rather than exact text, allowing "In City, on" to match "In Paris, on"
  */
 export function findPatternMatches(
   documentText: string,
@@ -150,38 +212,57 @@ export function findPatternMatches(
   const matchedPatternIds = new Set<string>();
 
   for (const pattern of patterns) {
-    // Try to find the original text in the document
-    const matchPositions = findAllOccurrences(documentText, pattern.originalText);
+    // Determine if originalText is a placeholder-like value
+    const isPlaceholder = isPlaceholderText(pattern.originalText, pattern.annotationType);
 
-    for (const position of matchPositions) {
-      // Verify context matches
-      const contextMatches = verifyContext(
-        documentText,
-        position,
-        pattern.originalText.length,
-        pattern.contextBefore,
-        pattern.contextAfter
-      );
+    if (isPlaceholder && pattern.contextBefore && pattern.contextAfter) {
+      // Smart matching: find by context keywords + structural pattern
+      const contextMatches = findByContextPattern(documentText, pattern);
 
-      if (contextMatches) {
-        const confidence = calculateMatchConfidence(
-          pattern,
-          contextMatches.beforeScore,
-          contextMatches.afterScore
-        );
-
+      for (const match of contextMatches) {
         matches.push({
           pattern,
-          matchPosition: {
-            start: position,
-            end: position + pattern.originalText.length,
-          },
-          matchedText: pattern.originalText,
-          suggestedAnnotation: pattern.annotatedText,
-          confidence,
+          matchPosition: match.position,
+          matchedText: match.text,
+          suggestedAnnotation: generateAnnotationForMatch(pattern, match.text),
+          confidence: match.confidence,
         });
-
         matchedPatternIds.add(pattern.id);
+      }
+    } else {
+      // Traditional matching: find exact text occurrences
+      const matchPositions = findAllOccurrences(documentText, pattern.originalText);
+
+      for (const position of matchPositions) {
+        // Verify context matches
+        const contextMatches = verifyContext(
+          documentText,
+          position,
+          pattern.originalText.length,
+          pattern.contextBefore,
+          pattern.contextAfter
+        );
+
+        if (contextMatches) {
+          const confidence = calculateMatchConfidence(
+            pattern,
+            contextMatches.beforeScore,
+            contextMatches.afterScore
+          );
+
+          matches.push({
+            pattern,
+            matchPosition: {
+              start: position,
+              end: position + pattern.originalText.length,
+            },
+            matchedText: pattern.originalText,
+            suggestedAnnotation: pattern.annotatedText,
+            confidence,
+          });
+
+          matchedPatternIds.add(pattern.id);
+        }
       }
     }
   }
@@ -205,6 +286,168 @@ export function findPatternMatches(
     unmatched,
     coverage,
   };
+}
+
+/**
+ * Check if text looks like a placeholder value (generic, short, or pattern-like)
+ * These should be matched by context rather than exact text
+ */
+function isPlaceholderText(text: string, annotationType: AnnotationType): boolean {
+  // Date placeholders: XX.XX.XXXX, DD.MM.YYYY, etc.
+  if (/^[XD]{1,2}[./-][XM]{1,2}[./-][XY]{2,4}$/i.test(text)) return true;
+  if (/^[X]+$/i.test(text)) return true; // Just XXX
+
+  // Money placeholders: XXX, numbers
+  if (annotationType === 'Money' && /^[X\d][X\d,.]*$/.test(text)) return true;
+
+  // Short generic words that are likely placeholders
+  const genericWords = [
+    'city', 'name', 'address', 'date', 'amount', 'number', 'value',
+    'company', 'person', 'party', 'bank', 'account', 'iban', 'bic',
+    'street', 'country', 'zip', 'email', 'phone', 'title', 'position'
+  ];
+  if (genericWords.includes(text.toLowerCase())) return true;
+
+  // Single capitalized word that looks like a placeholder
+  if (/^[A-Z][a-z]+$/.test(text) && text.length <= 15) {
+    // Could be a placeholder like "City", "Name", "Amount"
+    // Check if it's a common English word (less likely to be a placeholder)
+    const commonWords = ['the', 'and', 'for', 'with', 'this', 'that', 'from', 'have', 'will'];
+    if (!commonWords.includes(text.toLowerCase())) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Find matches in document using context pattern (keywords) instead of exact text
+ * This enables matching "In City, on" → "In Paris, on"
+ */
+function findByContextPattern(
+  documentText: string,
+  pattern: Pattern
+): Array<{ position: { start: number; end: number }; text: string; confidence: number }> {
+  const results: Array<{ position: { start: number; end: number }; text: string; confidence: number }> = [];
+
+  // Extract keywords from pattern context
+  const beforeKeywords = extractKeywords(pattern.contextBefore || '');
+  const afterKeywords = extractKeywords(pattern.contextAfter || '');
+  const allKeywords = [...beforeKeywords, ...afterKeywords];
+
+  if (allKeywords.length === 0) return results;
+
+  // Get placeholder type to know what kind of text to look for
+  const placeholderType = detectPlaceholderType(pattern.originalText, pattern.annotationType);
+
+  // Scan document for potential matches
+  // Look for positions where context keywords appear
+  const words = documentText.split(/(\s+)/);
+  let currentPos = 0;
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    const wordStart = currentPos;
+    currentPos += word.length;
+
+    // Skip whitespace
+    if (/^\s+$/.test(word)) continue;
+
+    // Check if this word could be a match based on context
+    const surroundingText = documentText.substring(
+      Math.max(0, wordStart - 100),
+      Math.min(documentText.length, wordStart + word.length + 100)
+    );
+
+    // Count how many keywords are present in surrounding context
+    const keywordsFound = allKeywords.filter(kw =>
+      surroundingText.toLowerCase().includes(kw.toLowerCase())
+    );
+
+    // Need at least 50% keyword match
+    const keywordScore = allKeywords.length > 0 ? keywordsFound.length / allKeywords.length : 0;
+
+    if (keywordScore >= 0.5) {
+      // Verify the word type matches what we're looking for
+      const wordType = detectWordType(word);
+
+      if (wordTypeMatches(wordType, placeholderType, pattern.annotationType)) {
+        // Don't match already annotated text
+        if (!word.startsWith('[') && !word.endsWith(']')) {
+          results.push({
+            position: { start: wordStart, end: wordStart + word.length },
+            text: word,
+            confidence: Math.min(0.9, pattern.confidence * keywordScore),
+          });
+        }
+      }
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Detect what type of value a word represents
+ */
+function detectWordType(word: string): 'DATE' | 'AMOUNT' | 'TEXT' {
+  // Date pattern
+  if (/^\d{1,2}[./-]\d{1,2}[./-]\d{2,4}$/.test(word)) return 'DATE';
+  if (/^[XD]{1,2}[./-][XM]{1,2}[./-][XY]{2,4}$/i.test(word)) return 'DATE';
+
+  // Amount/number pattern
+  if (/^[\d,.]+$/.test(word) && word.length >= 2) return 'AMOUNT';
+  if (/^[X]+$/i.test(word)) return 'AMOUNT'; // XXX placeholder
+
+  // Text (names, cities, etc.)
+  return 'TEXT';
+}
+
+/**
+ * Check if detected word type matches the pattern's expected type
+ */
+function wordTypeMatches(
+  wordType: 'DATE' | 'AMOUNT' | 'TEXT',
+  placeholderType: 'DATE' | 'AMOUNT' | 'TEXT',
+  annotationType: AnnotationType
+): boolean {
+  // Exact type match
+  if (wordType === placeholderType) return true;
+
+  // Annotation type specific matching
+  if (annotationType === 'Date' && wordType === 'DATE') return true;
+  if (annotationType === 'Money' && wordType === 'AMOUNT') return true;
+  if (annotationType === 'TextInput' && wordType === 'TEXT') return true;
+
+  // TEXT is flexible - can match various annotation types
+  if (wordType === 'TEXT' && ['TextInput', 'Text', 'Select'].includes(annotationType)) return true;
+
+  return false;
+}
+
+/**
+ * Generate appropriate annotation text for a matched word
+ * Adapts the pattern's annotation to the actual matched text
+ */
+function generateAnnotationForMatch(pattern: Pattern, matchedText: string): string {
+  // If the pattern annotation contains the original text as label, replace it
+  // e.g., [TextInput: City] → [TextInput: Paris] if matchedText is "Paris"
+
+  const annotatedText = pattern.annotatedText;
+
+  // Check if it's a labeled annotation like [Type: Label]
+  const labelMatch = annotatedText.match(/^\[([^:]+):\s*([^\]]+)\]$/);
+  if (labelMatch) {
+    const [, type, originalLabel] = labelMatch;
+    // If original label matches the original text, use the new matched text
+    if (originalLabel.toLowerCase() === pattern.originalText.toLowerCase()) {
+      return `[${type}: ${matchedText}]`;
+    }
+  }
+
+  // Otherwise return the pattern's annotation as-is
+  return annotatedText;
 }
 
 /**

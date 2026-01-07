@@ -454,7 +454,9 @@ function replaceTextInDocxXmlSafe(
     const after = textContent.substring(originalEndIndex);
     const newContent = before + replacement + after;
 
-    return fullMatch.replace(`>${textContent}<`, `>${escapeXml(newContent)}<`);
+    // Replace text and strip any highlighting (yellow background)
+    const newElem = fullMatch.replace(`>${textContent}<`, `>${escapeXml(newContent)}<`);
+    return stripHighlighting(newElem);
   });
 
   // Strategy 2: Handle text split across runs (if simple replacement didn't find anything)
@@ -595,7 +597,9 @@ function replaceAcrossRuns(
       // Be careful to escape XML entities
       const escapedNewText = escapeXml(newElemText);
       const newElem = elem.fullMatch.replace(`>${elem.text}<`, `>${escapedNewText}<`);
-      result = result.replace(elem.fullMatch, newElem);
+      // Strip any highlighting (yellow background) from the replaced element
+      const cleanedElem = stripHighlighting(newElem);
+      result = result.replace(elem.fullMatch, cleanedElem);
     }
 
     return result;
@@ -606,12 +610,27 @@ function replaceAcrossRuns(
  * Escape special XML characters
  */
 function escapeXml(text: string): string {
+  // Only escape characters that are invalid in XML text content
+  // Don't escape quotes/apostrophes - they're only problematic in attributes
   return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    .replace(/>/g, '&gt;');
+}
+
+/**
+ * Remove highlighting from XML run elements
+ * Original documents often have yellow highlighting on fields to annotate
+ * The exported annotated document shouldn't preserve this highlighting
+ */
+function stripHighlighting(xml: string): string {
+  // Remove <w:highlight .../> self-closing tags
+  let result = xml.replace(/<w:highlight[^>]*\/>/g, '');
+  // Remove <w:highlight ...>...</w:highlight> paired tags (rare but possible)
+  result = result.replace(/<w:highlight[^>]*>.*?<\/w:highlight>/g, '');
+  // Also remove shading that might cause background colors
+  result = result.replace(/<w:shd[^>]*\/>/g, '');
+  return result;
 }
 
 /**
