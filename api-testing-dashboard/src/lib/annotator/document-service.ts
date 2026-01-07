@@ -6,6 +6,7 @@
  */
 
 import mammoth from 'mammoth';
+import JSZip from 'jszip';
 import {
   Document,
   Paragraph,
@@ -287,6 +288,149 @@ export async function generateAnnotatedDocx(
   // Generate blob
   const buffer = await Packer.toBlob(doc);
   return buffer;
+}
+
+/**
+ * Generate annotated DOCX by modifying original document in-place
+ * This preserves all original formatting, styles, headers, footers, etc.
+ *
+ * @param originalFile - The original DOCX file
+ * @param replacements - Array of {original, replacement} text pairs
+ * @returns Modified DOCX as Blob
+ */
+export async function generateAnnotatedDocxPreservingFormat(
+  originalFile: File | Blob | Buffer,
+  replacements: Array<{ original: string; replacement: string }>
+): Promise<Blob> {
+  // Convert to Uint8Array for JSZip (works with all input types)
+  let data: Uint8Array;
+  if (Buffer.isBuffer(originalFile)) {
+    data = new Uint8Array(originalFile);
+  } else {
+    // File or Blob
+    const blob = originalFile as Blob;
+    const arrayBuffer = await blob.arrayBuffer();
+    data = new Uint8Array(arrayBuffer);
+  }
+
+  // Load the DOCX as a ZIP
+  const zip = await JSZip.loadAsync(data);
+
+  // Get the main document XML
+  const documentXml = await zip.file('word/document.xml')?.async('string');
+  if (!documentXml) {
+    throw new Error('Invalid DOCX: word/document.xml not found');
+  }
+
+  // Apply replacements to the XML content
+  let modifiedXml = documentXml;
+
+  for (const { original, replacement } of replacements) {
+    // Escape special XML characters in the replacement
+    const escapedReplacement = escapeXml(replacement);
+
+    // Find and replace text - this handles text that might be split across runs
+    modifiedXml = replaceTextInDocxXml(modifiedXml, original, escapedReplacement);
+  }
+
+  // Put the modified document.xml back
+  zip.file('word/document.xml', modifiedXml);
+
+  // Generate the new DOCX
+  const blob = await zip.generateAsync({
+    type: 'blob',
+    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  });
+
+  return blob;
+}
+
+/**
+ * Replace text in DOCX XML while handling text split across multiple w:t elements
+ *
+ * In DOCX, a single word like "Hello" might be split like:
+ * <w:r><w:t>Hel</w:t></w:r><w:r><w:t>lo</w:t></w:r>
+ *
+ * This function handles such cases by working with the full text content.
+ */
+function replaceTextInDocxXml(xml: string, searchText: string, replacement: string): string {
+  // First, try simple replacement (text not split across runs)
+  // Escape special regex characters in search text
+  const escapedSearch = searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Try direct replacement within w:t elements
+  const simplePattern = new RegExp(
+    `(<w:t[^>]*>)([^<]*?)(${escapedSearch})([^<]*?)(</w:t>)`,
+    'g'
+  );
+
+  let modified = xml.replace(simplePattern, `$1$2${replacement}$4$5`);
+
+  // If simple replacement worked, return
+  if (modified !== xml) {
+    return modified;
+  }
+
+  // Handle text split across multiple w:t elements
+  // This is more complex - we need to find paragraphs containing the text
+  // and reconstruct them
+
+  // Extract all text from w:t elements, find matches, and replace
+  const paragraphPattern = /<w:p[^>]*>[\s\S]*?<\/w:p>/g;
+
+  modified = xml.replace(paragraphPattern, (paragraph) => {
+    // Extract all text content from this paragraph
+    const textParts: Array<{ text: string; fullMatch: string }> = [];
+    const textPattern = /<w:t[^>]*>([^<]*)<\/w:t>/g;
+    let match;
+
+    while ((match = textPattern.exec(paragraph)) !== null) {
+      textParts.push({ text: match[1], fullMatch: match[0] });
+    }
+
+    // Combine all text
+    const fullText = textParts.map(p => p.text).join('');
+
+    // Check if this paragraph contains our search text
+    if (!fullText.includes(searchText)) {
+      return paragraph;
+    }
+
+    // Replace in the combined text
+    const newFullText = fullText.split(searchText).join(replacement);
+
+    // Now we need to redistribute the new text back into the original structure
+    // For simplicity, we'll put all text into the first w:t element and clear others
+    let firstTextReplaced = false;
+    let result = paragraph;
+
+    // Replace text content in w:t elements
+    result = paragraph.replace(textPattern, (fullMatch, textContent) => {
+      if (!firstTextReplaced) {
+        firstTextReplaced = true;
+        // Put all the new text in the first w:t element
+        return fullMatch.replace(textContent, newFullText);
+      }
+      // Clear subsequent w:t elements
+      return fullMatch.replace(textContent, '');
+    });
+
+    return result;
+  });
+
+  return modified;
+}
+
+/**
+ * Escape special XML characters
+ */
+function escapeXml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 }
 
 /**

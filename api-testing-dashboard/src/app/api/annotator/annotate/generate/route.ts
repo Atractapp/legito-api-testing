@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import {
   generateAnnotatedDocx,
+  generateAnnotatedDocxPreservingFormat,
   applyAnnotationsToText,
   storageService,
   getSessionDocPath,
@@ -74,8 +75,32 @@ export async function POST(request: NextRequest) {
 
     const annotatedText = applyAnnotationsToText(session.input_text, typedAnnotations);
 
-    // Generate DOCX file
-    const docxBlob = await generateAnnotatedDocx(session.input_text, typedAnnotations);
+    // Generate DOCX file - preserve original formatting if input file exists
+    let docxBlob: Blob;
+
+    if (session.input_file_path) {
+      try {
+        // Download original file from storage
+        const originalFile = await storageService.download(session.input_file_path);
+
+        // Build replacements array from annotations
+        const replacements = typedAnnotations.map((ann) => ({
+          original: ann.originalText,
+          replacement: ann.annotatedText,
+        }));
+
+        // Generate with format preservation
+        docxBlob = await generateAnnotatedDocxPreservingFormat(originalFile, replacements);
+        console.log('[Generate] Used format-preserving generation');
+      } catch (formatError) {
+        console.warn('[Generate] Format-preserving failed, falling back to plain generation:', formatError);
+        // Fall back to plain generation if format preservation fails
+        docxBlob = await generateAnnotatedDocx(session.input_text, typedAnnotations);
+      }
+    } else {
+      // No original file, generate new document
+      docxBlob = await generateAnnotatedDocx(session.input_text, typedAnnotations);
+    }
 
     // Upload to storage
     const outputPath = getSessionDocPath(userId, sessionId, 'output');

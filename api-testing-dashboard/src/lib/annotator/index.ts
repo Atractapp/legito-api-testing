@@ -19,6 +19,7 @@ export {
   parseDocx,
   diffDocuments,
   generateAnnotatedDocx,
+  generateAnnotatedDocxPreservingFormat,
   applyAnnotationsToText,
   validateAnnotation,
   createAnnotation,
