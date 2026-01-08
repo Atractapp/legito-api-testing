@@ -50,6 +50,7 @@ export default function TrainPage() {
   const {
     uploadTrainingPair,
     deleteTrainingPair,
+    deleteAllTrainingPairs,
     loadTrainingPairs,
     setPendingPatterns,
     acceptPendingPattern,
@@ -58,6 +59,7 @@ export default function TrainPage() {
     confirmPendingPatterns,
     clearPendingPatterns,
   } = useAnnotatorStore();
+  const [isDeletingAll, setIsDeletingAll] = useState(false);
   const { trainingPairs, loading, error } = useTrainingPairs();
   const { pendingPatterns, source: pendingSource, trainingPairId } = usePendingPatterns();
 
@@ -410,11 +412,41 @@ export default function TrainPage() {
 
       {/* Training Pairs List */}
       <Card>
-        <CardHeader>
-          <CardTitle>Training Pairs</CardTitle>
-          <CardDescription>
-            Previously uploaded document pairs used for training
-          </CardDescription>
+        <CardHeader className="flex flex-row items-start justify-between">
+          <div>
+            <CardTitle>Training Pairs</CardTitle>
+            <CardDescription>
+              Previously uploaded document pairs used for training
+            </CardDescription>
+          </div>
+          {trainingPairs.length > 0 && (
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={async () => {
+                if (confirm('Delete ALL training pairs and patterns? This cannot be undone.')) {
+                  try {
+                    setIsDeletingAll(true);
+                    const count = await deleteAllTrainingPairs();
+                    alert(`Deleted ${count} training pairs and all associated patterns.`);
+                  } catch (err) {
+                    console.error('Delete all failed:', err);
+                    alert('Failed to delete. Please try again.');
+                  } finally {
+                    setIsDeletingAll(false);
+                  }
+                }
+              }}
+              disabled={isDeletingAll}
+            >
+              {isDeletingAll ? (
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              ) : (
+                <Trash2 className="h-4 w-4 mr-2" />
+              )}
+              Delete All
+            </Button>
+          )}
         </CardHeader>
         <CardContent>
           {loading ? (

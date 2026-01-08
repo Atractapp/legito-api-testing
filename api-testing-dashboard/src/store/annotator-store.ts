@@ -172,6 +172,27 @@ export const useAnnotatorStore = create<AnnotatorStore>()(
         }
       },
 
+      deleteAllTrainingPairs: async () => {
+        const response = await fetch('/api/annotator/training', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ all: true }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete all training pairs');
+        }
+
+        const data = await response.json();
+        set({
+          trainingPairs: [],
+          patterns: [],
+          selectedTrainingPairId: null,
+          selectedPatternId: null,
+        });
+        return data.deleted;
+      },
+
       selectTrainingPair: (id: string | null) => {
         set({ selectedTrainingPairId: id });
       },

@@ -203,3 +203,99 @@ export async function POST(request: NextRequest) {
     return handleError(error, 'Training POST');
   }
 }
+
+/**
+ * DELETE /api/annotator/training
+ * Delete training pairs (single by id, or all)
+ *
+ * Body: { id: string } - delete specific training pair
+ * Body: { all: true } - delete ALL training pairs for user
+ */
+export async function DELETE(request: NextRequest) {
+  try {
+    const rateLimit = withRateLimit(request, 30, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
+
+    const body = await request.json();
+    const { id, all } = body;
+
+    // Option 1: Delete all training pairs
+    if (all === true) {
+      console.log(`[Training DELETE] Deleting ALL training pairs for user ${user.id}`);
+
+      // First count how many
+      const { count } = await supabase
+        .from('annotator_training_pairs')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      // Delete associated patterns first
+      const { error: patternError } = await supabase
+        .from('annotator_patterns')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (patternError) {
+        console.error('[Training DELETE] Failed to delete patterns:', patternError);
+      }
+
+      // Delete training pairs
+      const { error } = await supabase
+        .from('annotator_training_pairs')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (error) {
+        console.error('[Training DELETE] Failed to delete training pairs:', error);
+        return errorResponse('DELETE_FAILED', 'Failed to delete training pairs', 500);
+      }
+
+      console.log(`[Training DELETE] Deleted ${count} training pairs and associated patterns`);
+      return NextResponse.json({
+        success: true,
+        deleted: count || 0,
+        message: 'All training pairs and patterns deleted',
+      });
+    }
+
+    // Option 2: Delete specific training pair by id
+    if (!id) {
+      return errorResponse('INVALID_REQUEST', 'id or {all: true} is required', 400);
+    }
+
+    console.log(`[Training DELETE] Deleting training pair ${id}`);
+
+    // Delete associated patterns
+    const { error: patternError } = await supabase
+      .from('annotator_patterns')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('training_pair_id', id);
+
+    if (patternError) {
+      console.error('[Training DELETE] Failed to delete patterns:', patternError);
+    }
+
+    // Delete the training pair
+    const { error } = await supabase
+      .from('annotator_training_pairs')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('id', id);
+
+    if (error) {
+      console.error('[Training DELETE] Failed to delete training pair:', error);
+      return errorResponse('DELETE_FAILED', 'Failed to delete training pair', 500);
+    }
+
+    return NextResponse.json({
+      success: true,
+      deleted: 1,
+    });
+  } catch (error) {
+    return handleError(error, 'Training DELETE');
+  }
+}

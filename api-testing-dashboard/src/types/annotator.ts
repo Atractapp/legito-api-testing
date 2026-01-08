@@ -372,6 +372,7 @@ export interface AnnotatorActions {
   loadTrainingPairs: () => Promise<void>;
   uploadTrainingPair: (input: TrainingPairInput) => Promise<TrainingPair>;
   deleteTrainingPair: (id: string) => Promise<void>;
+  deleteAllTrainingPairs: () => Promise<number>;
   selectTrainingPair: (id: string | null) => void;
 
   // Pattern actions
