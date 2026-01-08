@@ -357,12 +357,16 @@ function convertDuplicatesToLinks(
       const seen = seenTextInputs.get(originalLower)!;
       seen.count++;
 
-      // Check if this looks like a party name reference (for signature blocks)
+      // Check if this looks like a party name or reference field
       const isPartyNamePattern = /\b(name|creditor|debtor|buyer|seller|lessor|lessee|landlord|tenant|employer|employee)\b/i.test(originalLower);
 
-      if (isPartyNamePattern) {
-        // Party name in duplicate occurrence → Link
-        console.log(`[convertDuplicatesToLinks] Converting party name duplicate "${suggestion.originalText}" to [Link]`);
+      // Check if original was a bracketed placeholder like [company], [city], [name]
+      // These should become [Link] on duplicate occurrences
+      const isBracketPlaceholder = /^\[.+\]$/.test(suggestion.originalText);
+
+      if (isPartyNamePattern || isBracketPlaceholder) {
+        // Party name or bracket placeholder in duplicate occurrence → Link
+        console.log(`[convertDuplicatesToLinks] Converting duplicate "${suggestion.originalText}" to [Link]`);
         return {
           ...suggestion,
           annotatedText: '[Link]',
@@ -372,7 +376,21 @@ function convertDuplicatesToLinks(
       }
 
       // Non-party TextInput duplicates stay as TextInput (e.g., "City" appears twice for different parties)
-      console.log(`[convertDuplicatesToLinks] Keeping duplicate "${suggestion.originalText}" as TextInput (not a party name)`);
+      // BUT: Check if in signature block - if so, convert to Link
+      if (documentText) {
+        const inSignature = isInSignatureBlock(documentText, suggestion.position.start);
+        if (inSignature) {
+          console.log(`[convertDuplicatesToLinks] Converting duplicate "${suggestion.originalText}" in signature block to [Link]`);
+          return {
+            ...suggestion,
+            annotatedText: '[Link]',
+            type: 'Link' as AnnotationType,
+            confidence: Math.min(suggestion.confidence, 0.90),
+          };
+        }
+      }
+
+      console.log(`[convertDuplicatesToLinks] Keeping duplicate "${suggestion.originalText}" as TextInput (not a party name, not in signature)`);
       return suggestion;
     } else {
       // First occurrence
@@ -557,7 +575,7 @@ function getMeaningfulLabel(text: string, contextBefore?: string): string | null
   // Empty or too short
   if (trimmed.length === 0) return null;
 
-  // FIRST: Strip ALL brackets from start and end - they break [Textinput: label] format
+  // FIRST: Strip ALL brackets from start and end - they break [TextInput: label] format
   // Also strip any brackets mixed with content like "XX]" or "[Name"
   trimmed = trimmed.replace(/^[\[\]{}()<>]+/, '').replace(/[\[\]{}()<>]+$/, '');
   // Also remove any remaining brackets inside
@@ -944,13 +962,32 @@ function autoDetectPlaceholders(
   // =================================================================
   // PRIORITY 1: Calculation formulas (word*word) - MUST run FIRST
   // Before highlighted text processing to avoid "amount" being detected alone
+  // IMPORTANT: Skip German gender-neutral asterisks like "Autor*in", "vom*von"
   // =================================================================
   const calcPattern = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\*\s*([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
   let match;
+
+  // German gender-neutral patterns to skip - these are NOT calculations
+  const germanGenderPatterns = [
+    /\*in\b/i,      // Autor*in, Autor*innen, Arbeitnehmer*in
+    /\*innen\b/i,   // Autor*innen
+    /vom\*von/i,    // vom*von
+    /er\*sie/i,     // er*sie
+    /ihm\*ihr/i,    // ihm*ihr
+    /sein\*ihr/i,   // sein*ihr
+  ];
+
   while ((match = calcPattern.exec(documentText)) !== null) {
     const fullMatch = match[0];
     const position = match.index;
     if (isCovered(position)) continue;
+
+    // Skip German gender-neutral patterns
+    const isGermanGender = germanGenderPatterns.some(p => p.test(fullMatch));
+    if (isGermanGender) {
+      console.log(`[autoDetect] Skipping German gender pattern: "${fullMatch}"`);
+      continue;
+    }
 
     console.log(`[autoDetect] PRIORITY: Found calculation "${fullMatch}" → [Calculation]`);
 
@@ -971,8 +1008,61 @@ function autoDetectPlaceholders(
   // =================================================================
   // PRIORITY 2: Slash-separated options (Select fields)
   // Must run before highlighted text to capture full phrases
-  // Strategy: Find balanced options (similar length before/after slash)
+  // IMPORTANT: Only detect REAL choice options, NOT:
+  // - Compound words: "treatments/scripts", "and/or"
+  // - Section headers: "Date/Term/Delivery"
+  // - Common conjunctions: "und/oder", "a/nebo"
   // =================================================================
+
+  // First: Detect known short title patterns like "Mr/Ms", "D/Dª."
+  const titlePatterns = [
+    { pattern: /\bMr\/Ms\.?/g, text: 'Mr/Ms' },
+    { pattern: /\bD\/Dª\.?/g, text: 'D/Dª.' },
+    { pattern: /\bHerr\/Frau/g, text: 'Herr/Frau' },
+    { pattern: /\bSr\.?\/Sra\.?/g, text: 'Sr./Sra.' },
+  ];
+
+  for (const { pattern, text } of titlePatterns) {
+    let titleMatch;
+    while ((titleMatch = pattern.exec(documentText)) !== null) {
+      const position = titleMatch.index;
+      if (isCovered(position)) continue;
+
+      console.log(`[autoDetect] PRIORITY: Found title options "${titleMatch[0]}" → [Select: ${text}]`);
+
+      detected.push({
+        id: crypto.randomUUID(),
+        originalText: titleMatch[0],
+        annotatedText: `[Select: ${text}]`,
+        type: 'Select',
+        position: { start: position, end: position + titleMatch[0].length },
+        confidence: 0.90,
+        isAccepted: true,
+        isEdited: false,
+      });
+
+      markCovered(position, position + titleMatch[0].length);
+    }
+  }
+
+  // Second: Detect phrase-level options like "by a bank transfer/in cash"
+  // BUT be very selective - skip common conjunctions and compound words
+  const skipSlashPatterns = [
+    /\band\/or\b/i,                    // common conjunction
+    /\bund\/oder\b/i,                  // German conjunction
+    /\ba\/nebo\b/i,                    // Czech conjunction
+    /\btreatments\/scripts\b/i,        // compound alternatives
+    /\boutlines\/treatments\b/i,       // compound alternatives
+    /\b\w+\/\w+\s+steps\b/i,          // "xxx/yyy steps"
+    /\b\w+\/instructions\b/i,          // "xxx/instructions"
+    /\bdate\/term\/delivery\b/i,       // section header
+    /\bstartdatum\/laufzeit\b/i,       // German section header
+    /\blieferzeit\/timeline\b/i,       // German compound
+    /\bänderungen\/entwürfe\b/i,       // German compound
+    /\bepisoden\b/i,                   // part of longer phrase
+    /\bneúčinným\b/i,                  // Czech legal text
+  ];
+
   let slashIdx = 0;
   while ((slashIdx = documentText.indexOf('/', slashIdx)) !== -1) {
     if (isCovered(slashIdx)) {
@@ -989,42 +1079,30 @@ function autoDetectPlaceholders(
     }
 
     // Expand backwards - find the phrase before slash
-    // STRATEGY: Start from slash, go backwards word by word
-    // Stop when we hit:
-    // - Punctuation
-    // - "the" / "with" / article words
-    // - A capitalized noun that's not part of the option (like "Loan")
     let start = slashIdx;
     let wordCount = 0;
-
-    // First, skip any whitespace immediately before slash
     while (start > 0 && /\s/.test(documentText[start - 1])) start--;
 
     while (start > 0 && wordCount < 5) {
       const prevChar = documentText[start - 1];
-
-      // Stop at punctuation
       if (/[.,:;!?\n\r\t()[\]{}]/.test(prevChar)) break;
 
-      // If we're at a word boundary, check the word BEFORE we include it
       if (/\s/.test(prevChar)) {
-        // Find where the previous word starts
         let wordStart = start - 1;
         while (wordStart > 0 && /\s/.test(documentText[wordStart - 1])) wordStart--;
         while (wordStart > 0 && !/\s/.test(documentText[wordStart - 1]) && !/[.,:;!?\n\r\t()[\]{}]/.test(documentText[wordStart - 1])) wordStart--;
 
         const prevWord = documentText.slice(wordStart, start).trim();
 
-        // Stop at articles/prepositions that start a new clause
-        if (/^(the|a|an|with|from|into|upon)$/i.test(prevWord)) {
-          break;
+        // Stop at articles/prepositions (except when part of "by a" phrase)
+        if (/^(the|with|from|into|upon)$/i.test(prevWord)) break;
+        if (/^(a|an)$/i.test(prevWord)) {
+          const evenEarlier = documentText.slice(Math.max(0, wordStart - 10), wordStart).trim();
+          if (!/\bby$/i.test(evenEarlier)) break;
         }
 
-        // Stop at capitalized nouns that look like document terms (not option words)
-        // "Loan", "Agreement", "Creditor" etc. are document nouns, not options
-        // But "By", "In", "Cash", "Bank", "Transfer" are OK as option words
+        // Stop at capitalized document terms
         if (/^[A-Z][a-z]+$/.test(prevWord) && !/^(By|In|Or|And|Cash|Bank|Transfer|Check|Card|Wire|Account)$/i.test(prevWord)) {
-          console.log(`[autoDetect] Slash: stopping at capitalized noun "${prevWord}"`);
           break;
         }
 
@@ -1034,23 +1112,20 @@ function autoDetectPlaceholders(
     }
     while (start < slashIdx && /\s/.test(documentText[start])) start++;
 
-    // Expand forwards - match similar word count as before
+    // Expand forwards
     const beforeText = documentText.slice(start, slashIdx).trim();
     const beforeWordCount = beforeText.split(/\s+/).length;
 
     let end = slashIdx + 1;
     let afterWordCount = 0;
-    // Allow slightly more words after to capture full phrase, but limit
     const maxAfterWords = Math.max(beforeWordCount + 1, 4);
 
     while (end < documentText.length && afterWordCount < maxAfterWords) {
       const nextChar = documentText[end];
       if (/[.,:;!?\n\r\t()[\]{}]/.test(nextChar)) break;
 
-      // Stop if we hit a word that clearly starts a new clause
       const wordAtEnd = documentText.slice(end, end + 15).match(/^\s*(\w+)/)?.[1]?.toLowerCase() || '';
       if (/^(deposited|transferred|paid|sent|into|to|from|by|the|a|an|and|or)$/i.test(wordAtEnd) && afterWordCount > 0) {
-        // Allow "in" as it's often part of options like "in cash"
         if (wordAtEnd !== 'in' || afterWordCount >= 2) break;
       }
 
@@ -1062,12 +1137,18 @@ function autoDetectPlaceholders(
     const fullMatch = documentText.slice(start, end);
     const options = fullMatch.split('/').map(o => o.trim()).filter(o => o.length > 0);
 
-    // Validate: need 2+ options, reasonably balanced length
+    // Validate: need 2+ options
     if (options.length >= 2) {
+      // Check if this matches any skip pattern
+      const shouldSkip = skipSlashPatterns.some(p => p.test(fullMatch));
+      if (shouldSkip) {
+        console.log(`[autoDetect] Skipping non-option slash pattern: "${fullMatch}"`);
+        slashIdx++;
+        continue;
+      }
+
       const maxLen = Math.max(...options.map(o => o.length));
       const minLen = Math.min(...options.map(o => o.length));
-
-      // Options should be somewhat balanced (not 3 chars vs 40 chars)
       const isBalanced = maxLen <= 40 && minLen >= 2 && maxLen / minLen < 10;
 
       // Skip dates
@@ -1102,7 +1183,7 @@ function autoDetectPlaceholders(
   // MUST run BEFORE highlighted text processing to handle XXX properly
   // XXX can mean different things based on context:
   // - XXX EUR → [Money] (include the currency)
-  // - XXX % → [Textinput] (percentage, needs to be filled)
+  // - XXX % → [TextInput] (percentage, needs to be filled)
   // - XXX. (end of sentence) → stay as XXX (static placeholder, don't annotate)
   // - Highlighted XXX → process based on context
   // =================================================================
@@ -1142,14 +1223,14 @@ function autoDetectPlaceholders(
 
       markCovered(position, position + fullLength);
     } else if (percentMatch) {
-      // XXX % → [Textinput] (percentage that needs to be filled)
+      // XXX % → [TextInput] (percentage that needs to be filled)
       // Only include the XXX, leave % visible
-      console.log(`[autoDetect] PRIORITY: Found XXX % (percentage) → [Textinput]`);
+      console.log(`[autoDetect] PRIORITY: Found XXX % (percentage) → [TextInput]`);
 
       detected.push({
         id: crypto.randomUUID(),
         originalText: 'XXX',
-        annotatedText: '[Textinput]',
+        annotatedText: '[TextInput]',
         type: 'TextInput',
         position: { start: position, end: position + 3 },
         confidence: 0.90,
@@ -1158,12 +1239,12 @@ function autoDetectPlaceholders(
       });
 
       markCovered(position, position + 3);
-    } else if (endOfSentence && !xxxIsHighlighted) {
-      // XXX at end of sentence and NOT highlighted → static placeholder, don't annotate
-      console.log(`[autoDetect] PRIORITY: Skipping standalone XXX at end of sentence (not highlighted)`);
-      // Don't add to detected, let it stay as XXX
-      // But mark as covered so highlighted text doesn't pick it up
-      // Actually no - we want it to stay as plain text, not be covered
+    } else if (endOfSentence) {
+      // XXX at end of sentence (followed by period) → static placeholder, don't annotate
+      // This applies regardless of highlighting - it's a fixed value, not fillable
+      console.log(`[autoDetect] PRIORITY: Skipping standalone XXX at end of sentence`);
+      // Mark as covered so highlighted text processing doesn't pick it up
+      markCovered(position, position + 3);
     } else if (xxxIsHighlighted) {
       // Highlighted XXX without specific context → default to [Money]
       console.log(`[autoDetect] PRIORITY: Found highlighted XXX (no specific context) → [Money]`);
@@ -1237,6 +1318,14 @@ function autoDetectPlaceholders(
     // Skip empty text
     if (!text) continue;
 
+    // SKIP common English words that are NOT placeholders even if highlighted
+    // These are regular document text, not fillable fields
+    const commonWordsToSkip = ['amount', 'total', 'the', 'and', 'or', 'of', 'in', 'on', 'at', 'by', 'for', 'to', 'from', 'with'];
+    if (commonWordsToSkip.includes(text.toLowerCase())) {
+      console.log(`[autoDetect] Skipping common word: "${text}"`);
+      continue;
+    }
+
     // SKIP punctuation-only text - parentheses, quotes, etc. are NOT placeholders
     // These often get highlighted as part of formatting but aren't fillable
     if (/^[()[\]{}<>"''""«»‹›.,;:!?@#$%^&*+=|\\\/~`]+$/.test(text)) {
@@ -1251,7 +1340,7 @@ function autoDetectPlaceholders(
       continue;
     }
 
-    // SKIP if text already contains annotation markers (prevents nested [Textinput: [Textinput:]])
+    // SKIP if text already contains annotation markers (prevents nested [TextInput: [TextInput:]])
     // Also skip if it looks like a partial annotation (has unmatched brackets with annotation keywords)
     if (/\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)/i.test(text)) {
       console.log(`[autoDetect] Skipping already-annotated text: "${text.slice(0, 50)}"`);
@@ -1370,7 +1459,7 @@ function autoDetectPlaceholders(
     } else {
       // Only add label if it's meaningful (not just the placeholder itself)
       const meaningfulLabel = getMeaningfulLabel(label || text, contextBefore);
-      annotatedText = meaningfulLabel ? `[Textinput: ${meaningfulLabel}]` : '[Textinput]';
+      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
     }
 
     // VALIDATION: Don't create nested annotations
@@ -1427,7 +1516,7 @@ function autoDetectPlaceholders(
     } else if (type === 'Select') {
       annotatedText = `[Select: ${label}]`;
     } else {
-      annotatedText = `[Textinput: ${label}]`;
+      annotatedText = `[TextInput: ${label}]`;
     }
 
     console.log(`[autoDetect] Found {placeholder} "${fullMatch}" → ${annotatedText}`);
@@ -1472,7 +1561,7 @@ function autoDetectPlaceholders(
     } else if (type === 'Select') {
       annotatedText = `[Select: ${label}]`;
     } else {
-      annotatedText = `[Textinput: ${label}]`;
+      annotatedText = `[TextInput: ${label}]`;
     }
 
     console.log(`[autoDetect] Found <<placeholder>> "${fullMatch}" → ${annotatedText}`);
@@ -1552,10 +1641,10 @@ function autoDetectPlaceholders(
     } else if (type === 'Money') {
       annotatedText = '[Money]';
     } else if (label) {
-      annotatedText = `[Textinput: ${label}]`;
+      annotatedText = `[TextInput: ${label}]`;
     } else {
       // Highlighted but no label - generic TextInput
-      annotatedText = '[Textinput]';
+      annotatedText = '[TextInput]';
     }
 
     console.log(`[autoDetect] Found underscores "${fullMatch}" → ${annotatedText} (label: "${label || 'none'}", highlighted: ${isHighlighted})`);
@@ -1593,7 +1682,7 @@ function autoDetectPlaceholders(
       continue;
     }
 
-    // Skip if it looks like an existing annotation [Textinput: X], [Date], etc.
+    // Skip if it looks like an existing annotation [TextInput: X], [Date], etc.
     if (/^(TextInput|Date|Money|Link|Select|Calculation|Number|Checkbox)/i.test(content)) {
       continue;
     }
@@ -1628,7 +1717,7 @@ function autoDetectPlaceholders(
     } else {
       // Use getMeaningfulLabel to filter out meaningless labels like "X", "__"
       const meaningfulLabel = getMeaningfulLabel(label, contextBefore);
-      annotatedText = meaningfulLabel ? `[Textinput: ${meaningfulLabel}]` : '[Textinput]';
+      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
     }
 
     console.log(`[autoDetect] Found [bracket] "${fullMatch}" → ${annotatedText}`);
@@ -1687,12 +1776,12 @@ function autoDetectPlaceholders(
     const position = match.index;
     if (isCovered(position)) continue;
 
-    console.log(`[autoDetect] Found bullet placeholder "${match[0]}" → [Textinput]`);
+    console.log(`[autoDetect] Found bullet placeholder "${match[0]}" → [TextInput]`);
 
     detected.push({
       id: crypto.randomUUID(),
       originalText: match[0],
-      annotatedText: '[Textinput]',
+      annotatedText: '[TextInput]',
       type: 'TextInput',
       position: { start: position, end: position + 1 },
       confidence: 0.85,
@@ -1863,8 +1952,14 @@ function inferAnnotationFromPlaceholderName(
 
   // Money indicators in name
   // NOTE: "amount" is NOT a money keyword - it's too generic (appears in "in the amount of")
-  // "Loan" CAN trigger Money, but context indicators above should have already
-  // overridden if it's actually a date (e.g., "do {LoanTo}" = until date)
+  // "Loan" CAN trigger Money, but NOT if it ends with "To" (e.g., "LoanTo" = end date)
+  // Check for date-suffix patterns first
+  if (nameLower.endsWith('to') && nameLower.includes('loan')) {
+    // "LoanTo" = loan end date, NOT money
+    console.log(`[inferType] "${placeholderName}" → Date (ends with "To", likely end date)`);
+    return { type: 'Date', label };
+  }
+
   const moneyNameKeywords = ['value', 'price', 'cost', 'fee', 'payment', 'sum', 'loan', 'money', 'salary', 'wage', 'cena', 'částka', 'půjčka', 'úvěr'];
   if (moneyNameKeywords.some(k => nameLower.includes(k))) {
     return { type: 'Money', label };
