@@ -769,22 +769,24 @@ function isPlaceholderContext(
   // =================================================================
 
   // If matched text is ALL CAPS and short, it might be a field marker
+  // BUT only if it's in a clearly placeholder position (not mid-sentence)
   if (matchedText === matchedText.toUpperCase() && matchedText.length <= 20) {
     // But not if it's in a header-like context (all caps line)
     const fullLine = getLineContaining(documentText, matchStart);
     if (fullLine && fullLine !== fullLine.toUpperCase()) {
-      // Mixed case line with ALL CAPS word = might be a field
-      return true;
+      // Mixed case line with ALL CAPS word - check if it's isolated
+      // "in CITY of" = regular text (surrounded by lowercase)
+      // "Name: CITY" = possibly a field
+      const isMidText = /\w\s*$/.test(contextBefore) && /^\s*\w/.test(contextAfter);
+      if (!isMidText) {
+        return true;
+      }
     }
   }
 
-  // If surrounded by other placeholder-like content
-  const surroundingContext = contextBefore + contextAfter;
-  const placeholderMarkers = surroundingContext.match(/\{[^}]+\}|\[[^\]]+\]|_{3,}|[Xx]{3,}/g) || [];
-  if (placeholderMarkers.length >= 1) {
-    // Other placeholders nearby suggest this might be one too
-    return true;
-  }
+  // REMOVED: The "nearby placeholders" heuristic was too aggressive
+  // Just because there's an underscore or [X] nearby doesn't mean all text is a placeholder
+  // Example: "currently titled '______' ('Series')" - "Series" is NOT a placeholder!
 
   // Default: If the text is a common word (< 10 chars) in flowing prose, skip it
   if (matchLength < 10) {
@@ -1173,7 +1175,9 @@ function autoDetectPlaceholders(
     } else if (type === 'Money') {
       annotatedText = '[Money]';
     } else {
-      annotatedText = `[TextInput: ${label}]`;
+      // Use getMeaningfulLabel to filter out meaningless labels like "X", "__"
+      const meaningfulLabel = getMeaningfulLabel(label, contextBefore);
+      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
     }
 
     console.log(`[autoDetect] Found [bracket] "${fullMatch}" → ${annotatedText}`);
@@ -1275,20 +1279,17 @@ function inferAnnotationFromPlaceholderName(
   // ============================================================
 
   // Check if the placeholder LOOKS like it could be a date
-  // - Has X patterns: X, XX, XXX, XX.XX.XXXX
-  // - Has numbers: 1, 12, 2024
-  // - Is underscores: ___, ____________
-  // - Date-like format: DD.MM.YYYY, MM/DD/YYYY
+  // STRICT: Only match patterns that are clearly date-like
+  // NOT underscores - those are generic placeholders
   const looksLikeDate = (text: string): boolean => {
     const t = text.trim();
-    // X patterns
-    if (/^[Xx]+([.\/-][Xx]+)*$/.test(t)) return true;
-    // Numbers that could be dates
-    if (/^\d{1,2}([.\/-]\d{1,2}([.\/-]\d{2,4})?)?$/.test(t)) return true;
-    // Just underscores (ambiguous - could be date)
-    if (/^_+$/.test(t)) return true;
+    // X patterns with date-like structure: XX.XX.XXXX, XX/XX/XX
+    if (/^[Xx]{1,2}[.\/-][Xx]{1,2}[.\/-][Xx]{2,4}$/.test(t)) return true;
+    // Numbers with date structure: 12.05.2024, 1/1/24
+    if (/^\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4}$/.test(t)) return true;
     // DD.MM.YYYY format
     if (/^[Dd]{1,2}[.\/-][Mm]{1,2}[.\/-][YyRr]{2,4}$/.test(t)) return true;
+    // DO NOT include just underscores or single numbers - too generic
     return false;
   };
 
