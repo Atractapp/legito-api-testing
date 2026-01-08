@@ -103,55 +103,40 @@ export async function POST(request: NextRequest) {
         // Get the actual text from document (preserving original case)
         const actualText = documentText.slice(foundIndex, foundIndex + originalText.length);
 
-        // CRITICAL: Check if this is actually a placeholder vs regular prose
-        //
-        // TWO TYPES OF PATTERNS:
-        // 1. STRUCTURAL patterns: [City], {Name}, ___, [**] - these DON'T need highlighting
-        // 2. PLAIN TEXT patterns: "City", "Name" - these REQUIRE highlighting to match
-        //
-        const isStructuralPattern = isStructuralPlaceholder(originalText);
-        const isHighlighted = isTextHighlighted(foundIndex, originalText.length, highlightedRegions);
+        // CRITICAL: Check if this match is a SUBSTRING of a larger highlighted region
+        // e.g., pattern "Serie" should NOT match inside highlighted "Series"
+        const isSubstringOfLargerHighlight = highlightedRegions.some((region) => {
+          const patternStart = foundIndex;
+          const patternEnd = foundIndex + originalText.length;
+          return region.position.start <= patternStart &&
+                 region.position.end > patternEnd &&
+                 (region.position.end - region.position.start) > originalText.length;
+        });
 
-        let shouldMatch = false;
-        let matchReason = '';
-
-        if (isStructuralPattern) {
-          // Structural patterns (brackets, underscores) don't need highlighting
-          shouldMatch = true;
-          matchReason = 'structural pattern';
-        } else if (isHighlighted) {
-          // Plain text patterns REQUIRE highlighting
-          shouldMatch = true;
-          matchReason = 'HIGHLIGHTED';
-        } else {
-          // Plain text without highlighting - check context as fallback
-          // But be very strict - only match if clearly a placeholder context
-          const hasPlaceholderContext = isPlaceholderContext(documentText, foundIndex, originalText.length);
-          if (hasPlaceholderContext) {
-            shouldMatch = true;
-            matchReason = 'placeholder context';
-          }
+        if (isSubstringOfLargerHighlight) {
+          console.log(`[Annotate] Skipping "${actualText}" at ${foundIndex} - it's a substring of a larger highlighted region`);
+          searchPos = foundIndex + originalText.length;
+          continue;
         }
 
-        if (shouldMatch) {
-          console.log(`[Annotate] Found ${matchReason} text "${actualText}" at position ${foundIndex} → ${pattern.annotatedText}`);
+        // TRAINED PATTERNS ARE ALWAYS MATCHED
+        // The user explicitly trained this pattern - trust it!
+        console.log(`[Annotate] Found TRAINED pattern "${actualText}" at position ${foundIndex} → ${pattern.annotatedText}`);
 
-          suggestions.push({
-            id: crypto.randomUUID(),
-            originalText: actualText, // Use actual text from document
-            annotatedText: pattern.annotatedText,
-            type: pattern.annotationType,
-            position: {
-              start: foundIndex,
-              end: foundIndex + originalText.length,
-            },
-            confidence: pattern.confidence,
-            isAccepted: true,
-            isEdited: false,
-          });
-        } else {
-          console.log(`[Annotate] Skipping plain text "${actualText}" at ${foundIndex} - not highlighted`);
-        }
+        suggestions.push({
+          id: crypto.randomUUID(),
+          originalText: actualText,
+          annotatedText: pattern.annotatedText,
+          type: pattern.annotationType,
+          position: {
+            start: foundIndex,
+            end: foundIndex + originalText.length,
+          },
+          confidence: pattern.confidence,
+          isAccepted: true,
+          isEdited: false,
+          isFromPattern: true, // Mark as from trained pattern
+        });
 
         // Move past this match to find next occurrence
         searchPos = foundIndex + originalText.length;
@@ -164,19 +149,44 @@ export async function POST(request: NextRequest) {
     suggestions.push(...autoDetectedSuggestions);
     console.log(`[Annotate] Auto-detected ${autoDetectedSuggestions.length} additional placeholders`);
 
+    // DEBUG: Log all Serie/Series suggestions BEFORE dedup
+    const serieBeforeDedup = suggestions.filter(s => s.originalText.includes('Serie'));
+    if (serieBeforeDedup.length > 0) {
+      console.log(`[DEBUG] Serie/Series suggestions BEFORE dedup (${serieBeforeDedup.length}):`);
+      serieBeforeDedup.forEach((s, i) => {
+        console.log(`  ${i + 1}. "${s.originalText}" at ${s.position.start}-${s.position.end} → ${s.annotatedText}`);
+      });
+    }
+
     // Sort by position
     suggestions.sort((a, b) => a.position.start - b.position.start);
 
     // Remove overlapping suggestions (keep higher confidence)
     const dedupedSuggestions = removeOverlappingSuggestions(suggestions);
 
+    // DEBUG: Log Serie/Series suggestions AFTER dedup
+    const serieAfterDedup = dedupedSuggestions.filter(s => s.originalText.includes('Serie'));
+    if (serieAfterDedup.length > 0) {
+      console.log(`[DEBUG] Serie/Series suggestions AFTER dedup (${serieAfterDedup.length}):`);
+      serieAfterDedup.forEach((s, i) => {
+        console.log(`  ${i + 1}. "${s.originalText}" at ${s.position.start}-${s.position.end} → ${s.annotatedText}`);
+      });
+    }
+
+    // Note: We removed the overly restrictive final verification filter
+    // Trained patterns are ALWAYS trusted - user explicitly taught them
+    // Auto-detected suggestions have their own validation in autoDetectPlaceholders
+    const verifiedSuggestions = dedupedSuggestions;
+
+    console.log(`[Annotate] After dedup: ${verifiedSuggestions.length} suggestions`);
+
     // Convert duplicate occurrences to [Link]
     // First occurrence of each original text stays as-is (TextInput, Select, Date, etc.)
     // Second+ occurrences become [Link] (user enters value once, rest auto-fill)
     // EXCEPTION: Signature blocks - dates/cities for different parties stay as new inputs
-    const linkedSuggestions = convertDuplicatesToLinks(dedupedSuggestions, documentText);
+    const linkedSuggestions = convertDuplicatesToLinks(verifiedSuggestions, documentText);
 
-    console.log(`[Annotate] Found ${suggestions.length} matches, after dedup: ${dedupedSuggestions.length}, after linking: ${linkedSuggestions.length}`);
+    console.log(`[Annotate] Found ${suggestions.length} matches, after dedup: ${dedupedSuggestions.length}, verified: ${verifiedSuggestions.length}, after linking: ${linkedSuggestions.length}`);
 
     // Create session in database
     const { data: session, error: sessionError } = await supabase
@@ -311,40 +321,63 @@ function convertDuplicatesToLinks(
   suggestions: AnnotationSuggestion[],
   documentText?: string
 ): AnnotationSuggestion[] {
-  // Track which CONTEXTUAL keys have been seen
-  // For meaningful text like "Name", key = "name"
-  // For context-less like "[X]" after "Name", key = "name|[x]|"
-  const seenContextualKeys = new Map<string, { count: number; firstAnnotation: string }>();
+  // Track which text values have been seen (for TextInput fields only)
+  // Dates, Money, Calculations should NOT become Links - they're independent entries
+  const seenTextInputs = new Map<string, { count: number; firstAnnotation: string }>();
 
   return suggestions.map((suggestion) => {
-    const contextualKey = getContextualKey(suggestion, documentText);
+    // RULE 1: Dates should NEVER become Links - each date is an independent entry
+    // (e.g., "repay by Date1", "paid by Date2" are different dates)
+    if (suggestion.type === 'Date') {
+      console.log(`[convertDuplicatesToLinks] Keeping Date "${suggestion.originalText}" (dates never become links)`);
+      return suggestion;
+    }
 
-    // Check if this is in a signature block context (different party signatures)
-    const isSignatureBlock = documentText ? isInSignatureBlock(documentText, suggestion.position.start) : false;
+    // RULE 2: Money and Calculation should NEVER become Links
+    if (suggestion.type === 'Money' || suggestion.type === 'Calculation') {
+      console.log(`[convertDuplicatesToLinks] Keeping ${suggestion.type} "${suggestion.originalText}" (never becomes link)`);
+      return suggestion;
+    }
 
-    if (seenContextualKeys.has(contextualKey)) {
-      const seen = seenContextualKeys.get(contextualKey)!;
+    // RULE 3: Select should NEVER become Links
+    if (suggestion.type === 'Select') {
+      return suggestion;
+    }
+
+    // RULE 4: For TextInput - check if it's a duplicate that should become Link
+    // Only party names and similar references should become Links
+    const originalLower = suggestion.originalText.toLowerCase();
+
+    // Skip generic placeholders from becoming links (●, [X], etc.)
+    if (isContextlessPlaceholder(suggestion.originalText)) {
+      return suggestion;
+    }
+
+    if (seenTextInputs.has(originalLower)) {
+      const seen = seenTextInputs.get(originalLower)!;
       seen.count++;
 
-      // EXCEPTION: Keep as new input if in signature block AND it's a date/city
-      if (isSignatureBlock && (suggestion.type === 'Date' || isLikelySignatureField(suggestion))) {
-        console.log(`[convertDuplicatesToLinks] Keeping "${suggestion.originalText}" as new input (signature block context)`);
-        return suggestion;
+      // Check if this looks like a party name reference (for signature blocks)
+      const isPartyNamePattern = /\b(name|creditor|debtor|buyer|seller|lessor|lessee|landlord|tenant|employer|employee)\b/i.test(originalLower);
+
+      if (isPartyNamePattern) {
+        // Party name in duplicate occurrence → Link
+        console.log(`[convertDuplicatesToLinks] Converting party name duplicate "${suggestion.originalText}" to [Link]`);
+        return {
+          ...suggestion,
+          annotatedText: '[Link]',
+          type: 'Link' as AnnotationType,
+          confidence: Math.min(suggestion.confidence, 0.95),
+        };
       }
 
-      // This is a DUPLICATE with same context - convert to [Link]
-      console.log(`[convertDuplicatesToLinks] Converting duplicate "${suggestion.originalText}" (key: ${contextualKey}) to [Link]`);
-
-      return {
-        ...suggestion,
-        annotatedText: '[Link]',
-        type: 'Link' as AnnotationType,
-        confidence: Math.min(suggestion.confidence, 0.95),
-      };
+      // Non-party TextInput duplicates stay as TextInput (e.g., "City" appears twice for different parties)
+      console.log(`[convertDuplicatesToLinks] Keeping duplicate "${suggestion.originalText}" as TextInput (not a party name)`);
+      return suggestion;
     } else {
-      // FIRST occurrence with this context
-      seenContextualKeys.set(contextualKey, { count: 1, firstAnnotation: suggestion.annotatedText });
-      console.log(`[convertDuplicatesToLinks] First occurrence of "${suggestion.originalText}" (key: ${contextualKey})`);
+      // First occurrence
+      seenTextInputs.set(originalLower, { count: 1, firstAnnotation: suggestion.annotatedText });
+      console.log(`[convertDuplicatesToLinks] First occurrence of "${suggestion.originalText}"`);
       return suggestion;
     }
   });
@@ -524,7 +557,7 @@ function getMeaningfulLabel(text: string, contextBefore?: string): string | null
   // Empty or too short
   if (trimmed.length === 0) return null;
 
-  // FIRST: Strip ALL brackets from start and end - they break [TextInput: label] format
+  // FIRST: Strip ALL brackets from start and end - they break [Textinput: label] format
   // Also strip any brackets mixed with content like "XX]" or "[Name"
   trimmed = trimmed.replace(/^[\[\]{}()<>]+/, '').replace(/[\[\]{}()<>]+$/, '');
   // Also remove any remaining brackets inside
@@ -881,8 +914,25 @@ function autoDetectPlaceholders(
     }
   }
 
-  // Helper to check if position is covered
+  // Helper to check if ANY position in range is covered
   const isCovered = (pos: number) => coveredPositions.has(String(pos));
+
+  // Helper to check if ANY position in a range is covered (for full overlap detection)
+  const isRangeCovered = (start: number, end: number): boolean => {
+    for (let i = start; i < end; i++) {
+      if (coveredPositions.has(String(i))) return true;
+    }
+    return false;
+  };
+
+  // Helper to check if this region is a SUBSTRING of a larger existing suggestion
+  const isSubstringOfExisting = (start: number, end: number): boolean => {
+    return existingSuggestions.some((s) =>
+      s.position.start <= start &&
+      s.position.end >= end &&
+      (s.position.end - s.position.start) > (end - start)
+    );
+  };
 
   // Helper to mark positions as covered
   const markCovered = (start: number, end: number) => {
@@ -890,6 +940,251 @@ function autoDetectPlaceholders(
       coveredPositions.add(String(i));
     }
   };
+
+  // =================================================================
+  // PRIORITY 1: Calculation formulas (word*word) - MUST run FIRST
+  // Before highlighted text processing to avoid "amount" being detected alone
+  // =================================================================
+  const calcPattern = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\*\s*([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
+  let match;
+  while ((match = calcPattern.exec(documentText)) !== null) {
+    const fullMatch = match[0];
+    const position = match.index;
+    if (isCovered(position)) continue;
+
+    console.log(`[autoDetect] PRIORITY: Found calculation "${fullMatch}" → [Calculation]`);
+
+    detected.push({
+      id: crypto.randomUUID(),
+      originalText: fullMatch,
+      annotatedText: '[Calculation]',
+      type: 'Calculation',
+      position: { start: position, end: position + fullMatch.length },
+      confidence: 0.90,
+      isAccepted: true,
+      isEdited: false,
+    });
+
+    markCovered(position, position + fullMatch.length);
+  }
+
+  // =================================================================
+  // PRIORITY 2: Slash-separated options (Select fields)
+  // Must run before highlighted text to capture full phrases
+  // Strategy: Find balanced options (similar length before/after slash)
+  // =================================================================
+  let slashIdx = 0;
+  while ((slashIdx = documentText.indexOf('/', slashIdx)) !== -1) {
+    if (isCovered(slashIdx)) {
+      slashIdx++;
+      continue;
+    }
+
+    // Skip if looks like a date: digits/digits
+    const beforeChar = documentText[slashIdx - 1] || '';
+    const afterChar = documentText[slashIdx + 1] || '';
+    if (/\d/.test(beforeChar) && /\d/.test(afterChar)) {
+      slashIdx++;
+      continue;
+    }
+
+    // Expand backwards - find the phrase before slash
+    // STRATEGY: Start from slash, go backwards word by word
+    // Stop when we hit:
+    // - Punctuation
+    // - "the" / "with" / article words
+    // - A capitalized noun that's not part of the option (like "Loan")
+    let start = slashIdx;
+    let wordCount = 0;
+
+    // First, skip any whitespace immediately before slash
+    while (start > 0 && /\s/.test(documentText[start - 1])) start--;
+
+    while (start > 0 && wordCount < 5) {
+      const prevChar = documentText[start - 1];
+
+      // Stop at punctuation
+      if (/[.,:;!?\n\r\t()[\]{}]/.test(prevChar)) break;
+
+      // If we're at a word boundary, check the word BEFORE we include it
+      if (/\s/.test(prevChar)) {
+        // Find where the previous word starts
+        let wordStart = start - 1;
+        while (wordStart > 0 && /\s/.test(documentText[wordStart - 1])) wordStart--;
+        while (wordStart > 0 && !/\s/.test(documentText[wordStart - 1]) && !/[.,:;!?\n\r\t()[\]{}]/.test(documentText[wordStart - 1])) wordStart--;
+
+        const prevWord = documentText.slice(wordStart, start).trim();
+
+        // Stop at articles/prepositions that start a new clause
+        if (/^(the|a|an|with|from|into|upon)$/i.test(prevWord)) {
+          break;
+        }
+
+        // Stop at capitalized nouns that look like document terms (not option words)
+        // "Loan", "Agreement", "Creditor" etc. are document nouns, not options
+        // But "By", "In", "Cash", "Bank", "Transfer" are OK as option words
+        if (/^[A-Z][a-z]+$/.test(prevWord) && !/^(By|In|Or|And|Cash|Bank|Transfer|Check|Card|Wire|Account)$/i.test(prevWord)) {
+          console.log(`[autoDetect] Slash: stopping at capitalized noun "${prevWord}"`);
+          break;
+        }
+
+        wordCount++;
+      }
+      start--;
+    }
+    while (start < slashIdx && /\s/.test(documentText[start])) start++;
+
+    // Expand forwards - match similar word count as before
+    const beforeText = documentText.slice(start, slashIdx).trim();
+    const beforeWordCount = beforeText.split(/\s+/).length;
+
+    let end = slashIdx + 1;
+    let afterWordCount = 0;
+    // Allow slightly more words after to capture full phrase, but limit
+    const maxAfterWords = Math.max(beforeWordCount + 1, 4);
+
+    while (end < documentText.length && afterWordCount < maxAfterWords) {
+      const nextChar = documentText[end];
+      if (/[.,:;!?\n\r\t()[\]{}]/.test(nextChar)) break;
+
+      // Stop if we hit a word that clearly starts a new clause
+      const wordAtEnd = documentText.slice(end, end + 15).match(/^\s*(\w+)/)?.[1]?.toLowerCase() || '';
+      if (/^(deposited|transferred|paid|sent|into|to|from|by|the|a|an|and|or)$/i.test(wordAtEnd) && afterWordCount > 0) {
+        // Allow "in" as it's often part of options like "in cash"
+        if (wordAtEnd !== 'in' || afterWordCount >= 2) break;
+      }
+
+      if (/\s/.test(documentText[end - 1]) && !/\s/.test(nextChar)) afterWordCount++;
+      end++;
+    }
+    while (end > slashIdx + 1 && /\s/.test(documentText[end - 1])) end--;
+
+    const fullMatch = documentText.slice(start, end);
+    const options = fullMatch.split('/').map(o => o.trim()).filter(o => o.length > 0);
+
+    // Validate: need 2+ options, reasonably balanced length
+    if (options.length >= 2) {
+      const maxLen = Math.max(...options.map(o => o.length));
+      const minLen = Math.min(...options.map(o => o.length));
+
+      // Options should be somewhat balanced (not 3 chars vs 40 chars)
+      const isBalanced = maxLen <= 40 && minLen >= 2 && maxLen / minLen < 10;
+
+      // Skip dates
+      const noSpaces = fullMatch.replace(/\s/g, '');
+      const isDate = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(noSpaces) ||
+                    /^[XxDdMmYy]{1,4}\/[XxDdMmYy]{1,4}\/[XxDdMmYy]{2,4}$/.test(noSpaces);
+
+      if (isBalanced && !isDate && !isRangeCovered(start, end)) {
+        console.log(`[autoDetect] PRIORITY: Found slash options "${fullMatch}" → [Select: ${fullMatch}]`);
+
+        detected.push({
+          id: crypto.randomUUID(),
+          originalText: fullMatch,
+          annotatedText: `[Select: ${fullMatch}]`,
+          type: 'Select',
+          position: { start, end },
+          confidence: 0.85,
+          isAccepted: true,
+          isEdited: false,
+        });
+
+        markCovered(start, end);
+        slashIdx = end;
+        continue;
+      }
+    }
+    slashIdx++;
+  }
+
+  // =================================================================
+  // PRIORITY 3: XXX placeholder handling (context-aware)
+  // MUST run BEFORE highlighted text processing to handle XXX properly
+  // XXX can mean different things based on context:
+  // - XXX EUR → [Money] (include the currency)
+  // - XXX % → [Textinput] (percentage, needs to be filled)
+  // - XXX. (end of sentence) → stay as XXX (static placeholder, don't annotate)
+  // - Highlighted XXX → process based on context
+  // =================================================================
+  const xxxPattern = /\bXXX\b/g;
+  while ((match = xxxPattern.exec(documentText)) !== null) {
+    const position = match.index;
+    if (isCovered(position)) continue;
+
+    const contextAfter = documentText.slice(position + 3, position + 20);
+
+    // Check what follows XXX
+    const currencyMatch = contextAfter.match(/^\s*(EUR|USD|CZK|GBP|CHF|€|\$|£|Kč)\b/i);
+    const percentMatch = contextAfter.match(/^\s*%/);
+    const endOfSentence = contextAfter.match(/^\s*[.,;:!?\n]/);
+
+    // Check if this XXX is highlighted
+    const xxxIsHighlighted = highlightedRegions.some((r) =>
+      r.position.start <= position && r.position.end >= position + 3
+    );
+
+    if (currencyMatch) {
+      // XXX EUR → [Money] (include the currency in the replacement)
+      const fullLength = 3 + currencyMatch[0].length;
+      const fullMatch = documentText.slice(position, position + fullLength);
+      console.log(`[autoDetect] PRIORITY: Found XXX with currency "${fullMatch}" → [Money]`);
+
+      detected.push({
+        id: crypto.randomUUID(),
+        originalText: fullMatch,
+        annotatedText: '[Money]',
+        type: 'Money',
+        position: { start: position, end: position + fullLength },
+        confidence: 0.95,
+        isAccepted: true,
+        isEdited: false,
+      });
+
+      markCovered(position, position + fullLength);
+    } else if (percentMatch) {
+      // XXX % → [Textinput] (percentage that needs to be filled)
+      // Only include the XXX, leave % visible
+      console.log(`[autoDetect] PRIORITY: Found XXX % (percentage) → [Textinput]`);
+
+      detected.push({
+        id: crypto.randomUUID(),
+        originalText: 'XXX',
+        annotatedText: '[Textinput]',
+        type: 'TextInput',
+        position: { start: position, end: position + 3 },
+        confidence: 0.90,
+        isAccepted: true,
+        isEdited: false,
+      });
+
+      markCovered(position, position + 3);
+    } else if (endOfSentence && !xxxIsHighlighted) {
+      // XXX at end of sentence and NOT highlighted → static placeholder, don't annotate
+      console.log(`[autoDetect] PRIORITY: Skipping standalone XXX at end of sentence (not highlighted)`);
+      // Don't add to detected, let it stay as XXX
+      // But mark as covered so highlighted text doesn't pick it up
+      // Actually no - we want it to stay as plain text, not be covered
+    } else if (xxxIsHighlighted) {
+      // Highlighted XXX without specific context → default to [Money]
+      console.log(`[autoDetect] PRIORITY: Found highlighted XXX (no specific context) → [Money]`);
+
+      detected.push({
+        id: crypto.randomUUID(),
+        originalText: 'XXX',
+        annotatedText: '[Money]',
+        type: 'Money',
+        position: { start: position, end: position + 3 },
+        confidence: 0.85,
+        isAccepted: true,
+        isEdited: false,
+      });
+
+      markCovered(position, position + 3);
+    } else {
+      // Non-highlighted XXX without specific context → skip, let it stay as XXX
+      console.log(`[autoDetect] PRIORITY: Skipping non-highlighted XXX: "${documentText.slice(position, position + 10)}..."`);
+    }
+  }
 
   // =================================================================
   // Pattern 0: HIGHLIGHTED TEXT - Auto-detect text with background color
@@ -906,10 +1201,38 @@ function autoDetectPlaceholders(
   // - Already contains annotation markers [TextInput, [Date, etc.
   // =================================================================
   for (const region of highlightedRegions) {
-    if (isCovered(region.position.start)) continue;
+    console.log(`[autoDetect] Processing highlighted region: "${region.text}" at ${region.position.start}-${region.position.end}`);
+
+    // Check if ANY part of this region is already covered
+    if (isRangeCovered(region.position.start, region.position.end)) {
+      console.log(`[autoDetect] Skipping - range ${region.position.start}-${region.position.end} overlaps with existing`);
+      continue;
+    }
+
+    // Check if this region is a substring of an existing larger suggestion
+    if (isSubstringOfExisting(region.position.start, region.position.end)) {
+      console.log(`[autoDetect] Skipping - region "${region.text}" is substring of a larger existing annotation`);
+      continue;
+    }
 
     let text = region.text.trim();
     let position = { ...region.position };
+
+    // CRITICAL: Verify the position is correct by checking actual text at position
+    const actualTextAtPosition = documentText.slice(position.start, position.end);
+    if (actualTextAtPosition !== region.text && !actualTextAtPosition.includes(region.text.trim())) {
+      console.log(`[autoDetect] POSITION MISMATCH: expected "${region.text}" but found "${actualTextAtPosition}" at ${position.start}-${position.end}`);
+      // Try to find the correct position
+      const correctPos = documentText.indexOf(region.text, Math.max(0, position.start - 50));
+      if (correctPos !== -1 && correctPos < position.start + 50) {
+        console.log(`[autoDetect] Found correct position at ${correctPos}`);
+        position.start = correctPos;
+        position.end = correctPos + region.text.length;
+      } else {
+        console.log(`[autoDetect] Could not find correct position, skipping`);
+        continue;
+      }
+    }
 
     // Skip empty text
     if (!text) continue;
@@ -928,7 +1251,7 @@ function autoDetectPlaceholders(
       continue;
     }
 
-    // SKIP if text already contains annotation markers (prevents nested [TextInput: [TextInput:]])
+    // SKIP if text already contains annotation markers (prevents nested [Textinput: [Textinput:]])
     // Also skip if it looks like a partial annotation (has unmatched brackets with annotation keywords)
     if (/\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)/i.test(text)) {
       console.log(`[autoDetect] Skipping already-annotated text: "${text.slice(0, 50)}"`);
@@ -942,19 +1265,73 @@ function autoDetectPlaceholders(
       continue;
     }
 
-    // CHECK: If only inner content is highlighted (e.g., "X" in "[X]"),
-    // expand to include surrounding brackets
+    // CHECK: Handle various partial bracket scenarios
+    // Case 1: Inner content highlighted (e.g., "X" in "[X]") - expand both sides
+    // Case 2: Content + closing bracket highlighted (e.g., "XX]" from "[XX]") - expand opening
+    // Case 3: Opening bracket + content highlighted (e.g., "[XX" from "[XX]") - expand closing
     const charBefore = documentText.charAt(position.start - 1);
     const charAfter = documentText.charAt(position.end);
+
+    // Case 1: Only inner content highlighted, both brackets are outside
     if ((charBefore === '[' && charAfter === ']') ||
         (charBefore === '{' && charAfter === '}') ||
         (charBefore === '<' && charAfter === '>') ||
         (charBefore === '(' && charAfter === ')')) {
-      // Expand position to include brackets
       position.start -= 1;
       position.end += 1;
       text = documentText.slice(position.start, position.end);
       console.log(`[autoDetect] Expanded highlighted region to include brackets: "${text}"`);
+    }
+    // Case 2: Text ends with ] but opening [ is before - include opening bracket
+    else if (charBefore === '[' && text.endsWith(']')) {
+      position.start -= 1;
+      text = documentText.slice(position.start, position.end);
+      console.log(`[autoDetect] Expanded to include opening bracket: "${text}"`);
+    }
+    // Case 3: Text starts with [ but closing ] is after - include closing bracket
+    else if (text.startsWith('[') && charAfter === ']') {
+      position.end += 1;
+      text = documentText.slice(position.start, position.end);
+      console.log(`[autoDetect] Expanded to include closing bracket: "${text}"`);
+    }
+    // Same for curly braces
+    else if (charBefore === '{' && text.endsWith('}')) {
+      position.start -= 1;
+      text = documentText.slice(position.start, position.end);
+      console.log(`[autoDetect] Expanded to include opening brace: "${text}"`);
+    }
+    else if (text.startsWith('{') && charAfter === '}') {
+      position.end += 1;
+      text = documentText.slice(position.start, position.end);
+      console.log(`[autoDetect] Expanded to include closing brace: "${text}"`);
+    }
+    // Case 4: Partial X pattern highlighted (e.g., just "X" from "[XX]")
+    // Need to find and include the full bracket pattern
+    else if (charBefore === '[' && /^[Xx]+$/.test(text)) {
+      // Find the closing ] after any remaining X's
+      let expandEnd = position.end;
+      while (expandEnd < documentText.length && /[Xx]/.test(documentText.charAt(expandEnd))) {
+        expandEnd++;
+      }
+      if (documentText.charAt(expandEnd) === ']') {
+        position.start -= 1; // Include opening [
+        position.end = expandEnd + 1; // Include closing ]
+        text = documentText.slice(position.start, position.end);
+        console.log(`[autoDetect] Expanded X pattern to include full brackets: "${text}"`);
+      }
+    }
+    // Case 5: Text is X pattern followed by ] but opening [ is further back
+    else if (/^[Xx]+\]$/.test(text) && charBefore !== '[') {
+      // Look back for opening [
+      let searchPos = position.start - 1;
+      while (searchPos >= 0 && /[Xx]/.test(documentText.charAt(searchPos))) {
+        searchPos--;
+      }
+      if (documentText.charAt(searchPos) === '[') {
+        position.start = searchPos;
+        text = documentText.slice(position.start, position.end);
+        console.log(`[autoDetect] Expanded X pattern to include opening bracket: "${text}"`);
+      }
     }
 
     // Count words in highlighted text
@@ -993,7 +1370,7 @@ function autoDetectPlaceholders(
     } else {
       // Only add label if it's meaningful (not just the placeholder itself)
       const meaningfulLabel = getMeaningfulLabel(label || text, contextBefore);
-      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
+      annotatedText = meaningfulLabel ? `[Textinput: ${meaningfulLabel}]` : '[Textinput]';
     }
 
     // VALIDATION: Don't create nested annotations
@@ -1029,7 +1406,6 @@ function autoDetectPlaceholders(
   // Pattern 1: {PlaceholderName} - curly brace placeholders
   // =================================================================
   const curlyBracePattern = /\{([A-Za-z][A-Za-z0-9_]*)\}/g;
-  let match;
 
   while ((match = curlyBracePattern.exec(documentText)) !== null) {
     const fullMatch = match[0];
@@ -1051,7 +1427,7 @@ function autoDetectPlaceholders(
     } else if (type === 'Select') {
       annotatedText = `[Select: ${label}]`;
     } else {
-      annotatedText = `[TextInput: ${label}]`;
+      annotatedText = `[Textinput: ${label}]`;
     }
 
     console.log(`[autoDetect] Found {placeholder} "${fullMatch}" → ${annotatedText}`);
@@ -1071,8 +1447,54 @@ function autoDetectPlaceholders(
   }
 
   // =================================================================
+  // Pattern 1.5: <<PlaceholderName>> - angle bracket placeholders
+  // Common in legal templates: <<Borrower>>, <<Loan Amount>>, etc.
+  // =================================================================
+  const angleBracketPattern = /<<([^<>]+)>>/g;
+
+  while ((match = angleBracketPattern.exec(documentText)) !== null) {
+    const fullMatch = match[0];
+    const placeholderName = match[1].trim();
+    const position = match.index;
+
+    if (isCovered(position)) continue;
+
+    const contextBefore = documentText.slice(Math.max(0, position - 150), position);
+    const contextAfter = documentText.slice(position + fullMatch.length, position + fullMatch.length + 150);
+
+    const { type, label } = inferAnnotationFromPlaceholderName(placeholderName, contextBefore, contextAfter);
+
+    let annotatedText: string;
+    if (type === 'Date') {
+      annotatedText = '[Date]';
+    } else if (type === 'Money') {
+      annotatedText = '[Money]';
+    } else if (type === 'Select') {
+      annotatedText = `[Select: ${label}]`;
+    } else {
+      annotatedText = `[Textinput: ${label}]`;
+    }
+
+    console.log(`[autoDetect] Found <<placeholder>> "${fullMatch}" → ${annotatedText}`);
+
+    detected.push({
+      id: crypto.randomUUID(),
+      originalText: fullMatch,
+      annotatedText,
+      type,
+      position: { start: position, end: position + fullMatch.length },
+      confidence: 0.90, // High confidence for explicit template markers
+      isAccepted: true,
+      isEdited: false,
+    });
+
+    markCovered(position, position + fullMatch.length);
+  }
+
+  // =================================================================
   // Pattern 2: Underscores ____________ (5+ underscores = blank field)
   // BUT: Skip standalone signature lines (just underscores on a line)
+  // REQUIRES: Either highlighting OR a label before (like "Name: _____")
   // =================================================================
   const underscorePattern = /_{5,}/g;
 
@@ -1104,30 +1526,39 @@ function autoDetectPlaceholders(
       continue;
     }
 
+    // Check if these underscores are highlighted
+    const isHighlighted = highlightedRegions.some((r) =>
+      r.position.start <= position && r.position.end >= position + fullMatch.length
+    );
+
     // Try to find a label before the underscores
     // Patterns: "Name: _____", "City _____", "Amount: _____"
     const labelMatch = contextBefore.match(/([A-Za-z][A-Za-z\s]{2,20})[:.]?\s*$/);
     const label = labelMatch ? labelMatch[1].trim() : null;
 
-    // If no label found, skip - it's likely a standalone fill-in line without context
-    if (!label) {
-      console.log(`[autoDetect] Skipping underscores "${fullMatch}" - no label found`);
+    // REQUIRE: Either highlighted OR has a label
+    // If neither, skip - it's likely a standalone fill-in line without context
+    if (!label && !isHighlighted) {
+      console.log(`[autoDetect] Skipping underscores "${fullMatch}" - no label and not highlighted`);
       continue;
     }
 
     // Infer type from label and context
-    const { type } = inferAnnotationFromPlaceholderName(label, contextBefore, contextAfter);
+    const { type } = inferAnnotationFromPlaceholderName(label || '', contextBefore, contextAfter);
 
     let annotatedText: string;
     if (type === 'Date') {
       annotatedText = '[Date]';
     } else if (type === 'Money') {
       annotatedText = '[Money]';
+    } else if (label) {
+      annotatedText = `[Textinput: ${label}]`;
     } else {
-      annotatedText = `[TextInput: ${label}]`;
+      // Highlighted but no label - generic TextInput
+      annotatedText = '[Textinput]';
     }
 
-    console.log(`[autoDetect] Found labeled underscores "${fullMatch}" → ${annotatedText} (label: "${label}")`);
+    console.log(`[autoDetect] Found underscores "${fullMatch}" → ${annotatedText} (label: "${label || 'none'}", highlighted: ${isHighlighted})`);
 
     detected.push({
       id: crypto.randomUUID(),
@@ -1162,7 +1593,7 @@ function autoDetectPlaceholders(
       continue;
     }
 
-    // Skip if it looks like an existing annotation [TextInput: X], [Date], etc.
+    // Skip if it looks like an existing annotation [Textinput: X], [Date], etc.
     if (/^(TextInput|Date|Money|Link|Select|Calculation|Number|Checkbox)/i.test(content)) {
       continue;
     }
@@ -1197,7 +1628,7 @@ function autoDetectPlaceholders(
     } else {
       // Use getMeaningfulLabel to filter out meaningless labels like "X", "__"
       const meaningfulLabel = getMeaningfulLabel(label, contextBefore);
-      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
+      annotatedText = meaningfulLabel ? `[Textinput: ${meaningfulLabel}]` : '[Textinput]';
     }
 
     console.log(`[autoDetect] Found [bracket] "${fullMatch}" → ${annotatedText}`);
@@ -1246,6 +1677,30 @@ function autoDetectPlaceholders(
 
       markCovered(position, position + fullMatch.length);
     }
+  }
+
+  // =================================================================
+  // Pattern 5: Bullet points as placeholders (●, •, ○)
+  // =================================================================
+  const bulletPattern = /[●•○◦]/g;
+  while ((match = bulletPattern.exec(documentText)) !== null) {
+    const position = match.index;
+    if (isCovered(position)) continue;
+
+    console.log(`[autoDetect] Found bullet placeholder "${match[0]}" → [Textinput]`);
+
+    detected.push({
+      id: crypto.randomUUID(),
+      originalText: match[0],
+      annotatedText: '[Textinput]',
+      type: 'TextInput',
+      position: { start: position, end: position + 1 },
+      confidence: 0.85,
+      isAccepted: true,
+      isEdited: false,
+    });
+
+    markCovered(position, position + 1);
   }
 
   return detected;
@@ -1407,9 +1862,10 @@ function inferAnnotationFromPlaceholderName(
   }
 
   // Money indicators in name
+  // NOTE: "amount" is NOT a money keyword - it's too generic (appears in "in the amount of")
   // "Loan" CAN trigger Money, but context indicators above should have already
   // overridden if it's actually a date (e.g., "do {LoanTo}" = until date)
-  const moneyNameKeywords = ['amount', 'value', 'price', 'cost', 'fee', 'payment', 'sum', 'loan', 'money', 'salary', 'wage', 'cena', 'částka', 'půjčka', 'úvěr'];
+  const moneyNameKeywords = ['value', 'price', 'cost', 'fee', 'payment', 'sum', 'loan', 'money', 'salary', 'wage', 'cena', 'částka', 'půjčka', 'úvěr'];
   if (moneyNameKeywords.some(k => nameLower.includes(k))) {
     return { type: 'Money', label };
   }
@@ -1439,11 +1895,8 @@ function humanizeLabel(placeholderName: string): string {
   // Split CamelCase: "ContractNumber" → "Contract Number"
   label = label.replace(/([a-z])([A-Z])/g, '$1 $2');
 
-  // Capitalize first letter of each word
-  label = label.split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-
-  return label;
+  // PRESERVE original case - don't force capitalize
+  // This keeps "Creditor's name" as-is instead of "Creditor's Name"
+  return label.trim();
 }
 
