@@ -189,6 +189,9 @@ export async function POST(request: NextRequest) {
       })
     );
 
+    console.log(`[Annotate] Pattern matches: ${patternSuggestions.length}, AI suggestions: ${aiSuggestions.length}`);
+    console.log(`[Annotate] Total patterns in DB: ${patterns.length}`);
+
     // Merge suggestions - PATTERNS FIRST, AI fills gaps
     // This ensures learned patterns take priority over AI guesses
     const allSuggestions = mergeSuggestionsPatternFirst(patternSuggestions, aiSuggestions);
