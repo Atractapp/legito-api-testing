@@ -240,44 +240,111 @@ export async function POST(request: NextRequest) {
  * @param suggestions - Sorted by position (earliest first)
  * @param documentText - Full document text for context analysis
  */
+/**
+ * Check if original text is a "context-less" placeholder that needs surrounding context to be linked.
+ * These are generic placeholders that could mean different things in different places.
+ *
+ * Examples that NEED context:
+ * - "X", "XX", "XXX" - could be any field
+ * - "_____" - underscores
+ * - "[X]", "{X}" - bracketed X
+ *
+ * Examples that DON'T need context (they ARE the context):
+ * - "Name", "City", "Amount" - meaningful labels
+ * - "DD.MM.YYYY" - specific date format
+ */
+function isContextlessPlaceholder(text: string): boolean {
+  const trimmed = text.trim();
+
+  // Just X's: X, XX, XXX, Xx
+  if (/^[Xx]+$/.test(trimmed)) return true;
+
+  // X's with separators: X.X.X, XX/XX/XXXX
+  if (/^[Xx]+([.\/-][Xx]+)+$/.test(trimmed)) return true;
+
+  // Just underscores
+  if (/^_+$/.test(trimmed)) return true;
+
+  // Bracketed X: [X], {XX}, <XXX>
+  if (/^[\[\{<][Xx_\s]+[\]\}>]$/.test(trimmed)) return true;
+
+  // Just symbols: *, **, ***, ●, ○
+  if (/^[●○•◦▪▫■□\*\#\?\.\-\s]+$/.test(trimmed)) return true;
+
+  return false;
+}
+
+/**
+ * Get the contextual key for a placeholder.
+ * For context-less placeholders, include surrounding words.
+ * For meaningful placeholders, just use the text itself.
+ */
+function getContextualKey(suggestion: AnnotationSuggestion, documentText?: string): string {
+  const originalLower = suggestion.originalText.toLowerCase();
+
+  // If it's a meaningful placeholder, just use the text
+  if (!isContextlessPlaceholder(suggestion.originalText)) {
+    return originalLower;
+  }
+
+  // For context-less placeholders, include surrounding context
+  if (!documentText) {
+    return originalLower;
+  }
+
+  // Get a few words before and after
+  const start = Math.max(0, suggestion.position.start - 50);
+  const end = Math.min(documentText.length, suggestion.position.end + 50);
+  const before = documentText.slice(start, suggestion.position.start);
+  const after = documentText.slice(suggestion.position.end, end);
+
+  // Extract the word immediately before (like "Name" in "Name [X]")
+  const wordBefore = before.match(/(\w+)\s*$/)?.[1]?.toLowerCase() || '';
+  // Extract the word immediately after (like "field" in "[X] field")
+  const wordAfter = after.match(/^\s*(\w+)/)?.[1]?.toLowerCase() || '';
+
+  // Build contextual key: "wordBefore|original|wordAfter"
+  return `${wordBefore}|${originalLower}|${wordAfter}`;
+}
+
 function convertDuplicatesToLinks(
   suggestions: AnnotationSuggestion[],
   documentText?: string
 ): AnnotationSuggestion[] {
-  // Track which original texts have been seen (case-insensitive)
-  const seenOriginalTexts = new Map<string, { count: number; firstAnnotation: string }>();
+  // Track which CONTEXTUAL keys have been seen
+  // For meaningful text like "Name", key = "name"
+  // For context-less like "[X]" after "Name", key = "name|[x]|"
+  const seenContextualKeys = new Map<string, { count: number; firstAnnotation: string }>();
 
   return suggestions.map((suggestion) => {
-    const key = suggestion.originalText.toLowerCase();
+    const contextualKey = getContextualKey(suggestion, documentText);
 
     // Check if this is in a signature block context (different party signatures)
     const isSignatureBlock = documentText ? isInSignatureBlock(documentText, suggestion.position.start) : false;
 
-    if (seenOriginalTexts.has(key)) {
-      const seen = seenOriginalTexts.get(key)!;
+    if (seenContextualKeys.has(contextualKey)) {
+      const seen = seenContextualKeys.get(contextualKey)!;
       seen.count++;
 
       // EXCEPTION: Keep as new input if in signature block AND it's a date/city
-      // This handles cases like multiple "V Praze dne DD.MM.YYYY" for different parties
       if (isSignatureBlock && (suggestion.type === 'Date' || isLikelySignatureField(suggestion))) {
         console.log(`[convertDuplicatesToLinks] Keeping "${suggestion.originalText}" as new input (signature block context)`);
         return suggestion;
       }
 
-      // This is a DUPLICATE - convert to [Link]
-      console.log(`[convertDuplicatesToLinks] Converting duplicate "${suggestion.originalText}" to [Link] (was ${suggestion.annotatedText})`);
+      // This is a DUPLICATE with same context - convert to [Link]
+      console.log(`[convertDuplicatesToLinks] Converting duplicate "${suggestion.originalText}" (key: ${contextualKey}) to [Link]`);
 
       return {
         ...suggestion,
         annotatedText: '[Link]',
         type: 'Link' as AnnotationType,
-        // Slightly lower confidence for auto-linked fields
         confidence: Math.min(suggestion.confidence, 0.95),
       };
     } else {
-      // FIRST occurrence - keep original type
-      seenOriginalTexts.set(key, { count: 1, firstAnnotation: suggestion.annotatedText });
-      console.log(`[convertDuplicatesToLinks] First occurrence of "${suggestion.originalText}" → ${suggestion.annotatedText}`);
+      // FIRST occurrence with this context
+      seenContextualKeys.set(contextualKey, { count: 1, firstAnnotation: suggestion.annotatedText });
+      console.log(`[convertDuplicatesToLinks] First occurrence of "${suggestion.originalText}" (key: ${contextualKey})`);
       return suggestion;
     }
   });
@@ -834,12 +901,37 @@ function autoDetectPlaceholders(
   // SKIP if:
   // - Long text (4+ words) without instruction keywords - likely conditional/legal text
   // - Looks like a sentence or legal clause
+  // - Already contains annotation markers [TextInput, [Date, etc.
   // =================================================================
   for (const region of highlightedRegions) {
     if (isCovered(region.position.start)) continue;
 
-    const text = region.text.trim();
-    if (!text || text.length < 2) continue;
+    let text = region.text.trim();
+    let position = { ...region.position };
+
+    // Skip empty text (but allow single characters like "1", "X")
+    if (!text) continue;
+
+    // SKIP if text already contains annotation markers (prevents nested [TextInput: [TextInput:]])
+    if (/\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)/i.test(text)) {
+      console.log(`[autoDetect] Skipping already-annotated text: "${text.slice(0, 50)}"`);
+      continue;
+    }
+
+    // CHECK: If only inner content is highlighted (e.g., "X" in "[X]"),
+    // expand to include surrounding brackets
+    const charBefore = documentText.charAt(position.start - 1);
+    const charAfter = documentText.charAt(position.end);
+    if ((charBefore === '[' && charAfter === ']') ||
+        (charBefore === '{' && charAfter === '}') ||
+        (charBefore === '<' && charAfter === '>') ||
+        (charBefore === '(' && charAfter === ')')) {
+      // Expand position to include brackets
+      position.start -= 1;
+      position.end += 1;
+      text = documentText.slice(position.start, position.end);
+      console.log(`[autoDetect] Expanded highlighted region to include brackets: "${text}"`);
+    }
 
     // Count words in highlighted text
     const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
@@ -862,8 +954,8 @@ function autoDetectPlaceholders(
     }
 
     // Get context for type inference
-    const contextBefore = documentText.slice(Math.max(0, region.position.start - 100), region.position.start);
-    const contextAfter = documentText.slice(region.position.end, region.position.end + 100);
+    const contextBefore = documentText.slice(Math.max(0, position.start - 100), position.start);
+    const contextAfter = documentText.slice(position.end, position.end + 100);
 
     // Infer type from highlighted text and context
     const { type, label } = inferAnnotationFromPlaceholderName(text, contextBefore, contextAfter);
@@ -887,13 +979,13 @@ function autoDetectPlaceholders(
       originalText: text,
       annotatedText,
       type,
-      position: region.position,
+      position,
       confidence: 0.95, // High confidence for highlighted text
       isAccepted: true,
       isEdited: false,
     });
 
-    markCovered(region.position.start, region.position.end);
+    markCovered(position.start, position.end);
   }
 
   // =================================================================
