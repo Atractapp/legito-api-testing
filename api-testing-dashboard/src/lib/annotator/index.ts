@@ -31,6 +31,7 @@ export {
   type ParseResult,
   type DiffResult,
   type ExtractedAnnotation,
+  type HighlightedRegion,
 } from './document-service';
 
 // Pattern Service
@@ -53,9 +54,22 @@ export {
   getClaudeService,
   isClaudeConfigured,
   ClaudeService,
+  generateSemanticContext,
+  generateSemanticContextBatch,
+  annotateWithCandidates,
   type AnnotateDocumentOptions,
+  type AnnotateWithCandidatesOptions,
+  type CandidateAnnotation,
   type ClaudeServiceConfig,
 } from './claude-service';
+
+// Preprocessor - Fillable Candidate Detection
+export {
+  identifyFillableCandidates,
+  getCandidateContext,
+  formatCandidatesForPrompt,
+  type CandidateRegion,
+} from './preprocessor';
 
 // API Utilities
 export {

@@ -9,6 +9,7 @@ import {
   errorResponse,
   handleError,
   withRateLimit,
+  type HighlightedRegion,
 } from '@/lib/annotator';
 import type { Pattern, AnnotationType, AnnotationSuggestion } from '@/types/annotator';
 
@@ -48,7 +49,8 @@ export async function POST(request: NextRequest) {
 
     // 1. Parse the document
     const parsed = await parseDocx(file);
-    console.log(`[Annotate] Document parsed, ${parsed.text.length} characters`);
+    const highlightedRegions = parsed.highlightedRegions || [];
+    console.log(`[Annotate] Document parsed, ${parsed.text.length} characters, ${highlightedRegions.length} highlighted regions`);
 
     // Create session ID and upload file
     const sessionId = crypto.randomUUID();
@@ -103,10 +105,13 @@ export async function POST(request: NextRequest) {
 
         // CRITICAL: Check if this is actually a placeholder vs regular prose
         // Words like "city", "name", "date" appear in regular sentences - don't match those!
-        const isPlaceholder = isPlaceholderContext(documentText, foundIndex, originalText.length);
+        // PRIORITY: If text is HIGHLIGHTED (has background color), always annotate it
+        const isHighlighted = isTextHighlighted(foundIndex, originalText.length, highlightedRegions);
+        const isPlaceholder = isHighlighted || isPlaceholderContext(documentText, foundIndex, originalText.length);
 
         if (isPlaceholder) {
-          console.log(`[Annotate] Found placeholder "${actualText}" at position ${foundIndex} → ${pattern.annotatedText}`);
+          const matchReason = isHighlighted ? 'HIGHLIGHTED' : 'placeholder context';
+          console.log(`[Annotate] Found ${matchReason} text "${actualText}" at position ${foundIndex} → ${pattern.annotatedText}`);
 
           suggestions.push({
             id: crypto.randomUUID(),
@@ -122,7 +127,7 @@ export async function POST(request: NextRequest) {
             isEdited: false,
           });
         } else {
-          console.log(`[Annotate] Skipping "${actualText}" at ${foundIndex} - appears to be regular text, not a placeholder`);
+          console.log(`[Annotate] Skipping "${actualText}" at ${foundIndex} - not highlighted and not a placeholder`);
         }
 
         // Move past this match to find next occurrence
@@ -131,8 +136,8 @@ export async function POST(request: NextRequest) {
     }
 
     // 4. AUTO-DETECT common placeholder formats even without trained patterns
-    // This catches {PlaceholderName}, [PlaceholderName], etc. that haven't been trained
-    const autoDetectedSuggestions = autoDetectPlaceholders(documentText, suggestions);
+    // This catches {PlaceholderName}, [PlaceholderName], highlighted text, etc.
+    const autoDetectedSuggestions = autoDetectPlaceholders(documentText, suggestions, highlightedRegions);
     suggestions.push(...autoDetectedSuggestions);
     console.log(`[Annotate] Auto-detected ${autoDetectedSuggestions.length} additional placeholders`);
 
@@ -408,6 +413,34 @@ function isLikelySignatureField(suggestion: AnnotationSuggestion): boolean {
 }
 
 /**
+ * Check if text at a given position is highlighted (has background color)
+ */
+function isTextHighlighted(
+  start: number,
+  length: number,
+  highlightedRegions: HighlightedRegion[]
+): boolean {
+  const end = start + length;
+
+  for (const region of highlightedRegions) {
+    // Check if the text overlaps with a highlighted region
+    if (start < region.position.end && end > region.position.start) {
+      // Calculate overlap
+      const overlapStart = Math.max(start, region.position.start);
+      const overlapEnd = Math.min(end, region.position.end);
+      const overlapLength = overlapEnd - overlapStart;
+
+      // If more than 50% of the text is highlighted, consider it highlighted
+      if (overlapLength > length * 0.5) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+/**
  * Check if a matched text is in a PLACEHOLDER context vs regular prose.
  *
  * Words like "city", "name", "date" appear everywhere in documents.
@@ -619,7 +652,8 @@ function extractTypeFromAnnotation(annotation: string): AnnotationType {
  */
 function autoDetectPlaceholders(
   documentText: string,
-  existingSuggestions: AnnotationSuggestion[]
+  existingSuggestions: AnnotationSuggestion[],
+  highlightedRegions: HighlightedRegion[] = []
 ): AnnotationSuggestion[] {
   const detected: AnnotationSuggestion[] = [];
 
@@ -640,6 +674,48 @@ function autoDetectPlaceholders(
       coveredPositions.add(String(i));
     }
   };
+
+  // =================================================================
+  // Pattern 0: HIGHLIGHTED TEXT - Auto-detect text with background color
+  // This is the most reliable indicator of fillable fields
+  // =================================================================
+  for (const region of highlightedRegions) {
+    if (isCovered(region.position.start)) continue;
+
+    const text = region.text.trim();
+    if (!text || text.length < 2) continue;
+
+    // Get context for type inference
+    const contextBefore = documentText.slice(Math.max(0, region.position.start - 100), region.position.start);
+    const contextAfter = documentText.slice(region.position.end, region.position.end + 100);
+
+    // Infer type from highlighted text and context
+    const { type, label } = inferAnnotationFromPlaceholderName(text, contextBefore, contextAfter);
+
+    let annotatedText: string;
+    if (type === 'Date') {
+      annotatedText = '[Date]';
+    } else if (type === 'Money') {
+      annotatedText = '[Money]';
+    } else {
+      annotatedText = `[TextInput: ${label || text}]`;
+    }
+
+    console.log(`[autoDetect] Found HIGHLIGHTED text "${text}" → ${annotatedText}`);
+
+    detected.push({
+      id: crypto.randomUUID(),
+      originalText: text,
+      annotatedText,
+      type,
+      position: region.position,
+      confidence: 0.95, // High confidence for highlighted text
+      isAccepted: true,
+      isEdited: false,
+    });
+
+    markCovered(region.position.start, region.position.end);
+  }
 
   // =================================================================
   // Pattern 1: {PlaceholderName} - curly brace placeholders
@@ -688,6 +764,7 @@ function autoDetectPlaceholders(
 
   // =================================================================
   // Pattern 2: Underscores ____________ (5+ underscores = blank field)
+  // BUT: Skip standalone signature lines (just underscores on a line)
   // =================================================================
   const underscorePattern = /_{5,}/g;
 
@@ -701,10 +778,34 @@ function autoDetectPlaceholders(
     const contextBefore = documentText.slice(Math.max(0, position - 100), position);
     const contextAfter = documentText.slice(position + fullMatch.length, position + fullMatch.length + 100);
 
+    // Check if this is a STANDALONE signature line (should NOT annotate)
+    // Signature lines: just underscores on a line, maybe with whitespace
+    const lineStart = contextBefore.lastIndexOf('\n');
+    const textBeforeOnLine = contextBefore.slice(lineStart + 1).trim();
+    const lineEnd = contextAfter.indexOf('\n');
+    const textAfterOnLine = (lineEnd === -1 ? contextAfter : contextAfter.slice(0, lineEnd)).trim();
+
+    // If there's no meaningful text before or after on the same line = signature line
+    const isSignatureLine = textBeforeOnLine.length === 0 && textAfterOnLine.length === 0;
+
+    // Also check: if it's VERY long (20+ underscores) and standalone, it's likely a signature line
+    const isLongStandalone = fullMatch.length >= 20 && textBeforeOnLine.length < 3;
+
+    if (isSignatureLine || isLongStandalone) {
+      console.log(`[autoDetect] Skipping signature line underscores "${fullMatch}" (standalone)`);
+      continue;
+    }
+
     // Try to find a label before the underscores
     // Patterns: "Name: _____", "City _____", "Amount: _____"
     const labelMatch = contextBefore.match(/([A-Za-z][A-Za-z\s]{2,20})[:.]?\s*$/);
-    const label = labelMatch ? labelMatch[1].trim() : 'Field';
+    const label = labelMatch ? labelMatch[1].trim() : null;
+
+    // If no label found, skip - it's likely a standalone fill-in line without context
+    if (!label) {
+      console.log(`[autoDetect] Skipping underscores "${fullMatch}" - no label found`);
+      continue;
+    }
 
     // Infer type from label and context
     const { type } = inferAnnotationFromPlaceholderName(label, contextBefore, contextAfter);
@@ -718,7 +819,7 @@ function autoDetectPlaceholders(
       annotatedText = `[TextInput: ${label}]`;
     }
 
-    console.log(`[autoDetect] Found underscores "${fullMatch}" → ${annotatedText} (label: "${label}")`);
+    console.log(`[autoDetect] Found labeled underscores "${fullMatch}" → ${annotatedText} (label: "${label}")`);
 
     detected.push({
       id: crypto.randomUUID(),
