@@ -909,12 +909,34 @@ function autoDetectPlaceholders(
     let text = region.text.trim();
     let position = { ...region.position };
 
-    // Skip empty text (but allow single characters like "1", "X")
+    // Skip empty text
     if (!text) continue;
 
+    // SKIP punctuation-only text - parentheses, quotes, etc. are NOT placeholders
+    // These often get highlighted as part of formatting but aren't fillable
+    if (/^[()[\]{}<>"''""«»‹›.,;:!?@#$%^&*+=|\\\/~`]+$/.test(text)) {
+      console.log(`[autoDetect] Skipping punctuation-only: "${text}"`);
+      continue;
+    }
+
+    // SKIP very short text that's not a meaningful placeholder
+    // Single letters/digits that aren't part of a pattern should be skipped
+    if (text.length === 1 && !/[A-Za-z0-9]/.test(text)) {
+      console.log(`[autoDetect] Skipping single non-alphanumeric: "${text}"`);
+      continue;
+    }
+
     // SKIP if text already contains annotation markers (prevents nested [TextInput: [TextInput:]])
+    // Also skip if it looks like a partial annotation (has unmatched brackets with annotation keywords)
     if (/\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)/i.test(text)) {
       console.log(`[autoDetect] Skipping already-annotated text: "${text.slice(0, 50)}"`);
+      continue;
+    }
+
+    // SKIP if text contains square brackets that look like annotations
+    // This catches cases where only part of an annotation is highlighted
+    if (/\[[^\]]*$/.test(text) || /^[^\[]*\]/.test(text)) {
+      console.log(`[autoDetect] Skipping text with unmatched annotation brackets: "${text.slice(0, 50)}"`);
       continue;
     }
 
@@ -1249,40 +1271,79 @@ function inferAnnotationFromPlaceholderName(
 
   // ============================================================
   // PRIORITY 2: Strong CONTEXT indicators (override name inference)
+  // BUT: Context alone is NOT enough - placeholder must also look date-like
   // ============================================================
 
-  // Date context indicators (words that strongly suggest a date follows)
-  const dateContextBefore = [
-    // Czech
-    'do', 'od', 'dne', 'dňa', 'ze dne', 'ke dni', 'v den', 'den', 'datum',
-    'platnosti do', 'účinnosti do', 'termín', 'lhůta', 'doba do', 'platné do',
+  // Check if the placeholder LOOKS like it could be a date
+  // - Has X patterns: X, XX, XXX, XX.XX.XXXX
+  // - Has numbers: 1, 12, 2024
+  // - Is underscores: ___, ____________
+  // - Date-like format: DD.MM.YYYY, MM/DD/YYYY
+  const looksLikeDate = (text: string): boolean => {
+    const t = text.trim();
+    // X patterns
+    if (/^[Xx]+([.\/-][Xx]+)*$/.test(t)) return true;
+    // Numbers that could be dates
+    if (/^\d{1,2}([.\/-]\d{1,2}([.\/-]\d{2,4})?)?$/.test(t)) return true;
+    // Just underscores (ambiguous - could be date)
+    if (/^_+$/.test(t)) return true;
+    // DD.MM.YYYY format
+    if (/^[Dd]{1,2}[.\/-][Mm]{1,2}[.\/-][YyRr]{2,4}$/.test(t)) return true;
+    return false;
+  };
+
+  // STRONG date indicators - these override even without date-like placeholder
+  // These are very specific and almost always mean a date follows
+  const strongDateIndicators = [
+    // Czech - very specific
+    'ze dne', 'ke dni', 'dne', 'dňa', 'datum', 'v den',
     'uzavřena dne', 'podepsáno dne', 'v praze dne', 'dnem',
-    // English
-    'on', 'by', 'until', 'from', 'dated', 'as of', 'effective', 'valid until',
-    'expires on', 'due by', 'signed on',
+    // English - very specific
+    'dated', 'as of', 'effective date', 'valid until', 'expires on',
+    'due by', 'signed on', 'executed on',
     // Spanish
-    'el día', 'fecha', 'hasta el', 'desde el',
+    'el día', 'fecha',
   ];
 
-  // Check if any date context word appears RIGHT BEFORE the placeholder
-  for (const indicator of dateContextBefore) {
-    // Check if indicator appears at the end of context (right before placeholder)
-    // IMPORTANT: Use word boundary \b to avoid matching parts of words (e.g., "Season" shouldn't match "on")
+  // WEAK date indicators - only apply if placeholder looks like a date
+  // Words like "by", "on", "from" are too generic alone
+  const weakDateIndicators = [
+    'do', 'od', 'on', 'by', 'until', 'from', 'effective',
+    'platnosti do', 'účinnosti do', 'termín', 'lhůta', 'platné do',
+    'hasta el', 'desde el',
+  ];
+
+  // Check STRONG indicators first (don't need date-like placeholder)
+  for (const indicator of strongDateIndicators) {
     const escapedIndicator = indicator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const pattern = new RegExp(`(?:^|\\s|[^a-zA-Z])${escapedIndicator}\\s*$`, 'i');
     if (pattern.test(beforeText)) {
-      console.log(`[inferType] "${placeholderName}" → Date (context: "${indicator}" before)`);
+      console.log(`[inferType] "${placeholderName}" → Date (STRONG context: "${indicator}")`);
       return { type: 'Date', label };
     }
   }
 
-  // Date context indicators AFTER placeholder
+  // Check WEAK indicators - ONLY if placeholder looks like a date
+  if (looksLikeDate(placeholderName)) {
+    for (const indicator of weakDateIndicators) {
+      const escapedIndicator = indicator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = new RegExp(`(?:^|\\s|[^a-zA-Z])${escapedIndicator}\\s*$`, 'i');
+      if (pattern.test(beforeText)) {
+        console.log(`[inferType] "${placeholderName}" → Date (weak context "${indicator}" + date-like placeholder)`);
+        return { type: 'Date', label };
+      }
+    }
+  }
+
+  // Date context indicators AFTER placeholder (only if placeholder looks date-like)
   const dateContextAfter = ['roku', 'měsíce', 'dní', 'year', 'month', 'day'];
-  for (const indicator of dateContextAfter) {
-    const pattern = new RegExp(`^\\s*${indicator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
-    if (pattern.test(afterText)) {
-      console.log(`[inferType] "${placeholderName}" → Date (context: "${indicator}" after)`);
-      return { type: 'Date', label };
+  if (looksLikeDate(placeholderName)) {
+    for (const indicator of dateContextAfter) {
+      const pattern = new RegExp(`^\\s*${indicator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
+      if (pattern.test(afterText)) {
+        console.log(`[inferType] "${placeholderName}" → Date (context: "${indicator}" after)`);
+        return { type: 'Date', label };
+      }
     }
   }
 
