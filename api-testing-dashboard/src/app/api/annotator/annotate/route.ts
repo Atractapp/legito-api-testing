@@ -1155,6 +1155,13 @@ function autoDetectPlaceholders(
 
     if (isCovered(position)) continue;
 
+    // Also check if the INNER content is covered (handles case where [X] has X highlighted)
+    // position+1 is the start of content inside brackets
+    if (isCovered(position + 1)) {
+      console.log(`[autoDetect] Skipping [bracket] "${fullMatch}" - inner content already covered`);
+      continue;
+    }
+
     // Skip if it looks like an existing annotation [TextInput: X], [Date], etc.
     if (/^(TextInput|Date|Money|Link|Select|Calculation|Number|Checkbox)/i.test(content)) {
       continue;

@@ -326,23 +326,48 @@ async function extractHighlightedRegions(
             const normalizedRunText = normalizeForComparison(runText);
             const normalizedPlainText = normalizeForComparison(plainText);
 
-            let pos = normalizedPlainText.indexOf(normalizedRunText, searchStartPos);
-            if (pos === -1) {
-              // Try from the beginning if not found after search position
-              pos = normalizedPlainText.indexOf(normalizedRunText);
+            // Find ALL occurrences of this text in the plain text
+            // Then pick the one closest to searchStartPos that hasn't been used
+            let bestPos = -1;
+            let searchFrom = 0;
+            const usedPositions = new Set(regions.map(r => r.position.start));
+
+            while (searchFrom < normalizedPlainText.length) {
+              const pos = normalizedPlainText.indexOf(normalizedRunText, searchFrom);
+              if (pos === -1) break;
+
+              // Check if this position is already used by another region
+              const isUsed = Array.from(usedPositions).some(usedPos =>
+                Math.abs(usedPos - pos) < runText.length
+              );
+
+              if (!isUsed) {
+                // Prefer position closest to searchStartPos (forward direction)
+                if (pos >= searchStartPos) {
+                  bestPos = pos;
+                  break;
+                } else if (bestPos === -1) {
+                  bestPos = pos;
+                }
+              }
+              searchFrom = pos + 1;
             }
 
-            if (pos !== -1) {
-              // Map back to original plain text position
-              // (simplified - assumes positions roughly match)
+            if (bestPos !== -1) {
+              // Verify the match - text at position should match
+              const actualText = plainText.slice(bestPos, bestPos + runText.length);
+
               regions.push({
-                text: plainText.slice(pos, pos + runText.length),
-                position: { start: pos, end: pos + runText.length },
+                text: actualText,
+                position: { start: bestPos, end: bestPos + runText.length },
                 highlightType,
               });
 
-              // Update search position to avoid matching same text twice
-              searchStartPos = pos + runText.length;
+              // Update search position
+              searchStartPos = bestPos + runText.length;
+              console.log(`[parseDocx] Found highlighted "${runText}" at position ${bestPos}`);
+            } else {
+              console.log(`[parseDocx] Could not find position for highlighted "${runText}"`);
             }
           }
         }
@@ -1325,9 +1350,52 @@ export function applyAnnotationsToText(
 
   let result = originalText;
   for (const annotation of sortedAnnotations) {
+    // Validate position is within bounds
+    if (annotation.position.start < 0 || annotation.position.end > result.length) {
+      console.log(`[applyAnnotations] Skipping invalid position: ${annotation.position.start}-${annotation.position.end} for "${annotation.originalText}"`);
+      continue;
+    }
+
+    // Get the actual text at this position
+    const actualTextAtPosition = result.substring(annotation.position.start, annotation.position.end);
+
+    // CRITICAL: Verify the text at position matches what we expect
+    // If it doesn't match, skip this annotation (position might be wrong)
+    if (actualTextAtPosition !== annotation.originalText) {
+      // Allow partial matches if original is contained
+      if (!actualTextAtPosition.includes(annotation.originalText) &&
+          !annotation.originalText.includes(actualTextAtPosition)) {
+        console.log(`[applyAnnotations] Position mismatch: expected "${annotation.originalText}" but found "${actualTextAtPosition}" at ${annotation.position.start}`);
+        continue;
+      }
+    }
+
+    // CRITICAL: Don't create nested annotations
+    // If the annotatedText would create [[TextInput]] (double brackets), fix it
     const before = result.substring(0, annotation.position.start);
     const after = result.substring(annotation.position.end);
-    result = before + annotation.annotatedText + after;
+
+    let finalAnnotation = annotation.annotatedText;
+
+    // Check for double brackets
+    if (before.endsWith('[') && finalAnnotation.startsWith('[')) {
+      console.log(`[applyAnnotations] Preventing double open bracket for "${annotation.originalText}"`);
+      // Either remove the bracket from before or adjust the annotation
+      // We'll expand the replacement to include the preceding bracket
+      const newBefore = before.slice(0, -1);
+      result = newBefore + finalAnnotation + after;
+      continue;
+    }
+
+    if (finalAnnotation.endsWith(']') && after.startsWith(']')) {
+      console.log(`[applyAnnotations] Preventing double close bracket for "${annotation.originalText}"`);
+      // Expand replacement to include the following bracket
+      const newAfter = after.slice(1);
+      result = before + finalAnnotation + newAfter;
+      continue;
+    }
+
+    result = before + finalAnnotation + after;
   }
 
   return result;
