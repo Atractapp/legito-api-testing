@@ -106,7 +106,7 @@ async function fetchTemplates(jwt: string, baseUrl: string): Promise<TemplateRes
     // Elements can be fetched on-demand when user selects a template
     templates.push({
       id: template.id,
-      name: template.name,
+      name: template.title || template.name || '',  // API returns 'title', fallback to 'name'
       elements: [], // Will be populated on demand
     });
   }
@@ -330,7 +330,8 @@ async function hashApiKey(apiKey: string): Promise<string> {
 // Raw API response types
 interface RawTemplate {
   id: number;
-  name: string;
+  title?: string;  // API returns 'title' not 'name'
+  name?: string;   // Fallback
 }
 
 interface RawObject {
