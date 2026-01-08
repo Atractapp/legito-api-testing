@@ -248,62 +248,86 @@ function convertDuplicatesToLinks(
 
 /**
  * Check if a position in the document is within a signature block.
- * Signature blocks typically contain patterns like:
- * - "V Praze dne" / "V ... dne" (Czech)
- * - "In City, on" / "In ..., on" (English)
- * - Underscores followed by name (e.g., "____Creditor's name")
- * - Near the end of the document
- * - After phrases like "podpis", "signature", "za společnost"
+ *
+ * LANGUAGE-AGNOSTIC detection based on structural patterns:
+ * - Underscore lines (signature lines): _______________
+ * - Position in document (last 30%)
+ * - Repetitive placeholder structure (same pattern appearing multiple times)
+ * - Date-like patterns near placeholders
+ * - Short lines with [placeholder], on [placeholder] structure
  */
 function isInSignatureBlock(documentText: string, position: number): boolean {
-  // Get context around position (500 chars before, 200 after)
+  // Get context around position (500 chars before, 300 after)
   const contextStart = Math.max(0, position - 500);
-  const contextEnd = Math.min(documentText.length, position + 200);
-  const contextBefore = documentText.slice(contextStart, position).toLowerCase();
-  const contextAfter = documentText.slice(position, contextEnd).toLowerCase();
+  const contextEnd = Math.min(documentText.length, position + 300);
+  const contextBefore = documentText.slice(contextStart, position);
+  const contextAfter = documentText.slice(position, contextEnd);
   const fullContext = contextBefore + contextAfter;
 
-  // Signature block indicators
-  const signatureIndicators = [
-    // Czech
-    'v praze dne', 'v brně dne', 'v ostravě dne', 'v městě', 'dne',
-    'podpis', 'podepsal', 'za společnost', 'za stranu', 'jménem',
-    'výtisk pro', 'originál', 'věřitel', 'dlužník', 'pronajímatel', 'nájemce',
-    // English
-    'signed', 'signature', 'in witness', 'executed', 'by:', 'for and on behalf',
-    'creditor', 'debtor', 'landlord', 'tenant', 'buyer', 'seller', 'lender', 'borrower',
-    // Spanish
-    'firma', 'firmado', 'en nombre de',
+  // =================================================================
+  // STRUCTURAL PATTERN 1: Underscore signature lines nearby
+  // Pattern: 3+ underscores, often followed by a name/title
+  // Examples: __________________, _______________Name
+  // =================================================================
+  const underscoreLinePattern = /_{5,}/;
+  if (underscoreLinePattern.test(fullContext)) {
+    return true;
+  }
+
+  // =================================================================
+  // STRUCTURAL PATTERN 2: "[Word], [Word]" or "[Word] [Word]" structure
+  // Common in signature blocks: "In City, on Date" / "V Městě, dne Datum"
+  // Look for: preposition + placeholder + comma/punctuation + preposition + placeholder
+  // =================================================================
+  // Pattern: word + comma + word before a date-like or placeholder pattern
+  const locationDatePattern = /\b\w{1,4}\s+\w+,?\s+\w{1,4}\s+[\dXx]{1,2}[.\/-]/i;
+  if (locationDatePattern.test(fullContext)) {
+    return true;
+  }
+
+  // =================================================================
+  // STRUCTURAL PATTERN 3: Date patterns in the last portion of document
+  // Date formats: DD.MM.YYYY, XX.XX.XXXX, dd/mm/yyyy, etc.
+  // These are universal regardless of language
+  // =================================================================
+  const datePatterns = [
+    /[\dXx]{1,2}[.\/-][\dXx]{1,2}[.\/-][\dXx]{2,4}/,  // DD.MM.YYYY, XX.XX.XXXX
+    /\b[Dd]{2}[.\/-][Mm]{2}[.\/-][Yy]{2,4}\b/,        // DD.MM.YYYY literal
   ];
 
-  // Check if any signature indicator is in recent context
-  const recentContextBefore = contextBefore.slice(-300); // Last 300 chars before position
-  for (const indicator of signatureIndicators) {
-    if (recentContextBefore.includes(indicator) || contextAfter.includes(indicator)) {
-      return true;
+  const positionRatio = position / documentText.length;
+
+  // If we're in the last 30% of document AND there's a date pattern nearby
+  if (positionRatio > 0.7) {
+    for (const pattern of datePatterns) {
+      if (pattern.test(fullContext)) {
+        return true;
+      }
     }
   }
 
-  // Check for "In City, on" pattern (English signature block format)
-  // Pattern: "In [Word], on" where Word could be City, Location name, etc.
-  const inCityOnPattern = /in\s+\w+,?\s+on\b/i;
-  if (inCityOnPattern.test(fullContext)) {
+  // =================================================================
+  // STRUCTURAL PATTERN 4: Multiple similar short blocks
+  // Signature sections often have repeated structure for multiple parties
+  // Look for newlines + short content + newlines pattern
+  // =================================================================
+  // Count newlines - signature blocks tend to have more line breaks
+  const newlineCount = (fullContext.match(/\n/g) || []).length;
+  const avgLineLength = fullContext.length / Math.max(newlineCount, 1);
+
+  // Short average lines (< 60 chars) with multiple breaks suggests signature block
+  if (positionRatio > 0.7 && newlineCount >= 3 && avgLineLength < 60) {
     return true;
   }
 
-  // Check for underscore signature lines nearby (___Name, ____Title)
-  const underscoreNamePattern = /_{3,}\s*[a-zA-Z]/;
-  if (underscoreNamePattern.test(fullContext)) {
-    return true;
-  }
-
-  // Also check if we're in the last 25% of the document (common signature area)
-  const positionRatio = position / documentText.length;
+  // =================================================================
+  // STRUCTURAL PATTERN 5: Position-based with placeholder density
+  // Last 25% of document with multiple placeholders = likely signature
+  // =================================================================
   if (positionRatio > 0.75) {
-    // Additional check: look for signature-like patterns nearby
-    const nearEnd = documentText.slice(Math.max(0, position - 200), Math.min(documentText.length, position + 200)).toLowerCase();
-    if (nearEnd.includes('dne') || nearEnd.includes('podpis') || nearEnd.includes('signature') ||
-        nearEnd.includes(', on') || nearEnd.includes('name') || nearEnd.includes('jméno')) {
+    // Count placeholder-like patterns in context
+    const placeholderPatterns = fullContext.match(/\{[^}]+\}|\[[^\]]+\]|_{3,}|[Xx]{2,}[.\/-][Xx]{2,}/g) || [];
+    if (placeholderPatterns.length >= 2) {
       return true;
     }
   }
@@ -314,36 +338,60 @@ function isInSignatureBlock(documentText: string, position: number): boolean {
 /**
  * Check if a suggestion is likely a signature-related field (city, date for signing)
  * These fields should remain as NEW inputs in signature blocks, not become Links.
+ *
+ * LANGUAGE-AGNOSTIC detection based on:
+ * - Date type annotations
+ * - Date-like placeholder patterns (DD.MM.YYYY, XX.XX.XXXX)
+ * - Short single-word placeholders (likely city/location)
+ * - Annotation structure patterns
  */
 function isLikelySignatureField(suggestion: AnnotationSuggestion): boolean {
-  const originalLower = suggestion.originalText.toLowerCase();
-  const annotatedLower = suggestion.annotatedText.toLowerCase();
+  const originalText = suggestion.originalText;
+  const originalLower = originalText.toLowerCase();
 
-  // Check for city/place indicators in annotation
-  const cityIndicators = ['city', 'place', 'město', 'místo', 'location', 'town', 'prague', 'brno', 'praha'];
-  if (cityIndicators.some(ind => annotatedLower.includes(ind))) {
-    return true;
-  }
-
-  // Check if original text IS the word "city" or a known city placeholder
-  const cityOriginalPatterns = ['city', 'místo', 'město', 'v praze', 'v brně'];
-  if (cityOriginalPatterns.some(pat => originalLower === pat || originalLower.includes(pat))) {
-    return true;
-  }
-
-  // Check for signature date patterns
+  // =================================================================
+  // PATTERN 1: Date type - always a signature field candidate
+  // =================================================================
   if (suggestion.type === 'Date') {
     return true;
   }
 
-  // Check original text patterns for date-like placeholders
-  // e.g., DD.MM.YYYY, XX.XX.XXXX, dd/mm/yyyy
-  if (/^(dd|mm|yy|yyyy|xx|\.|\-|\/)+$/i.test(originalLower.replace(/[.\/-\s]/g, ''))) {
+  // =================================================================
+  // PATTERN 2: Date-like placeholder patterns (universal)
+  // DD.MM.YYYY, XX.XX.XXXX, dd/mm/yyyy, 00.00.0000, etc.
+  // =================================================================
+  // Check for date format patterns
+  if (/^[\dXxDdMmYy]{1,4}[.\/-][\dXxDdMmYy]{1,4}[.\/-][\dXxDdMmYy]{2,4}$/.test(originalText.trim())) {
     return true;
   }
 
-  // Check for explicit date patterns
-  if (/dd\.?mm\.?yy/i.test(originalLower) || /xx\.?xx\.?xx/i.test(originalLower)) {
+  // Check for DD.MM.YYYY literal pattern
+  if (/^[Dd]{1,2}[.\/-][Mm]{1,2}[.\/-][Yy]{2,4}$/.test(originalText.trim())) {
+    return true;
+  }
+
+  // Check for X patterns: XX.XX.XXXX, XXX, etc.
+  if (/^[Xx]{2,}([.\/-][Xx]{2,})*$/.test(originalText.trim())) {
+    return true;
+  }
+
+  // =================================================================
+  // PATTERN 3: Short single-word text (likely city/location placeholder)
+  // In signature blocks, short words like "City", "Město", "Place" are locations
+  // =================================================================
+  const trimmed = originalText.trim();
+  // Single word, 3-15 characters, starts with capital letter = likely location
+  if (/^[A-Z][a-zA-Z\u00C0-\u024F]{2,14}$/.test(trimmed)) {
+    // But not if it's a common document word (check if it's short and capitalized)
+    // This catches: City, Prague, Berlin, Москва, 東京, etc.
+    return true;
+  }
+
+  // =================================================================
+  // PATTERN 4: Placeholder with only special characters
+  // [___], {___}, (blank), etc. - these are fill-in-the-blank fields
+  // =================================================================
+  if (/^[\[\{\(]?[_\-\s\*\.]{2,}[\]\}\)]?$/.test(trimmed)) {
     return true;
   }
 
