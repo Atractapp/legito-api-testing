@@ -996,6 +996,19 @@ function autoDetectPlaceholders(
       annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
     }
 
+    // VALIDATION: Don't create nested annotations
+    // If originalText already contains annotation markers, skip
+    if (/\[(TextInput|Date|Money|Select|Link)/i.test(text)) {
+      console.log(`[autoDetect] Skipping - text already contains annotation: "${text.slice(0, 50)}"`);
+      continue;
+    }
+
+    // VALIDATION: Don't annotate if text matches annotation pattern itself
+    if (/^\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)[:\]]/.test(text)) {
+      console.log(`[autoDetect] Skipping - text IS an annotation: "${text}"`);
+      continue;
+    }
+
     console.log(`[autoDetect] Found HIGHLIGHTED text "${text.slice(0, 50)}" → ${annotatedText}`);
 
     detected.push({
@@ -1301,7 +1314,8 @@ function inferAnnotationFromPlaceholderName(
     'uzavřena dne', 'podepsáno dne', 'v praze dne', 'dnem',
     // English - very specific
     'dated', 'as of', 'effective date', 'valid until', 'expires on',
-    'due by', 'signed on', 'executed on',
+    'due by', 'signed on', 'executed on', 'starting on', 'ending on',
+    'commencing on', 'beginning on',
     // Spanish
     'el día', 'fecha',
   ];

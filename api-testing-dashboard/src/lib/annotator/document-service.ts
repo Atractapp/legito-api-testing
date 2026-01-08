@@ -350,7 +350,8 @@ async function extractHighlightedRegions(
     }
 
     // Merge adjacent highlighted regions with same text
-    const mergedRegions = mergeAdjacentRegions(regions);
+    // Pass plainText to extend partial-word highlights to full words
+    const mergedRegions = mergeAdjacentRegions(regions, plainText);
 
     console.log(`[parseDocx] Found ${mergedRegions.length} highlighted regions`);
 
@@ -364,7 +365,7 @@ async function extractHighlightedRegions(
 /**
  * Merge adjacent highlighted regions that are part of the same text
  */
-function mergeAdjacentRegions(regions: HighlightedRegion[]): HighlightedRegion[] {
+function mergeAdjacentRegions(regions: HighlightedRegion[], plainText?: string): HighlightedRegion[] {
   if (regions.length === 0) return regions;
 
   // Sort by position
@@ -394,6 +395,38 @@ function mergeAdjacentRegions(regions: HighlightedRegion[]): HighlightedRegion[]
   }
 
   merged.push(current);
+
+  // Extend regions to word boundaries if we have the plain text
+  // This fixes issues where DOCX splits "Series" into "Serie" + "s" across runs
+  if (plainText) {
+    return merged.map(region => {
+      let { start, end } = region.position;
+      const originalText = region.text;
+
+      // Extend backward to start of word
+      while (start > 0 && /\w/.test(plainText.charAt(start - 1)) && /\w/.test(plainText.charAt(start))) {
+        start--;
+      }
+
+      // Extend forward to end of word
+      while (end < plainText.length && /\w/.test(plainText.charAt(end - 1)) && /\w/.test(plainText.charAt(end))) {
+        end++;
+      }
+
+      if (start !== region.position.start || end !== region.position.end) {
+        const extendedText = plainText.slice(start, end);
+        console.log(`[mergeRegions] Extended "${originalText}" to "${extendedText}"`);
+        return {
+          ...region,
+          text: extendedText,
+          position: { start, end },
+        };
+      }
+
+      return region;
+    });
+  }
+
   return merged;
 }
 
