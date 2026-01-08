@@ -377,6 +377,7 @@ export interface AnnotatorActions {
   // Pattern actions
   loadPatterns: () => Promise<void>;
   deletePattern: (id: string) => Promise<void>;
+  deleteAllPatterns: () => Promise<number>;
   selectPattern: (id: string | null) => void;
 
   // Pending pattern actions (for review before saving)

@@ -55,8 +55,9 @@ export default function PatternsPage() {
   );
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  const { loadPatterns, deletePattern } = useAnnotatorStore();
+  const { loadPatterns, deletePattern, deleteAllPatterns } = useAnnotatorStore();
   const { patterns, stats, loading, error } = usePatterns();
+  const [deletingAll, setDeletingAll] = useState(false);
 
   useEffect(() => {
     loadPatterns();
@@ -111,6 +112,25 @@ export default function PatternsPage() {
     }
   };
 
+  const handleDeleteAll = async () => {
+    if (
+      confirm(
+        `Are you sure you want to delete ALL ${patterns.length} patterns?\n\nThis action cannot be undone. You will need to re-train to create new patterns.`
+      )
+    ) {
+      try {
+        setDeletingAll(true);
+        const deleted = await deleteAllPatterns();
+        alert(`Successfully deleted ${deleted} patterns.`);
+      } catch (err) {
+        console.error('Delete all failed:', err);
+        alert('Failed to delete patterns. Please try again.');
+      } finally {
+        setDeletingAll(false);
+      }
+    }
+  };
+
   const toggleSort = (field: typeof sortField) => {
     if (sortField === field) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -123,14 +143,35 @@ export default function PatternsPage() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Layers className="h-6 w-6" />
-          Learned Patterns
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          View and manage annotation patterns extracted from training
-        </p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <Layers className="h-6 w-6" />
+            Learned Patterns
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            View and manage annotation patterns extracted from training
+          </p>
+        </div>
+        {patterns.length > 0 && (
+          <Button
+            variant="destructive"
+            onClick={handleDeleteAll}
+            disabled={deletingAll}
+          >
+            {deletingAll ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Deleting...
+              </>
+            ) : (
+              <>
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete All Patterns
+              </>
+            )}
+          </Button>
+        )}
       </div>
 
       {/* Stats */}

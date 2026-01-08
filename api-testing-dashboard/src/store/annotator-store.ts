@@ -225,6 +225,36 @@ export const useAnnotatorStore = create<AnnotatorStore>()(
         }
       },
 
+      deleteAllPatterns: async () => {
+        try {
+          const response = await fetch('/api/annotator/patterns', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ all: true }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Failed to delete patterns: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log(`[Store] Deleted ${data.deleted} patterns`);
+
+          set({
+            patterns: [],
+            selectedPatternId: null,
+          });
+
+          return data.deleted;
+        } catch (error) {
+          set({
+            patternsError:
+              error instanceof Error ? error.message : 'Failed to delete all patterns',
+          });
+          throw error;
+        }
+      },
+
       selectPattern: (id: string | null) => {
         set({ selectedPatternId: id });
       },
