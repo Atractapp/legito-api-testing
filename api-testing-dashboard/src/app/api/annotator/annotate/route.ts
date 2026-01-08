@@ -1231,6 +1231,15 @@ function inferAnnotationFromPlaceholderName(
   const afterText = (contextAfter || '').slice(0, 100).toLowerCase();
 
   // ============================================================
+  // PRIORITY 0: Single digits are NOT dates
+  // A single number like "1" in "Season 1" is not a date field
+  // ============================================================
+  if (/^\d$/.test(placeholderName.trim())) {
+    console.log(`[inferType] "${placeholderName}" → TextInput (single digit, not a date)`);
+    return { type: 'TextInput', label };
+  }
+
+  // ============================================================
   // PRIORITY 1: Check for _Header suffix - always TextInput
   // These are template structure fields, not data fields
   // ============================================================
@@ -1258,7 +1267,9 @@ function inferAnnotationFromPlaceholderName(
   // Check if any date context word appears RIGHT BEFORE the placeholder
   for (const indicator of dateContextBefore) {
     // Check if indicator appears at the end of context (right before placeholder)
-    const pattern = new RegExp(`${indicator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'i');
+    // IMPORTANT: Use word boundary \b to avoid matching parts of words (e.g., "Season" shouldn't match "on")
+    const escapedIndicator = indicator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pattern = new RegExp(`(?:^|\\s|[^a-zA-Z])${escapedIndicator}\\s*$`, 'i');
     if (pattern.test(beforeText)) {
       console.log(`[inferType] "${placeholderName}" → Date (context: "${indicator}" before)`);
       return { type: 'Date', label };
