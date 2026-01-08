@@ -83,6 +83,7 @@ export async function POST(request: NextRequest) {
     console.log(`[Annotate] Loaded ${patterns.length} patterns`);
 
     // 3. For EACH pattern: search for originalText in document (case-insensitive)
+    // IMPORTANT: Only match when text is in a PLACEHOLDER CONTEXT, not regular prose
     const suggestions: AnnotationSuggestion[] = [];
     const documentText = parsed.text;
     const documentTextLower = documentText.toLowerCase();
@@ -100,21 +101,29 @@ export async function POST(request: NextRequest) {
         // Get the actual text from document (preserving original case)
         const actualText = documentText.slice(foundIndex, foundIndex + originalText.length);
 
-        console.log(`[Annotate] Found "${actualText}" at position ${foundIndex} → ${pattern.annotatedText}`);
+        // CRITICAL: Check if this is actually a placeholder vs regular prose
+        // Words like "city", "name", "date" appear in regular sentences - don't match those!
+        const isPlaceholder = isPlaceholderContext(documentText, foundIndex, originalText.length);
 
-        suggestions.push({
-          id: crypto.randomUUID(),
-          originalText: actualText, // Use actual text from document
-          annotatedText: pattern.annotatedText,
-          type: pattern.annotationType,
-          position: {
-            start: foundIndex,
-            end: foundIndex + originalText.length,
-          },
-          confidence: pattern.confidence,
-          isAccepted: true,
-          isEdited: false,
-        });
+        if (isPlaceholder) {
+          console.log(`[Annotate] Found placeholder "${actualText}" at position ${foundIndex} → ${pattern.annotatedText}`);
+
+          suggestions.push({
+            id: crypto.randomUUID(),
+            originalText: actualText, // Use actual text from document
+            annotatedText: pattern.annotatedText,
+            type: pattern.annotationType,
+            position: {
+              start: foundIndex,
+              end: foundIndex + originalText.length,
+            },
+            confidence: pattern.confidence,
+            isAccepted: true,
+            isEdited: false,
+          });
+        } else {
+          console.log(`[Annotate] Skipping "${actualText}" at ${foundIndex} - appears to be regular text, not a placeholder`);
+        }
 
         // Move past this match to find next occurrence
         searchPos = foundIndex + originalText.length;
@@ -399,6 +408,161 @@ function isLikelySignatureField(suggestion: AnnotationSuggestion): boolean {
 }
 
 /**
+ * Check if a matched text is in a PLACEHOLDER context vs regular prose.
+ *
+ * Words like "city", "name", "date" appear everywhere in documents.
+ * We should ONLY match them when they're clearly placeholders, not regular text.
+ *
+ * PLACEHOLDER indicators (should match):
+ * - Near underscores: "city: ______", "______city______"
+ * - In brackets: "[city]", "{city}", "<city>"
+ * - After colon at line start: "City:"
+ * - Standalone on a line (form field)
+ * - ALL CAPS in non-header context: "CITY" as a field
+ * - Near other placeholder markers
+ *
+ * REGULAR TEXT indicators (should NOT match):
+ * - Part of sentence: "the city", "their city of residence"
+ * - After articles: "a city", "an city", "the city"
+ * - Common phrases: "city of", "city and", "city or"
+ * - Middle of paragraph with normal punctuation
+ */
+function isPlaceholderContext(
+  documentText: string,
+  matchStart: number,
+  matchLength: number
+): boolean {
+  // Get context around the match
+  const contextBefore = documentText.slice(Math.max(0, matchStart - 50), matchStart);
+  const contextAfter = documentText.slice(matchStart + matchLength, matchStart + matchLength + 50);
+  const matchedText = documentText.slice(matchStart, matchStart + matchLength);
+
+  const beforeLower = contextBefore.toLowerCase();
+  const afterLower = contextAfter.toLowerCase();
+
+  // =================================================================
+  // DEFINITE PLACEHOLDER - Always match these
+  // =================================================================
+
+  // Pattern 1: Text is in brackets [city], {city}, <city>
+  if (/[\[\{<]\s*$/.test(contextBefore) && /^\s*[\]\}>]/.test(contextAfter)) {
+    return true;
+  }
+
+  // Pattern 2: Near underscores (within 10 chars)
+  if (/_{3,}\s*$/.test(contextBefore) || /^\s*_{3,}/.test(contextAfter)) {
+    return true;
+  }
+
+  // Pattern 3: After colon with optional space, at-ish line start
+  // "City: " or "Name:" pattern (form field label)
+  if (/:\s*$/.test(contextBefore) && /^\s*($|\n|,|;)/.test(contextAfter)) {
+    return true;
+  }
+
+  // Pattern 4: Standalone on line (form field style)
+  // Check if preceded by newline/start and followed by newline/end
+  if (/(?:^|\n)\s*$/.test(contextBefore) && /^\s*(?:\n|$)/.test(contextAfter)) {
+    return true;
+  }
+
+  // Pattern 5: Part of a placeholder pattern like "currently ______"
+  // The underscores ARE the placeholder, but labeled text nearby should match
+  if (/_{5,}/.test(contextBefore + contextAfter)) {
+    // But only if text is adjacent to the underscores (within 20 chars)
+    const nearUnderscores = documentText.slice(
+      Math.max(0, matchStart - 20),
+      matchStart + matchLength + 20
+    );
+    if (/_{5,}/.test(nearUnderscores)) {
+      // Check if this is a label FOR the underscores or regular text
+      // "currently ______" - "currently" is regular text
+      // "City: ______" - "City" is a label
+      if (/:\s*_{3,}/.test(nearUnderscores) || /_{3,}\s*:/.test(nearUnderscores)) {
+        return true;
+      }
+    }
+  }
+
+  // =================================================================
+  // DEFINITE REGULAR TEXT - Never match these
+  // =================================================================
+
+  // Pattern: After articles (the, a, an, their, this, that, etc.)
+  const articlePattern = /\b(the|a|an|their|this|that|these|those|its|his|her|our|your|my)\s+$/i;
+  if (articlePattern.test(contextBefore)) {
+    return false;
+  }
+
+  // Pattern: Common phrases that indicate regular text
+  // "city of", "city and", "city or", "city is", "city was"
+  const regularPhraseAfter = /^\s+(of|and|or|is|was|were|are|has|had|will|would|can|could|for|to|in|on|at|by|from)\b/i;
+  if (regularPhraseAfter.test(contextAfter)) {
+    return false;
+  }
+
+  // Pattern: Part of possessive or compound: "city's", "city-wide"
+  if (/^['']s\b/.test(contextAfter) || /^-\w/.test(contextAfter)) {
+    return false;
+  }
+
+  // Pattern: After prepositions in flowing text
+  const prepositionBefore = /\b(in|on|at|to|from|of|for|with|by|outside|inside|within|near)\s+$/i;
+  if (prepositionBefore.test(contextBefore)) {
+    // Could be either - check if there's more sentence after
+    // "in city of residence" = regular text
+    // "in City" at end = possibly placeholder
+    if (/^\s+\w+\s+\w+/.test(contextAfter)) {
+      return false; // More words follow - likely regular text
+    }
+  }
+
+  // =================================================================
+  // HEURISTIC CHECKS - More nuanced decisions
+  // =================================================================
+
+  // If matched text is ALL CAPS and short, it might be a field marker
+  if (matchedText === matchedText.toUpperCase() && matchedText.length <= 20) {
+    // But not if it's in a header-like context (all caps line)
+    const fullLine = getLineContaining(documentText, matchStart);
+    if (fullLine && fullLine !== fullLine.toUpperCase()) {
+      // Mixed case line with ALL CAPS word = might be a field
+      return true;
+    }
+  }
+
+  // If surrounded by other placeholder-like content
+  const surroundingContext = contextBefore + contextAfter;
+  const placeholderMarkers = surroundingContext.match(/\{[^}]+\}|\[[^\]]+\]|_{3,}|[Xx]{3,}/g) || [];
+  if (placeholderMarkers.length >= 1) {
+    // Other placeholders nearby suggest this might be one too
+    return true;
+  }
+
+  // Default: If the text is a common word (< 10 chars) in flowing prose, skip it
+  if (matchLength < 10) {
+    // Check if it looks like mid-sentence
+    const isMidSentence = /\w\s+$/.test(contextBefore) && /^\s+\w/.test(contextAfter);
+    if (isMidSentence) {
+      return false;
+    }
+  }
+
+  // Default: Assume it's NOT a placeholder for common words
+  // Only explicit placeholder patterns should match
+  return false;
+}
+
+/**
+ * Get the full line containing a position in the document
+ */
+function getLineContaining(text: string, position: number): string | null {
+  const lineStart = text.lastIndexOf('\n', position - 1) + 1;
+  const lineEnd = text.indexOf('\n', position);
+  return text.slice(lineStart, lineEnd === -1 ? text.length : lineEnd);
+}
+
+/**
  * Remove overlapping suggestions, keeping the one with higher confidence
  */
 function removeOverlappingSuggestions(suggestions: AnnotationSuggestion[]): AnnotationSuggestion[] {
@@ -467,29 +631,34 @@ function autoDetectPlaceholders(
     }
   }
 
-  // Pattern 1: {PlaceholderName} - curly brace placeholders (Legito/template style)
-  // Match {Word}, {WordWord}, {Word_Word}, {WordNumber}, etc.
+  // Helper to check if position is covered
+  const isCovered = (pos: number) => coveredPositions.has(String(pos));
+
+  // Helper to mark positions as covered
+  const markCovered = (start: number, end: number) => {
+    for (let i = start; i < end; i++) {
+      coveredPositions.add(String(i));
+    }
+  };
+
+  // =================================================================
+  // Pattern 1: {PlaceholderName} - curly brace placeholders
+  // =================================================================
   const curlyBracePattern = /\{([A-Za-z][A-Za-z0-9_]*)\}/g;
   let match;
 
   while ((match = curlyBracePattern.exec(documentText)) !== null) {
-    const fullMatch = match[0];      // e.g., "{ContractNumber}"
-    const placeholderName = match[1]; // e.g., "ContractNumber"
+    const fullMatch = match[0];
+    const placeholderName = match[1];
     const position = match.index;
 
-    // Skip if already covered by a pattern match
-    if (coveredPositions.has(String(position))) {
-      continue;
-    }
+    if (isCovered(position)) continue;
 
-    // Get surrounding context for smarter type inference
     const contextBefore = documentText.slice(Math.max(0, position - 150), position);
     const contextAfter = documentText.slice(position + fullMatch.length, position + fullMatch.length + 150);
 
-    // Infer annotation type and label from placeholder name AND context
     const { type, label } = inferAnnotationFromPlaceholderName(placeholderName, contextBefore, contextAfter);
 
-    // Create annotation text
     let annotatedText: string;
     if (type === 'Date') {
       annotatedText = '[Date]';
@@ -501,21 +670,164 @@ function autoDetectPlaceholders(
       annotatedText = `[TextInput: ${label}]`;
     }
 
-    console.log(`[autoDetect] Found placeholder "${fullMatch}" → ${annotatedText} (inferred from name)`);
+    console.log(`[autoDetect] Found {placeholder} "${fullMatch}" → ${annotatedText}`);
 
     detected.push({
       id: crypto.randomUUID(),
       originalText: fullMatch,
       annotatedText,
       type,
-      position: {
-        start: position,
-        end: position + fullMatch.length,
-      },
-      confidence: 0.85, // Slightly lower confidence for auto-detected
+      position: { start: position, end: position + fullMatch.length },
+      confidence: 0.85,
       isAccepted: true,
       isEdited: false,
     });
+
+    markCovered(position, position + fullMatch.length);
+  }
+
+  // =================================================================
+  // Pattern 2: Underscores ____________ (5+ underscores = blank field)
+  // =================================================================
+  const underscorePattern = /_{5,}/g;
+
+  while ((match = underscorePattern.exec(documentText)) !== null) {
+    const fullMatch = match[0];
+    const position = match.index;
+
+    if (isCovered(position)) continue;
+
+    // Get context to infer type
+    const contextBefore = documentText.slice(Math.max(0, position - 100), position);
+    const contextAfter = documentText.slice(position + fullMatch.length, position + fullMatch.length + 100);
+
+    // Try to find a label before the underscores
+    // Patterns: "Name: _____", "City _____", "Amount: _____"
+    const labelMatch = contextBefore.match(/([A-Za-z][A-Za-z\s]{2,20})[:.]?\s*$/);
+    const label = labelMatch ? labelMatch[1].trim() : 'Field';
+
+    // Infer type from label and context
+    const { type } = inferAnnotationFromPlaceholderName(label, contextBefore, contextAfter);
+
+    let annotatedText: string;
+    if (type === 'Date') {
+      annotatedText = '[Date]';
+    } else if (type === 'Money') {
+      annotatedText = '[Money]';
+    } else {
+      annotatedText = `[TextInput: ${label}]`;
+    }
+
+    console.log(`[autoDetect] Found underscores "${fullMatch}" → ${annotatedText} (label: "${label}")`);
+
+    detected.push({
+      id: crypto.randomUUID(),
+      originalText: fullMatch,
+      annotatedText,
+      type,
+      position: { start: position, end: position + fullMatch.length },
+      confidence: 0.8,
+      isAccepted: true,
+      isEdited: false,
+    });
+
+    markCovered(position, position + fullMatch.length);
+  }
+
+  // =================================================================
+  // Pattern 3: [bracketed placeholders] like [name], [date], [___]
+  // =================================================================
+  const bracketPattern = /\[([^\[\]]{1,30})\]/g;
+
+  while ((match = bracketPattern.exec(documentText)) !== null) {
+    const fullMatch = match[0];
+    const content = match[1];
+    const position = match.index;
+
+    if (isCovered(position)) continue;
+
+    // Skip if it looks like an existing annotation [TextInput: X], [Date], etc.
+    if (/^(TextInput|Date|Money|Link|Select|Calculation|Number|Checkbox)/i.test(content)) {
+      continue;
+    }
+
+    // Check if it's a blank placeholder [___], [***], [   ]
+    const isBlank = /^[_\*\s\-\.]+$/.test(content);
+
+    const contextBefore = documentText.slice(Math.max(0, position - 100), position);
+    const contextAfter = documentText.slice(position + fullMatch.length, position + fullMatch.length + 100);
+
+    let label: string;
+    let type: AnnotationType;
+
+    if (isBlank) {
+      // Try to find label from context
+      const labelMatch = contextBefore.match(/([A-Za-z][A-Za-z\s]{2,20})[:.]?\s*$/);
+      label = labelMatch ? labelMatch[1].trim() : 'Field';
+      const inferred = inferAnnotationFromPlaceholderName(label, contextBefore, contextAfter);
+      type = inferred.type;
+    } else {
+      // Content is the label
+      label = content;
+      const inferred = inferAnnotationFromPlaceholderName(content, contextBefore, contextAfter);
+      type = inferred.type;
+    }
+
+    let annotatedText: string;
+    if (type === 'Date') {
+      annotatedText = '[Date]';
+    } else if (type === 'Money') {
+      annotatedText = '[Money]';
+    } else {
+      annotatedText = `[TextInput: ${label}]`;
+    }
+
+    console.log(`[autoDetect] Found [bracket] "${fullMatch}" → ${annotatedText}`);
+
+    detected.push({
+      id: crypto.randomUUID(),
+      originalText: fullMatch,
+      annotatedText,
+      type,
+      position: { start: position, end: position + fullMatch.length },
+      confidence: 0.8,
+      isAccepted: true,
+      isEdited: false,
+    });
+
+    markCovered(position, position + fullMatch.length);
+  }
+
+  // =================================================================
+  // Pattern 4: Date placeholders DD.MM.YYYY, XX.XX.XXXX, etc.
+  // =================================================================
+  const datePatterns = [
+    /\b[Dd]{1,2}[.\/-][Mm]{1,2}[.\/-][Yy]{2,4}\b/g,  // DD.MM.YYYY
+    /\b[Xx]{2,4}[.\/-][Xx]{2,4}[.\/-][Xx]{2,4}\b/g,  // XX.XX.XXXX
+  ];
+
+  for (const pattern of datePatterns) {
+    while ((match = pattern.exec(documentText)) !== null) {
+      const fullMatch = match[0];
+      const position = match.index;
+
+      if (isCovered(position)) continue;
+
+      console.log(`[autoDetect] Found date pattern "${fullMatch}" → [Date]`);
+
+      detected.push({
+        id: crypto.randomUUID(),
+        originalText: fullMatch,
+        annotatedText: '[Date]',
+        type: 'Date',
+        position: { start: position, end: position + fullMatch.length },
+        confidence: 0.9,
+        isAccepted: true,
+        isEdited: false,
+      });
+
+      markCovered(position, position + fullMatch.length);
+    }
   }
 
   return detected;
