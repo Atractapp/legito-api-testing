@@ -353,6 +353,14 @@ function convertDuplicatesToLinks(
       return suggestion;
     }
 
+    // RULE 4b: Skip single digits from becoming links
+    // These are usually episode numbers, season numbers, section numbers
+    // e.g., "Season 1", "Article 2" - the "1" and "2" are NOT party references
+    if (/^\d$/.test(suggestion.originalText.trim())) {
+      console.log(`[convertDuplicatesToLinks] Keeping single digit "${suggestion.originalText}" (never becomes link)`);
+      return suggestion;
+    }
+
     if (seenTextInputs.has(originalLower)) {
       const seen = seenTextInputs.get(originalLower)!;
       seen.count++;
