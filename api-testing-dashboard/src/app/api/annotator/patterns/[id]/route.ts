@@ -1,17 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase client
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase environment variables not configured');
-  }
-
-  return createClient(supabaseUrl, supabaseKey);
-}
+import {
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  errorResponse,
+  handleError,
+  withRateLimit,
+} from '@/lib/annotator';
 
 /**
  * DELETE /api/annotator/patterns/[id]
@@ -22,15 +16,15 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 30, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
     const { id } = await params;
 
     if (!id) {
-      return NextResponse.json(
-        { error: 'Pattern ID is required' },
-        { status: 400 }
-      );
+      return errorResponse('MISSING_ID', 'Pattern ID is required', 400);
     }
 
     // Delete the pattern (only if it belongs to the user)
@@ -38,14 +32,11 @@ export async function DELETE(
       .from('annotator_patterns')
       .delete()
       .eq('id', id)
-      .eq('user_id', userId);
+      .eq('user_id', user.id);
 
     if (error) {
       console.error('Failed to delete pattern:', error);
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      return errorResponse('DELETE_FAILED', error.message, 500);
     }
 
     return NextResponse.json({
@@ -54,11 +45,7 @@ export async function DELETE(
       deletedCount: count,
     });
   } catch (error) {
-    console.error('Delete pattern error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Delete Pattern');
   }
 }
 
@@ -71,29 +58,26 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 100, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
     const { id } = await params;
 
     if (!id) {
-      return NextResponse.json(
-        { error: 'Pattern ID is required' },
-        { status: 400 }
-      );
+      return errorResponse('MISSING_ID', 'Pattern ID is required', 400);
     }
 
     const { data: pattern, error } = await supabase
       .from('annotator_patterns')
       .select('*')
       .eq('id', id)
-      .eq('user_id', userId)
+      .eq('user_id', user.id)
       .single();
 
     if (error) {
-      return NextResponse.json(
-        { error: 'Pattern not found' },
-        { status: 404 }
-      );
+      return errorResponse('NOT_FOUND', 'Pattern not found', 404);
     }
 
     return NextResponse.json({
@@ -113,10 +97,6 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error('Get pattern error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Get Pattern');
   }
 }

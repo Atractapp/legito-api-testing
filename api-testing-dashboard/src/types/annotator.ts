@@ -72,6 +72,25 @@ export interface TrainingPairSummary {
 // Pattern Types
 // ----------------------------------------------------------------------------
 
+/**
+ * Type indicator extracted from pattern context.
+ * These are semantic rules like "if 'value of' appears before → Money"
+ */
+export interface TypeIndicator {
+  keyword: string;
+  position: 'before' | 'after' | 'any';
+  impliesType: AnnotationType;
+  confidence: number;
+}
+
+/**
+ * Context rules derived from pattern context.
+ * Used for smart pattern matching based on semantic meaning.
+ */
+export interface ContextRules {
+  typeIndicators: TypeIndicator[];
+}
+
 export interface Pattern {
   id: string;
   userId: string;
@@ -85,6 +104,8 @@ export interface Pattern {
   successRate: number;
   trainingPairId: string | null;
   createdAt: Date;
+  // Semantic context rules for smart matching
+  contextRules?: ContextRules | null;
 }
 
 export interface PatternMatch {
@@ -454,3 +475,85 @@ export const SESSION_STATUS_LABELS: Record<SessionStatus, string> = {
   corrected: 'Corrected',
   failed: 'Failed',
 };
+
+// ----------------------------------------------------------------------------
+// Feedback Types (Phase 2)
+// ----------------------------------------------------------------------------
+
+export type FeedbackType = 'accepted' | 'rejected' | 'edited';
+export type FeedbackSource = 'ai' | 'pattern';
+
+export interface AnnotationFeedback {
+  id: string;
+  userId: string;
+  sessionId: string;
+  originalText: string;
+  suggestedText: string;
+  annotationType: AnnotationType;
+  feedbackType: FeedbackType;
+  editedText?: string;
+  contextBefore?: string;
+  contextAfter?: string;
+  positionStart?: number;
+  positionEnd?: number;
+  source: FeedbackSource;
+  patternId?: string;
+  originalConfidence?: number;
+  createdAt: Date;
+}
+
+export interface FeedbackInput {
+  sessionId: string;
+  originalText: string;
+  suggestedText: string;
+  annotationType: AnnotationType;
+  feedbackType: FeedbackType;
+  editedText?: string;
+  contextBefore?: string;
+  contextAfter?: string;
+  positionStart?: number;
+  positionEnd?: number;
+  source: FeedbackSource;
+  patternId?: string;
+  originalConfidence?: number;
+}
+
+export interface RejectedPattern {
+  originalText: string;
+  suggestedText: string;
+  rejectionCount: number;
+  lastRejected: Date;
+}
+
+export interface PatternPerformance {
+  patternId: string;
+  userId: string;
+  originalText: string;
+  annotatedText: string;
+  annotationType: AnnotationType;
+  confidence: number;
+  usageCount: number;
+  successRate: number;
+  negativeFeedbackCount: number;
+  acceptCount: number;
+  rejectCount: number;
+  editCount: number;
+  acceptanceRatePercent: number | null;
+  createdAt: Date;
+}
+
+// Feedback API types
+export interface SubmitFeedbackRequest {
+  feedback: FeedbackInput[];
+}
+
+export interface SubmitFeedbackResponse {
+  success: boolean;
+  feedbackSaved: number;
+  patternsUpdated: number;
+}
+
+export interface GetRejectedPatternsResponse {
+  patterns: RejectedPattern[];
+  total: number;
+}

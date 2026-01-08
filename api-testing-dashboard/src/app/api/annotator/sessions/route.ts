@@ -1,18 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import {
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  handleError,
+  withRateLimit,
+} from '@/lib/annotator';
 import type { SessionStatus } from '@/types/annotator';
-
-// Initialize Supabase client
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase environment variables not configured');
-  }
-
-  return createClient(supabaseUrl, supabaseKey);
-}
 
 /**
  * GET /api/annotator/sessions
@@ -20,8 +13,11 @@ function getSupabase() {
  */
 export async function GET(request: NextRequest) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 100, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
 
     // Parse query params
     const { searchParams } = new URL(request.url);
@@ -32,7 +28,7 @@ export async function GET(request: NextRequest) {
     let query = supabase
       .from('annotator_sessions')
       .select('id, input_filename, status, annotations_applied, created_at, completed_at')
-      .eq('user_id', userId)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false })
       .limit(limit);
 
@@ -67,10 +63,6 @@ export async function GET(request: NextRequest) {
       total: summaries.length,
     });
   } catch (error) {
-    console.error('Sessions GET error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Sessions GET');
   }
 }

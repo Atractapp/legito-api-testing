@@ -3,10 +3,12 @@
  *
  * Uses mammoth for parsing DOCX to text/HTML
  * Uses docx for generating DOCX files
+ * Uses diff-match-patch for accurate pattern extraction
  */
 
 import mammoth from 'mammoth';
 import JSZip from 'jszip';
+import DiffMatchPatch from 'diff-match-patch';
 import {
   Document,
   Paragraph,
@@ -104,11 +106,31 @@ function parseTextIntoParagraphs(text: string): ParsedParagraph[] {
 }
 
 // ----------------------------------------------------------------------------
-// Diff Functions
+// Diff Functions - Uses diff-match-patch for accurate pattern extraction
 // ----------------------------------------------------------------------------
 
 /**
- * Compare original and annotated documents to extract changes
+ * Internal type for tracking annotations during diff processing
+ */
+interface AnnotationInfo {
+  fullMatch: string;
+  type: AnnotationType;
+  label: string | null;
+  startPos: number;
+  endPos: number;
+  marker: string;
+}
+
+/**
+ * Compare original and annotated documents using proper diff algorithm.
+ * This uses diff-match-patch (Myers diff) to accurately extract what each
+ * annotation replaced in the original document.
+ *
+ * The algorithm:
+ * 1. Find ALL annotations in annotated text (broad regex)
+ * 2. Replace annotations with unique markers → "stripped" text
+ * 3. Diff ORIGINAL vs STRIPPED using Myers diff
+ * 4. Walk through diffs, mapping markers to what was deleted
  */
 export function diffDocuments(
   originalText: string,
@@ -117,96 +139,264 @@ export function diffDocuments(
   const diffs: DocumentDiff[] = [];
   const annotations: ExtractedAnnotation[] = [];
 
-  // Find all annotations in the annotated text
-  const annotationRegex = /\[(TextInput(?::\s*[^\]]+)?|Select:\s*[^\]]+|Date|Link|Money|Calculation)\]/g;
+  // 1. Find ALL annotations in annotated text (broader regex that catches any [xxx] format)
+  const annotationRegex = /\[([^\]]+)\]/g;
+  const foundAnnotations: AnnotationInfo[] = [];
+
   let match;
-
   while ((match = annotationRegex.exec(annotatedText)) !== null) {
-    const annotatedMatch = match[0];
-    const position = match.index;
+    const parsed = parseAnnotationContent(match[0]);
+    foundAnnotations.push({
+      fullMatch: match[0],
+      type: parsed.type,
+      label: parsed.label,
+      startPos: match.index,
+      endPos: match.index + match[0].length,
+      marker: `\x00M${foundAnnotations.length}\x00`, // Unique marker
+    });
+  }
 
-    // Find what this annotation replaced in the original
-    const extractedAnnotation = extractAnnotationContext(
-      originalText,
-      annotatedText,
-      annotatedMatch,
-      position
-    );
+  console.log(`[diffDocuments] Found ${foundAnnotations.length} annotations in annotated text`);
 
-    if (extractedAnnotation) {
-      annotations.push(extractedAnnotation);
-      diffs.push({
-        type: 'added',
-        originalText: extractedAnnotation.originalText,
-        newText: annotatedMatch,
-        position: {
-          start: position,
-          end: position + annotatedMatch.length,
-        },
-      });
+  if (foundAnnotations.length === 0) {
+    return { diffs: [], annotations: [] };
+  }
+
+  // 2. Create stripped version (replace annotations with unique markers)
+  // Process from end to start to preserve positions
+  let strippedText = annotatedText;
+  for (let i = foundAnnotations.length - 1; i >= 0; i--) {
+    const ann = foundAnnotations[i];
+    strippedText =
+      strippedText.slice(0, ann.startPos) +
+      ann.marker +
+      strippedText.slice(ann.endPos);
+  }
+
+  // 3. Diff original vs stripped using Myers diff
+  const dmp = new DiffMatchPatch();
+  const diffResults = dmp.diff_main(originalText, strippedText);
+  dmp.diff_cleanupSemantic(diffResults);
+
+  console.log(`[diffDocuments] Diff produced ${diffResults.length} operations`);
+
+  // 4. Walk through diffs and find what each marker replaced
+  // Build a map of marker → deleted text
+  const markerToDeleted = new Map<string, string>();
+
+  // Track position and recent deletions
+  let currentDeletedText = '';
+  let lastDeletePos = -1;
+
+  for (const [op, text] of diffResults) {
+    if (op === -1) {
+      // DELETE: text was in original but not in stripped
+      currentDeletedText += text;
+      lastDeletePos = diffResults.indexOf([op, text]);
+    } else if (op === 1) {
+      // INSERT: text is in stripped but not in original (could be a marker)
+      for (const ann of foundAnnotations) {
+        if (text.includes(ann.marker)) {
+          // This marker was inserted where text was deleted
+          if (currentDeletedText.trim()) {
+            markerToDeleted.set(ann.marker, currentDeletedText.trim());
+            console.log(`[diffDocuments] Mapped marker ${ann.marker.replace(/\x00/g, '')} → "${currentDeletedText.trim()}"`);
+          }
+          currentDeletedText = '';
+        }
+      }
+    } else {
+      // EQUAL: reset deletion tracking
+      currentDeletedText = '';
     }
   }
+
+  // Alternative approach: use position-based mapping for any unmapped markers
+  // This handles cases where the diff interleaves deletions and insertions
+  const unmappedAnnotations = foundAnnotations.filter(ann => !markerToDeleted.has(ann.marker));
+
+  if (unmappedAnnotations.length > 0) {
+    console.log(`[diffDocuments] ${unmappedAnnotations.length} annotations need position-based mapping`);
+
+    // Try to map by finding deletions near where the marker was inserted
+    const deletedSegments: Array<{ text: string; origEnd: number }> = [];
+    let origPos = 0;
+
+    for (const [op, text] of diffResults) {
+      if (op === -1) {
+        deletedSegments.push({ text: text.trim(), origEnd: origPos + text.length });
+        origPos += text.length;
+      } else if (op === 0) {
+        origPos += text.length;
+      }
+      // INSERT doesn't advance original position
+    }
+
+    // For each unmapped annotation, find the closest deleted segment
+    for (const ann of unmappedAnnotations) {
+      // Find where this annotation would be in the original (approximate)
+      // by counting non-annotation characters before it
+      let charsBeforeAnnotation = 0;
+      let pos = 0;
+      for (const a of foundAnnotations) {
+        if (a === ann) break;
+        // Add chars between last position and this annotation
+        charsBeforeAnnotation += a.startPos - pos;
+        pos = a.endPos;
+      }
+      charsBeforeAnnotation += ann.startPos - pos;
+
+      // Find closest deleted segment
+      let bestMatch = '';
+      let bestDistance = Infinity;
+      for (const seg of deletedSegments) {
+        const distance = Math.abs(seg.origEnd - charsBeforeAnnotation);
+        if (distance < bestDistance && seg.text) {
+          bestDistance = distance;
+          bestMatch = seg.text;
+        }
+      }
+
+      if (bestMatch && bestDistance < 200) {
+        markerToDeleted.set(ann.marker, bestMatch);
+        console.log(`[diffDocuments] Position-mapped ${ann.marker.replace(/\x00/g, '')} → "${bestMatch}" (distance: ${bestDistance})`);
+      }
+    }
+  }
+
+  // 5. Build the final annotations list
+  for (const ann of foundAnnotations) {
+    const originalValue = markerToDeleted.get(ann.marker);
+
+    if (originalValue) {
+      annotations.push({
+        originalText: originalValue,
+        annotatedText: ann.fullMatch,
+        type: ann.type,
+        position: {
+          start: ann.startPos,
+          end: ann.endPos,
+        },
+      });
+
+      diffs.push({
+        type: 'added',
+        originalText: originalValue,
+        newText: ann.fullMatch,
+        position: {
+          start: ann.startPos,
+          end: ann.endPos,
+        },
+      });
+    } else {
+      // Still no mapping - try context-based fallback
+      const fallbackOriginal = extractOriginalByContext(originalText, annotatedText, ann);
+      if (fallbackOriginal) {
+        annotations.push({
+          originalText: fallbackOriginal,
+          annotatedText: ann.fullMatch,
+          type: ann.type,
+          position: {
+            start: ann.startPos,
+            end: ann.endPos,
+          },
+        });
+
+        diffs.push({
+          type: 'added',
+          originalText: fallbackOriginal,
+          newText: ann.fullMatch,
+          position: {
+            start: ann.startPos,
+            end: ann.endPos,
+          },
+        });
+
+        console.log(`[diffDocuments] Context-fallback: "${fallbackOriginal}" → "${ann.fullMatch}"`);
+      } else {
+        console.warn(`[diffDocuments] Could not find original text for annotation: ${ann.fullMatch}`);
+      }
+    }
+  }
+
+  console.log(`[diffDocuments] Final result: ${annotations.length} annotations extracted from ${foundAnnotations.length} found`);
 
   return { diffs, annotations };
 }
 
 /**
- * Extract the context around an annotation to understand what was replaced
+ * Parse annotation content to determine type and label.
+ * Accepts ANY [xxx] format, then categorizes appropriately.
  */
-function extractAnnotationContext(
-  originalText: string,
-  annotatedText: string,
-  annotation: string,
-  annotationPosition: number
-): ExtractedAnnotation | null {
-  // Get surrounding context from annotated text
-  const contextBefore = annotatedText.substring(
-    Math.max(0, annotationPosition - 50),
-    annotationPosition
-  );
-  const contextAfter = annotatedText.substring(
-    annotationPosition + annotation.length,
-    annotationPosition + annotation.length + 50
-  );
+function parseAnnotationContent(annotation: string): { type: AnnotationType; label: string | null } {
+  const content = annotation.slice(1, -1).trim();
 
-  // Try to find the same context in original text
-  const searchPattern = escapeRegex(contextBefore) + '(.+?)' + escapeRegex(contextAfter);
+  // Known types (exact match)
+  if (content === 'Date') return { type: 'Date', label: null };
+  if (content === 'Money') return { type: 'Money', label: null };
+  if (content === 'Link') return { type: 'Link', label: null };
+  if (content === 'Calculation') return { type: 'Calculation', label: null };
+  if (content === 'TextInput') return { type: 'TextInput', label: null };
 
-  try {
-    const regex = new RegExp(searchPattern, 's');
-    const match = originalText.match(regex);
-
-    if (match && match[1]) {
-      const originalValue = match[1].trim();
-      const type = detectAnnotationType(annotation);
-
-      return {
-        originalText: originalValue,
-        annotatedText: annotation,
-        type,
-        position: {
-          start: annotationPosition,
-          end: annotationPosition + annotation.length,
-        },
-      };
-    }
-  } catch {
-    // Regex failed, try simpler approach
+  // Labeled types
+  if (content.startsWith('TextInput:')) {
+    return { type: 'TextInput', label: content.slice(10).trim() };
+  }
+  if (content.startsWith('Select:')) {
+    return { type: 'Select', label: content.slice(7).trim() };
   }
 
-  // Fallback: use the label or placeholder as original
-  const type = detectAnnotationType(annotation);
-  const label = extractLabel(annotation);
+  // Default: treat unknown as TextInput with the content as label
+  return { type: 'TextInput', label: content };
+}
 
-  return {
-    originalText: label || annotation,
-    annotatedText: annotation,
-    type,
-    position: {
-      start: annotationPosition,
-      end: annotationPosition + annotation.length,
-    },
-  };
+/**
+ * Fallback: try to extract original text using context matching
+ * This is used when diff-based approach fails
+ */
+function extractOriginalByContext(
+  originalText: string,
+  annotatedText: string,
+  annotation: AnnotationInfo
+): string | null {
+  // Get more context (100 chars) for better matching
+  const contextBefore = annotatedText.substring(
+    Math.max(0, annotation.startPos - 100),
+    annotation.startPos
+  ).trim();
+  const contextAfter = annotatedText.substring(
+    annotation.endPos,
+    annotation.endPos + 100
+  ).trim();
+
+  // Try to find context in original and extract what's between
+  if (contextBefore.length >= 10 && contextAfter.length >= 10) {
+    try {
+      // Use shorter, more reliable context snippets
+      const shortBefore = contextBefore.slice(-30);
+      const shortAfter = contextAfter.slice(0, 30);
+
+      const searchPattern =
+        escapeRegex(shortBefore) +
+        '([\\s\\S]{1,200}?)' +
+        escapeRegex(shortAfter);
+
+      const regex = new RegExp(searchPattern);
+      const match = originalText.match(regex);
+
+      if (match && match[1]) {
+        const extracted = match[1].trim();
+        // Validate: should not be empty and should not be another annotation
+        if (extracted && !/^\[.+\]$/.test(extracted)) {
+          return extracted;
+        }
+      }
+    } catch {
+      // Regex failed
+    }
+  }
+
+  return null;
 }
 
 /**

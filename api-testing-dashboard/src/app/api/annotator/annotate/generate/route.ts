@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import {
   generateAnnotatedDocx,
   generateAnnotatedDocxPreservingFormat,
@@ -7,20 +6,13 @@ import {
   deduplicatePatterns,
   storageService,
   getSessionDocPath,
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  errorResponse,
+  handleError,
+  withRateLimit,
 } from '@/lib/annotator';
 import type { Annotation, AnnotationType, Pattern } from '@/types/annotator';
-
-// Initialize Supabase client
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase environment variables not configured');
-  }
-
-  return createClient(supabaseUrl, supabaseKey);
-}
 
 /**
  * POST /api/annotator/annotate/generate
@@ -28,23 +20,20 @@ function getSupabase() {
  */
 export async function POST(request: NextRequest) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 20, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
 
     const { sessionId, annotations, saveAsPatterns } = await request.json();
 
     if (!sessionId) {
-      return NextResponse.json(
-        { error: 'sessionId is required' },
-        { status: 400 }
-      );
+      return errorResponse('MISSING_SESSION', 'sessionId is required', 400);
     }
 
     if (!Array.isArray(annotations)) {
-      return NextResponse.json(
-        { error: 'annotations array is required' },
-        { status: 400 }
-      );
+      return errorResponse('INVALID_ANNOTATIONS', 'annotations array is required', 400);
     }
 
     // Fetch session
@@ -52,14 +41,11 @@ export async function POST(request: NextRequest) {
       .from('annotator_sessions')
       .select('*')
       .eq('id', sessionId)
-      .eq('user_id', userId)
+      .eq('user_id', user.id)
       .single();
 
     if (sessionError || !session) {
-      return NextResponse.json(
-        { error: 'Session not found' },
-        { status: 404 }
-      );
+      return errorResponse('SESSION_NOT_FOUND', 'Session not found', 404);
     }
 
     // Apply annotations to text
@@ -104,7 +90,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Upload to storage
-    const outputPath = getSessionDocPath(userId, sessionId, 'output');
+    const outputPath = getSessionDocPath(user.id, sessionId, 'output');
     await storageService.upload(docxBlob, outputPath);
 
     // Get download URL
@@ -188,7 +174,7 @@ export async function POST(request: NextRequest) {
         const { data: existingPatternsData } = await supabase
           .from('annotator_patterns')
           .select('*')
-          .eq('user_id', userId);
+          .eq('user_id', user.id);
 
         // Convert to Pattern type
         const existingPatterns: Pattern[] = (existingPatternsData || []).map((p) => ({
@@ -213,7 +199,7 @@ export async function POST(request: NextRequest) {
         if (toAdd.length > 0) {
           const { error: insertError } = await supabase.from('annotator_patterns').insert(
             toAdd.map((p) => ({
-              user_id: userId,
+              user_id: user.id,
               original_text: p.originalText,
               annotated_text: p.annotatedText,
               annotation_type: p.annotationType,
@@ -259,10 +245,6 @@ export async function POST(request: NextRequest) {
       patternsUpdated,
     });
   } catch (error) {
-    console.error('Generate POST error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Generate POST');
   }
 }

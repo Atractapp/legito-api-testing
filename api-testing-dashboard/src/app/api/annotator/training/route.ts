@@ -1,23 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import {
   parseDocx,
   extractPatterns,
   storageService,
   getTrainingDocPath,
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  validateDocxFile,
+  errorResponse,
+  handleError,
+  withRateLimit,
 } from '@/lib/annotator';
-
-// Initialize Supabase client
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase environment variables not configured');
-  }
-
-  return createClient(supabaseUrl, supabaseKey);
-}
 
 /**
  * GET /api/annotator/training
@@ -25,15 +18,17 @@ function getSupabase() {
  */
 export async function GET(request: NextRequest) {
   try {
-    const supabase = getSupabase();
+    // Rate limiting
+    const rateLimit = withRateLimit(request, 100, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
 
-    // Get user from auth header or session (simplified for now)
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
 
     const { data: trainingPairs, error } = await supabase
       .from('annotator_training_pairs')
       .select('id, name, patterns_extracted, is_user_corrected, created_at')
-      .eq('user_id', userId)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -75,10 +70,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   console.log('[Training POST] Starting upload...');
   try {
-    const supabase = getSupabase();
+    // Rate limiting (stricter for uploads)
+    const rateLimit = withRateLimit(request, 20, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
     console.log('[Training POST] Supabase client created');
-    const userId = request.headers.get('x-user-id') || 'default-user';
-    console.log('[Training POST] User ID:', userId);
+    const user = getAuthenticatedUser(request);
+    console.log('[Training POST] User ID:', user.id);
 
     // Parse form data
     console.log('[Training POST] Parsing form data...');
@@ -90,34 +89,21 @@ export async function POST(request: NextRequest) {
 
     if (!name || !originalFile || !annotatedFile) {
       console.log('[Training POST] Missing required fields');
-      return NextResponse.json(
-        { error: 'Missing required fields: name, originalFile, annotatedFile' },
-        { status: 400 }
-      );
+      return errorResponse('MISSING_FIELDS', 'Missing required fields: name, originalFile, annotatedFile', 400);
     }
 
-    // Validate file types
-    const validTypes = [
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/msword',
-    ];
-    if (
-      !validTypes.includes(originalFile.type) &&
-      !originalFile.name.endsWith('.docx')
-    ) {
-      return NextResponse.json(
-        { error: 'Original file must be a Word document (.docx)' },
-        { status: 400 }
-      );
+    // Validate files using magic bytes
+    const [originalValidation, annotatedValidation] = await Promise.all([
+      validateDocxFile(originalFile),
+      validateDocxFile(annotatedFile),
+    ]);
+
+    if (!originalValidation.valid) {
+      return errorResponse('INVALID_FILE', `Original file: ${originalValidation.error}`, 400);
     }
-    if (
-      !validTypes.includes(annotatedFile.type) &&
-      !annotatedFile.name.endsWith('.docx')
-    ) {
-      return NextResponse.json(
-        { error: 'Annotated file must be a Word document (.docx)' },
-        { status: 400 }
-      );
+
+    if (!annotatedValidation.valid) {
+      return errorResponse('INVALID_FILE', `Annotated file: ${annotatedValidation.error}`, 400);
     }
 
     // Parse documents
@@ -139,8 +125,8 @@ export async function POST(request: NextRequest) {
     console.log('[Training POST] Patterns extracted:', patterns.length);
 
     // Upload files to storage
-    const originalPath = getTrainingDocPath(userId, pairId, 'original');
-    const annotatedPath = getTrainingDocPath(userId, pairId, 'annotated');
+    const originalPath = getTrainingDocPath(user.id, pairId, 'original');
+    const annotatedPath = getTrainingDocPath(user.id, pairId, 'annotated');
     console.log('[Training POST] Uploading files to storage...', { originalPath, annotatedPath });
 
     await Promise.all([
@@ -155,7 +141,7 @@ export async function POST(request: NextRequest) {
       .from('annotator_training_pairs')
       .insert({
         id: pairId,
-        user_id: userId,
+        user_id: user.id,
         name,
         original_text: originalParsed.text,
         annotated_text: annotatedParsed.text,
@@ -214,11 +200,6 @@ export async function POST(request: NextRequest) {
       summary,
     });
   } catch (error) {
-    console.error('[Training POST] Error:', error);
-    console.error('[Training POST] Stack:', error instanceof Error ? error.stack : 'No stack');
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Training POST');
   }
 }

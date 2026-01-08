@@ -56,3 +56,23 @@ export {
   type AnnotateDocumentOptions,
   type ClaudeServiceConfig,
 } from './claude-service';
+
+// API Utilities
+export {
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  requireAuth,
+  validateDocxFile,
+  validateDocxFiles,
+  successResponse,
+  errorResponse,
+  handleError,
+  checkRateLimit,
+  withRateLimit,
+  transformDbPattern,
+  transformDbPatterns,
+  groupRejectedFeedback,
+  type AuthenticatedUser,
+  type ApiResponse,
+  type FileValidationResult,
+} from './api-utils';

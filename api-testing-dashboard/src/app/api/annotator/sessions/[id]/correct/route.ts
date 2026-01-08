@@ -1,25 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import {
   parseDocx,
   extractPatterns,
   deduplicatePatterns,
   storageService,
   getTrainingDocPath,
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  validateDocxFile,
+  errorResponse,
+  handleError,
+  withRateLimit,
 } from '@/lib/annotator';
 import type { Pattern, AnnotationType } from '@/types/annotator';
-
-// Initialize Supabase client
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase environment variables not configured');
-  }
-
-  return createClient(supabaseUrl, supabaseKey);
-}
 
 /**
  * POST /api/annotator/sessions/[id]/correct
@@ -31,19 +24,29 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 20, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
     const { id: sessionId } = await params;
+
+    if (!sessionId) {
+      return errorResponse('MISSING_SESSION', 'Session ID is required', 400);
+    }
 
     // Parse form data
     const formData = await request.formData();
     const correctedFile = formData.get('correctedFile') as File;
 
     if (!correctedFile) {
-      return NextResponse.json(
-        { error: 'correctedFile is required' },
-        { status: 400 }
-      );
+      return errorResponse('MISSING_FILE', 'correctedFile is required', 400);
+    }
+
+    // Validate DOCX file
+    const validation = await validateDocxFile(correctedFile);
+    if (!validation.valid) {
+      return errorResponse('INVALID_FILE', validation.error || 'Invalid file', 400);
     }
 
     // Fetch original session
@@ -51,14 +54,11 @@ export async function POST(
       .from('annotator_sessions')
       .select('*')
       .eq('id', sessionId)
-      .eq('user_id', userId)
+      .eq('user_id', user.id)
       .single();
 
     if (sessionError || !session) {
-      return NextResponse.json(
-        { error: 'Session not found' },
-        { status: 404 }
-      );
+      return errorResponse('SESSION_NOT_FOUND', 'Session not found', 404);
     }
 
     // Parse the corrected document
@@ -75,8 +75,8 @@ export async function POST(
     );
 
     // Upload corrected file
-    const originalPath = getTrainingDocPath(userId, newPairId, 'original');
-    const annotatedPath = getTrainingDocPath(userId, newPairId, 'annotated');
+    const originalPath = getTrainingDocPath(user.id, newPairId, 'original');
+    const annotatedPath = getTrainingDocPath(user.id, newPairId, 'annotated');
 
     // Download original input file if it exists
     let originalBlob: Blob | null = null;
@@ -99,7 +99,7 @@ export async function POST(
       .from('annotator_training_pairs')
       .insert({
         id: newPairId,
-        user_id: userId,
+        user_id: user.id,
         name: `Correction: ${session.input_filename}`,
         original_text: session.input_text,
         annotated_text: correctedParsed.text,
@@ -114,17 +114,14 @@ export async function POST(
 
     if (insertError) {
       console.error('Failed to create training pair:', insertError);
-      return NextResponse.json(
-        { error: 'Failed to save correction as training pair' },
-        { status: 500 }
-      );
+      return errorResponse('INSERT_FAILED', 'Failed to save correction as training pair', 500);
     }
 
     // Fetch existing patterns for deduplication
     const { data: existingPatterns } = await supabase
       .from('annotator_patterns')
       .select('*')
-      .eq('user_id', userId);
+      .eq('user_id', user.id);
 
     const existingPatternsTyped: Pattern[] = (existingPatterns || []).map((p) => ({
       id: p.id,
@@ -147,7 +144,7 @@ export async function POST(
     // Insert new patterns
     if (toAdd.length > 0) {
       const patternsToInsert = toAdd.map((pattern) => ({
-        user_id: userId,
+        user_id: user.id,
         original_text: pattern.originalText,
         annotated_text: pattern.annotatedText,
         annotation_type: pattern.annotationType,
@@ -198,10 +195,6 @@ export async function POST(
       summary,
     });
   } catch (error) {
-    console.error('Correct POST error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Correct POST');
   }
 }

@@ -9,6 +9,8 @@ import type {
   AnnotationType,
   PatternMatch,
   PatternStats,
+  ContextRules,
+  TypeIndicator,
 } from '@/types/annotator';
 import {
   diffDocuments,
@@ -58,12 +60,16 @@ export function extractPatterns(
       annotation.position.end || annotation.position.start + annotation.annotatedText.length
     );
 
+    // Extract semantic context rules from the context
+    const contextRules = extractContextRules(contextBefore, contextAfter, annotation.type);
+
     patterns.push({
       originalText: annotation.originalText,
       annotatedText: annotation.annotatedText,
       annotationType: annotation.type,
       contextBefore,
       contextAfter,
+      contextRules,
       confidence: 1.0, // Initial confidence
       usageCount: 1,
       successRate: 1.0,
@@ -72,15 +78,18 @@ export function extractPatterns(
   }
 
   // Filter out invalid patterns
+  // NOTE: With diff-based extraction, originalText will always be the real
+  // text that was replaced, NOT the annotation itself. The previous filter
+  // that removed /^\[.+\]$/ patterns was masking extraction failures.
   const validPatterns = patterns.filter((p) => {
     // Skip if original text is same as annotated (no real replacement)
     if (p.originalText === p.annotatedText) return false;
 
-    // Skip if original text is already an annotation format like [Date], [Money], etc.
-    if (/^\[.+\]$/.test(p.originalText)) return false;
-
     // Skip if original text is empty or whitespace only
     if (!p.originalText || !p.originalText.trim()) return false;
+
+    // Log what we're keeping for debugging
+    console.log(`[extractPatterns] Keeping pattern: "${p.originalText}" → "${p.annotatedText}" (${p.annotationType})`);
 
     return true;
   });
@@ -124,6 +133,172 @@ function getContextAfter(text: string, position: number, maxLength = 100): strin
   }
 
   return context.trim();
+}
+
+/**
+ * Extract semantic context rules from pattern context.
+ * These rules are used for smart pattern matching - e.g., "if context contains
+ * 'value of' → Money" regardless of the actual value.
+ *
+ * This is the KEY function for making the system understand context-based typing.
+ */
+function extractContextRules(
+  contextBefore: string | null,
+  contextAfter: string | null,
+  annotationType: AnnotationType
+): ContextRules {
+  const rules: ContextRules = { typeIndicators: [] };
+  const beforeLower = (contextBefore || '').toLowerCase();
+  const afterLower = (contextAfter || '').toLowerCase();
+
+  // === MONEY INDICATORS ===
+  if (annotationType === 'Money') {
+    // Keywords that appear BEFORE money values
+    const moneyBeforeKeywords = [
+      { pattern: /value of|in the value of/i, keyword: 'value of', confidence: 0.95 },
+      { pattern: /amount of?/i, keyword: 'amount', confidence: 0.9 },
+      { pattern: /sum of?/i, keyword: 'sum', confidence: 0.9 },
+      { pattern: /total of?/i, keyword: 'total', confidence: 0.9 },
+      { pattern: /price of?/i, keyword: 'price', confidence: 0.9 },
+      { pattern: /fee of?|fee:/i, keyword: 'fee', confidence: 0.85 },
+      { pattern: /cost of?/i, keyword: 'cost', confidence: 0.85 },
+      { pattern: /payment of?/i, keyword: 'payment', confidence: 0.85 },
+      { pattern: /salary|wage/i, keyword: 'salary', confidence: 0.85 },
+      { pattern: /deposit of?/i, keyword: 'deposit', confidence: 0.85 },
+      { pattern: /rent of?/i, keyword: 'rent', confidence: 0.85 },
+    ];
+
+    for (const { pattern, keyword, confidence } of moneyBeforeKeywords) {
+      if (pattern.test(beforeLower)) {
+        rules.typeIndicators.push({
+          keyword,
+          position: 'before',
+          impliesType: 'Money',
+          confidence,
+        });
+      }
+    }
+
+    // Keywords that appear AFTER money values (currencies)
+    const currencyKeywords = [
+      { pattern: /^\s*(eur|euro|euros)/i, keyword: 'EUR', confidence: 0.95 },
+      { pattern: /^\s*(usd|dollars?)/i, keyword: 'USD', confidence: 0.95 },
+      { pattern: /^\s*(czk|kč|korun)/i, keyword: 'CZK', confidence: 0.95 },
+      { pattern: /^\s*(gbp|pounds?)/i, keyword: 'GBP', confidence: 0.95 },
+      { pattern: /^\s*(chf|francs?)/i, keyword: 'CHF', confidence: 0.95 },
+    ];
+
+    for (const { pattern, keyword, confidence } of currencyKeywords) {
+      if (pattern.test(afterLower)) {
+        rules.typeIndicators.push({
+          keyword,
+          position: 'after',
+          impliesType: 'Money',
+          confidence,
+        });
+      }
+    }
+  }
+
+  // === DATE INDICATORS ===
+  if (annotationType === 'Date') {
+    const dateBeforeKeywords = [
+      { pattern: /dated?/i, keyword: 'dated', confidence: 0.9 },
+      { pattern: /as of/i, keyword: 'as of', confidence: 0.9 },
+      { pattern: /valid from/i, keyword: 'valid from', confidence: 0.9 },
+      { pattern: /valid until/i, keyword: 'valid until', confidence: 0.9 },
+      { pattern: /effective/i, keyword: 'effective', confidence: 0.85 },
+      { pattern: /expires?/i, keyword: 'expires', confidence: 0.85 },
+      { pattern: /due date/i, keyword: 'due date', confidence: 0.9 },
+      { pattern: /signed on/i, keyword: 'signed on', confidence: 0.9 },
+      { pattern: /executed on/i, keyword: 'executed on', confidence: 0.9 },
+      { pattern: /starting/i, keyword: 'starting', confidence: 0.8 },
+      { pattern: /ending/i, keyword: 'ending', confidence: 0.8 },
+      { pattern: /on the/i, keyword: 'on the', confidence: 0.7 },
+    ];
+
+    for (const { pattern, keyword, confidence } of dateBeforeKeywords) {
+      if (pattern.test(beforeLower)) {
+        rules.typeIndicators.push({
+          keyword,
+          position: 'before',
+          impliesType: 'Date',
+          confidence,
+        });
+      }
+    }
+  }
+
+  // === LINK INDICATORS (References to entities) ===
+  if (annotationType === 'Link') {
+    const linkKeywords = [
+      { pattern: /the buyer|the seller/i, keyword: 'party reference', confidence: 0.9 },
+      { pattern: /the (creditor|debtor)/i, keyword: 'creditor/debtor', confidence: 0.9 },
+      { pattern: /the (landlord|tenant)/i, keyword: 'landlord/tenant', confidence: 0.9 },
+      { pattern: /the (employer|employee)/i, keyword: 'employer/employee', confidence: 0.9 },
+      { pattern: /aforementioned/i, keyword: 'aforementioned', confidence: 0.95 },
+      { pattern: /hereinafter/i, keyword: 'hereinafter', confidence: 0.9 },
+      { pattern: /as defined/i, keyword: 'as defined', confidence: 0.85 },
+    ];
+
+    for (const { pattern, keyword, confidence } of linkKeywords) {
+      if (pattern.test(beforeLower) || pattern.test(afterLower)) {
+        rules.typeIndicators.push({
+          keyword,
+          position: 'any',
+          impliesType: 'Link',
+          confidence,
+        });
+      }
+    }
+  }
+
+  // === SELECT INDICATORS ===
+  if (annotationType === 'Select') {
+    const selectKeywords = [
+      { pattern: /choose|select|pick/i, keyword: 'choose/select', confidence: 0.85 },
+      { pattern: /circle|check/i, keyword: 'circle/check', confidence: 0.8 },
+      { pattern: /yes\/no|true\/false/i, keyword: 'yes/no', confidence: 0.95 },
+    ];
+
+    for (const { pattern, keyword, confidence } of selectKeywords) {
+      if (pattern.test(beforeLower) || pattern.test(afterLower)) {
+        rules.typeIndicators.push({
+          keyword,
+          position: 'any',
+          impliesType: 'Select',
+          confidence,
+        });
+      }
+    }
+  }
+
+  // === CALCULATION INDICATORS ===
+  if (annotationType === 'Calculation') {
+    const calcKeywords = [
+      { pattern: /total|sum|aggregate/i, keyword: 'total/sum', confidence: 0.85 },
+      { pattern: /calculated|computed/i, keyword: 'calculated', confidence: 0.9 },
+    ];
+
+    for (const { pattern, keyword, confidence } of calcKeywords) {
+      if (pattern.test(beforeLower) || pattern.test(afterLower)) {
+        rules.typeIndicators.push({
+          keyword,
+          position: 'any',
+          impliesType: 'Calculation',
+          confidence,
+        });
+      }
+    }
+  }
+
+  // Log extracted rules for debugging
+  if (rules.typeIndicators.length > 0) {
+    console.log(`[extractContextRules] Type ${annotationType}: found ${rules.typeIndicators.length} indicators:`,
+      rules.typeIndicators.map(i => `"${i.keyword}" (${i.position})`).join(', '));
+  }
+
+  return rules;
 }
 
 /**

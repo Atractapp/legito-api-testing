@@ -1,19 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import { deduplicatePatterns } from '@/lib/annotator';
+import {
+  deduplicatePatterns,
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  errorResponse,
+  handleError,
+  withRateLimit,
+} from '@/lib/annotator';
 import type { Pattern, AnnotationType } from '@/types/annotator';
-
-// Initialize Supabase client
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase environment variables not configured');
-  }
-
-  return createClient(supabaseUrl, supabaseKey);
-}
 
 interface PatternInput {
   originalText: string;
@@ -30,16 +24,16 @@ interface PatternInput {
  */
 export async function POST(request: NextRequest) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 30, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
 
     const { patterns, source, trainingPairId, sessionId } = await request.json();
 
     if (!Array.isArray(patterns) || patterns.length === 0) {
-      return NextResponse.json(
-        { error: 'patterns array is required and must not be empty' },
-        { status: 400 }
-      );
+      return errorResponse('INVALID_REQUEST', 'patterns array is required and must not be empty', 400);
     }
 
     console.log('[Patterns Confirm] Saving patterns:', {
@@ -73,7 +67,7 @@ export async function POST(request: NextRequest) {
     const { data: existingPatternsData } = await supabase
       .from('annotator_patterns')
       .select('*')
-      .eq('user_id', userId);
+      .eq('user_id', user.id);
 
     // Convert to Pattern type
     const existingPatterns: Pattern[] = (existingPatternsData || []).map((p) => ({
@@ -120,7 +114,7 @@ export async function POST(request: NextRequest) {
     if (toAdd.length > 0) {
       const { error: insertError } = await supabase.from('annotator_patterns').insert(
         toAdd.map((p) => ({
-          user_id: userId,
+          user_id: user.id,
           original_text: p.originalText,
           annotated_text: p.annotatedText,
           annotation_type: p.annotationType,
@@ -135,10 +129,7 @@ export async function POST(request: NextRequest) {
 
       if (insertError) {
         console.error('[Patterns Confirm] Failed to insert patterns:', insertError);
-        return NextResponse.json(
-          { error: `Failed to save patterns: ${insertError.message}` },
-          { status: 500 }
-        );
+        return errorResponse('INSERT_FAILED', `Failed to save patterns: ${insertError.message}`, 500);
       }
       patternsSaved = toAdd.length;
     }
@@ -166,10 +157,6 @@ export async function POST(request: NextRequest) {
       patternsUpdated,
     });
   } catch (error) {
-    console.error('[Patterns Confirm] Error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Patterns Confirm');
   }
 }

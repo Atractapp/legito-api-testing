@@ -1,19 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import { calculatePatternStats } from '@/lib/annotator';
+import {
+  calculatePatternStats,
+  getSupabaseAdmin,
+  getAuthenticatedUser,
+  errorResponse,
+  handleError,
+  withRateLimit,
+} from '@/lib/annotator';
 import type { Pattern, AnnotationType } from '@/types/annotator';
-
-// Initialize Supabase client
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Supabase environment variables not configured');
-  }
-
-  return createClient(supabaseUrl, supabaseKey);
-}
 
 /**
  * GET /api/annotator/patterns
@@ -21,8 +15,11 @@ function getSupabase() {
  */
 export async function GET(request: NextRequest) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 100, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
 
     // Parse query params
     const { searchParams } = new URL(request.url);
@@ -35,7 +32,7 @@ export async function GET(request: NextRequest) {
     let query = supabase
       .from('annotator_patterns')
       .select('*')
-      .eq('user_id', userId);
+      .eq('user_id', user.id);
 
     // Apply filters
     if (type) {
@@ -85,11 +82,7 @@ export async function GET(request: NextRequest) {
       stats,
     });
   } catch (error) {
-    console.error('Patterns GET error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Patterns GET');
   }
 }
 
@@ -99,30 +92,27 @@ export async function GET(request: NextRequest) {
  */
 export async function DELETE(request: NextRequest) {
   try {
-    const supabase = getSupabase();
-    const userId = request.headers.get('x-user-id') || 'default-user';
+    const rateLimit = withRateLimit(request, 30, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
 
     const { ids } = await request.json();
 
     if (!Array.isArray(ids) || ids.length === 0) {
-      return NextResponse.json(
-        { error: 'ids array is required' },
-        { status: 400 }
-      );
+      return errorResponse('INVALID_REQUEST', 'ids array is required', 400);
     }
 
     const { error } = await supabase
       .from('annotator_patterns')
       .delete()
-      .eq('user_id', userId)
+      .eq('user_id', user.id)
       .in('id', ids);
 
     if (error) {
       console.error('Failed to delete patterns:', error);
-      return NextResponse.json(
-        { error: 'Failed to delete patterns' },
-        { status: 500 }
-      );
+      return errorResponse('DELETE_FAILED', 'Failed to delete patterns', 500);
     }
 
     return NextResponse.json({
@@ -130,10 +120,6 @@ export async function DELETE(request: NextRequest) {
       deleted: ids.length,
     });
   } catch (error) {
-    console.error('Patterns DELETE error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error, 'Patterns DELETE');
   }
 }
