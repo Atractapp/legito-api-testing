@@ -53,12 +53,30 @@ export function extractPatterns(
   const patterns: Omit<Pattern, 'id' | 'userId' | 'createdAt'>[] = [];
 
   for (const annotation of annotations) {
-    // Get context around the annotation
-    const contextBefore = getContextBefore(annotatedText, annotation.position.start);
-    const contextAfter = getContextAfter(
-      annotatedText,
-      annotation.position.end || annotation.position.start + annotation.annotatedText.length
-    );
+    // CRITICAL FIX: Extract context from ORIGINAL text, not annotated text!
+    // The annotated text contains [annotations] which won't exist in documents to match.
+    // We need context from the original to enable proper matching.
+
+    // Find where the originalText appears in the original document
+    const origPos = originalText.indexOf(annotation.originalText);
+
+    let contextBefore: string;
+    let contextAfter: string;
+
+    if (origPos !== -1) {
+      // Found in original - extract context from there (correct approach)
+      contextBefore = getContextBefore(originalText, origPos);
+      contextAfter = getContextAfter(originalText, origPos + annotation.originalText.length);
+      console.log(`[extractPatterns] Context from ORIGINAL: before="${contextBefore.slice(-30)}", after="${contextAfter.slice(0, 30)}"`);
+    } else {
+      // Fallback: use annotated text context (may contain [annotations])
+      console.warn(`[extractPatterns] Could not find "${annotation.originalText}" in original, using annotated context`);
+      contextBefore = getContextBefore(annotatedText, annotation.position.start);
+      contextAfter = getContextAfter(
+        annotatedText,
+        annotation.position.end || annotation.position.start + annotation.annotatedText.length
+      );
+    }
 
     // Extract semantic context rules from the context
     const contextRules = extractContextRules(contextBefore, contextAfter, annotation.type);
@@ -493,7 +511,12 @@ export function findPatternMatches(
   const matches: PatternMatch[] = [];
   const matchedPatternIds = new Set<string>();
 
+  console.log(`[findPatternMatches] Searching for ${patterns.length} patterns in ${documentText.length} chars`);
+
   for (const pattern of patterns) {
+    console.log(`[findPatternMatches] Checking pattern: "${pattern.originalText}" → "${pattern.annotatedText}"`);
+    console.log(`  Context: before="${(pattern.contextBefore || '').slice(-30)}", after="${(pattern.contextAfter || '').slice(0, 30)}"`);
+
     // Determine if originalText is a placeholder-like value
     const isPlaceholder = isPlaceholderText(pattern.originalText, pattern.annotationType);
 
@@ -533,7 +556,8 @@ export function findPatternMatches(
           position,
           pattern.originalText.length,
           pattern.contextBefore,
-          pattern.contextAfter
+          pattern.contextAfter,
+          pattern.originalText
         );
 
         if (contextMatches) {
@@ -784,7 +808,8 @@ function verifyContext(
   position: number,
   matchLength: number,
   expectedBefore: string | null,
-  expectedAfter: string | null
+  expectedAfter: string | null,
+  patternOriginal?: string
 ): { beforeScore: number; afterScore: number } | null {
   const actualBefore = getContextBefore(text, position);
   const actualAfter = getContextAfter(text, position + matchLength);
@@ -796,12 +821,14 @@ function verifyContext(
     ? calculateSimilarity(actualAfter, expectedAfter)
     : 1.0;
 
-  // Require at least 30% context similarity
-  const threshold = 0.3;
+  // Lowered threshold to 0.2 for better matching now that context is from original text
+  const threshold = 0.2;
   if (beforeScore < threshold && afterScore < threshold) {
+    console.log(`[verifyContext] REJECT "${patternOriginal || '?'}": beforeScore=${beforeScore.toFixed(2)}, afterScore=${afterScore.toFixed(2)}`);
     return null;
   }
 
+  console.log(`[verifyContext] ACCEPT "${patternOriginal || '?'}": beforeScore=${beforeScore.toFixed(2)}, afterScore=${afterScore.toFixed(2)}`);
   return { beforeScore, afterScore };
 }
 
