@@ -49,44 +49,26 @@ const DEFAULT_MAX_TOKENS = 8192;
 // System Prompt
 // ----------------------------------------------------------------------------
 
-const SYSTEM_PROMPT = `You are a document annotation expert for Legito. Your job is to find FILL-IN-THE-BLANK placeholders in legal documents.
+const SYSTEM_PROMPT = `You annotate FILL-IN-THE-BLANK placeholders in legal documents.
 
-## WHAT YOU MUST ANNOTATE (explicit placeholders only):
-1. Underscores: _____, ______, _________ (blank lines)
-2. X patterns: XXX, XXXX, XX.XX.XXXX (placeholder text)
-3. Dots: ........, .......... (blanks)
-4. Date patterns: DD.MM.YYYY, __.__.____
-5. Amount patterns: 0,00 EUR, XXX CZK
+## ONLY ANNOTATE THESE EXACT PATTERNS:
+- _____ (underscores) → [TextInput: label based on context]
+- XXXX or XXX (X letters) → [TextInput] or [Date] or [Money]
+- ........ (dots) → [TextInput]
+- DD.MM.YYYY or XX.XX.XXXX → [Date]
+- 0,00 EUR or XXX CZK → [Money]
 
-## WHAT YOU MUST NEVER ANNOTATE:
-- Single words like: Loan, Agreement, Contract, Name, Address, Company, City, Date, Amount, Party, Buyer, Seller, Bank, Account
+## NEVER ANNOTATE:
+- Words: Loan, Agreement, Contract, Party, Buyer, Seller, Bank, Name, Address, City, Date, Amount
+- ANY readable text
 - Sentences or phrases
-- Headings or titles
-- ANY readable text that is not a fill-in-the-blank
+- Headings
 
-## CRITICAL RULES:
-1. A typical contract has 5-20 placeholders, NEVER hundreds
-2. If you return more than 30 annotations, you are doing it WRONG
-3. If it's a readable English/Czech word, DO NOT annotate it
-4. When in doubt, DO NOT annotate
-5. Look for actual blanks (_____, XXXX) not words
+## HARD LIMIT: Maximum 20 annotations per document.
+If you find more than 20, you are annotating regular text which is WRONG.
 
-## Annotation Types:
-- [Date] - For XX.XX.XXXX, DD.MM.YYYY patterns
-- [Money] - For amounts with currency (0,00 EUR, XXX CZK)
-- [TextInput: label] - For _____ with clear context (e.g., after "Name:")
-- [TextInput] - For _____ without clear context
-- [Select: option1/option2] - For yes/no, true/false choices
-
-## Output Format (JSON):
-{
-  "annotations": [
-    {"original": "_____", "annotated": "[TextInput]", "type": "TextInput", "position": {"start": 0, "end": 5}, "confidence": 0.9}
-  ],
-  "metadata": {"total_annotations": 1}
-}
-
-REMEMBER: You should find 5-20 placeholders in a typical document. If you're finding more, you're annotating regular text by mistake.`;
+## Output JSON only:
+{"annotations":[{"original":"_____","annotated":"[TextInput: Name]","type":"TextInput","position":{"start":0,"end":5},"confidence":0.9}]}`;
 
 // ----------------------------------------------------------------------------
 // Claude Service Class
@@ -524,48 +506,69 @@ function extractLabelFromAnnotation(annotation: string): string | null {
 }
 
 /**
+ * Check if text is a valid placeholder (not a regular word)
+ */
+function isValidPlaceholder(text: string): boolean {
+  const trimmed = text.trim();
+
+  // Empty
+  if (!trimmed) return false;
+
+  // Underscores: _____, __, etc.
+  if (/^_+$/.test(trimmed)) return true;
+  if (/__{2,}/.test(trimmed)) return true;
+
+  // X patterns: XXX, XXXX
+  if (/^X+$/i.test(trimmed)) return true;
+  if (/X{2,}/i.test(trimmed)) return true;
+
+  // Dots: ........
+  if (/^\.{3,}$/.test(trimmed)) return true;
+
+  // Date patterns: DD.MM.YYYY, XX.XX.XXXX
+  if (/^[XD_]{1,2}[.\/-][XM_]{1,2}[.\/-][XY_]{2,4}$/i.test(trimmed)) return true;
+
+  // Actual dates: 01.01.2024
+  if (/^\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4}$/.test(trimmed)) return true;
+
+  // Amount: 0,00
+  if (/^0[,.]00$/.test(trimmed)) return true;
+
+  // Select: yes/no, true/false
+  if (/^[a-z]+\/[a-z]+$/i.test(trimmed)) return true;
+
+  // Question marks: ???
+  if (/^\?{2,}$/.test(trimmed)) return true;
+
+  // REJECT everything else - especially regular words and phrases
+  return false;
+}
+
+/**
  * Apply refinement to all annotations in a response
- * Simple filter: only keep annotations where original text looks like a placeholder
+ * STRICT filter: only keep annotations where original text is an actual placeholder
  */
 function refineAnnotations(
   response: ClaudeAnnotationResponse,
   documentText: string
 ): ClaudeAnnotationResponse {
-  // Simple filter: only keep explicit placeholders
+  // Strict filter: only keep actual placeholders
   const filtered = response.annotations.filter((ann) => {
     const original = ann.original.trim();
 
-    // Accept: _____, XXX, ........, XX.XX.XXXX, 0,00, yes/no
-    const isPlaceholder =
-      /^_+$/.test(original) ||           // _____
-      /__{2,}/.test(original) ||         // contains __
-      /^X+$/i.test(original) ||          // XXX
-      /X{2,}/i.test(original) ||         // contains XX
-      /^\.{3,}$/.test(original) ||       // ........
-      /^\d{1,2}[./-]\d{1,2}[./-]\d{2,4}$/.test(original) || // dates
-      /^[XD_]{1,2}[./-][XM_]{1,2}[./-][XY_]{2,4}$/i.test(original) || // XX.XX.XXXX
-      /^0[,.]00$/.test(original) ||      // 0,00
-      /^[a-z]+\/[a-z]+$/i.test(original); // yes/no
-
-    // Reject: single regular words
-    const isSingleWord = !/\s/.test(original) && /^[A-Za-z]+:?$/.test(original);
-
-    if (isSingleWord && !isPlaceholder) {
-      console.log(`[filter] REJECT word: "${original}"`);
+    if (!isValidPlaceholder(original)) {
+      console.log(`[filter] REJECT: "${original}" → "${ann.annotated}"`);
       return false;
     }
 
-    if (!isPlaceholder && original.length < 50) {
-      // Check if it's just regular text (no placeholder patterns)
-      const hasPlaceholderChars = /[_]{2,}|X{2,}|\.{3,}/.test(original);
-      if (!hasPlaceholderChars) {
-        console.log(`[filter] REJECT no placeholder chars: "${original}"`);
-        return false;
-      }
-    }
-
+    console.log(`[filter] ACCEPT: "${original}" → "${ann.annotated}"`);
     return true;
   });
+
+  // Additional safety: if Claude returned way too many, something is wrong
+  if (response.annotations.length > 50 && filtered.length > 20) {
+    console.warn(`[refineAnnotations] WARNING: ${response.annotations.length} raw, ${filtered.length} filtered - may need review`);
+  }
 
   console.log(`[refineAnnotations] Kept ${filtered.length} of ${response.annotations.length}`);
 

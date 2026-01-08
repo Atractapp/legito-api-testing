@@ -42,7 +42,67 @@ export interface PatternApplicationResult {
 // ----------------------------------------------------------------------------
 
 /**
+ * Check if text looks like a fill-in-the-blank placeholder
+ * Only these should become patterns - not regular words!
+ */
+function isActualPlaceholder(text: string): boolean {
+  const trimmed = text.trim();
+
+  // Empty or too short
+  if (!trimmed || trimmed.length < 1) return false;
+
+  // Underscores: _____, __, etc.
+  if (/^_+$/.test(trimmed)) return true;
+  if (/__{2,}/.test(trimmed)) return true; // Contains multiple underscores
+
+  // X patterns: XXX, XXXX, XX.XX.XXXX
+  if (/^X+$/i.test(trimmed)) return true;
+  if (/X{2,}/i.test(trimmed)) return true; // Contains XX
+
+  // Dots: ........
+  if (/^\.{3,}$/.test(trimmed)) return true;
+
+  // Date placeholders: DD.MM.YYYY, XX.XX.XXXX, __.__.____
+  if (/^[XD_]{1,2}[.\/-][XM_]{1,2}[.\/-][XY_]{2,4}$/i.test(trimmed)) return true;
+  if (/^\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4}$/.test(trimmed)) return true; // Actual dates like 01.01.2024
+
+  // Amount placeholders: 0,00 or 0.00
+  if (/^0[,.]00$/.test(trimmed)) return true;
+
+  // Bracket placeholders: [xxx], <xxx>
+  if (/^\[.+\]$/.test(trimmed)) return true;
+  if (/^<.+>$/.test(trimmed)) return true;
+
+  // Number placeholders with currency
+  if (/^\d+[,.]?\d*\s*(EUR|USD|CZK|GBP|CHF)$/i.test(trimmed)) return true;
+
+  // Question marks as placeholder: ???, ????
+  if (/^\?{2,}$/.test(trimmed)) return true;
+
+  // REJECT: Regular words (this is the key filter!)
+  // Single words without special chars are NOT placeholders
+  if (/^[A-Za-záéíóúčďěňřšťžýůÁÉÍÓÚČĎĚŇŘŠŤŽÝŮ]+['']?s?$/i.test(trimmed)) {
+    return false; // "Loan", "Agreement", "Creditor's" - NOT placeholders
+  }
+
+  // Short phrases without placeholder chars are NOT placeholders
+  if (trimmed.length < 30 && !/[_X]{2,}|\.{3,}|\?{2,}/.test(trimmed)) {
+    // Check if it's just normal words
+    const words = trimmed.split(/\s+/);
+    const allNormalWords = words.every(w =>
+      /^[A-Za-záéíóúčďěňřšťžýůÁÉÍÓÚČĎĚŇŘŠŤŽÝŮ]+['']?s?[,.:;]?$/i.test(w)
+    );
+    if (allNormalWords) return false;
+  }
+
+  return false; // Default: reject if not explicitly a placeholder
+}
+
+/**
  * Extract patterns from a training pair (original + annotated document)
+ *
+ * CRITICAL: Only creates patterns from ACTUAL PLACEHOLDERS like _____, XXX, DD.MM.YYYY
+ * Regular words like "Loan", "Agreement" are NOT extracted as patterns!
  */
 export function extractPatterns(
   originalText: string,
@@ -52,33 +112,28 @@ export function extractPatterns(
   const { annotations } = diffDocuments(originalText, annotatedText);
   const patterns: Omit<Pattern, 'id' | 'userId' | 'createdAt'>[] = [];
 
+  console.log(`[extractPatterns] Processing ${annotations.length} annotations from diff`);
+
   for (const annotation of annotations) {
-    // CRITICAL FIX: Extract context from ORIGINAL text, not annotated text!
-    // The annotated text contains [annotations] which won't exist in documents to match.
-    // We need context from the original to enable proper matching.
+    // CRITICAL: Only accept actual placeholders, not regular words!
+    if (!isActualPlaceholder(annotation.originalText)) {
+      console.log(`[extractPatterns] SKIP - not a placeholder: "${annotation.originalText}" → "${annotation.annotatedText}"`);
+      continue;
+    }
 
     // Find where the originalText appears in the original document
     const origPos = originalText.indexOf(annotation.originalText);
 
-    let contextBefore: string;
-    let contextAfter: string;
+    let contextBefore = '';
+    let contextAfter = '';
 
     if (origPos !== -1) {
-      // Found in original - extract context from there (correct approach)
-      contextBefore = getContextBefore(originalText, origPos);
-      contextAfter = getContextAfter(originalText, origPos + annotation.originalText.length);
-      console.log(`[extractPatterns] Context from ORIGINAL: before="${contextBefore.slice(-30)}", after="${contextAfter.slice(0, 30)}"`);
-    } else {
-      // Fallback: use annotated text context (may contain [annotations])
-      console.warn(`[extractPatterns] Could not find "${annotation.originalText}" in original, using annotated context`);
-      contextBefore = getContextBefore(annotatedText, annotation.position.start);
-      contextAfter = getContextAfter(
-        annotatedText,
-        annotation.position.end || annotation.position.start + annotation.annotatedText.length
-      );
+      // Extract short context for reference (just for logging/debugging)
+      contextBefore = getContextBefore(originalText, origPos, 50);
+      contextAfter = getContextAfter(originalText, origPos + annotation.originalText.length, 50);
     }
 
-    // Extract semantic context rules from the context
+    // Extract semantic context rules
     const contextRules = extractContextRules(contextBefore, contextAfter, annotation.type);
 
     patterns.push({
@@ -88,37 +143,24 @@ export function extractPatterns(
       contextBefore,
       contextAfter,
       contextRules,
-      confidence: 1.0, // Initial confidence
+      confidence: 1.0,
       usageCount: 1,
       successRate: 1.0,
       trainingPairId: trainingPairId || null,
     });
+
+    console.log(`[extractPatterns] ACCEPT placeholder: "${annotation.originalText}" → "${annotation.annotatedText}"`);
   }
-
-  // Filter out invalid patterns
-  // NOTE: With diff-based extraction, originalText will always be the real
-  // text that was replaced, NOT the annotation itself. The previous filter
-  // that removed /^\[.+\]$/ patterns was masking extraction failures.
-  const validPatterns = patterns.filter((p) => {
-    // Skip if original text is same as annotated (no real replacement)
-    if (p.originalText === p.annotatedText) return false;
-
-    // Skip if original text is empty or whitespace only
-    if (!p.originalText || !p.originalText.trim()) return false;
-
-    // Log what we're keeping for debugging
-    console.log(`[extractPatterns] Keeping pattern: "${p.originalText}" → "${p.annotatedText}" (${p.annotationType})`);
-
-    return true;
-  });
 
   // Calculate summary
   const summary = {
-    total: validPatterns.length,
-    byType: countByType(validPatterns),
+    total: patterns.length,
+    byType: countByType(patterns),
   };
 
-  return { patterns: validPatterns, summary };
+  console.log(`[extractPatterns] Final: ${patterns.length} patterns from ${annotations.length} annotations`);
+
+  return { patterns, summary };
 }
 
 /**
