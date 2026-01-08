@@ -452,16 +452,27 @@ function isLikelySignatureField(suggestion: AnnotationSuggestion): boolean {
 function getMeaningfulLabel(text: string, contextBefore?: string): string | null {
   if (!text) return null;
 
-  const trimmed = text.trim();
+  let trimmed = text.trim();
 
   // Empty or too short
+  if (trimmed.length === 0) return null;
+
+  // FIRST: Strip ALL brackets from start and end - they break [TextInput: label] format
+  // Also strip any brackets mixed with content like "XX]" or "[Name"
+  trimmed = trimmed.replace(/^[\[\]{}()<>]+/, '').replace(/[\[\]{}()<>]+$/, '');
+  // Also remove any remaining brackets inside
+  trimmed = trimmed.replace(/[\[\]{}()<>]/g, '').trim();
+
+  // After stripping, check if empty
   if (trimmed.length === 0) return null;
 
   // Just underscores
   if (/^_+$/.test(trimmed)) return null;
 
-  // Just X's or symbols
+  // Just X's (X, XX, XXX, Xx, etc.) - these are placeholders, not labels
   if (/^[Xx]+$/.test(trimmed)) return null;
+
+  // Just symbols
   if (/^[●○•◦▪▫■□\*\#\?\.\-\s]+$/.test(trimmed)) return null;
 
   // Just numbers
@@ -470,11 +481,11 @@ function getMeaningfulLabel(text: string, contextBefore?: string): string | null
   // Just punctuation
   if (/^[:\.,;!\?\-\s]+$/.test(trimmed)) return null;
 
-  // Single character (unless it's a letter that makes sense)
+  // Single character (unless it's a meaningful letter)
   if (trimmed.length === 1 && !/^[A-Za-z]$/.test(trimmed)) return null;
 
-  // Brackets with meaningless content: [X], [_], [**]
-  if (/^[\[\{<][Xx_\*\#\?\.\-\s]+[\]\}>]$/.test(trimmed)) return null;
+  // X's with dots (date patterns): XX.XX.XXXX, X.X.X
+  if (/^[Xx]+([.\/-][Xx]+)+$/.test(trimmed)) return null;
 
   // If it's too long (instruction text), don't use as label
   const wordCount = trimmed.split(/\s+/).length;
