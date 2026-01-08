@@ -968,9 +968,10 @@ function autoDetectPlaceholders(
   let match;
 
   // German gender-neutral patterns to skip - these are NOT calculations
+  // IMPORTANT: Do NOT use word boundaries (\b) - compound words like "Autor*innenvertrag"
+  // have more letters after "*in" and won't match with word boundary
   const germanGenderPatterns = [
-    /\*in\b/i,      // Autor*in, Autor*innen, Arbeitnehmer*in
-    /\*innen\b/i,   // Autor*innen
+    /\*in/i,        // Matches *in, *innen, *innenvertrag, *innenhonorar, etc.
     /vom\*von/i,    // vom*von
     /er\*sie/i,     // er*sie
     /ihm\*ihr/i,    // ihm*ihr
