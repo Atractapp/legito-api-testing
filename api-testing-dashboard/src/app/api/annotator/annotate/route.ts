@@ -436,6 +436,64 @@ function isLikelySignatureField(suggestion: AnnotationSuggestion): boolean {
 }
 
 /**
+ * Get a meaningful label for TextInput, or null if the label is not meaningful.
+ *
+ * Labels that are NOT meaningful (return null):
+ * - Empty or whitespace only
+ * - Just underscores: ___, ____________
+ * - Just symbols: X, [X], **, ●
+ * - Just numbers: 1, 123
+ * - Very short meaningless: "", " ", ":"
+ *
+ * Labels that ARE meaningful:
+ * - Actual field names: "Name", "City", "Amount"
+ * - Descriptive text: "Company Name", "Date of Birth"
+ */
+function getMeaningfulLabel(text: string, contextBefore?: string): string | null {
+  if (!text) return null;
+
+  const trimmed = text.trim();
+
+  // Empty or too short
+  if (trimmed.length === 0) return null;
+
+  // Just underscores
+  if (/^_+$/.test(trimmed)) return null;
+
+  // Just X's or symbols
+  if (/^[Xx]+$/.test(trimmed)) return null;
+  if (/^[●○•◦▪▫■□\*\#\?\.\-\s]+$/.test(trimmed)) return null;
+
+  // Just numbers
+  if (/^\d+$/.test(trimmed)) return null;
+
+  // Just punctuation
+  if (/^[:\.,;!\?\-\s]+$/.test(trimmed)) return null;
+
+  // Single character (unless it's a letter that makes sense)
+  if (trimmed.length === 1 && !/^[A-Za-z]$/.test(trimmed)) return null;
+
+  // Brackets with meaningless content: [X], [_], [**]
+  if (/^[\[\{<][Xx_\*\#\?\.\-\s]+[\]\}>]$/.test(trimmed)) return null;
+
+  // If it's too long (instruction text), don't use as label
+  const wordCount = trimmed.split(/\s+/).length;
+  if (wordCount > 5) {
+    // Try to extract a label from context instead
+    if (contextBefore) {
+      const labelMatch = contextBefore.match(/([A-Za-z][A-Za-z\s]{2,20})[:.]?\s*$/);
+      if (labelMatch) {
+        return labelMatch[1].trim();
+      }
+    }
+    return null;
+  }
+
+  // It's meaningful
+  return trimmed;
+}
+
+/**
  * Check if a pattern's original text is a STRUCTURAL placeholder.
  *
  * Structural placeholders have clear markers that indicate they're fillable:
@@ -755,13 +813,42 @@ function autoDetectPlaceholders(
 
   // =================================================================
   // Pattern 0: HIGHLIGHTED TEXT - Auto-detect text with background color
-  // This is the most reliable indicator of fillable fields
+  // BUT: Not all highlighted text is a fillable field!
+  //
+  // ANNOTATE if:
+  // - Short (1-3 words) - likely a field placeholder
+  // - Contains "insert", "enter", "fill in" - instruction to fill
+  // - Is a structural pattern ([X], ___, etc.)
+  //
+  // SKIP if:
+  // - Long text (4+ words) without instruction keywords - likely conditional/legal text
+  // - Looks like a sentence or legal clause
   // =================================================================
   for (const region of highlightedRegions) {
     if (isCovered(region.position.start)) continue;
 
     const text = region.text.trim();
     if (!text || text.length < 2) continue;
+
+    // Count words in highlighted text
+    const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+
+    // Check if it's an instruction to fill (should annotate)
+    const instructionKeywords = ['insert', 'enter', 'fill in', 'fill out', 'specify', 'indicate', 'provide', 'add', 'write', 'type'];
+    const hasInstruction = instructionKeywords.some(kw => text.toLowerCase().includes(kw));
+
+    // Check if it's a structural placeholder
+    const isStructural = isStructuralPlaceholder(text);
+
+    // Decision logic:
+    // - Structural patterns → always annotate
+    // - Has instruction keyword → always annotate
+    // - Short (1-3 words) → annotate
+    // - Long (4+ words) without instruction → SKIP (likely conditional/legal text)
+    if (!isStructural && !hasInstruction && wordCount >= 4) {
+      console.log(`[autoDetect] Skipping long highlighted text (${wordCount} words, no instruction): "${text.slice(0, 50)}..."`);
+      continue;
+    }
 
     // Get context for type inference
     const contextBefore = documentText.slice(Math.max(0, region.position.start - 100), region.position.start);
@@ -770,16 +857,19 @@ function autoDetectPlaceholders(
     // Infer type from highlighted text and context
     const { type, label } = inferAnnotationFromPlaceholderName(text, contextBefore, contextAfter);
 
+    // Build annotation - only add label if meaningful
     let annotatedText: string;
     if (type === 'Date') {
       annotatedText = '[Date]';
     } else if (type === 'Money') {
       annotatedText = '[Money]';
     } else {
-      annotatedText = `[TextInput: ${label || text}]`;
+      // Only add label if it's meaningful (not just the placeholder itself)
+      const meaningfulLabel = getMeaningfulLabel(label || text, contextBefore);
+      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
     }
 
-    console.log(`[autoDetect] Found HIGHLIGHTED text "${text}" → ${annotatedText}`);
+    console.log(`[autoDetect] Found HIGHLIGHTED text "${text.slice(0, 50)}" → ${annotatedText}`);
 
     detected.push({
       id: crypto.randomUUID(),
