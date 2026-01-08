@@ -104,13 +104,36 @@ export async function POST(request: NextRequest) {
         const actualText = documentText.slice(foundIndex, foundIndex + originalText.length);
 
         // CRITICAL: Check if this is actually a placeholder vs regular prose
-        // Words like "city", "name", "date" appear in regular sentences - don't match those!
-        // PRIORITY: If text is HIGHLIGHTED (has background color), always annotate it
+        //
+        // TWO TYPES OF PATTERNS:
+        // 1. STRUCTURAL patterns: [City], {Name}, ___, [**] - these DON'T need highlighting
+        // 2. PLAIN TEXT patterns: "City", "Name" - these REQUIRE highlighting to match
+        //
+        const isStructuralPattern = isStructuralPlaceholder(originalText);
         const isHighlighted = isTextHighlighted(foundIndex, originalText.length, highlightedRegions);
-        const isPlaceholder = isHighlighted || isPlaceholderContext(documentText, foundIndex, originalText.length);
 
-        if (isPlaceholder) {
-          const matchReason = isHighlighted ? 'HIGHLIGHTED' : 'placeholder context';
+        let shouldMatch = false;
+        let matchReason = '';
+
+        if (isStructuralPattern) {
+          // Structural patterns (brackets, underscores) don't need highlighting
+          shouldMatch = true;
+          matchReason = 'structural pattern';
+        } else if (isHighlighted) {
+          // Plain text patterns REQUIRE highlighting
+          shouldMatch = true;
+          matchReason = 'HIGHLIGHTED';
+        } else {
+          // Plain text without highlighting - check context as fallback
+          // But be very strict - only match if clearly a placeholder context
+          const hasPlaceholderContext = isPlaceholderContext(documentText, foundIndex, originalText.length);
+          if (hasPlaceholderContext) {
+            shouldMatch = true;
+            matchReason = 'placeholder context';
+          }
+        }
+
+        if (shouldMatch) {
           console.log(`[Annotate] Found ${matchReason} text "${actualText}" at position ${foundIndex} → ${pattern.annotatedText}`);
 
           suggestions.push({
@@ -127,7 +150,7 @@ export async function POST(request: NextRequest) {
             isEdited: false,
           });
         } else {
-          console.log(`[Annotate] Skipping "${actualText}" at ${foundIndex} - not highlighted and not a placeholder`);
+          console.log(`[Annotate] Skipping plain text "${actualText}" at ${foundIndex} - not highlighted`);
         }
 
         // Move past this match to find next occurrence
@@ -409,6 +432,61 @@ function isLikelySignatureField(suggestion: AnnotationSuggestion): boolean {
     return true;
   }
 
+  return false;
+}
+
+/**
+ * Check if a pattern's original text is a STRUCTURAL placeholder.
+ *
+ * Structural placeholders have clear markers that indicate they're fillable:
+ * - Brackets: [City], {Name}, <date>
+ * - Underscores: ____, Name: _____
+ * - Placeholder symbols: [**], [___], [●], XXX
+ * - Date patterns: DD.MM.YYYY, XX.XX.XXXX
+ *
+ * These DON'T need highlighting to match - the structure itself is the indicator.
+ *
+ * Plain text patterns like "City", "Name", "Company" DO need highlighting.
+ */
+function isStructuralPlaceholder(text: string): boolean {
+  const trimmed = text.trim();
+
+  // Brackets: [xxx], {xxx}, <xxx>
+  if (/^[\[\{<].+[\]\}>]$/.test(trimmed)) {
+    return true;
+  }
+
+  // Underscores: ___ (3 or more)
+  if (/_{3,}/.test(trimmed)) {
+    return true;
+  }
+
+  // X patterns: XXX, XX.XX.XXXX
+  if (/^[Xx]{2,}([.\/-][Xx]{2,})*$/.test(trimmed)) {
+    return true;
+  }
+
+  // Date patterns: DD.MM.YYYY, dd/mm/yyyy
+  if (/^[Dd]{1,2}[.\/-][Mm]{1,2}[.\/-][Yy]{2,4}$/.test(trimmed)) {
+    return true;
+  }
+
+  // Special placeholder symbols: ●, ○, •, *, #
+  if (/^[●○•◦▪▫■□\*\#\?\.\-]+$/.test(trimmed)) {
+    return true;
+  }
+
+  // Curly brace placeholders: {Name}, {City}
+  if (/^\{[^}]+\}$/.test(trimmed)) {
+    return true;
+  }
+
+  // Template variables: {{name}}, <%= name %>
+  if (/^\{\{.+\}\}$/.test(trimmed) || /^<%[=\-]?\s*.+\s*%>$/.test(trimmed)) {
+    return true;
+  }
+
+  // Otherwise, it's plain text
   return false;
 }
 
