@@ -288,7 +288,7 @@ export function AddTestDialog({
                         <SelectContent>
                           {workspaceResources?.templates.map((template) => (
                             <SelectItem key={template.id} value={String(template.id)}>
-                              {template.name || `Template ${template.id}`}
+                              {template.id} - {template.name || 'Unnamed'}
                             </SelectItem>
                           ))}
                           {(!workspaceResources?.templates || workspaceResources.templates.length === 0) && (
@@ -312,7 +312,7 @@ export function AddTestDialog({
                         <SelectContent>
                           {workspaceResources?.objects.map((obj) => (
                             <SelectItem key={obj.id} value={String(obj.id)}>
-                              {obj.name}
+                              {obj.id} - {obj.name || 'Unnamed'}
                             </SelectItem>
                           ))}
                           {(!workspaceResources?.objects || workspaceResources.objects.length === 0) && (

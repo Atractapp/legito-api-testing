@@ -1018,7 +1018,7 @@ export function PresetManager() {
                                   checked={selectedTemplates.has(template.id)}
                                   onCheckedChange={() => toggleTemplate(template.id)}
                                 />
-                                <span className="text-sm flex-1 truncate">{template.name || `Template ${template.id}`}</span>
+                                <span className="text-sm flex-1 truncate">{template.id} - {template.name || 'Unnamed'}</span>
                                 {configuredElements.length > 0 && (
                                   <Badge variant="secondary" className="text-xs">
                                     {configuredElements.length} el
@@ -1069,7 +1069,7 @@ export function PresetManager() {
                                 checked={selectedObjects.has(object.id)}
                                 onCheckedChange={() => toggleObject(object.id)}
                               />
-                              <span className="text-sm">{object.name}</span>
+                              <span className="text-sm">{object.id} - {object.name || 'Unnamed'}</span>
                             </div>
                           ))}
                           {resources.objects.length === 0 && (
