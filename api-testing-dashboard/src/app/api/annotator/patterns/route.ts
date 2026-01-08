@@ -88,7 +88,10 @@ export async function GET(request: NextRequest) {
 
 /**
  * DELETE /api/annotator/patterns
- * Delete multiple patterns (bulk delete)
+ * Delete multiple patterns (bulk delete) or all patterns
+ *
+ * Body: { ids: string[] } - delete specific patterns
+ * Body: { all: true } - delete ALL patterns for user
  */
 export async function DELETE(request: NextRequest) {
   try {
@@ -98,10 +101,40 @@ export async function DELETE(request: NextRequest) {
     const supabase = getSupabaseAdmin();
     const user = getAuthenticatedUser(request);
 
-    const { ids } = await request.json();
+    const body = await request.json();
+    const { ids, all } = body;
 
+    // Option 1: Delete all patterns for user
+    if (all === true) {
+      console.log(`[Patterns DELETE] Deleting ALL patterns for user ${user.id}`);
+
+      // First count how many will be deleted
+      const { count } = await supabase
+        .from('annotator_patterns')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      const { error } = await supabase
+        .from('annotator_patterns')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (error) {
+        console.error('Failed to delete all patterns:', error);
+        return errorResponse('DELETE_FAILED', 'Failed to delete patterns', 500);
+      }
+
+      console.log(`[Patterns DELETE] Deleted ${count} patterns`);
+      return NextResponse.json({
+        success: true,
+        deleted: count || 0,
+        message: 'All patterns deleted',
+      });
+    }
+
+    // Option 2: Delete specific patterns by ID
     if (!Array.isArray(ids) || ids.length === 0) {
-      return errorResponse('INVALID_REQUEST', 'ids array is required', 400);
+      return errorResponse('INVALID_REQUEST', 'ids array or {all: true} is required', 400);
     }
 
     const { error } = await supabase
