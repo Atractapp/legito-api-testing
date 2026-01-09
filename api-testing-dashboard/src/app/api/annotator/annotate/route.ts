@@ -433,9 +433,21 @@ function convertDuplicatesToLinks(
   suggestions: AnnotationSuggestion[],
   documentText?: string
 ): AnnotationSuggestion[] {
-  // Track which text values have been seen (for TextInput fields only)
+  // Track which text values have been seen (for TextInput and title Select fields)
   // Dates, Money, Calculations should NOT become Links - they're independent entries
   const seenTextInputs = new Map<string, { count: number; firstAnnotation: string }>();
+  const seenTitleSelects = new Map<string, { count: number; firstAnnotation: string }>();
+
+  // Title/salutation Select patterns that SHOULD become Links on second occurrence
+  // These represent a choice for the SAME person's salutation in different places
+  const titleSelectPatterns = [
+    'D/Dª.',
+    'Mr/Ms.',
+    'Mr/Ms',
+    'Herr/Frau',
+    'Sr./Sra.',
+    'Sr/Sra',
+  ];
 
   return suggestions.map((suggestion) => {
     // RULE 1: Dates should NEVER become Links - each date is an independent entry
@@ -451,8 +463,33 @@ function convertDuplicatesToLinks(
       return suggestion;
     }
 
-    // RULE 3: Select should NEVER become Links
+    // RULE 3: Select - MOST should never become Links, BUT title salutations should
+    // D/Dª., Mr/Ms., etc. represent the same person's salutation in multiple places
     if (suggestion.type === 'Select') {
+      const isTitleSelect = titleSelectPatterns.some(p =>
+        suggestion.originalText.includes(p) || suggestion.annotatedText.includes(p)
+      );
+
+      if (isTitleSelect) {
+        const key = suggestion.originalText.toLowerCase();
+        if (seenTitleSelects.has(key)) {
+          // Second occurrence of title select → Link
+          console.log(`[convertDuplicatesToLinks] Converting duplicate title Select "${suggestion.originalText}" to [Link]`);
+          return {
+            ...suggestion,
+            annotatedText: '[Link]',
+            type: 'Link' as AnnotationType,
+            confidence: Math.min(suggestion.confidence, 0.95),
+          };
+        } else {
+          // First occurrence
+          seenTitleSelects.set(key, { count: 1, firstAnnotation: suggestion.annotatedText });
+          console.log(`[convertDuplicatesToLinks] First occurrence of title Select "${suggestion.originalText}"`);
+          return suggestion;
+        }
+      }
+
+      // Non-title Select - never becomes Link
       return suggestion;
     }
 
