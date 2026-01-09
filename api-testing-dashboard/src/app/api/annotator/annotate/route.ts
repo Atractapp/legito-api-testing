@@ -1872,7 +1872,10 @@ function autoDetectPlaceholders(
     }
 
     // Skip if it looks like an existing annotation [TextInput: X], [Date], etc.
-    if (/^(TextInput|Date|Money|Link|Select|Calculation|Number|Checkbox)/i.test(content)) {
+    // IMPORTANT: Case-SENSITIVE check - [Date] is an annotation, [date] is a placeholder
+    // Annotations use PascalCase: TextInput, Date, Money, Link, Select, Calculation
+    // Placeholders from origin files often use lowercase: [date], [name], [company]
+    if (/^(TextInput|Textinput|Date|Money|Link|Select|Calculation|Number|Checkbox)/.test(content)) {
       continue;
     }
 
