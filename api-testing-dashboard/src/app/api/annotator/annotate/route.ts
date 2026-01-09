@@ -1209,35 +1209,50 @@ function autoDetectPlaceholders(
   // =================================================================
 
   // First: Detect known short title patterns like "Mr/Ms", "D/Dª."
-  // IMPORTANT: Don't consume trailing periods - they should appear AFTER the annotation
-  // Expected: [Select: Mr/Ms]. [Link] (period after bracket, not consumed)
+  // IMPORTANT: Consume trailing periods to avoid doubling them
+  // D/Dª. in origin → [Select: D/Dª.] (period inside annotation, consumed from origin)
+  // Mr/Ms. in origin → [Select: Mr/Ms]. (period outside annotation - see special handling below)
   const titlePatterns = [
-    { pattern: /\bMr\/Ms/g, text: 'Mr/Ms' },
-    { pattern: /\bD\/Dª/g, text: 'D/Dª.' },
-    { pattern: /\bHerr\/Frau/g, text: 'Herr/Frau' },
-    { pattern: /\bSr\/Sra/g, text: 'Sr./Sra.' },
+    { pattern: /\bMr\/Ms\.?/g, text: 'Mr/Ms', periodOutside: true },
+    { pattern: /\bD\/Dª\.?/g, text: 'D/Dª.', periodOutside: false },
+    { pattern: /\bHerr\/Frau/g, text: 'Herr/Frau', periodOutside: false },
+    { pattern: /\bSr\.?\/Sra\.?/g, text: 'Sr./Sra.', periodOutside: false },
   ];
 
-  for (const { pattern, text } of titlePatterns) {
+  for (const { pattern, text, periodOutside } of titlePatterns) {
     let titleMatch;
     while ((titleMatch = pattern.exec(documentText)) !== null) {
       const position = titleMatch.index;
       if (isCovered(position)) continue;
 
-      console.log(`[autoDetect] PRIORITY: Found title options "${titleMatch[0]}" → [Select: ${text}]`);
+      // Check if the match included a trailing period
+      const matchedText = titleMatch[0];
+      const hadPeriod = matchedText.endsWith('.');
+
+      // Build the annotation text
+      let annotatedText: string;
+      if (periodOutside && hadPeriod) {
+        // Mr/Ms. → [Select: Mr/Ms]. (period outside bracket)
+        annotatedText = `[Select: ${text}].`;
+      } else {
+        // D/Dª. → [Select: D/Dª.] (period inside, or no period)
+        annotatedText = `[Select: ${text}]`;
+      }
+
+      console.log(`[autoDetect] PRIORITY: Found title options "${matchedText}" → ${annotatedText}`);
 
       detected.push({
         id: crypto.randomUUID(),
-        originalText: titleMatch[0],
-        annotatedText: `[Select: ${text}]`,
+        originalText: matchedText,
+        annotatedText,
         type: 'Select',
-        position: { start: position, end: position + titleMatch[0].length },
+        position: { start: position, end: position + matchedText.length },
         confidence: 0.90,
         isAccepted: true,
         isEdited: false,
       });
 
-      markCovered(position, position + titleMatch[0].length);
+      markCovered(position, position + matchedText.length);
     }
   }
 
