@@ -449,10 +449,37 @@ function convertDuplicatesToLinks(
     'Sr/Sra',
   ];
 
+  // Track [date] placeholder occurrences (these CAN become Links, unlike DD.MM.YYYY)
+  const seenDatePlaceholders = new Map<string, { count: number; firstAnnotation: string }>();
+
   return suggestions.map((suggestion) => {
-    // RULE 1: Dates should NEVER become Links - each date is an independent entry
-    // (e.g., "repay by Date1", "paid by Date2" are different dates)
+    // RULE 1: Dates - distinguish between placeholders and date patterns
+    // - [date] placeholder: duplicates SHOULD become Links (same field in different locations)
+    // - DD.MM.YYYY pattern: never becomes Link (independent date entries)
     if (suggestion.type === 'Date') {
+      const isBracketedDatePlaceholder = /^\[date\]$/i.test(suggestion.originalText);
+
+      if (isBracketedDatePlaceholder) {
+        // This is a [date] placeholder - treat like other placeholders
+        const key = suggestion.originalText.toLowerCase();
+        if (seenDatePlaceholders.has(key)) {
+          // Second occurrence → Link
+          console.log(`[convertDuplicatesToLinks] Converting duplicate [date] placeholder to [Link]`);
+          return {
+            ...suggestion,
+            annotatedText: '[Link]',
+            type: 'Link' as AnnotationType,
+            confidence: Math.min(suggestion.confidence, 0.95),
+          };
+        } else {
+          // First occurrence - keep as Date (or original)
+          seenDatePlaceholders.set(key, { count: 1, firstAnnotation: suggestion.annotatedText });
+          console.log(`[convertDuplicatesToLinks] First occurrence of [date] placeholder`);
+          return suggestion;
+        }
+      }
+
+      // Regular date pattern (DD.MM.YYYY, etc.) - never becomes Link
       console.log(`[convertDuplicatesToLinks] Keeping Date "${suggestion.originalText}" (dates never become links)`);
       return suggestion;
     }
