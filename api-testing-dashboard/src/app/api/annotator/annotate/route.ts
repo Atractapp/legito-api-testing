@@ -1363,27 +1363,9 @@ function autoDetectPlaceholders(
         continue;
       }
 
-      // CONTEXT-AWARE: Skip if this looks like a section header with synonyms
-      // e.g., "Marketing/PR" followed by newline or substantial text = title, not Select
-      const contextBefore = documentText.slice(Math.max(0, start - 20), start);
-      const contextAfter = documentText.slice(end, Math.min(documentText.length, end + 100));
-
-      // Check if at start of line (after newline, or start of document, or after "Section X\n")
-      const isAtLineStart = start === 0 || /[\n\r]\s*$/.test(contextBefore) || /^\s*$/.test(contextBefore.trim());
-
-      // Check if both options are single words (no spaces) and short - likely synonyms
-      const allSingleWords = options.every(o => !/\s/.test(o.trim()) && o.length <= 15);
-
-      // Check if followed by newline or substantial descriptive text (not a question/choice context)
-      const followedByNewline = /^\s*[\n\r]/.test(contextAfter);
-      const followedByDescription = /^\s*[\n\r]\s*\w/.test(contextAfter) || /^\s{2,}\w/.test(contextAfter);
-
-      // If at line start + single words + followed by newline/description = likely section header
-      if (isAtLineStart && allSingleWords && (followedByNewline || followedByDescription)) {
-        console.log(`[autoDetect] Skipping section header with synonyms: "${fullMatch}" (at line start, single words, followed by content)`);
-        slashIdx++;
-        continue;
-      }
+      // NOTE: Context-aware synonym detection would require AI analysis
+      // For now, "/" separator = Select as the default behavior
+      // User can manually correct synonyms like "Marketing/PR" to not be Select
 
       const maxLen = Math.max(...options.map(o => o.length));
       const minLen = Math.min(...options.map(o => o.length));
