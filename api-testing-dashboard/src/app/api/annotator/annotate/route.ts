@@ -180,6 +180,16 @@ export async function POST(request: NextRequest) {
 
     console.log(`[Annotate] After dedup: ${verifiedSuggestions.length} suggestions`);
 
+    // CRITICAL: Find duplicate occurrences of party-name-like placeholders
+    // and add them as [Link] suggestions. This catches signature block party names
+    // that are NOT highlighted but should still become links.
+    const partyNameDuplicates = findPartyNameDuplicates(verifiedSuggestions, documentText);
+    verifiedSuggestions.push(...partyNameDuplicates);
+    console.log(`[Annotate] Found ${partyNameDuplicates.length} party name duplicates for linking`);
+
+    // Re-sort by position after adding duplicates
+    verifiedSuggestions.sort((a, b) => a.position.start - b.position.start);
+
     // Convert duplicate occurrences to [Link]
     // First occurrence of each original text stays as-is (TextInput, Select, Date, etc.)
     // Second+ occurrences become [Link] (user enters value once, rest auto-fill)
@@ -317,6 +327,108 @@ function getContextualKey(suggestion: AnnotationSuggestion, documentText?: strin
   return `${wordBefore}|${originalLower}|${wordAfter}`;
 }
 
+/**
+ * Find additional occurrences of party-name-like placeholders in the document.
+ *
+ * When we detect a placeholder like "Creditor's name" or "Debtor's name",
+ * we should search the document for any other occurrences of that exact text
+ * and add them as Link suggestions.
+ *
+ * This is especially important for signature blocks where the party names
+ * often appear again but are NOT highlighted.
+ */
+function findPartyNameDuplicates(
+  existingSuggestions: AnnotationSuggestion[],
+  documentText: string
+): AnnotationSuggestion[] {
+  const duplicates: AnnotationSuggestion[] = [];
+
+  // Get positions already covered by existing suggestions
+  const coveredPositions = new Set<string>();
+  for (const s of existingSuggestions) {
+    for (let i = s.position.start; i < s.position.end; i++) {
+      coveredPositions.add(String(i));
+    }
+  }
+
+  // Find party-name-like suggestions
+  const partyNamePatterns = [
+    /\b(creditor|debtor|buyer|seller|lessor|lessee|landlord|tenant|employer|employee|borrower|lender|party|name)\b/i,
+    /\bname\b/i,  // Generic "name" fields
+  ];
+
+  for (const suggestion of existingSuggestions) {
+    // Only process TextInput suggestions that look like party names
+    if (suggestion.type !== 'TextInput') continue;
+
+    const originalText = suggestion.originalText;
+    const isPartyName = partyNamePatterns.some(p => p.test(originalText));
+
+    if (!isPartyName) continue;
+
+    // Search for other occurrences of this exact text in the document
+    const originalLower = originalText.toLowerCase();
+    const documentLower = documentText.toLowerCase();
+
+    let searchPos = 0;
+    while (true) {
+      const foundIndex = documentLower.indexOf(originalLower, searchPos);
+      if (foundIndex === -1) break;
+
+      // Skip if this position is already covered
+      if (coveredPositions.has(String(foundIndex))) {
+        searchPos = foundIndex + originalText.length;
+        continue;
+      }
+
+      // Verify it's an exact word match (not part of another word)
+      // NOTE: Underscores and other punctuation are valid boundaries (for signature lines like ___Name)
+      const charBefore = foundIndex > 0 ? documentText[foundIndex - 1] : ' ';
+      const charAfter = foundIndex + originalText.length < documentText.length
+        ? documentText[foundIndex + originalText.length]
+        : ' ';
+
+      // Allow underscores as valid word boundaries (common in signature lines)
+      const isWordBoundaryBefore = /[^a-zA-Z0-9]/.test(charBefore);
+      const isWordBoundaryAfter = /[^a-zA-Z0-9]/.test(charAfter);
+
+      if (!isWordBoundaryBefore || !isWordBoundaryAfter) {
+        searchPos = foundIndex + originalText.length;
+        continue;
+      }
+
+      // Get actual text at this position (preserving case)
+      const actualText = documentText.slice(foundIndex, foundIndex + originalText.length);
+
+      console.log(`[findPartyNameDuplicates] Found duplicate party name "${actualText}" at ${foundIndex}`);
+
+      duplicates.push({
+        id: crypto.randomUUID(),
+        originalText: actualText,
+        annotatedText: '[TextInput]', // Will be converted to [Link] by convertDuplicatesToLinks
+        type: 'TextInput',
+        position: {
+          start: foundIndex,
+          end: foundIndex + originalText.length,
+        },
+        confidence: 0.90,
+        isAccepted: true,
+        isEdited: false,
+        isFromPattern: false,
+      });
+
+      // Mark these positions as covered
+      for (let i = foundIndex; i < foundIndex + originalText.length; i++) {
+        coveredPositions.add(String(i));
+      }
+
+      searchPos = foundIndex + originalText.length;
+    }
+  }
+
+  return duplicates;
+}
+
 function convertDuplicatesToLinks(
   suggestions: AnnotationSuggestion[],
   documentText?: string
@@ -384,21 +496,9 @@ function convertDuplicatesToLinks(
       }
 
       // Non-party TextInput duplicates stay as TextInput (e.g., "City" appears twice for different parties)
-      // BUT: Check if in signature block - if so, convert to Link
-      if (documentText) {
-        const inSignature = isInSignatureBlock(documentText, suggestion.position.start);
-        if (inSignature) {
-          console.log(`[convertDuplicatesToLinks] Converting duplicate "${suggestion.originalText}" in signature block to [Link]`);
-          return {
-            ...suggestion,
-            annotatedText: '[Link]',
-            type: 'Link' as AnnotationType,
-            confidence: Math.min(suggestion.confidence, 0.90),
-          };
-        }
-      }
-
-      console.log(`[convertDuplicatesToLinks] Keeping duplicate "${suggestion.originalText}" as TextInput (not a party name, not in signature)`);
+      // In signature blocks especially, duplicates like "City", "Date" are for DIFFERENT parties
+      // and should remain as independent inputs, NOT links
+      console.log(`[convertDuplicatesToLinks] Keeping duplicate "${suggestion.originalText}" as TextInput (not a party name)`);
       return suggestion;
     } else {
       // First occurrence
@@ -583,11 +683,11 @@ function getMeaningfulLabel(text: string, contextBefore?: string): string | null
   // Empty or too short
   if (trimmed.length === 0) return null;
 
-  // FIRST: Strip ALL brackets from start and end - they break [TextInput: label] format
-  // Also strip any brackets mixed with content like "XX]" or "[Name"
-  trimmed = trimmed.replace(/^[\[\]{}()<>]+/, '').replace(/[\[\]{}()<>]+$/, '');
-  // Also remove any remaining brackets inside
-  trimmed = trimmed.replace(/[\[\]{}()<>]/g, '').trim();
+  // Strip square brackets, curly braces, angle brackets from start and end
+  // But KEEP parentheses - they're valid in instruction text like "(Outlines, treatments/Skripte)"
+  trimmed = trimmed.replace(/^[\[\]{}<>]+/, '').replace(/[\[\]{}<>]+$/, '');
+  // Also remove any remaining square/curly/angle brackets inside
+  trimmed = trimmed.replace(/[\[\]{}<>]/g, '').trim();
 
   // After stripping, check if empty
   if (trimmed.length === 0) return null;
@@ -604,6 +704,9 @@ function getMeaningfulLabel(text: string, contextBefore?: string): string | null
   // Just numbers
   if (/^\d+$/.test(trimmed)) return null;
 
+  // Parenthesized numbers like (1), (2), (a) - these are section/list markers, not placeholders
+  if (/^\(\d+\)$/.test(trimmed) || /^\([a-zA-Z]\)$/.test(trimmed)) return null;
+
   // Just punctuation
   if (/^[:\.,;!\?\-\s]+$/.test(trimmed)) return null;
 
@@ -613,7 +716,22 @@ function getMeaningfulLabel(text: string, contextBefore?: string): string | null
   // X's with dots (date patterns): XX.XX.XXXX, X.X.X
   if (/^[Xx]+([.\/-][Xx]+)+$/.test(trimmed)) return null;
 
-  // If it's too long (instruction text), don't use as label
+  // For instruction text (contains "insert", "enter", etc.), keep the FULL label
+  // Expected format: [TextInput: insert description of services – eg writing steps...]
+  const instructionKeywords = ['insert', 'enter', 'fill in', 'fill out', 'specify', 'provide',
+    'einfügen', 'eingeben', 'ausfüllen', 'angeben', // German
+    'insertar', 'llenar', 'completar', // Spanish
+  ];
+  const isInstruction = instructionKeywords.some(kw =>
+    trimmed.toLowerCase().includes(kw)
+  );
+
+  // If it's instruction text, keep the full label
+  if (isInstruction) {
+    return trimmed;
+  }
+
+  // For non-instruction long text (>5 words), try to extract from context
   const wordCount = trimmed.split(/\s+/).length;
   if (wordCount > 5) {
     // Try to extract a label from context instead
@@ -647,7 +765,8 @@ function isStructuralPlaceholder(text: string): boolean {
   const trimmed = text.trim();
 
   // Brackets: [xxx], {xxx}, <xxx>
-  if (/^[\[\{<].+[\]\}>]$/.test(trimmed)) {
+  // BUT: Only short bracketed text (< 100 chars) - long text is likely instructions
+  if (/^[\[\{<].+[\]\}>]$/.test(trimmed) && trimmed.length < 100) {
     return true;
   }
 
@@ -1060,16 +1179,21 @@ function autoDetectPlaceholders(
     /\band\/or\b/i,                    // common conjunction
     /\bund\/oder\b/i,                  // German conjunction
     /\ba\/nebo\b/i,                    // Czech conjunction
-    /\btreatments\/scripts\b/i,        // compound alternatives
+    /\btreatments\/scripts?\b/i,       // compound alternatives (scripts or Skripte)
+    /\btreatments\/skripte\b/i,        // German compound (explicit)
     /\boutlines\/treatments\b/i,       // compound alternatives
+    /\brevisions\/drafts\b/i,          // compound alternatives
+    /\bnumber\s+of\s+\w+\/\w+/i,       // "number of X/Y" phrases
     /\b\w+\/\w+\s+steps\b/i,          // "xxx/yyy steps"
     /\b\w+\/instructions\b/i,          // "xxx/instructions"
     /\bdate\/term\/delivery\b/i,       // section header
     /\bstartdatum\/laufzeit\b/i,       // German section header
     /\blieferzeit\/timeline\b/i,       // German compound
     /\bänderungen\/entwürfe\b/i,       // German compound
+    /\bder\s+änderungen\/entwürfe\b/i, // German compound with article
     /\bepisoden\b/i,                   // part of longer phrase
     /\bneúčinným\b/i,                  // Czech legal text
+    /writing\s+steps/i,                // "writing steps" in same context
   ];
 
   let slashIdx = 0;
@@ -1435,9 +1559,24 @@ function autoDetectPlaceholders(
     // Count words in highlighted text
     const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
 
+    // Note: Long instruction text like "[insert description of services...]" SHOULD be annotated
+    // The hasInstruction check below will ensure they get proper labels
+
     // Check if it's an instruction to fill (should annotate)
-    const instructionKeywords = ['insert', 'enter', 'fill in', 'fill out', 'specify', 'indicate', 'provide', 'add', 'write', 'type'];
-    const hasInstruction = instructionKeywords.some(kw => text.toLowerCase().includes(kw));
+    // IMPORTANT: Use word boundary matching to avoid false positives
+    // e.g., "add" should NOT match "addition" in legal text
+    // Include German instruction keywords
+    const instructionKeywords = [
+      'insert', 'enter', 'fill in', 'fill out', 'specify', 'indicate', 'provide', 'add', 'write', 'type',
+      'einfügen', 'eingeben', 'ausfüllen', 'angeben', 'hinzufügen', // German
+      'insertar', 'llenar', 'completar', // Spanish
+    ];
+    const textLower = text.toLowerCase();
+    const hasInstruction = instructionKeywords.some(kw => {
+      // Use word boundary regex to match whole words only
+      const regex = new RegExp(`\\b${kw}\\b`, 'i');
+      return regex.test(textLower);
+    });
 
     // Check if it's a structural placeholder
     const isStructural = isStructuralPlaceholder(text);
@@ -1483,6 +1622,9 @@ function autoDetectPlaceholders(
       console.log(`[autoDetect] Skipping - text IS an annotation: "${text}"`);
       continue;
     }
+
+    // Note: Parenthesized numbers like (2) CAN be placeholders for editable values
+    // The getMeaningfulLabel function will return null for them, so they become [TextInput] without label
 
     console.log(`[autoDetect] Found HIGHLIGHTED text "${text.slice(0, 50)}" → ${annotatedText}`);
 
@@ -1674,8 +1816,9 @@ function autoDetectPlaceholders(
 
   // =================================================================
   // Pattern 3: [bracketed placeholders] like [name], [date], [___]
+  // Also matches longer instruction text like [insert description of services...]
   // =================================================================
-  const bracketPattern = /\[([^\[\]]{1,30})\]/g;
+  const bracketPattern = /\[([^\[\]]{1,300})\]/g;
 
   while ((match = bracketPattern.exec(documentText)) !== null) {
     const fullMatch = match[0];
@@ -1876,14 +2019,18 @@ function inferAnnotationFromPlaceholderName(
     'dated', 'as of', 'effective date', 'valid until', 'expires on',
     'due by', 'signed on', 'executed on', 'starting on', 'ending on',
     'commencing on', 'beginning on',
+    // "until" alone is a strong date indicator when followed by a blank field
+    'until', 'through', 'till',
+    // German date indicators
+    'bis zum', 'bis', 'vom', 'ab dem', 'zum', 'vor dem',
     // Spanish
-    'el día', 'fecha',
+    'el día', 'fecha', 'hasta', 'desde',
   ];
 
   // WEAK date indicators - only apply if placeholder looks like a date
   // Words like "by", "on", "from" are too generic alone
   const weakDateIndicators = [
-    'do', 'od', 'on', 'by', 'until', 'from', 'effective',
+    'do', 'od', 'on', 'by', 'from', 'effective',
     'platnosti do', 'účinnosti do', 'termín', 'lhůta', 'platné do',
     'hasta el', 'desde el',
   ];
@@ -1951,7 +2098,16 @@ function inferAnnotationFromPlaceholderName(
 
   // ============================================================
   // PRIORITY 3: Placeholder NAME keywords (weaker than context)
+  // CRITICAL: Only apply to SHORT placeholders (< 5 words)
+  // Long sentences like "Any VAT payable..." should NOT trigger keywords
   // ============================================================
+  const wordCount = placeholderName.split(/\s+/).filter(w => w.length > 0).length;
+
+  // Skip keyword inference for sentences (5+ words) - they're not placeholders
+  if (wordCount >= 5) {
+    console.log(`[inferType] "${placeholderName.slice(0, 50)}..." → TextInput (too long for keyword inference, ${wordCount} words)`);
+    return { type: 'TextInput', label };
+  }
 
   // Date indicators in name (but NOT if it's a _Header or _Addition field)
   const dateNameKeywords = ['date', 'datum', 'signed', 'signature'];
