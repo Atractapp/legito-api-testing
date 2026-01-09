@@ -440,13 +440,15 @@ function convertDuplicatesToLinks(
 
   // Title/salutation Select patterns that SHOULD become Links on second occurrence
   // These represent a choice for the SAME person's salutation in different places
+  // Note: Patterns without trailing period since we don't consume periods in detection
   const titleSelectPatterns = [
-    'D/Dª.',
-    'Mr/Ms.',
-    'Mr/Ms',
-    'Herr/Frau',
-    'Sr./Sra.',
-    'Sr/Sra',
+    'D/Dª',      // Spanish (without period - period is separate)
+    'D/Dª.',     // Spanish (with period - for backward compatibility)
+    'Mr/Ms',     // English (without period - period is separate)
+    'Mr/Ms.',    // English (with period - for backward compatibility)
+    'Herr/Frau', // German
+    'Sr./Sra.',  // Spanish alternative
+    'Sr/Sra',    // Spanish alternative (without period)
   ];
 
   // Track [date] placeholder occurrences (these CAN become Links, unlike DD.MM.YYYY)
@@ -1207,11 +1209,13 @@ function autoDetectPlaceholders(
   // =================================================================
 
   // First: Detect known short title patterns like "Mr/Ms", "D/Dª."
+  // IMPORTANT: Don't consume trailing periods - they should appear AFTER the annotation
+  // Expected: [Select: Mr/Ms]. [Link] (period after bracket, not consumed)
   const titlePatterns = [
-    { pattern: /\bMr\/Ms\.?/g, text: 'Mr/Ms' },
-    { pattern: /\bD\/Dª\.?/g, text: 'D/Dª.' },
+    { pattern: /\bMr\/Ms/g, text: 'Mr/Ms' },
+    { pattern: /\bD\/Dª/g, text: 'D/Dª.' },
     { pattern: /\bHerr\/Frau/g, text: 'Herr/Frau' },
-    { pattern: /\bSr\.?\/Sra\.?/g, text: 'Sr./Sra.' },
+    { pattern: /\bSr\/Sra/g, text: 'Sr./Sra.' },
   ];
 
   for (const { pattern, text } of titlePatterns) {
