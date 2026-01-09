@@ -475,7 +475,7 @@ function detectAngleBracketPlaceholders(
 ): AnnotationSuggestion[] {
   const detected: AnnotationSuggestion[] = [];
   const angleBracketPattern = /(\$)?<<([^<>]+)>>/g;
-  const seenPlaceholders = new Map<string, { type: AnnotationType; label: string }>();
+  const seenPlaceholders = new Map<string, { type: AnnotationType; label: string; annotatedText: string }>();
   let match;
 
   while ((match = angleBracketPattern.exec(documentText)) !== null) {
@@ -498,9 +498,11 @@ function detectAngleBracketPlaceholders(
     let confidence = 0.9;
 
     if (seenPlaceholders.has(normalizedName)) {
-      // Subsequent occurrence -> Link
-      type = 'Link';
-      annotatedText = '[Link]';
+      // Subsequent occurrence - keep original type, let convertDuplicatesToLinks decide
+      // Angle-bracket <<...>> placeholders should remain TextInput, not become Links
+      const firstOccurrence = seenPlaceholders.get(normalizedName)!;
+      type = firstOccurrence.type;
+      annotatedText = firstOccurrence.annotatedText;
     } else {
       // First occurrence
       const semanticMatch = inferFromSemanticIndex(placeholderName, semanticIndex);
@@ -535,7 +537,7 @@ function detectAngleBracketPlaceholders(
         annotatedText = `[Textinput: ${label}]`;
       }
 
-      seenPlaceholders.set(normalizedName, { type, label });
+      seenPlaceholders.set(normalizedName, { type, label, annotatedText });
     }
 
     detected.push({
