@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Anthropic from '@anthropic-ai/sdk';
 import {
   parseDocx,
   storageService,
@@ -12,6 +13,9 @@ import {
   type HighlightedRegion,
 } from '@/lib/annotator';
 import type { Pattern, AnnotationType, AnnotationSuggestion } from '@/types/annotator';
+
+// Initialize Anthropic client for AI-based context analysis
+const anthropic = new Anthropic();
 
 /**
  * POST /api/annotator/annotate
@@ -145,7 +149,8 @@ export async function POST(request: NextRequest) {
 
     // 4. AUTO-DETECT common placeholder formats even without trained patterns
     // This catches {PlaceholderName}, [PlaceholderName], highlighted text, etc.
-    const autoDetectedSuggestions = autoDetectPlaceholders(documentText, suggestions, highlightedRegions);
+    // NOTE: This is async because it uses AI to analyze slash patterns
+    const autoDetectedSuggestions = await autoDetectPlaceholders(documentText, suggestions, highlightedRegions);
     suggestions.push(...autoDetectedSuggestions);
     console.log(`[Annotate] Auto-detected ${autoDetectedSuggestions.length} additional placeholders`);
 
@@ -1101,6 +1106,108 @@ function extractTypeFromAnnotation(annotation: string): AnnotationType {
 }
 
 /**
+ * AI-based context analysis for slash patterns.
+ * Uses Claude to determine if a slash pattern is a real Select (choice between options)
+ * or just synonyms/alternative terms that should stay as regular text.
+ */
+interface SlashPatternCandidate {
+  pattern: string;
+  contextBefore: string;
+  contextAfter: string;
+  position: { start: number; end: number };
+}
+
+async function analyzeSlashPatternsWithAI(
+  candidates: SlashPatternCandidate[]
+): Promise<Map<string, boolean>> {
+  // Map: pattern -> isSelect (true = real choice, false = synonym/title)
+  const results = new Map<string, boolean>();
+
+  if (candidates.length === 0) {
+    return results;
+  }
+
+  // Build the prompt with all candidates
+  const candidatesList = candidates.map((c, i) => {
+    return `${i + 1}. Pattern: "${c.pattern}"
+   Context before: "...${c.contextBefore}"
+   Context after: "${c.contextAfter}..."`;
+  }).join('\n\n');
+
+  const prompt = `You are analyzing slash-separated patterns in a legal document to determine if they represent:
+A) SELECT: A real choice between different options (user must pick one)
+B) SYNONYM: Alternative terms/synonyms that mean the same thing (NOT a choice)
+
+## Rules:
+- "by a bank transfer/in cash" → SELECT (user chooses payment method)
+- "Mr/Ms." or "D/Dª." → SELECT (user chooses title/salutation)
+- "Marketing/PR" → SYNONYM (both mean the same thing - marketing/public relations)
+- "promotional/publicity" → SYNONYM (both mean similar promotional activities)
+- "treatments/scripts" → SYNONYM (different names for the same deliverable type)
+- Section headers with synonyms → SYNONYM (e.g., "Date/Term/Delivery" as a section title)
+- If pattern appears at start of a line/section followed by content → likely SYNONYM (title)
+- If pattern is embedded in a sentence about requirements → could be either, check semantically
+
+## Candidates to analyze:
+${candidatesList}
+
+## Response format:
+Return ONLY a JSON array with the decision for each pattern:
+[{"index": 1, "isSelect": true, "reason": "payment method choice"}, {"index": 2, "isSelect": false, "reason": "synonyms for same concept"}]
+
+Analyze each pattern carefully based on context. Return ONLY the JSON array.`;
+
+  try {
+    console.log(`[AI-Slash] Analyzing ${candidates.length} slash patterns with Claude...`);
+
+    const response = await anthropic.messages.create({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1024,
+      messages: [{ role: 'user', content: prompt }],
+    });
+
+    const content = response.content[0];
+    if (content.type !== 'text') {
+      console.log('[AI-Slash] Unexpected response type, defaulting all to Select');
+      candidates.forEach(c => results.set(c.pattern, true));
+      return results;
+    }
+
+    // Parse the JSON response
+    const jsonMatch = content.text.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) {
+      console.log('[AI-Slash] Could not parse JSON response, defaulting all to Select');
+      candidates.forEach(c => results.set(c.pattern, true));
+      return results;
+    }
+
+    const decisions = JSON.parse(jsonMatch[0]) as Array<{ index: number; isSelect: boolean; reason: string }>;
+
+    for (const decision of decisions) {
+      const candidate = candidates[decision.index - 1];
+      if (candidate) {
+        results.set(candidate.pattern, decision.isSelect);
+        console.log(`[AI-Slash] "${candidate.pattern}" → ${decision.isSelect ? 'SELECT' : 'SKIP'} (${decision.reason})`);
+      }
+    }
+
+    // Default any missing patterns to Select
+    for (const c of candidates) {
+      if (!results.has(c.pattern)) {
+        results.set(c.pattern, true);
+      }
+    }
+
+    return results;
+  } catch (error) {
+    console.error('[AI-Slash] Error analyzing patterns:', error);
+    // On error, default all to Select (safer - user can correct)
+    candidates.forEach(c => results.set(c.pattern, true));
+    return results;
+  }
+}
+
+/**
  * Auto-detect common placeholder formats in document even without trained patterns.
  *
  * Detects:
@@ -1110,12 +1217,15 @@ function extractTypeFromAnnotation(annotation: string): AnnotationType {
  * This allows the annotator to work on documents that already have template placeholders
  * without requiring manual training first.
  */
-function autoDetectPlaceholders(
+async function autoDetectPlaceholders(
   documentText: string,
   existingSuggestions: AnnotationSuggestion[],
   highlightedRegions: HighlightedRegion[] = []
-): AnnotationSuggestion[] {
+): Promise<AnnotationSuggestion[]> {
   const detected: AnnotationSuggestion[] = [];
+
+  // Collect slash pattern candidates for AI analysis
+  const slashCandidates: SlashPatternCandidate[] = [];
 
   // Get positions already covered by pattern-matched suggestions
   const coveredPositions = new Set<string>();
@@ -1278,12 +1388,8 @@ function autoDetectPlaceholders(
     /\bepisoden\b/i,                   // part of longer phrase
     /\bneúčinným\b/i,                  // Czech legal text
     /writing\s+steps/i,                // "writing steps" in same context
-    // Marketing/PR and synonyms (these are NOT choices, they're equivalent terms)
-    /\bmarketing\/pr\b/i,              // Marketing/PR - synonym pair
-    /\bmarketing-\/pr-/i,              // German: Marketing-/PR-Anforderungen
-    /\bpromotional\/publicity\b/i,     // promotional/publicity - synonym pair
-    /\bepk\/marketing\b/i,             // EPK/marketing campaign
-    /\bwerbe-\/promotion/i,            // German: Werbe-/Promotionaktivitäten
+    // NOTE: Marketing/PR and similar synonym patterns are now handled by AI analysis
+    // The AI will determine if a pattern is a real Select or just synonyms
   ];
 
   let slashIdx = 0;
@@ -1362,17 +1468,13 @@ function autoDetectPlaceholders(
 
     // Validate: need 2+ options
     if (options.length >= 2) {
-      // Check if this matches any skip pattern
+      // Check if this matches any skip pattern (conjunctions, compound words)
       const shouldSkip = skipSlashPatterns.some(p => p.test(fullMatch));
       if (shouldSkip) {
         console.log(`[autoDetect] Skipping non-option slash pattern: "${fullMatch}"`);
         slashIdx++;
         continue;
       }
-
-      // NOTE: Context-aware synonym detection would require AI analysis
-      // For now, "/" separator = Select as the default behavior
-      // User can manually correct synonyms like "Marketing/PR" to not be Select
 
       const maxLen = Math.max(...options.map(o => o.length));
       const minLen = Math.min(...options.map(o => o.length));
@@ -1384,25 +1486,49 @@ function autoDetectPlaceholders(
                     /^[XxDdMmYy]{1,4}\/[XxDdMmYy]{1,4}\/[XxDdMmYy]{2,4}$/.test(noSpaces);
 
       if (isBalanced && !isDate && !isRangeCovered(start, end)) {
-        console.log(`[autoDetect] PRIORITY: Found slash options "${fullMatch}" → [Select: ${fullMatch}]`);
+        // Collect candidate for AI analysis instead of immediately adding
+        const contextBefore = documentText.slice(Math.max(0, start - 50), start).trim();
+        const contextAfter = documentText.slice(end, Math.min(documentText.length, end + 50)).trim();
 
-        detected.push({
-          id: crypto.randomUUID(),
-          originalText: fullMatch,
-          annotatedText: `[Select: ${fullMatch}]`,
-          type: 'Select',
+        slashCandidates.push({
+          pattern: fullMatch,
+          contextBefore,
+          contextAfter,
           position: { start, end },
-          confidence: 0.85,
-          isAccepted: true,
-          isEdited: false,
         });
 
+        // Mark as covered to prevent overlapping matches
         markCovered(start, end);
         slashIdx = end;
         continue;
       }
     }
     slashIdx++;
+  }
+
+  // AI analysis for slash patterns - determine which are real Selects vs synonyms
+  if (slashCandidates.length > 0) {
+    console.log(`[autoDetect] Found ${slashCandidates.length} slash candidates, analyzing with AI...`);
+    const aiDecisions = await analyzeSlashPatternsWithAI(slashCandidates);
+
+    for (const candidate of slashCandidates) {
+      const isSelect = aiDecisions.get(candidate.pattern);
+      if (isSelect) {
+        console.log(`[autoDetect] AI confirmed SELECT: "${candidate.pattern}" → [Select: ${candidate.pattern}]`);
+        detected.push({
+          id: crypto.randomUUID(),
+          originalText: candidate.pattern,
+          annotatedText: `[Select: ${candidate.pattern}]`,
+          type: 'Select',
+          position: candidate.position,
+          confidence: 0.85,
+          isAccepted: true,
+          isEdited: false,
+        });
+      } else {
+        console.log(`[autoDetect] AI skipped SYNONYM: "${candidate.pattern}" (not a choice)`);
+      }
+    }
   }
 
   // =================================================================
