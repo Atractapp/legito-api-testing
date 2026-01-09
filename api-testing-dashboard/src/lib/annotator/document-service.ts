@@ -330,18 +330,20 @@ async function extractHighlightedRegions(
             // Then pick the one closest to searchStartPos that hasn't been used
             let bestPos = -1;
             let searchFrom = 0;
-            const usedPositions = new Set(regions.map(r => r.position.start));
 
             while (searchFrom < normalizedPlainText.length) {
               const pos = normalizedPlainText.indexOf(normalizedRunText, searchFrom);
               if (pos === -1) break;
 
-              // Check if this position is already used by another region
-              const isUsed = Array.from(usedPositions).some(usedPos =>
-                Math.abs(usedPos - pos) < runText.length
-              );
+              // CRITICAL: Check if this position OVERLAPS with any existing region
+              // Not just start position, but the entire range [pos, pos+length)
+              const newEnd = pos + runText.length;
+              const overlapsExisting = regions.some((r) => {
+                // Check for any overlap between [pos, newEnd) and [r.start, r.end)
+                return pos < r.position.end && newEnd > r.position.start;
+              });
 
-              if (!isUsed) {
+              if (!overlapsExisting) {
                 // Prefer position closest to searchStartPos (forward direction)
                 if (pos >= searchStartPos) {
                   bestPos = pos;
@@ -945,34 +947,75 @@ export async function generateAnnotatedDocxPreservingFormat(
     (a, b) => b.original.length - a.original.length
   );
 
-  // Filter out duplicates and already-annotated text
-  const uniqueReplacements = sortedReplacements.filter((r, index) => {
-    // Skip if original text is already an annotation (prevents nesting)
-    if (r.original.startsWith('[') && r.original.includes(']')) {
-      return false;
+  // Group replacements by original text, preserving order
+  // This is crucial: first occurrence gets type annotation, subsequent get [Link]
+  const replacementsByOriginal = new Map<string, Array<{ original: string; replacement: string }>>();
+  for (const r of sortedReplacements) {
+    // Skip if original is already a full annotation (CASE-SENSITIVE!)
+    // [Date] = annotation, [date] = placeholder that should be replaced
+    if (/^\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)/.test(r.original)) {
+      continue;
     }
-    // Skip duplicates (same original text)
-    return sortedReplacements.findIndex(x => x.original === r.original) === index;
-  });
+    if (!replacementsByOriginal.has(r.original)) {
+      replacementsByOriginal.set(r.original, []);
+    }
+    replacementsByOriginal.get(r.original)!.push(r);
+  }
 
-  // Track which text segments have been replaced (by storing replaced strings)
-  const replacedTexts = new Set<string>();
+  // Build a set of all originals for quick lookup
+  const allOriginals = new Set(replacementsByOriginal.keys());
+
+  // Track how many times each original has been replaced
+  const replacementCounts = new Map<string, number>();
 
   // Apply replacements to the XML content
   let modifiedXml = documentXml;
 
-  for (const { original, replacement } of uniqueReplacements) {
-    // Skip if we've already replaced this exact text
-    if (replacedTexts.has(original)) {
-      continue;
-    }
+  for (const [original, replacementsForOriginal] of replacementsByOriginal) {
+    // NOTE: Standalone X patterns (like "X" after "Season") should NOT be skipped
+    // even if bracketed [X] exists - they are DIFFERENT patterns in DIFFERENT locations
+    // The sequential replacement will handle each occurrence correctly
 
-    const escapedReplacement = escapeXml(replacement);
-    const result = replaceTextInDocxXmlSafe(modifiedXml, original, escapedReplacement);
+    // CRITICAL: For short/ambiguous patterns, ONLY replace in highlighted regions
+    const isAmbiguousPattern =
+      original.length <= 2 ||
+      /^\d+$/.test(original) ||
+      /^[A-Za-z]$/.test(original) ||
+      /^[A-Za-z]{1,6}$/.test(original.trim());
 
-    if (result !== modifiedXml) {
-      modifiedXml = result;
-      replacedTexts.add(original);
+    // Structural placeholders are always safe to replace
+    const isStructuralPlaceholder =
+      /^_+/.test(original) ||                  // Underscores
+      /^\[.+\]$/.test(original) ||              // Bracketed: [X], [insert name]
+      /^\{.+\}$/.test(original) ||              // Curly braces: {Name}
+      /^<.+>$/.test(original) ||                // Angle brackets: <date>
+      /^X{2,}[.\/-]/.test(original) ||          // Date patterns: XX.XX.XXXX
+      /^X$/i.test(original);                    // Single X - almost always a placeholder
+
+    const onlyHighlighted = isAmbiguousPattern && !isStructuralPlaceholder;
+
+    // Apply each replacement for this original one at a time
+    // First replacement goes to first occurrence, second to second, etc.
+    for (let i = 0; i < replacementsForOriginal.length; i++) {
+      const { replacement } = replacementsForOriginal[i];
+      const escapedReplacement = escapeXml(replacement);
+
+      if (onlyHighlighted) {
+        console.log(`[Generate] Ambiguous "${original}" occurrence ${i + 1} -> "${replacement}" (highlighted only)`);
+      } else {
+        console.log(`[Generate] Pattern "${original}" occurrence ${i + 1} -> "${replacement}"`);
+      }
+
+      // Replace only ONE occurrence at a time
+      const result = replaceTextInDocxXmlSafeOnce(modifiedXml, original, escapedReplacement, onlyHighlighted);
+      if (result !== modifiedXml) {
+        modifiedXml = result;
+        replacementCounts.set(original, (replacementCounts.get(original) || 0) + 1);
+      } else {
+        // No more occurrences to replace
+        console.log(`[Generate] No more occurrences of "${original}" to replace`);
+        break;
+      }
     }
   }
 
@@ -1028,32 +1071,419 @@ function normalizeForComparison(text: string): string {
 }
 
 /**
+ * Check if a run element has highlighting (yellow background or highlight tag)
+ */
+function runHasHighlighting(runXml: string): boolean {
+  // Check for <w:highlight> tag
+  if (/<w:highlight[^>]*>/i.test(runXml)) {
+    return true;
+  }
+  // Check for yellow shading (w:fill="FFFF00" or similar yellow shades)
+  if (/<w:shd[^>]*w:fill=["']?(?:FFFF00|ffff00|FFFF99|ffff99|FFF200|fff200)["']?/i.test(runXml)) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Check if text is a structural placeholder (should always be replaced regardless of highlighting)
+ * ONLY patterns with clear semantic meaning - NOT plain underscores (which could be separators)
+ * Underscores require highlighting or context to be considered fillable
+ */
+function isStructuralPlaceholderText(text: string): boolean {
+  const trimmed = text.trim();
+
+  // NOTE: Plain underscores (___) are NOT auto-replaced - they could be separators
+  // They need highlighting or context like "Name: ______"
+
+  // Angle bracket patterns: <<Borrower>>, <<Name>>, etc. - common template markers
+  if (/^<<[^>]+>>$/.test(trimmed)) return true;
+
+  // Square bracket X patterns: [X], [XX], [XXX] - common placeholders
+  if (/^\[X+\]$/i.test(trimmed)) return true;
+
+  // Curly brace fields with content: {Name}, {Date}, etc.
+  if (/^\{[A-Za-z][^}]*\}$/.test(trimmed)) return true;
+
+  // Instruction patterns: [insert name], <enter date>, etc.
+  if (/^\[(?:insert|enter|fill|type|add)\s+[^\]]+\]$/i.test(trimmed)) return true;
+  if (/^<(?:insert|enter|fill|type|add)\s+[^>]+>$/i.test(trimmed)) return true;
+
+  // X patterns for dates: XX.XX.XXXX, XX/XX/XXXX (but NOT just XXX which could be anything)
+  if (/^X{2,4}[.\/-]X{2,4}[.\/-]X{2,4}$/i.test(trimmed)) return true;
+
+  return false;
+}
+
+/**
+ * Replace ONLY ONE occurrence of text in DOCX XML
+ * Used for sequential replacement where first occurrence gets one replacement,
+ * second occurrence gets another (e.g., first is [Select], second is [Link])
+ */
+function replaceTextInDocxXmlSafeOnce(
+  xml: string,
+  searchText: string,
+  replacement: string,
+  onlyHighlighted: boolean = true
+): string {
+  const normalizedSearch = normalizeForComparison(searchText);
+
+  // Strategy 1: Find and replace in individual runs
+  const runPattern = /<w:r[^>]*>[\s\S]*?<\/w:r>/g;
+  let foundAndReplaced = false;
+
+  const modified = xml.replace(runPattern, (runMatch) => {
+    if (foundAndReplaced) return runMatch; // Already replaced one, skip rest
+
+    const textMatch = runMatch.match(/<w:t[^>]*>([^<]*)<\/w:t>/);
+    if (!textMatch) return runMatch;
+
+    const textContent = textMatch[1];
+    const normalizedContent = normalizeForComparison(textContent);
+    const matchIndex = normalizedContent.indexOf(normalizedSearch);
+
+    if (matchIndex === -1) return runMatch;
+
+    // CRITICAL: Skip if the ACTUAL text is already a proper annotation (CASE-SENSITIVE!)
+    // [Date] = annotation (skip), [date] = placeholder (replace)
+    const actualMatchedText = textContent.substring(matchIndex, matchIndex + searchText.length);
+    if (/^\[(TextInput|Date|Money|Select|Link|Calculation|Number|Checkbox)/.test(actualMatchedText)) {
+      return runMatch; // Already a proper annotation, skip
+    }
+
+    // Check highlighting if required
+    if (onlyHighlighted && !runHasHighlighting(runMatch) && !isStructuralPlaceholderText(searchText)) {
+      return runMatch;
+    }
+
+    // Check if inside existing brackets
+    const matchEnd = matchIndex + normalizedSearch.length;
+    const bracketOpenBefore = normalizedContent.lastIndexOf('[', matchIndex);
+    const bracketCloseBefore = normalizedContent.lastIndexOf(']', matchIndex);
+    const bracketOpenAfter = normalizedContent.indexOf('[', matchEnd);
+    const bracketCloseAfter = normalizedContent.indexOf(']', matchEnd);
+
+    if (bracketOpenBefore !== -1 &&
+        (bracketCloseBefore === -1 || bracketCloseBefore < bracketOpenBefore) &&
+        bracketCloseAfter !== -1 &&
+        (bracketOpenAfter === -1 || bracketCloseAfter < bracketOpenAfter)) {
+      return runMatch; // Inside brackets, skip
+    }
+
+    foundAndReplaced = true;
+
+    // Map normalized position back to original
+    let originalIndex = 0;
+    let normalizedIndex = 0;
+    while (normalizedIndex < matchIndex && originalIndex < textContent.length) {
+      const origChar = textContent[originalIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedIndex += normChar.length;
+      originalIndex++;
+    }
+
+    let originalEndIndex = originalIndex;
+    let normalizedEndIndex = normalizedIndex;
+    while (normalizedEndIndex < matchIndex + normalizedSearch.length && originalEndIndex < textContent.length) {
+      const origChar = textContent[originalEndIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedEndIndex += normChar.length;
+      originalEndIndex++;
+    }
+
+    const before = textContent.substring(0, originalIndex);
+    const after = textContent.substring(originalEndIndex);
+    const newTextContent = before + replacement + after;
+
+    let newRun = runMatch.replace(
+      /<w:t([^>]*)>[^<]*<\/w:t>/,
+      `<w:t$1>${escapeXml(newTextContent)}</w:t>`
+    );
+    return stripHighlighting(newRun);
+  });
+
+  if (foundAndReplaced) {
+    return modified;
+  }
+
+  // Strategy 2: Try cross-run replacement for ONE occurrence
+  return replaceAcrossRunsOnce(xml, searchText, replacement, onlyHighlighted);
+}
+
+/**
+ * Replace ONE occurrence across runs
+ */
+function replaceAcrossRunsOnce(
+  xml: string,
+  searchText: string,
+  replacement: string,
+  onlyHighlighted: boolean = true
+): string {
+  const paragraphPattern = /<w:p[^>]*>[\s\S]*?<\/w:p>/g;
+  const normalizedSearch = normalizeForComparison(searchText);
+  let foundAndReplaced = false;
+
+  const result = xml.replace(paragraphPattern, (paragraph) => {
+    if (foundAndReplaced) return paragraph;
+
+    const runPattern = /<w:r[^>]*>[\s\S]*?<\/w:r>/g;
+    const runs: Array<{
+      fullMatch: string;
+      text: string;
+      index: number;
+      isHighlighted: boolean;
+    }> = [];
+
+    let runMatch;
+    while ((runMatch = runPattern.exec(paragraph)) !== null) {
+      const runXml = runMatch[0];
+      const textMatch = runXml.match(/<w:t[^>]*>([^<]*)<\/w:t>/);
+      if (textMatch) {
+        runs.push({
+          fullMatch: runXml,
+          text: textMatch[1],
+          index: runMatch.index,
+          isHighlighted: runHasHighlighting(runXml)
+        });
+      }
+    }
+
+    if (runs.length === 0) return paragraph;
+
+    const combinedText = runs.map(r => r.text).join('');
+    const normalizedCombined = normalizeForComparison(combinedText);
+    const searchIndex = normalizedCombined.indexOf(normalizedSearch);
+
+    if (searchIndex === -1) return paragraph;
+
+    // CRITICAL: Skip if the ACTUAL text is already a proper annotation (CASE-SENSITIVE!)
+    // [Date] = annotation (skip), [date] = placeholder (replace)
+    const actualMatchedText = combinedText.substring(searchIndex, searchIndex + searchText.length);
+    if (/^\[(TextInput|Date|Money|Select|Link|Calculation|Number|Checkbox)/.test(actualMatchedText)) {
+      return paragraph; // Already a proper annotation, skip
+    }
+
+    // Check highlighting
+    if (onlyHighlighted) {
+      let charPos = 0;
+      let anyHighlighted = false;
+      for (const run of runs) {
+        const runStart = charPos;
+        const runEnd = charPos + run.text.length;
+        charPos = runEnd;
+        if (runEnd > searchIndex && runStart < searchIndex + normalizedSearch.length) {
+          if (run.isHighlighted) {
+            anyHighlighted = true;
+            break;
+          }
+        }
+      }
+      if (!anyHighlighted && !isStructuralPlaceholderText(searchText)) {
+        return paragraph;
+      }
+    }
+
+    // Check if inside brackets
+    const matchEnd = searchIndex + normalizedSearch.length;
+    const bracketOpenBefore = normalizedCombined.lastIndexOf('[', searchIndex);
+    const bracketCloseBefore = normalizedCombined.lastIndexOf(']', searchIndex);
+    const bracketOpenAfter = normalizedCombined.indexOf('[', matchEnd);
+    const bracketCloseAfter = normalizedCombined.indexOf(']', matchEnd);
+
+    if (bracketOpenBefore !== -1 &&
+        (bracketCloseBefore === -1 || bracketCloseBefore < bracketOpenBefore) &&
+        bracketCloseAfter !== -1 &&
+        (bracketOpenAfter === -1 || bracketCloseAfter < bracketOpenAfter)) {
+      return paragraph;
+    }
+
+    foundAndReplaced = true;
+
+    // Simple approach: put replacement in first run that contains part of the match
+    let charOffset = 0;
+    let modifiedParagraph = paragraph;
+
+    for (const run of runs) {
+      const runStart = charOffset;
+      const runEnd = charOffset + run.text.length;
+      charOffset = runEnd;
+
+      if (runEnd > searchIndex && runStart < searchIndex + normalizedSearch.length) {
+        // This run overlaps with the match
+        const overlapStart = Math.max(0, searchIndex - runStart);
+        const overlapEnd = Math.min(run.text.length, searchIndex + normalizedSearch.length - runStart);
+
+        let newText: string;
+        if (runStart <= searchIndex && runEnd >= searchIndex + normalizedSearch.length) {
+          // Entire match is in this run
+          newText = run.text.substring(0, overlapStart) + replacement + run.text.substring(overlapEnd);
+        } else if (runStart <= searchIndex) {
+          // Match starts in this run
+          newText = run.text.substring(0, overlapStart) + replacement;
+        } else if (runEnd >= searchIndex + normalizedSearch.length) {
+          // Match ends in this run
+          newText = run.text.substring(overlapEnd);
+        } else {
+          // Match spans through this run - clear it
+          newText = '';
+        }
+
+        const newRun = run.fullMatch.replace(
+          /<w:t([^>]*)>[^<]*<\/w:t>/,
+          `<w:t$1>${escapeXml(newText)}</w:t>`
+        );
+        modifiedParagraph = modifiedParagraph.replace(run.fullMatch, stripHighlighting(newRun));
+      }
+    }
+
+    return modifiedParagraph;
+  });
+
+  return result;
+}
+
+/**
  * Safe text replacement in DOCX XML
  * Handles both simple replacements and text split across runs
  * Uses normalized comparison to handle curly quotes and special characters
+ * ONLY replaces text that is highlighted (has highlighting in parent run)
  */
 function replaceTextInDocxXmlSafe(
   xml: string,
   searchText: string,
-  replacement: string
+  replacement: string,
+  onlyHighlighted: boolean = true
 ): string {
   // Normalize search text for comparison
   const normalizedSearch = normalizeForComparison(searchText);
   const escapedNormalizedSearch = escapeRegexChars(normalizedSearch);
 
-  // Strategy 1: Direct replacement within single <w:t> elements
-  // We need to find matches using normalized comparison but replace in original
+  // Strategy 1: Replace within runs (<w:r>...</w:r>) to check highlighting context
+  // Match entire run elements so we can check if they're highlighted
+  const runPattern = /<w:r[^>]*>[\s\S]*?<\/w:r>/g;
+  let modified = xml;
+  let hasMatch = false;
+
+  // Process each run element
+  modified = xml.replace(runPattern, (runMatch) => {
+    // Extract text content from this run
+    const textMatch = runMatch.match(/<w:t[^>]*>([^<]*)<\/w:t>/);
+    if (!textMatch) {
+      return runMatch; // No text in this run
+    }
+
+    const textContent = textMatch[1];
+    const normalizedContent = normalizeForComparison(textContent);
+    const matchIndex = normalizedContent.indexOf(normalizedSearch);
+
+    if (matchIndex === -1) {
+      return runMatch; // No match, keep original
+    }
+
+    // CRITICAL: If onlyHighlighted is true, only replace in highlighted runs
+    // EXCEPTION: Structural placeholders (underscores, X patterns) are always replaced
+    if (onlyHighlighted && !runHasHighlighting(runMatch) && !isStructuralPlaceholderText(searchText)) {
+      console.log(`[replaceTextInDocxXmlSafe] Skipping "${searchText}" - run is not highlighted`);
+      return runMatch; // Not highlighted, skip
+    }
+
+    // Check if this match is inside existing annotation brackets
+    const matchEnd = matchIndex + normalizedSearch.length;
+    const bracketOpenBefore = normalizedContent.lastIndexOf('[', matchIndex);
+    const bracketCloseBefore = normalizedContent.lastIndexOf(']', matchIndex);
+    const bracketOpenAfter = normalizedContent.indexOf('[', matchEnd);
+    const bracketCloseAfter = normalizedContent.indexOf(']', matchEnd);
+
+    if (bracketOpenBefore !== -1 &&
+        (bracketCloseBefore === -1 || bracketCloseBefore < bracketOpenBefore) &&
+        bracketCloseAfter !== -1 &&
+        (bracketOpenAfter === -1 || bracketCloseAfter < bracketOpenAfter)) {
+      console.log(`[replaceTextInDocxXmlSafe] Skipping "${searchText}" - found inside brackets`);
+      return runMatch;
+    }
+
+    hasMatch = true;
+
+    // Map normalized position back to original
+    let originalIndex = 0;
+    let normalizedIndex = 0;
+    while (normalizedIndex < matchIndex && originalIndex < textContent.length) {
+      const origChar = textContent[originalIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedIndex += normChar.length;
+      originalIndex++;
+    }
+
+    let originalEndIndex = originalIndex;
+    let normalizedEndIndex = normalizedIndex;
+    while (normalizedEndIndex < matchIndex + normalizedSearch.length && originalEndIndex < textContent.length) {
+      const origChar = textContent[originalEndIndex];
+      const normChar = normalizeForComparison(origChar);
+      normalizedEndIndex += normChar.length;
+      originalEndIndex++;
+    }
+
+    // Build new text content
+    const before = textContent.substring(0, originalIndex);
+    const after = textContent.substring(originalEndIndex);
+    const newTextContent = before + replacement + after;
+
+    // Replace text in the run and strip highlighting
+    let newRun = runMatch.replace(
+      /<w:t([^>]*)>[^<]*<\/w:t>/,
+      `<w:t$1>${escapeXml(newTextContent)}</w:t>`
+    );
+    return stripHighlighting(newRun);
+  });
+
+  // Strategy 2: Handle text split across runs (if simple replacement didn't find anything)
+  if (!hasMatch) {
+    modified = replaceAcrossRuns(xml, searchText, replacement, onlyHighlighted);
+  }
+
+  return modified;
+}
+
+/**
+ * LEGACY: Direct text element replacement (kept for fallback)
+ */
+function replaceTextInDocxXmlSafeLegacy(
+  xml: string,
+  searchText: string,
+  replacement: string
+): string {
+  const normalizedSearch = normalizeForComparison(searchText);
   const textPattern = /<w:t[^>]*>([^<]*)<\/w:t>/g;
   let modified = xml;
   let hasMatch = false;
 
-  // First, check if any single <w:t> element contains the search text (normalized)
   modified = xml.replace(textPattern, (fullMatch, textContent) => {
     const normalizedContent = normalizeForComparison(textContent);
     const matchIndex = normalizedContent.indexOf(normalizedSearch);
 
     if (matchIndex === -1) {
       return fullMatch; // No match, keep original
+    }
+
+    // CRITICAL: Check if this match is INSIDE an existing annotation bracket
+    // e.g., don't replace "Serie" inside "[TextInput: Series]"
+    const matchEnd = matchIndex + normalizedSearch.length;
+
+    // Find the nearest [ before the match and ] after the match
+    const bracketOpenBefore = normalizedContent.lastIndexOf('[', matchIndex);
+    const bracketCloseBefore = normalizedContent.lastIndexOf(']', matchIndex);
+    const bracketOpenAfter = normalizedContent.indexOf('[', matchEnd);
+    const bracketCloseAfter = normalizedContent.indexOf(']', matchEnd);
+
+    // If there's a [ before us and no ] between [ and match, and there's a ] after us
+    // Then we're inside brackets - skip this match
+    if (bracketOpenBefore !== -1 &&
+        (bracketCloseBefore === -1 || bracketCloseBefore < bracketOpenBefore) &&
+        bracketCloseAfter !== -1 &&
+        (bracketOpenAfter === -1 || bracketCloseAfter < bracketOpenAfter)) {
+      // Match is inside existing brackets, skip it
+      console.log(`[replaceTextInDocxXmlSafe] Skipping "${searchText}" - found inside brackets at position ${matchIndex}`);
+      return fullMatch;
     }
 
     hasMatch = true;
@@ -1101,45 +1531,97 @@ function replaceTextInDocxXmlSafe(
  * Handle text replacement when the search text is split across multiple <w:t> elements
  * Preserves the XML structure better than the previous implementation
  * Uses normalized comparison for Unicode characters (curly quotes, etc.)
+ * ONLY replaces text in highlighted runs when onlyHighlighted is true
  */
 function replaceAcrossRuns(
   xml: string,
   searchText: string,
-  replacement: string
+  replacement: string,
+  onlyHighlighted: boolean = true
 ): string {
   const paragraphPattern = /<w:p[^>]*>[\s\S]*?<\/w:p>/g;
   const normalizedSearch = normalizeForComparison(searchText);
 
   return xml.replace(paragraphPattern, (paragraph) => {
-    // Extract all text elements with their positions
-    const textElements: Array<{
+    // Extract all runs with their text and highlighting status
+    const runPattern = /<w:r[^>]*>[\s\S]*?<\/w:r>/g;
+    const runs: Array<{
       fullMatch: string;
       text: string;
       index: number;
+      isHighlighted: boolean;
     }> = [];
 
-    const textPattern = /<w:t[^>]*>([^<]*)<\/w:t>/g;
-    let match;
-
-    while ((match = textPattern.exec(paragraph)) !== null) {
-      textElements.push({
-        fullMatch: match[0],
-        text: match[1],
-        index: match.index
-      });
+    let runMatch;
+    while ((runMatch = runPattern.exec(paragraph)) !== null) {
+      const runXml = runMatch[0];
+      const textMatch = runXml.match(/<w:t[^>]*>([^<]*)<\/w:t>/);
+      if (textMatch) {
+        runs.push({
+          fullMatch: runXml,
+          text: textMatch[1],
+          index: runMatch.index,
+          isHighlighted: runHasHighlighting(runXml)
+        });
+      }
     }
 
-    if (textElements.length === 0) {
+    if (runs.length === 0) {
       return paragraph;
     }
 
     // Combine all text
-    const combinedText = textElements.map(e => e.text).join('');
+    const combinedText = runs.map(r => r.text).join('');
 
     // Check if this paragraph contains our search text (using normalized comparison)
     const normalizedCombined = normalizeForComparison(combinedText);
     const normalizedSearchIndex = normalizedCombined.indexOf(normalizedSearch);
     if (normalizedSearchIndex === -1) {
+      return paragraph;
+    }
+
+    // CRITICAL: If onlyHighlighted, check if any runs containing the match are highlighted
+    if (onlyHighlighted) {
+      // Find which character positions in combinedText are highlighted
+      let charPos = 0;
+      let anyHighlighted = false;
+      for (const run of runs) {
+        const runStart = charPos;
+        const runEnd = charPos + run.text.length;
+        charPos = runEnd;
+
+        // Check if this run overlaps with the search match
+        const matchStart = normalizedSearchIndex;
+        const matchEndPos = normalizedSearchIndex + normalizedSearch.length;
+        if (runEnd > matchStart && runStart < matchEndPos) {
+          // This run overlaps with the match
+          if (run.isHighlighted) {
+            anyHighlighted = true;
+            break;
+          }
+        }
+      }
+
+      // EXCEPTION: Structural placeholders (underscores, X patterns) are always replaced
+      if (!anyHighlighted && !isStructuralPlaceholderText(searchText)) {
+        console.log(`[replaceAcrossRuns] Skipping "${searchText}" - no highlighted runs in match`);
+        return paragraph;
+      }
+    }
+
+    // CRITICAL: Check if this match is INSIDE an existing annotation bracket
+    // e.g., don't replace "Serie" inside "[TextInput: Series]"
+    const matchEnd = normalizedSearchIndex + normalizedSearch.length;
+    const bracketOpenBefore = normalizedCombined.lastIndexOf('[', normalizedSearchIndex);
+    const bracketCloseBefore = normalizedCombined.lastIndexOf(']', normalizedSearchIndex);
+    const bracketOpenAfter = normalizedCombined.indexOf('[', matchEnd);
+    const bracketCloseAfter = normalizedCombined.indexOf(']', matchEnd);
+
+    if (bracketOpenBefore !== -1 &&
+        (bracketCloseBefore === -1 || bracketCloseBefore < bracketOpenBefore) &&
+        bracketCloseAfter !== -1 &&
+        (bracketOpenAfter === -1 || bracketCloseAfter < bracketOpenAfter)) {
+      console.log(`[replaceAcrossRuns] Skipping "${searchText}" - found inside brackets`);
       return paragraph;
     }
 
@@ -1178,8 +1660,8 @@ function replaceAcrossRuns(
     let charOffset = 0;
     let newTextOffset = 0;
 
-    for (let i = 0; i < textElements.length; i++) {
-      const elem = textElements[i];
+    for (let i = 0; i < runs.length; i++) {
+      const elem = runs[i];
       const elemStart = charOffset;
       const elemEnd = charOffset + elem.text.length;
       charOffset = elemEnd;
@@ -1190,7 +1672,7 @@ function replaceAcrossRuns(
       if (newTextOffset < newCombinedText.length) {
         // Calculate how much text this element should now hold
         // We try to maintain proportional distribution
-        if (i === textElements.length - 1) {
+        if (i === runs.length - 1) {
           // Last element gets all remaining text
           newElemText = newCombinedText.substring(newTextOffset);
         } else {
