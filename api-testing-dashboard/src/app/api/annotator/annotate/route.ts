@@ -1169,6 +1169,7 @@ function autoDetectPlaceholders(
     /er\*sie/i,     // er*sie
     /ihm\*ihr/i,    // ihm*ihr
     /sein\*ihr/i,   // sein*ihr
+    /seiner\*ihrer/i, // seiner*ihrer (possessive)
   ];
 
   while ((match = calcPattern.exec(documentText)) !== null) {
