@@ -1277,6 +1277,12 @@ function autoDetectPlaceholders(
     /\bepisoden\b/i,                   // part of longer phrase
     /\bneúčinným\b/i,                  // Czech legal text
     /writing\s+steps/i,                // "writing steps" in same context
+    // Marketing/PR and synonyms (these are NOT choices, they're equivalent terms)
+    /\bmarketing\/pr\b/i,              // Marketing/PR - synonym pair
+    /\bmarketing-\/pr-/i,              // German: Marketing-/PR-Anforderungen
+    /\bpromotional\/publicity\b/i,     // promotional/publicity - synonym pair
+    /\bepk\/marketing\b/i,             // EPK/marketing campaign
+    /\bwerbe-\/promotion/i,            // German: Werbe-/Promotionaktivitäten
   ];
 
   let slashIdx = 0;
