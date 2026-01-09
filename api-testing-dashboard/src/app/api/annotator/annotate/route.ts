@@ -405,7 +405,7 @@ function findPartyNameDuplicates(
       duplicates.push({
         id: crypto.randomUUID(),
         originalText: actualText,
-        annotatedText: '[TextInput]', // Will be converted to [Link] by convertDuplicatesToLinks
+        annotatedText: '[Textinput]', // Will be converted to [Link] by convertDuplicatesToLinks
         type: 'TextInput',
         position: {
           start: foundIndex,
@@ -783,7 +783,7 @@ function getMeaningfulLabel(text: string, contextBefore?: string): string | null
   if (/^[Xx]+([.\/-][Xx]+)+$/.test(trimmed)) return null;
 
   // For instruction text (contains "insert", "enter", etc.), keep the FULL label
-  // Expected format: [TextInput: insert description of services – eg writing steps...]
+  // Expected format: [Textinput: insert description of services – eg writing steps...]
   const instructionKeywords = ['insert', 'enter', 'fill in', 'fill out', 'specify', 'provide',
     'einfügen', 'eingeben', 'ausfüllen', 'angeben', // German
     'insertar', 'llenar', 'completar', // Spanish
@@ -1091,7 +1091,7 @@ function removeOverlappingSuggestions(suggestions: AnnotationSuggestion[]): Anno
  * Extract annotation type from annotation string
  */
 function extractTypeFromAnnotation(annotation: string): AnnotationType {
-  if (annotation.startsWith('[TextInput')) return 'TextInput';
+  if (annotation.startsWith('[Textinput')) return 'TextInput';
   if (annotation.startsWith('[Select:')) return 'Select';
   if (annotation === '[Date]') return 'Date';
   if (annotation === '[Link]') return 'Link';
@@ -1363,6 +1363,28 @@ function autoDetectPlaceholders(
         continue;
       }
 
+      // CONTEXT-AWARE: Skip if this looks like a section header with synonyms
+      // e.g., "Marketing/PR" followed by newline or substantial text = title, not Select
+      const contextBefore = documentText.slice(Math.max(0, start - 20), start);
+      const contextAfter = documentText.slice(end, Math.min(documentText.length, end + 100));
+
+      // Check if at start of line (after newline, or start of document, or after "Section X\n")
+      const isAtLineStart = start === 0 || /[\n\r]\s*$/.test(contextBefore) || /^\s*$/.test(contextBefore.trim());
+
+      // Check if both options are single words (no spaces) and short - likely synonyms
+      const allSingleWords = options.every(o => !/\s/.test(o.trim()) && o.length <= 15);
+
+      // Check if followed by newline or substantial descriptive text (not a question/choice context)
+      const followedByNewline = /^\s*[\n\r]/.test(contextAfter);
+      const followedByDescription = /^\s*[\n\r]\s*\w/.test(contextAfter) || /^\s{2,}\w/.test(contextAfter);
+
+      // If at line start + single words + followed by newline/description = likely section header
+      if (isAtLineStart && allSingleWords && (followedByNewline || followedByDescription)) {
+        console.log(`[autoDetect] Skipping section header with synonyms: "${fullMatch}" (at line start, single words, followed by content)`);
+        slashIdx++;
+        continue;
+      }
+
       const maxLen = Math.max(...options.map(o => o.length));
       const minLen = Math.min(...options.map(o => o.length));
       const isBalanced = maxLen <= 40 && minLen >= 2 && maxLen / minLen < 10;
@@ -1399,7 +1421,7 @@ function autoDetectPlaceholders(
   // MUST run BEFORE highlighted text processing to handle XXX properly
   // XXX can mean different things based on context:
   // - XXX EUR → [Money] (include the currency)
-  // - XXX % → [TextInput] (percentage, needs to be filled)
+  // - XXX % → [Textinput] (percentage, needs to be filled)
   // - XXX. (end of sentence) → stay as XXX (static placeholder, don't annotate)
   // - Highlighted XXX → process based on context
   // =================================================================
@@ -1439,14 +1461,14 @@ function autoDetectPlaceholders(
 
       markCovered(position, position + fullLength);
     } else if (percentMatch) {
-      // XXX % → [TextInput] (percentage that needs to be filled)
+      // XXX % → [Textinput] (percentage that needs to be filled)
       // Only include the XXX, leave % visible
-      console.log(`[autoDetect] PRIORITY: Found XXX % (percentage) → [TextInput]`);
+      console.log(`[autoDetect] PRIORITY: Found XXX % (percentage) → [Textinput]`);
 
       detected.push({
         id: crypto.randomUUID(),
         originalText: 'XXX',
-        annotatedText: '[TextInput]',
+        annotatedText: '[Textinput]',
         type: 'TextInput',
         position: { start: position, end: position + 3 },
         confidence: 0.90,
@@ -1556,7 +1578,7 @@ function autoDetectPlaceholders(
       continue;
     }
 
-    // SKIP if text already contains annotation markers (prevents nested [TextInput: [TextInput:]])
+    // SKIP if text already contains annotation markers (prevents nested [Textinput: [Textinput:]])
     // Also skip if it looks like a partial annotation (has unmatched brackets with annotation keywords)
     if (/\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)/i.test(text)) {
       console.log(`[autoDetect] Skipping already-annotated text: "${text.slice(0, 50)}"`);
@@ -1690,7 +1712,7 @@ function autoDetectPlaceholders(
     } else {
       // Only add label if it's meaningful (not just the placeholder itself)
       const meaningfulLabel = getMeaningfulLabel(label || text, contextBefore);
-      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
+      annotatedText = meaningfulLabel ? `[Textinput: ${meaningfulLabel}]` : '[Textinput]';
     }
 
     // VALIDATION: Don't create nested annotations
@@ -1701,13 +1723,13 @@ function autoDetectPlaceholders(
     }
 
     // VALIDATION: Don't annotate if text matches annotation pattern itself
-    if (/^\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)[:\]]/.test(text)) {
+    if (/^\[(Textinput|Date|Money|Select|Link|Number|Checkbox|Calculation)[:\]]/.test(text)) {
       console.log(`[autoDetect] Skipping - text IS an annotation: "${text}"`);
       continue;
     }
 
     // Note: Parenthesized numbers like (2) CAN be placeholders for editable values
-    // The getMeaningfulLabel function will return null for them, so they become [TextInput] without label
+    // The getMeaningfulLabel function will return null for them, so they become [Textinput] without label
 
     console.log(`[autoDetect] Found HIGHLIGHTED text "${text.slice(0, 50)}" → ${annotatedText}`);
 
@@ -1750,7 +1772,7 @@ function autoDetectPlaceholders(
     } else if (type === 'Select') {
       annotatedText = `[Select: ${label}]`;
     } else {
-      annotatedText = `[TextInput: ${label}]`;
+      annotatedText = `[Textinput: ${label}]`;
     }
 
     console.log(`[autoDetect] Found {placeholder} "${fullMatch}" → ${annotatedText}`);
@@ -1795,7 +1817,7 @@ function autoDetectPlaceholders(
     } else if (type === 'Select') {
       annotatedText = `[Select: ${label}]`;
     } else {
-      annotatedText = `[TextInput: ${label}]`;
+      annotatedText = `[Textinput: ${label}]`;
     }
 
     console.log(`[autoDetect] Found <<placeholder>> "${fullMatch}" → ${annotatedText}`);
@@ -1875,10 +1897,10 @@ function autoDetectPlaceholders(
     } else if (type === 'Money') {
       annotatedText = '[Money]';
     } else if (label) {
-      annotatedText = `[TextInput: ${label}]`;
+      annotatedText = `[Textinput: ${label}]`;
     } else {
       // Highlighted but no label - generic TextInput
-      annotatedText = '[TextInput]';
+      annotatedText = '[Textinput]';
     }
 
     console.log(`[autoDetect] Found underscores "${fullMatch}" → ${annotatedText} (label: "${label || 'none'}", highlighted: ${isHighlighted})`);
@@ -1917,7 +1939,7 @@ function autoDetectPlaceholders(
       continue;
     }
 
-    // Skip if it looks like an existing annotation [TextInput: X], [Date], etc.
+    // Skip if it looks like an existing annotation [Textinput: X], [Date], etc.
     // IMPORTANT: Case-SENSITIVE check - [Date] is an annotation, [date] is a placeholder
     // Annotations use PascalCase: TextInput, Date, Money, Link, Select, Calculation
     // Placeholders from origin files often use lowercase: [date], [name], [company]
@@ -1955,7 +1977,7 @@ function autoDetectPlaceholders(
     } else {
       // Use getMeaningfulLabel to filter out meaningless labels like "X", "__"
       const meaningfulLabel = getMeaningfulLabel(label, contextBefore);
-      annotatedText = meaningfulLabel ? `[TextInput: ${meaningfulLabel}]` : '[TextInput]';
+      annotatedText = meaningfulLabel ? `[Textinput: ${meaningfulLabel}]` : '[Textinput]';
     }
 
     console.log(`[autoDetect] Found [bracket] "${fullMatch}" → ${annotatedText}`);
@@ -2014,12 +2036,12 @@ function autoDetectPlaceholders(
     const position = match.index;
     if (isCovered(position)) continue;
 
-    console.log(`[autoDetect] Found bullet placeholder "${match[0]}" → [TextInput]`);
+    console.log(`[autoDetect] Found bullet placeholder "${match[0]}" → [Textinput]`);
 
     detected.push({
       id: crypto.randomUUID(),
       originalText: match[0],
-      annotatedText: '[TextInput]',
+      annotatedText: '[Textinput]',
       type: 'TextInput',
       position: { start: position, end: position + 1 },
       confidence: 0.85,

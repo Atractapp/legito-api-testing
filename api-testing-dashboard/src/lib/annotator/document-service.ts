@@ -831,7 +831,7 @@ function parseAnnotationContent(annotation: string): { type: AnnotationType; lab
  * Detect the annotation type from the annotation string
  */
 export function detectAnnotationType(annotation: string): AnnotationType {
-  if (annotation.startsWith('[TextInput')) return 'TextInput';
+  if (annotation.startsWith('[Textinput')) return 'TextInput';
   if (annotation.startsWith('[Select:')) return 'Select';
   if (annotation === '[Date]') return 'Date';
   if (annotation === '[Link]') return 'Link';
@@ -844,7 +844,7 @@ export function detectAnnotationType(annotation: string): AnnotationType {
  * Extract label from annotation
  */
 export function extractLabel(annotation: string): string | null {
-  const textInputMatch = annotation.match(/\[TextInput:\s*([^\]]+)\]/);
+  const textInputMatch = annotation.match(/\[Textinput:\s*([^\]]+)\]/);
   if (textInputMatch) return textInputMatch[1].trim();
 
   const selectMatch = annotation.match(/\[Select:\s*([^\]]+)\]/);
@@ -953,7 +953,7 @@ export async function generateAnnotatedDocxPreservingFormat(
   for (const r of sortedReplacements) {
     // Skip if original is already a full annotation (CASE-SENSITIVE!)
     // [Date] = annotation, [date] = placeholder that should be replaced
-    if (/^\[(TextInput|Date|Money|Select|Link|Number|Checkbox|Calculation)/.test(r.original)) {
+    if (/^\[(Textinput|Date|Money|Select|Link|Number|Checkbox|Calculation)/.test(r.original)) {
       continue;
     }
     if (!replacementsByOriginal.has(r.original)) {
@@ -1147,7 +1147,7 @@ function replaceTextInDocxXmlSafeOnce(
     // CRITICAL: Skip if the ACTUAL text is already a proper annotation (CASE-SENSITIVE!)
     // [Date] = annotation (skip), [date] = placeholder (replace)
     const actualMatchedText = textContent.substring(matchIndex, matchIndex + searchText.length);
-    if (/^\[(TextInput|Date|Money|Select|Link|Calculation|Number|Checkbox)/.test(actualMatchedText)) {
+    if (/^\[(Textinput|Date|Money|Select|Link|Calculation|Number|Checkbox)/.test(actualMatchedText)) {
       return runMatch; // Already a proper annotation, skip
     }
 
@@ -1259,7 +1259,7 @@ function replaceAcrossRunsOnce(
     // CRITICAL: Skip if the ACTUAL text is already a proper annotation (CASE-SENSITIVE!)
     // [Date] = annotation (skip), [date] = placeholder (replace)
     const actualMatchedText = combinedText.substring(searchIndex, searchIndex + searchText.length);
-    if (/^\[(TextInput|Date|Money|Select|Link|Calculation|Number|Checkbox)/.test(actualMatchedText)) {
+    if (/^\[(Textinput|Date|Money|Select|Link|Calculation|Number|Checkbox)/.test(actualMatchedText)) {
       return paragraph; // Already a proper annotation, skip
     }
 
@@ -1466,7 +1466,7 @@ function replaceTextInDocxXmlSafeLegacy(
     }
 
     // CRITICAL: Check if this match is INSIDE an existing annotation bracket
-    // e.g., don't replace "Serie" inside "[TextInput: Series]"
+    // e.g., don't replace "Serie" inside "[Textinput: Series]"
     const matchEnd = matchIndex + normalizedSearch.length;
 
     // Find the nearest [ before the match and ] after the match
@@ -1610,7 +1610,7 @@ function replaceAcrossRuns(
     }
 
     // CRITICAL: Check if this match is INSIDE an existing annotation bracket
-    // e.g., don't replace "Serie" inside "[TextInput: Series]"
+    // e.g., don't replace "Serie" inside "[Textinput: Series]"
     const matchEnd = normalizedSearchIndex + normalizedSearch.length;
     const bracketOpenBefore = normalizedCombined.lastIndexOf('[', normalizedSearchIndex);
     const bracketCloseBefore = normalizedCombined.lastIndexOf(']', normalizedSearchIndex);
@@ -1853,7 +1853,7 @@ export function applyAnnotationsToText(
     }
 
     // CRITICAL: Don't create nested annotations
-    // If the annotatedText would create [[TextInput]] (double brackets), fix it
+    // If the annotatedText would create [[Textinput]] (double brackets), fix it
     const before = result.substring(0, annotation.position.start);
     const after = result.substring(annotation.position.end);
 
@@ -1903,8 +1903,8 @@ export function validateAnnotation(annotation: string): {
 
   // Check for valid format
   const validFormats = [
-    /^\[TextInput\]$/,
-    /^\[TextInput:\s*[^\]]+\]$/,
+    /^\[Textinput\]$/,
+    /^\[Textinput:\s*[^\]]+\]$/,
     /^\[Select:\s*[^\]]+\/[^\]]+\]$/, // At least 2 options
     /^\[Date\]$/,
     /^\[Link\]$/,
@@ -1942,7 +1942,7 @@ export function createAnnotation(
 ): string {
   switch (type) {
     case 'TextInput':
-      return label ? `[TextInput: ${label}]` : '[TextInput]';
+      return label ? `[Textinput: ${label}]` : '[Textinput]';
     case 'Select':
       if (!options || options.length < 2) {
         throw new Error('Select requires at least 2 options');

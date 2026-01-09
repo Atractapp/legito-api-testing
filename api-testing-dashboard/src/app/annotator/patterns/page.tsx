@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -24,6 +25,14 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
   Layers,
   Trash2,
   Loader2,
@@ -31,12 +40,15 @@ import {
   Search,
   Filter,
   ArrowUpDown,
+  Pencil,
+  Plus,
 } from 'lucide-react';
 import { useAnnotatorStore, usePatterns } from '@/store/annotator-store';
 import {
   ANNOTATION_TYPES,
   ANNOTATION_TYPE_LABELS,
   type AnnotationType,
+  type Pattern,
 } from '@/types/annotator';
 import { format } from 'date-fns';
 
@@ -55,9 +67,74 @@ export default function PatternsPage() {
   );
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  const { loadPatterns, deletePattern, deleteAllPatterns } = useAnnotatorStore();
+  // Edit/Create dialog state
+  const [editingPattern, setEditingPattern] = useState<Pattern | null>(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [editOriginalText, setEditOriginalText] = useState('');
+  const [editAnnotatedText, setEditAnnotatedText] = useState('');
+  const [editAnnotationType, setEditAnnotationType] = useState<AnnotationType>('TextInput');
+  const [editUserContextHint, setEditUserContextHint] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+
+  const { loadPatterns, deletePattern, deleteAllPatterns, updatePattern, createPattern } = useAnnotatorStore();
   const { patterns, stats, loading, error } = usePatterns();
   const [deletingAll, setDeletingAll] = useState(false);
+
+  // Open edit dialog
+  const handleEdit = (pattern: Pattern) => {
+    setEditingPattern(pattern);
+    setEditOriginalText(pattern.originalText);
+    setEditAnnotatedText(pattern.annotatedText);
+    setEditAnnotationType(pattern.annotationType);
+    setEditUserContextHint(pattern.userContextHint || '');
+  };
+
+  // Open create dialog
+  const handleOpenCreate = () => {
+    setIsCreateDialogOpen(true);
+    setEditOriginalText('');
+    setEditAnnotatedText('');
+    setEditAnnotationType('TextInput');
+    setEditUserContextHint('');
+  };
+
+  // Save edited pattern
+  const handleSaveEdit = async () => {
+    if (!editingPattern) return;
+    setIsSaving(true);
+    try {
+      await updatePattern(editingPattern.id, {
+        originalText: editOriginalText,
+        annotatedText: editAnnotatedText,
+        annotationType: editAnnotationType,
+        userContextHint: editUserContextHint || undefined,
+      });
+      setEditingPattern(null);
+    } catch (err) {
+      console.error('Failed to update pattern:', err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Create new pattern
+  const handleCreate = async () => {
+    if (!editOriginalText || !editAnnotatedText) return;
+    setIsSaving(true);
+    try {
+      await createPattern({
+        originalText: editOriginalText,
+        annotatedText: editAnnotatedText,
+        annotationType: editAnnotationType,
+        userContextHint: editUserContextHint || undefined,
+      });
+      setIsCreateDialogOpen(false);
+    } catch (err) {
+      console.error('Failed to create pattern:', err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   useEffect(() => {
     loadPatterns();
@@ -153,25 +230,31 @@ export default function PatternsPage() {
             View and manage annotation patterns extracted from training
           </p>
         </div>
-        {patterns.length > 0 && (
-          <Button
-            variant="destructive"
-            onClick={handleDeleteAll}
-            disabled={deletingAll}
-          >
-            {deletingAll ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Deleting...
-              </>
-            ) : (
-              <>
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete All Patterns
-              </>
-            )}
+        <div className="flex gap-2">
+          <Button onClick={handleOpenCreate}>
+            <Plus className="mr-2 h-4 w-4" />
+            New Pattern
           </Button>
-        )}
+          {patterns.length > 0 && (
+            <Button
+              variant="destructive"
+              onClick={handleDeleteAll}
+              disabled={deletingAll}
+            >
+              {deletingAll ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete All Patterns
+                </>
+              )}
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Stats */}
@@ -386,22 +469,16 @@ export default function PatternsPage() {
                       <TableCell className="font-mono text-sm max-w-[200px] truncate text-primary">
                         {pattern.annotatedText}
                       </TableCell>
-                      <TableCell className="text-xs text-muted-foreground max-w-[250px]">
-                        <span className="font-mono">
-                          {pattern.contextBefore && (
-                            <span title={pattern.contextBefore}>
-                              ...{pattern.contextBefore.slice(-25)}
-                            </span>
-                          )}
-                          <span className="text-primary font-medium mx-1">
-                            [{pattern.originalText}]
+                      <TableCell className="text-xs text-muted-foreground max-w-[300px]">
+                        {pattern.semanticContext ? (
+                          <span title={pattern.semanticContext} className="line-clamp-2">
+                            {pattern.semanticContext}
                           </span>
-                          {pattern.contextAfter && (
-                            <span title={pattern.contextAfter}>
-                              {pattern.contextAfter.slice(0, 25)}...
-                            </span>
-                          )}
-                        </span>
+                        ) : (
+                          <span className="italic text-muted-foreground/50">
+                            No AI context
+                          </span>
+                        )}
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline">
@@ -420,13 +497,24 @@ export default function PatternsPage() {
                         {format(new Date(pattern.createdAt), 'MMM d')}
                       </TableCell>
                       <TableCell>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(pattern.id)}
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
+                        <div className="flex gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(pattern)}
+                            title="Edit pattern"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(pattern.id)}
+                            title="Delete pattern"
+                          >
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -436,6 +524,168 @@ export default function PatternsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Edit Pattern Dialog */}
+      <Dialog open={!!editingPattern} onOpenChange={(open) => !open && setEditingPattern(null)}>
+        <DialogContent className="sm:max-w-[550px]">
+          <DialogHeader>
+            <DialogTitle>Edit Pattern</DialogTitle>
+            <DialogDescription>
+              Modify the pattern text and annotation. AI context will be regenerated.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-original">Original Text (what to find)</Label>
+              <Input
+                id="edit-original"
+                value={editOriginalText}
+                onChange={(e) => setEditOriginalText(e.target.value)}
+                placeholder="e.g., Creditor's name"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-annotated">Annotated Text (replacement)</Label>
+              <Input
+                id="edit-annotated"
+                value={editAnnotatedText}
+                onChange={(e) => setEditAnnotatedText(e.target.value)}
+                placeholder="e.g., [Textinput: Creditor's name]"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-type">Annotation Type</Label>
+              <Select
+                value={editAnnotationType}
+                onValueChange={(v) => setEditAnnotationType(v as AnnotationType)}
+              >
+                <SelectTrigger id="edit-type">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {ANNOTATION_TYPES.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {ANNOTATION_TYPE_LABELS[type]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-hint">AI Context Hint (optional)</Label>
+              <Textarea
+                id="edit-hint"
+                value={editUserContextHint}
+                onChange={(e) => setEditUserContextHint(e.target.value)}
+                placeholder="e.g., Use Link when in signature section (second occurrence), TextInput for first occurrence in body"
+                rows={3}
+              />
+              <p className="text-xs text-muted-foreground">
+                Help the AI understand when to use this pattern
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingPattern(null)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSaveEdit} disabled={isSaving || !editOriginalText || !editAnnotatedText}>
+              {isSaving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                'Save Changes'
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Create Pattern Dialog */}
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogContent className="sm:max-w-[550px]">
+          <DialogHeader>
+            <DialogTitle>Create New Pattern</DialogTitle>
+            <DialogDescription>
+              Add a new annotation pattern manually. AI will generate semantic context.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="create-original">Original Text (what to find)</Label>
+              <Input
+                id="create-original"
+                value={editOriginalText}
+                onChange={(e) => setEditOriginalText(e.target.value)}
+                placeholder="e.g., Seller's address"
+              />
+              <p className="text-xs text-muted-foreground">
+                The text that will be searched for in documents
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="create-annotated">Annotated Text (replacement)</Label>
+              <Input
+                id="create-annotated"
+                value={editAnnotatedText}
+                onChange={(e) => setEditAnnotatedText(e.target.value)}
+                placeholder="e.g., [Textinput: Seller's address]"
+              />
+              <p className="text-xs text-muted-foreground">
+                The annotation that will replace the original text
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="create-type">Annotation Type</Label>
+              <Select
+                value={editAnnotationType}
+                onValueChange={(v) => setEditAnnotationType(v as AnnotationType)}
+              >
+                <SelectTrigger id="create-type">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {ANNOTATION_TYPES.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {ANNOTATION_TYPE_LABELS[type]}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="create-hint">AI Context Hint (optional)</Label>
+              <Textarea
+                id="create-hint"
+                value={editUserContextHint}
+                onChange={(e) => setEditUserContextHint(e.target.value)}
+                placeholder="e.g., Use Link when in signature section (second occurrence), TextInput for first occurrence in body"
+                rows={3}
+              />
+              <p className="text-xs text-muted-foreground">
+                Help the AI understand when to use this pattern
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleCreate} disabled={isSaving || !editOriginalText || !editAnnotatedText}>
+              {isSaving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                'Create Pattern'
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

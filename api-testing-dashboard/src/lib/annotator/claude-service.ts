@@ -42,7 +42,7 @@ export interface ClaudeServiceConfig {
 // Default Configuration
 // ----------------------------------------------------------------------------
 
-const DEFAULT_MODEL = 'claude-sonnet-4-20250514';
+const DEFAULT_MODEL = 'claude-opus-4-5-20251101';
 const DEFAULT_MAX_TOKENS = 8192;
 
 // ----------------------------------------------------------------------------
@@ -52,9 +52,9 @@ const DEFAULT_MAX_TOKENS = 8192;
 const SYSTEM_PROMPT = `You annotate FILL-IN-THE-BLANK placeholders in legal documents.
 
 ## ONLY ANNOTATE THESE EXACT PATTERNS:
-- _____ (underscores) → [TextInput: label based on context]
-- XXXX or XXX (X letters) → [TextInput] or [Date] or [Money]
-- ........ (dots) → [TextInput]
+- _____ (underscores) → [Textinput: label based on context]
+- XXXX or XXX (X letters) → [Textinput] or [Date] or [Money]
+- ........ (dots) → [Textinput]
 - DD.MM.YYYY or XX.XX.XXXX → [Date]
 - 0,00 EUR or XXX CZK → [Money]
 
@@ -68,7 +68,7 @@ const SYSTEM_PROMPT = `You annotate FILL-IN-THE-BLANK placeholders in legal docu
 If you find more than 20, you are annotating regular text which is WRONG.
 
 ## Output JSON only:
-{"annotations":[{"original":"_____","annotated":"[TextInput: Name]","type":"TextInput","position":{"start":0,"end":5},"confidence":0.9}]}`;
+{"annotations":[{"original":"_____","annotated":"[Textinput: Name]","type":"TextInput","position":{"start":0,"end":5},"confidence":0.9}]}`;
 
 // ----------------------------------------------------------------------------
 // Claude Service Class
@@ -203,10 +203,10 @@ class ClaudeService {
         if (typePatterns.length > 0) {
           prompt += `**${type}:**\n`;
           typePatterns.slice(0, 10).forEach((pattern) => {
-            const context = pattern.contextBefore
-              ? `(context: "...${pattern.contextBefore.slice(-20)}")`
+            const context = pattern.semanticContext
+              ? ` (${pattern.semanticContext})`
               : '';
-            prompt += `- "${pattern.originalText}" → ${pattern.annotatedText} ${context}\n`;
+            prompt += `- "${pattern.originalText}" → ${pattern.annotatedText}${context}\n`;
           });
           prompt += '\n';
         }
@@ -373,7 +373,7 @@ class ClaudeService {
  * Detect annotation type from annotation string
  */
 function detectType(annotation: string): AnnotationType {
-  if (annotation.startsWith('[TextInput')) return 'TextInput';
+  if (annotation.startsWith('[Textinput')) return 'TextInput';
   if (annotation.startsWith('[Select:')) return 'Select';
   if (annotation === '[Date]') return 'Date';
   if (annotation === '[Link]') return 'Link';
@@ -449,7 +449,7 @@ function refineAnnotationType(
       return {
         ...annotation,
         type: 'TextInput',
-        annotated: `[TextInput: ${extractLabelFromAnnotation(annotation.annotated) || annotation.original}]`,
+        annotated: `[Textinput: ${extractLabelFromAnnotation(annotation.annotated) || annotation.original}]`,
       };
     }
   }
@@ -464,7 +464,7 @@ function refineAnnotationType(
       return {
         ...annotation,
         type: 'TextInput',
-        annotated: `[TextInput: ${extractLabelFromAnnotation(annotation.annotated) || annotation.original}]`,
+        annotated: `[Textinput: ${extractLabelFromAnnotation(annotation.annotated) || annotation.original}]`,
       };
     }
   }
@@ -482,7 +482,7 @@ function updateAnnotationText(currentAnnotation: string, newType: AnnotationType
     const label = labelMatch[1];
     // For types that use labels
     if (newType === 'TextInput') {
-      return `[TextInput: ${label}]`;
+      return `[Textinput: ${label}]`;
     }
     // Simple types don't have labels
     return `[${newType}]`;
@@ -498,7 +498,7 @@ function updateAnnotationText(currentAnnotation: string, newType: AnnotationType
 }
 
 /**
- * Extract label from an annotation like [TextInput: Some Label]
+ * Extract label from an annotation like [Textinput: Some Label]
  */
 function extractLabelFromAnnotation(annotation: string): string | null {
   const match = annotation.match(/^\[[^:]+:\s*([^\]]+)\]$/);
@@ -507,20 +507,27 @@ function extractLabelFromAnnotation(annotation: string): string | null {
 
 /**
  * Check if text is a valid placeholder (not a regular word)
+ * VERY STRICT: Only allow obvious placeholder patterns
  */
 function isValidPlaceholder(text: string): boolean {
   const trimmed = text.trim();
 
-  // Empty
-  if (!trimmed) return false;
+  // Empty or too short
+  if (!trimmed || trimmed.length < 2) return false;
+
+  // REJECT if it looks like a regular word or phrase
+  // Regular words: only letters, possibly with apostrophe
+  if (/^[A-Za-z][a-z']*$/.test(trimmed)) return false;  // "Loan", "Agreement", "Party's"
+  if (/^[A-Za-z][a-z']*\s+[A-Za-z][a-z']*/.test(trimmed)) return false;  // "Loan Agreement"
+  if (/^[A-Z][a-z]+:?$/.test(trimmed)) return false;  // "Between:", "Name:"
 
   // Underscores: _____, __, etc.
   if (/^_+$/.test(trimmed)) return true;
   if (/__{2,}/.test(trimmed)) return true;
 
-  // X patterns: XXX, XXXX
+  // X patterns: XXX, XXXX (must be mostly X's)
   if (/^X+$/i.test(trimmed)) return true;
-  if (/X{2,}/i.test(trimmed)) return true;
+  if (/^X{2,}\s*(EUR|CZK|USD)?$/i.test(trimmed)) return true;
 
   // Dots: ........
   if (/^\.{3,}$/.test(trimmed)) return true;
@@ -528,7 +535,7 @@ function isValidPlaceholder(text: string): boolean {
   // Date patterns: DD.MM.YYYY, XX.XX.XXXX
   if (/^[XD_]{1,2}[.\/-][XM_]{1,2}[.\/-][XY_]{2,4}$/i.test(trimmed)) return true;
 
-  // Actual dates: 01.01.2024
+  // Actual dates with numbers: 01.01.2024
   if (/^\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4}$/.test(trimmed)) return true;
 
   // Amount: 0,00
@@ -584,6 +591,649 @@ function refineAnnotations(
 }
 
 // ----------------------------------------------------------------------------
+// Semantic Context Generation - AI-ONLY (NO document chunks!)
+// ----------------------------------------------------------------------------
+
+/**
+ * Get type-specific context explanation for Legito annotation types.
+ * This helps the AI understand what each annotation type MEANS in Legito's system.
+ */
+function getAnnotationTypeExplanation(annotationType: AnnotationType): string {
+  switch (annotationType) {
+    case 'Link':
+      return `
+TYPE EXPLANATION - [Link]:
+In Legito, [Link] is NOT a web hyperlink. It means this field is a REFERENCE to another field.
+- When the same value appears multiple times in a document, first occurrence = [Textinput], subsequent = [Link]
+- User enters the value ONCE; all [Link] fields auto-fill with that value
+- Example: "Buyer's name" appears 5 times → first is [Textinput: Buyer's name], next 4 are [Link]
+- The semantic context should describe WHEN this link pattern applies (e.g., "Second+ occurrence of a field")`;
+
+    case 'TextInput':
+      return `
+TYPE EXPLANATION - [Textinput]:
+This is a fillable text field where user enters a value.
+- Usually the FIRST occurrence of a field in the document
+- Context should describe what kind of input this captures`;
+
+    case 'Date':
+      return `
+TYPE EXPLANATION - [Date]:
+A date input field for capturing dates.
+- Formats: DD.MM.YYYY, MM/DD/YYYY, etc.
+- Context should describe what date this represents (signing, effective, birth, etc.)`;
+
+    case 'Money':
+      return `
+TYPE EXPLANATION - [Money]:
+A monetary amount field.
+- Usually has currency (EUR, CZK, USD) nearby
+- Context should describe what amount this represents`;
+
+    case 'Select':
+      return `
+TYPE EXPLANATION - [Select]:
+A dropdown/choice field with predefined options.
+- Format: [Select: option1 / option2 / option3]
+- Context should describe what choice this represents`;
+
+    default:
+      return '';
+  }
+}
+
+/**
+ * Generate AI-powered semantic context for a pattern.
+ *
+ * IMPORTANT: This generates a SEMANTIC description of what the field represents,
+ * NOT document text chunks. The context describes the field's meaning and what
+ * similar patterns might look like in OTHER documents.
+ *
+ * Example output: "Party name field. Could match: Seller, Buyer, Lessor, Lessee, Landlord, Tenant"
+ */
+export async function generateSemanticContext(
+  originalText: string,
+  annotatedText: string,
+  annotationType: AnnotationType,
+  userContextHint?: string | null
+): Promise<string | null> {
+  const service = getClaudeService();
+
+  if (!service.isConfigured()) {
+    console.error('[generateSemanticContext] Claude NOT CONFIGURED - check ANTHROPIC_API_KEY env var');
+    return null;
+  }
+
+  console.log(`[generateSemanticContext] Generating context for: "${originalText}" → "${annotatedText}"`);
+  if (userContextHint) {
+    console.log(`[generateSemanticContext] User hint: "${userContextHint}"`);
+  }
+
+  try {
+    const client = (service as unknown as { client: Anthropic }).client;
+    if (!client) {
+      console.error('[generateSemanticContext] No client available');
+      return null;
+    }
+
+    // Build prompt with optional user hint and type explanation
+    const typeExplanation = getAnnotationTypeExplanation(annotationType);
+    const userHintSection = userContextHint
+      ? `\n\nIMPORTANT USER GUIDANCE:\n${userContextHint}\n\nIncorporate this guidance into your understanding of when this pattern should be used.`
+      : '';
+
+    // Special handling for placeholder patterns like [**]
+    const isPlaceholder = /^[\[\(\{][\*_\-●○•\#\?\.\s]+[\]\)\}]$/.test(originalText.trim());
+    const placeholderNote = isPlaceholder
+      ? `\n\nNOTE: The original text "${originalText}" is a GENERIC PLACEHOLDER (like [**] or [___]).
+This means different placeholders in the document may have been annotated with different types.
+Focus on WHEN to use this specific annotation type "${annotatedText}", not what "${originalText}" literally means.`
+      : '';
+
+    const response = await client.messages.create({
+      model: DEFAULT_MODEL,
+      max_tokens: 200,
+      messages: [
+        {
+          role: 'user',
+          content: `You are analyzing a document annotation pattern to generate SEMANTIC context.
+
+This pattern was extracted from a training document:
+- Original text (what was replaced): "${originalText}"
+- Annotation (the replacement): "${annotatedText}"
+- Type: ${annotationType}
+${typeExplanation}${placeholderNote}${userHintSection}
+
+Generate a JSON response with:
+1. "description": What this field semantically represents and WHEN to use this annotation (1-2 sentences)
+2. "category": One of: party_name, date, money, address, identification, signature, contact, linked_field, custom
+3. "alternatives": Array of similar patterns or contexts where this annotation applies
+
+${annotationType === 'Link' ? `For [Link] patterns, focus on:
+- When this is a REPEATED occurrence of a field (not the first)
+- The relationship to the original [Textinput] it references
+- "alternatives" should describe the types of fields this links to (party names, dates, addresses, etc.)` : ''}
+
+Output ONLY valid JSON, nothing else:
+{"description": "...", "category": "...", "alternatives": ["...", "..."]}`,
+        },
+      ],
+    });
+
+    console.log(`[generateSemanticContext] API response received, content blocks: ${response.content.length}`);
+
+    const textContent = response.content.find((c) => c.type === 'text');
+    if (textContent && textContent.type === 'text') {
+      console.log(`[generateSemanticContext] Raw response: ${textContent.text.slice(0, 200)}`);
+      try {
+        const parsed = JSON.parse(textContent.text);
+        // Format as readable semantic context
+        const context = `${parsed.description} Could match: ${parsed.alternatives.join(', ')}`;
+        console.log(`[generateSemanticContext] SUCCESS "${originalText}" → "${context}"`);
+        return context.slice(0, 250);
+      } catch (parseError) {
+        // If JSON parsing fails, use raw text
+        console.log(`[generateSemanticContext] JSON parse failed, using raw text`);
+        const context = textContent.text.trim().slice(0, 250);
+        console.log(`[generateSemanticContext] "${originalText}" → "${context}" (raw)`);
+        return context;
+      }
+    } else {
+      console.error(`[generateSemanticContext] No text content in response for "${originalText}"`);
+    }
+  } catch (error) {
+    console.error(`[generateSemanticContext] API Error for "${originalText}":`, error);
+    // Log more details if available
+    if (error instanceof Error) {
+      console.error(`[generateSemanticContext] Error message: ${error.message}`);
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Batch generate semantic context for multiple patterns
+ * More efficient than calling one at a time
+ */
+export async function generateSemanticContextBatch(
+  patterns: Array<{
+    originalText: string;
+    annotatedText: string;
+    annotationType: AnnotationType;
+    contextKeywords?: {
+      before: string[];
+      after: string[];
+    };
+  }>
+): Promise<Map<string, string>> {
+  console.log(`[generateSemanticContextBatch] Starting batch for ${patterns.length} patterns`);
+  const results = new Map<string, string>();
+
+  // Process in parallel, but limit concurrency
+  const batchSize = 5;
+  for (let i = 0; i < patterns.length; i += batchSize) {
+    const batch = patterns.slice(i, i + batchSize);
+    console.log(`[generateSemanticContextBatch] Processing batch ${i / batchSize + 1}, size: ${batch.length}`);
+    const promises = batch.map(async (p) => {
+      // Format context keywords as a hint for the AI
+      let keywordHint: string | undefined;
+      if (p.contextKeywords && (p.contextKeywords.before.length > 0 || p.contextKeywords.after.length > 0)) {
+        const beforeHint = p.contextKeywords.before.length > 0
+          ? `Words before placeholder: "${p.contextKeywords.before.join('", "')}"`
+          : '';
+        const afterHint = p.contextKeywords.after.length > 0
+          ? `Words after placeholder: "${p.contextKeywords.after.join('", "')}"`
+          : '';
+        keywordHint = [beforeHint, afterHint].filter(Boolean).join('. ');
+        console.log(`[generateSemanticContextBatch] Keyword hint for "${p.originalText}": ${keywordHint}`);
+      }
+
+      const context = await generateSemanticContext(
+        p.originalText,
+        p.annotatedText,
+        p.annotationType,
+        keywordHint // Pass as user context hint
+      );
+      if (context) {
+        results.set(p.originalText, context);
+        console.log(`[generateSemanticContextBatch] Got context for "${p.originalText}"`);
+      } else {
+        console.log(`[generateSemanticContextBatch] NO context for "${p.originalText}"`);
+      }
+    });
+    await Promise.all(promises);
+  }
+
+  console.log(`[generateSemanticContextBatch] Completed. Got ${results.size}/${patterns.length} contexts`);
+  return results;
+}
+
+// ----------------------------------------------------------------------------
+// Candidate-Based Annotation (NEW!)
+// ----------------------------------------------------------------------------
+
+import type { CandidateRegion } from './preprocessor';
+
+export interface AnnotateWithCandidatesOptions {
+  document: string;
+  candidates: CandidateRegion[];
+  patterns: Pattern[];
+}
+
+export interface CandidateAnnotation {
+  candidateId: number;
+  annotate: boolean;
+  annotation: string;
+  matchedPatternId?: string;
+  confidence: number;
+  reasoning?: string;
+}
+
+/**
+ * Annotate pre-identified fillable candidates using patterns and AI.
+ *
+ * This is the NEW annotation flow:
+ * 1. Preprocessor identifies fillable candidates (underscores, XXX, etc.)
+ * 2. This function evaluates each candidate against patterns
+ * 3. Claude only sees candidates, not the full document
+ * 4. Returns decisions for each candidate
+ */
+export async function annotateWithCandidates(
+  options: AnnotateWithCandidatesOptions
+): Promise<CandidateAnnotation[]> {
+  const { document, candidates, patterns } = options;
+  const service = getClaudeService();
+
+  if (candidates.length === 0) {
+    console.log('[annotateWithCandidates] No candidates to process');
+    return [];
+  }
+
+  // First, try pattern matching (no AI needed for exact/similar matches)
+  const results: CandidateAnnotation[] = [];
+  const needsAI: CandidateRegion[] = [];
+
+  for (const candidate of candidates) {
+    const patternMatch = findBestPatternMatch(candidate, patterns, document);
+
+    if (patternMatch) {
+      results.push({
+        candidateId: candidate.id,
+        annotate: true,
+        annotation: patternMatch.annotation,
+        matchedPatternId: patternMatch.patternId,
+        confidence: patternMatch.confidence,
+        reasoning: `Matched pattern: ${patternMatch.patternId}`,
+      });
+    } else {
+      needsAI.push(candidate);
+    }
+  }
+
+  console.log(`[annotateWithCandidates] Pattern matched: ${results.length}, needs AI: ${needsAI.length}`);
+
+  // For unmatched candidates, use Claude if configured
+  if (needsAI.length > 0 && service.isConfigured()) {
+    const aiResults = await evaluateCandidatesWithClaude(needsAI, patterns, document);
+    results.push(...aiResults);
+  } else {
+    // No AI available - use preprocessor's suggested types
+    for (const candidate of needsAI) {
+      const label = extractLabelFromContext(document, candidate);
+      results.push({
+        candidateId: candidate.id,
+        annotate: true,
+        annotation: createAnnotationString(candidate.suggestedType, label),
+        confidence: candidate.confidence * 0.8, // Lower confidence without AI
+        reasoning: 'Preprocessor detection (no AI)',
+      });
+    }
+  }
+
+  return results.sort((a, b) => a.candidateId - b.candidateId);
+}
+
+/**
+ * Context keywords that indicate specific annotation types.
+ * Used to disambiguate when same placeholder maps to different types.
+ */
+const CONTEXT_TYPE_INDICATORS = {
+  Date: {
+    before: ['on', 'dated', 'date', 'as of', 'effective', 'executed', 'signed', 'from', 'until', 'by', 'before', 'after', 'dne', 'dňa', 'ze dne'],
+    after: ['day', 'month', 'year', 'roku', 'měsíce'],
+  },
+  Money: {
+    before: ['amount', 'sum', 'price', 'value', 'cost', 'fee', 'payment', 'částka', 'suma', 'cena', 've výši'],
+    after: ['eur', 'czk', 'usd', 'gbp', 'kč', '€', '$', '£', '%', 'korun'],
+  },
+  Link: {
+    before: ['hereinafter', 'above', 'aforementioned', 'said', 'the', 'dále jen', 'výše uvedený'],
+    after: [],
+  },
+  TextInput: {
+    before: ['in', 'at', 'v', 've', 'na', 'city', 'place', 'město', 'místo', 'name', 'named', 'called', 'jméno', 'název'],
+    after: [],
+  },
+};
+
+/**
+ * Score how well context matches a specific annotation type
+ */
+function scoreContextForType(
+  contextBefore: string,
+  contextAfter: string,
+  annotationType: AnnotationType
+): number {
+  const indicators = CONTEXT_TYPE_INDICATORS[annotationType as keyof typeof CONTEXT_TYPE_INDICATORS];
+  if (!indicators) return 0;
+
+  const beforeLower = contextBefore.toLowerCase();
+  const afterLower = contextAfter.toLowerCase();
+  let score = 0;
+
+  // Check before indicators
+  for (const keyword of indicators.before) {
+    const pattern = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+    if (pattern.test(beforeLower)) {
+      score += 1;
+    }
+  }
+
+  // Check after indicators
+  for (const keyword of indicators.after) {
+    const pattern = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+    if (pattern.test(afterLower)) {
+      score += 1.5; // After indicators are often more specific (like currency)
+    }
+  }
+
+  return score;
+}
+
+/**
+ * Find the best matching pattern for a candidate
+ *
+ * Priority order:
+ * 1. EXACT MATCH - candidate text exactly matches pattern's original text
+ *    - If multiple patterns match same text, use CONTEXT to disambiguate (e.g., "In [**]" → TextInput, "On [**]" → Date)
+ * 2. LABEL MATCH - a label before the candidate matches a pattern (e.g., "Creditor's name: ____")
+ * 3. TYPE MATCH - candidate type matches pattern type (e.g., date → date pattern)
+ */
+function findBestPatternMatch(
+  candidate: CandidateRegion,
+  patterns: Pattern[],
+  document: string
+): { patternId: string; annotation: string; confidence: number } | null {
+  if (patterns.length === 0) return null;
+
+  const candidateText = candidate.text.trim();
+  const candidateTextLower = candidateText.toLowerCase();
+
+  // Get context before and after the candidate
+  const contextStart = Math.max(0, candidate.position.start - 150);
+  const contextEnd = Math.min(document.length, candidate.position.end + 100);
+  const contextBefore = document.slice(contextStart, candidate.position.start);
+  const contextAfter = document.slice(candidate.position.end, contextEnd);
+
+  console.log(`[findBestPatternMatch] Candidate: "${candidateText}" (type: ${candidate.suggestedType})`);
+
+  // ============================================================
+  // PRIORITY 1: EXACT MATCH on original text
+  // If multiple patterns match, use CONTEXT to choose the right type
+  // ============================================================
+  const exactMatches: Pattern[] = [];
+
+  for (const pattern of patterns) {
+    const patternOriginal = pattern.originalText.trim().toLowerCase();
+
+    // Exact match (case-insensitive)
+    if (candidateTextLower === patternOriginal) {
+      exactMatches.push(pattern);
+    } else {
+      // Normalized match (strip punctuation, normalize spaces)
+      const normalizedCandidate = candidateTextLower.replace(/[^a-z0-9]/g, '');
+      const normalizedPattern = patternOriginal.replace(/[^a-z0-9]/g, '');
+      if (normalizedCandidate === normalizedPattern && normalizedCandidate.length > 2) {
+        exactMatches.push(pattern);
+      }
+    }
+  }
+
+  if (exactMatches.length === 1) {
+    // Single match - use it directly
+    const pattern = exactMatches[0];
+    console.log(`[findBestPatternMatch] EXACT MATCH: "${candidateText}" → ${pattern.annotatedText}`);
+    return {
+      patternId: pattern.id,
+      annotation: pattern.annotatedText,
+      confidence: 0.95,
+    };
+  } else if (exactMatches.length > 1) {
+    // Multiple patterns for same original text - use CONTEXT to disambiguate
+    console.log(`[findBestPatternMatch] Multiple matches (${exactMatches.length}) for "${candidateText}" - using context to disambiguate`);
+
+    let bestMatch = exactMatches[0];
+    let bestScore = -1;
+
+    for (const pattern of exactMatches) {
+      const score = scoreContextForType(contextBefore, contextAfter, pattern.annotationType);
+      console.log(`[findBestPatternMatch]   ${pattern.annotationType}: context score = ${score}`);
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = pattern;
+      }
+    }
+
+    // If no clear winner from context, prefer the candidate's suggested type
+    if (bestScore === 0) {
+      const suggestedTypeMatch = exactMatches.find(p => p.annotationType === candidate.suggestedType);
+      if (suggestedTypeMatch) {
+        bestMatch = suggestedTypeMatch;
+        console.log(`[findBestPatternMatch]   No context match, using preprocessor's suggested type: ${candidate.suggestedType}`);
+      }
+    }
+
+    console.log(`[findBestPatternMatch] CONTEXT-BASED MATCH: "${candidateText}" → ${bestMatch.annotatedText} (context score: ${bestScore})`);
+    return {
+      patternId: bestMatch.id,
+      annotation: bestMatch.annotatedText,
+      confidence: bestScore > 0 ? 0.90 : 0.80,
+    };
+  }
+
+  // ============================================================
+  // PRIORITY 2: LABEL MATCH - look for "Label: ____" pattern
+  // ============================================================
+  // Look for a label immediately before the candidate
+  const labelMatch = contextBefore.match(/([A-Z][a-zA-Z''\s]+?):\s*$/);
+  if (labelMatch) {
+    const detectedLabel = labelMatch[1].trim();
+    console.log(`[findBestPatternMatch] Detected label: "${detectedLabel}"`);
+
+    // Find pattern whose original text matches this label
+    for (const pattern of patterns) {
+      const patternOriginal = pattern.originalText.trim().toLowerCase();
+      const labelLower = detectedLabel.toLowerCase();
+
+      if (patternOriginal === labelLower || patternOriginal.includes(labelLower) || labelLower.includes(patternOriginal)) {
+        console.log(`[findBestPatternMatch] LABEL MATCH: "${detectedLabel}" → ${pattern.annotatedText}`);
+        return {
+          patternId: pattern.id,
+          annotation: pattern.annotatedText,
+          confidence: 0.90,
+        };
+      }
+    }
+
+    // No exact pattern match, but we have a label - create annotation from label
+    console.log(`[findBestPatternMatch] LABEL (no pattern): "${detectedLabel}" → [Textinput: ${detectedLabel}]`);
+    return {
+      patternId: '',
+      annotation: `[Textinput: ${detectedLabel}]`,
+      confidence: 0.85,
+    };
+  }
+
+  // ============================================================
+  // PRIORITY 3: TYPE MATCH - match by candidate type
+  // ============================================================
+  // For generic placeholders (XXX, underscores), match by type
+  const isGenericPlaceholder = /^[_X.]+$/i.test(candidateText.replace(/\s/g, '')) ||
+                               /^●+$/.test(candidateText);
+
+  if (isGenericPlaceholder) {
+    // Find patterns of the same type
+    const sameTypePatterns = patterns.filter(p => p.annotationType === candidate.suggestedType);
+
+    if (sameTypePatterns.length > 0) {
+      // Return the most confident pattern of this type
+      const bestTypePattern = sameTypePatterns.reduce((best, p) =>
+        p.confidence > best.confidence ? p : best
+      );
+
+      console.log(`[findBestPatternMatch] TYPE MATCH: ${candidate.suggestedType} → ${bestTypePattern.annotatedText}`);
+      return {
+        patternId: bestTypePattern.id,
+        annotation: bestTypePattern.annotatedText,
+        confidence: 0.70,
+      };
+    }
+  }
+
+  // No match found - let AI handle it
+  console.log(`[findBestPatternMatch] NO MATCH for "${candidateText}"`);
+  return null;
+}
+
+/**
+ * Use Claude to evaluate candidates that didn't match patterns
+ */
+async function evaluateCandidatesWithClaude(
+  candidates: CandidateRegion[],
+  patterns: Pattern[],
+  document: string
+): Promise<CandidateAnnotation[]> {
+  const service = getClaudeService();
+  const client = (service as unknown as { client: Anthropic }).client;
+  if (!client) return [];
+
+  // Build candidate descriptions
+  const candidateDescriptions = candidates.map((c) => {
+    const contextStart = Math.max(0, c.position.start - 50);
+    const contextEnd = Math.min(document.length, c.position.end + 50);
+    const before = document.slice(contextStart, c.position.start);
+    const after = document.slice(c.position.end, contextEnd);
+    return `Candidate ${c.id}: "${c.text}" | Context: "...${before}" [HERE] "${after}..."`;
+  }).join('\n');
+
+  // Build pattern descriptions with semantic context
+  const patternDescriptions = patterns.slice(0, 20).map((p) => {
+    const semantic = p.semanticContext ? ` (${p.semanticContext})` : '';
+    return `- "${p.originalText}" → ${p.annotatedText}${semantic}`;
+  }).join('\n');
+
+  const prompt = `You are annotating FILLABLE FIELDS in a legal document.
+
+## CANDIDATES TO ANNOTATE
+These placeholders need annotations. Look at the CONTEXT to determine what they should be:
+${candidateDescriptions}
+
+## TRAINED PATTERNS (with semantic descriptions)
+Use these as reference for what annotations look like:
+${patternDescriptions || 'No patterns available.'}
+
+## ANNOTATION RULES
+
+1. **Look at the LABEL before the placeholder**:
+   - "Creditor's name: ____" → [Textinput: Creditor's name]
+   - "Date: DD.MM.YYYY" → [Date]
+   - "Amount: XXX EUR" → [Money]
+
+2. **Match by content type**:
+   - DD.MM.YYYY, XX.XX.XXXX → [Date]
+   - XXX EUR, 0,00 CZK → [Money]
+   - yes/no, true/false → [Select: option1 / option2]
+   - Underscores ____ → Look at label for [Textinput: Label]
+
+3. **Use semantic context from patterns**:
+   - If a pattern says "Could match: Lender, Seller, Buyer" and you see "Buyer's name: ____",
+     use that pattern's annotation style
+
+## OUTPUT FORMAT
+Return a JSON array. For each candidate:
+- candidateId: the candidate number
+- annotate: true (these are all placeholders that need annotation)
+- annotation: the annotation to apply (e.g., "[Textinput: Name]", "[Date]", "[Money]")
+- confidence: 0.7-1.0 based on how certain you are
+
+JSON array:
+[
+  {"candidateId": 1, "annotate": true, "annotation": "[Textinput: Label]", "confidence": 0.9},
+  ...
+]`;
+
+  try {
+    const response = await client.messages.create({
+      model: DEFAULT_MODEL,
+      max_tokens: 2000,
+      messages: [{ role: 'user', content: prompt }],
+    });
+
+    const textContent = response.content.find((c) => c.type === 'text');
+    if (textContent && textContent.type === 'text') {
+      const jsonMatch = textContent.text.match(/\[[\s\S]*\]/);
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]) as CandidateAnnotation[];
+        return parsed.filter((r) => r.annotate);
+      }
+    }
+  } catch (error) {
+    console.error('[evaluateCandidatesWithClaude] Error:', error);
+  }
+
+  return [];
+}
+
+/**
+ * Extract a label from context around a candidate
+ */
+function extractLabelFromContext(document: string, candidate: CandidateRegion): string | null {
+  const contextStart = Math.max(0, candidate.position.start - 100);
+  const before = document.slice(contextStart, candidate.position.start);
+
+  // Look for "Label:" pattern before the candidate
+  const labelMatch = before.match(/([A-Z][a-zA-Z\s']+):\s*$/);
+  if (labelMatch) {
+    return labelMatch[1].trim();
+  }
+
+  // Look for labels in parentheses
+  const parenMatch = before.match(/\(([^)]+)\)\s*$/);
+  if (parenMatch) {
+    return parenMatch[1].trim();
+  }
+
+  return null;
+}
+
+/**
+ * Create annotation string from type and optional label
+ */
+function createAnnotationString(type: AnnotationType, label: string | null): string {
+  switch (type) {
+    case 'TextInput':
+      return label ? `[Textinput: ${label}]` : '[Textinput]';
+    case 'Date':
+      return '[Date]';
+    case 'Money':
+      return '[Money]';
+    default:
+      return label ? `[Textinput: ${label}]` : '[Textinput]';
+  }
+}
+
+// ----------------------------------------------------------------------------
 // Singleton Instance
 // ----------------------------------------------------------------------------
 
@@ -614,6 +1264,9 @@ export function isClaudeConfigured(): boolean {
 export const claudeService = {
   annotate: (options: AnnotateDocumentOptions) =>
     getClaudeService().annotateDocument(options),
+  annotateWithCandidates,
+  generateSemanticContext,
+  generateSemanticContextBatch,
   isConfigured: () => isClaudeConfigured(),
 };
 

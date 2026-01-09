@@ -9,8 +9,6 @@ import type {
   AnnotationType,
   PatternMatch,
   PatternStats,
-  ContextRules,
-  TypeIndicator,
 } from '@/types/annotator';
 import {
   diffDocuments,
@@ -49,9 +47,18 @@ export interface PatternApplicationResult {
  *
  * Example:
  *   Original: "Creditor's name, address Creditor's address"
- *   Annotated: "[TextInput: Creditor's name], address [TextInput: Creditor's address]"
- *   Patterns: "Creditor's name" → "[TextInput: Creditor's name]"
- *             "Creditor's address" → "[TextInput: Creditor's address]"
+ *   Annotated: "[Textinput: Creditor's name], address [Textinput: Creditor's address]"
+ *   Patterns: "Creditor's name" → "[Textinput: Creditor's name]"
+ *             "Creditor's address" → "[Textinput: Creditor's address]"
+ */
+/**
+ * Extract patterns from a training pair (original + annotated document)
+ *
+ * This extracts EVERY annotation from the annotated file and maps it to
+ * what was in the original. The user teaches the system by example.
+ *
+ * IMPORTANT: Patterns NO LONGER store document context chunks.
+ * Semantic context is generated separately by AI (see generateSemanticContext).
  */
 export function extractPatterns(
   originalText: string,
@@ -76,32 +83,15 @@ export function extractPatterns(
       continue;
     }
 
-    // Find where the originalText appears in the original document
-    const origPos = originalText.indexOf(annotation.originalText);
-
-    let contextBefore = '';
-    let contextAfter = '';
-
-    if (origPos !== -1) {
-      // Extract context from original document
-      contextBefore = getContextBefore(originalText, origPos, 50);
-      contextAfter = getContextAfter(originalText, origPos + annotation.originalText.length, 50);
-    }
-
-    // Extract semantic context rules (AI-powered type hints)
-    const contextRules = extractContextRules(contextBefore, contextAfter, annotation.type);
-
     patterns.push({
       originalText: annotation.originalText,
       annotatedText: annotation.annotatedText,
       annotationType: annotation.type,
-      contextBefore,
-      contextAfter,
-      contextRules,
       confidence: 1.0,
       usageCount: 1,
       successRate: 1.0,
       trainingPairId: trainingPairId || null,
+      // semanticContext will be generated separately by AI
     });
 
     console.log(`[extractPatterns] Pattern: "${annotation.originalText}" → "${annotation.annotatedText}"`);
@@ -118,263 +108,8 @@ export function extractPatterns(
   return { patterns, summary };
 }
 
-/**
- * Get context before a position (up to 100 chars, word-bounded)
- */
-function getContextBefore(text: string, position: number, maxLength = 100): string {
-  const start = Math.max(0, position - maxLength);
-  let context = text.substring(start, position);
 
-  // Trim to word boundary
-  const firstSpace = context.indexOf(' ');
-  if (firstSpace > 0 && firstSpace < context.length / 2) {
-    context = context.substring(firstSpace + 1);
-  }
-
-  return context.trim();
-}
-
-/**
- * Get context after a position (up to 100 chars, word-bounded)
- */
-function getContextAfter(text: string, position: number, maxLength = 100): string {
-  const end = Math.min(text.length, position + maxLength);
-  let context = text.substring(position, end);
-
-  // Trim to word boundary
-  const lastSpace = context.lastIndexOf(' ');
-  if (lastSpace > context.length / 2) {
-    context = context.substring(0, lastSpace);
-  }
-
-  return context.trim();
-}
-
-/**
- * Extract semantic context rules from pattern context.
- * These rules are used for smart pattern matching - e.g., "if context contains
- * 'value of' → Money" regardless of the actual value.
- *
- * This is the KEY function for making the system understand context-based typing.
- */
-function extractContextRules(
-  contextBefore: string | null,
-  contextAfter: string | null,
-  annotationType: AnnotationType
-): ContextRules {
-  const rules: ContextRules = { typeIndicators: [] };
-  const beforeLower = (contextBefore || '').toLowerCase();
-  const afterLower = (contextAfter || '').toLowerCase();
-
-  // === MONEY INDICATORS ===
-  if (annotationType === 'Money') {
-    // Keywords that appear BEFORE money values
-    const moneyBeforeKeywords = [
-      { pattern: /value of|in the value of/i, keyword: 'value of', confidence: 0.95 },
-      { pattern: /amount of?/i, keyword: 'amount', confidence: 0.9 },
-      { pattern: /sum of?/i, keyword: 'sum', confidence: 0.9 },
-      { pattern: /total of?/i, keyword: 'total', confidence: 0.9 },
-      { pattern: /price of?/i, keyword: 'price', confidence: 0.9 },
-      { pattern: /fee of?|fee:/i, keyword: 'fee', confidence: 0.85 },
-      { pattern: /cost of?/i, keyword: 'cost', confidence: 0.85 },
-      { pattern: /payment of?/i, keyword: 'payment', confidence: 0.85 },
-      { pattern: /salary|wage/i, keyword: 'salary', confidence: 0.85 },
-      { pattern: /deposit of?/i, keyword: 'deposit', confidence: 0.85 },
-      { pattern: /rent of?/i, keyword: 'rent', confidence: 0.85 },
-    ];
-
-    for (const { pattern, keyword, confidence } of moneyBeforeKeywords) {
-      if (pattern.test(beforeLower)) {
-        rules.typeIndicators.push({
-          keyword,
-          position: 'before',
-          impliesType: 'Money',
-          confidence,
-        });
-      }
-    }
-
-    // Keywords that appear AFTER money values (currencies)
-    const currencyKeywords = [
-      { pattern: /^\s*(eur|euro|euros)/i, keyword: 'EUR', confidence: 0.95 },
-      { pattern: /^\s*(usd|dollars?)/i, keyword: 'USD', confidence: 0.95 },
-      { pattern: /^\s*(czk|kč|korun)/i, keyword: 'CZK', confidence: 0.95 },
-      { pattern: /^\s*(gbp|pounds?)/i, keyword: 'GBP', confidence: 0.95 },
-      { pattern: /^\s*(chf|francs?)/i, keyword: 'CHF', confidence: 0.95 },
-    ];
-
-    for (const { pattern, keyword, confidence } of currencyKeywords) {
-      if (pattern.test(afterLower)) {
-        rules.typeIndicators.push({
-          keyword,
-          position: 'after',
-          impliesType: 'Money',
-          confidence,
-        });
-      }
-    }
-  }
-
-  // === DATE INDICATORS ===
-  if (annotationType === 'Date') {
-    const dateBeforeKeywords = [
-      { pattern: /dated?/i, keyword: 'dated', confidence: 0.9 },
-      { pattern: /as of/i, keyword: 'as of', confidence: 0.9 },
-      { pattern: /valid from/i, keyword: 'valid from', confidence: 0.9 },
-      { pattern: /valid until/i, keyword: 'valid until', confidence: 0.9 },
-      { pattern: /effective/i, keyword: 'effective', confidence: 0.85 },
-      { pattern: /expires?/i, keyword: 'expires', confidence: 0.85 },
-      { pattern: /due date/i, keyword: 'due date', confidence: 0.9 },
-      { pattern: /signed on/i, keyword: 'signed on', confidence: 0.9 },
-      { pattern: /executed on/i, keyword: 'executed on', confidence: 0.9 },
-      { pattern: /starting/i, keyword: 'starting', confidence: 0.8 },
-      { pattern: /ending/i, keyword: 'ending', confidence: 0.8 },
-      { pattern: /on the/i, keyword: 'on the', confidence: 0.7 },
-    ];
-
-    for (const { pattern, keyword, confidence } of dateBeforeKeywords) {
-      if (pattern.test(beforeLower)) {
-        rules.typeIndicators.push({
-          keyword,
-          position: 'before',
-          impliesType: 'Date',
-          confidence,
-        });
-      }
-    }
-  }
-
-  // === LINK INDICATORS (References to entities) ===
-  if (annotationType === 'Link') {
-    const linkKeywords = [
-      { pattern: /the buyer|the seller/i, keyword: 'party reference', confidence: 0.9 },
-      { pattern: /the (creditor|debtor)/i, keyword: 'creditor/debtor', confidence: 0.9 },
-      { pattern: /the (landlord|tenant)/i, keyword: 'landlord/tenant', confidence: 0.9 },
-      { pattern: /the (employer|employee)/i, keyword: 'employer/employee', confidence: 0.9 },
-      { pattern: /aforementioned/i, keyword: 'aforementioned', confidence: 0.95 },
-      { pattern: /hereinafter/i, keyword: 'hereinafter', confidence: 0.9 },
-      { pattern: /as defined/i, keyword: 'as defined', confidence: 0.85 },
-    ];
-
-    for (const { pattern, keyword, confidence } of linkKeywords) {
-      if (pattern.test(beforeLower) || pattern.test(afterLower)) {
-        rules.typeIndicators.push({
-          keyword,
-          position: 'any',
-          impliesType: 'Link',
-          confidence,
-        });
-      }
-    }
-  }
-
-  // === SELECT INDICATORS ===
-  if (annotationType === 'Select') {
-    const selectKeywords = [
-      { pattern: /choose|select|pick/i, keyword: 'choose/select', confidence: 0.85 },
-      { pattern: /circle|check/i, keyword: 'circle/check', confidence: 0.8 },
-      { pattern: /yes\/no|true\/false/i, keyword: 'yes/no', confidence: 0.95 },
-    ];
-
-    for (const { pattern, keyword, confidence } of selectKeywords) {
-      if (pattern.test(beforeLower) || pattern.test(afterLower)) {
-        rules.typeIndicators.push({
-          keyword,
-          position: 'any',
-          impliesType: 'Select',
-          confidence,
-        });
-      }
-    }
-  }
-
-  // === CALCULATION INDICATORS ===
-  if (annotationType === 'Calculation') {
-    const calcKeywords = [
-      { pattern: /total|sum|aggregate/i, keyword: 'total/sum', confidence: 0.85 },
-      { pattern: /calculated|computed/i, keyword: 'calculated', confidence: 0.9 },
-    ];
-
-    for (const { pattern, keyword, confidence } of calcKeywords) {
-      if (pattern.test(beforeLower) || pattern.test(afterLower)) {
-        rules.typeIndicators.push({
-          keyword,
-          position: 'any',
-          impliesType: 'Calculation',
-          confidence,
-        });
-      }
-    }
-  }
-
-  // Log extracted rules for debugging
-  if (rules.typeIndicators.length > 0) {
-    console.log(`[extractContextRules] Type ${annotationType}: found ${rules.typeIndicators.length} indicators:`,
-      rules.typeIndicators.map(i => `"${i.keyword}" (${i.position})`).join(', '));
-  }
-
-  return rules;
-}
-
-/**
- * Extract meaningful keywords from context
- * These are structural words that indicate where annotations should be placed
- */
-function extractKeywords(context: string): string[] {
-  if (!context) return [];
-
-  // Common structural keywords that indicate annotation positions
-  const structuralKeywords = [
-    // Prepositions and connectors
-    'in', 'on', 'at', 'by', 'to', 'from', 'of', 'for', 'with', 'between',
-    // Document-specific terms
-    'dated', 'signed', 'amount', 'sum', 'total', 'name', 'address', 'city',
-    'date', 'party', 'parties', 'agreement', 'contract', 'loan', 'payment',
-    'creditor', 'debtor', 'bank', 'account', 'iban', 'installment',
-    // Punctuation context (kept as is)
-    'the', '(', ')', '"', ',', ':', ';'
-  ];
-
-  const words = context.toLowerCase().split(/\s+/).filter(Boolean);
-  const keywords: string[] = [];
-
-  for (const word of words) {
-    const cleanWord = word.replace(/[.,;:()"\[\]]/g, '').trim();
-    if (cleanWord && structuralKeywords.includes(cleanWord)) {
-      keywords.push(cleanWord);
-    }
-  }
-
-  // Also keep punctuation patterns that indicate structure
-  if (context.includes(',')) keywords.push(',');
-  if (context.includes('(')) keywords.push('(');
-  if (context.includes(')')) keywords.push(')');
-  if (context.includes(':')) keywords.push(':');
-
-  return [...new Set(keywords)]; // Remove duplicates
-}
-
-/**
- * Detect what type of placeholder the original text represents
- * This helps match similar patterns even with different values
- */
-function detectPlaceholderType(text: string, annotationType: AnnotationType): 'DATE' | 'AMOUNT' | 'TEXT' {
-  // Date patterns: DD.MM.YYYY, XX.XX.XXXX, DD/MM/YYYY, etc.
-  if (annotationType === 'Date' || /^\d{1,2}[./-]\d{1,2}[./-]\d{2,4}$/.test(text)) {
-    return 'DATE';
-  }
-  if (/^[XD]{1,2}[./-][XM]{1,2}[./-][XY]{2,4}$/i.test(text)) {
-    return 'DATE';
-  }
-
-  // Money patterns: XXX, numbers, amounts
-  if (annotationType === 'Money' || /^[X\d][X\d,.]*$/.test(text)) {
-    return 'AMOUNT';
-  }
-
-  // Everything else is variable text (names, cities, etc.)
-  return 'TEXT';
-}
+// Note: Context rules extraction and keyword matching removed - now using AI-generated semantic context
 
 /**
  * Rule-based type detection from content and surrounding context
@@ -512,72 +247,24 @@ export function findPatternMatches(
 
   for (const pattern of patterns) {
     console.log(`[findPatternMatches] Checking pattern: "${pattern.originalText}" → "${pattern.annotatedText}"`);
-    console.log(`  Context: before="${(pattern.contextBefore || '').slice(-30)}", after="${(pattern.contextAfter || '').slice(0, 30)}"`);
+    console.log(`  Semantic context: "${pattern.semanticContext || 'none'}"`);
 
-    // Determine if originalText is a placeholder-like value
-    const isPlaceholder = isPlaceholderText(pattern.originalText, pattern.annotationType);
+    // Simple exact text matching - context matching now done via AI semantic context
+    const matchPositions = findAllOccurrences(documentText, pattern.originalText);
 
-    // Enable smart matching if:
-    // 1. It's a placeholder (like "City", "XXX")
-    // 2. OR it has meaningful context (at least 10 chars before OR after)
-    const hasGoodContext =
-      (pattern.contextBefore?.length || 0) >= 10 ||
-      (pattern.contextAfter?.length || 0) >= 10;
+    for (const position of matchPositions) {
+      matches.push({
+        pattern,
+        matchPosition: {
+          start: position,
+          end: position + pattern.originalText.length,
+        },
+        matchedText: pattern.originalText,
+        suggestedAnnotation: pattern.annotatedText,
+        confidence: pattern.confidence,
+      });
 
-    const useSmartMatching =
-      (isPlaceholder || hasGoodContext) &&
-      (pattern.contextBefore || pattern.contextAfter);
-
-    if (useSmartMatching) {
-      // Smart matching: find by context keywords + structural pattern
-      const contextMatches = findByContextPattern(documentText, pattern);
-
-      for (const match of contextMatches) {
-        matches.push({
-          pattern,
-          matchPosition: match.position,
-          matchedText: match.text,
-          suggestedAnnotation: generateAnnotationForMatch(pattern, match.text),
-          confidence: match.confidence,
-        });
-        matchedPatternIds.add(pattern.id);
-      }
-    } else {
-      // Traditional matching: find exact text occurrences
-      const matchPositions = findAllOccurrences(documentText, pattern.originalText);
-
-      for (const position of matchPositions) {
-        // Verify context matches
-        const contextMatches = verifyContext(
-          documentText,
-          position,
-          pattern.originalText.length,
-          pattern.contextBefore,
-          pattern.contextAfter,
-          pattern.originalText
-        );
-
-        if (contextMatches) {
-          const confidence = calculateMatchConfidence(
-            pattern,
-            contextMatches.beforeScore,
-            contextMatches.afterScore
-          );
-
-          matches.push({
-            pattern,
-            matchPosition: {
-              start: position,
-              end: position + pattern.originalText.length,
-            },
-            matchedText: pattern.originalText,
-            suggestedAnnotation: pattern.annotatedText,
-            confidence,
-          });
-
-          matchedPatternIds.add(pattern.id);
-        }
-      }
+      matchedPatternIds.add(pattern.id);
     }
   }
 
@@ -602,181 +289,7 @@ export function findPatternMatches(
   };
 }
 
-/**
- * Check if text looks like a placeholder value (generic, short, or pattern-like)
- * These should be matched by context rather than exact text
- */
-function isPlaceholderText(text: string, annotationType: AnnotationType): boolean {
-  // Date placeholders: XX.XX.XXXX, DD.MM.YYYY, etc.
-  if (/^[XD]{1,2}[./-][XM]{1,2}[./-][XY]{2,4}$/i.test(text)) return true;
-  if (/^[X]+$/i.test(text)) return true; // Just XXX
-
-  // Money placeholders: XXX, numbers
-  if (annotationType === 'Money' && /^[X\d][X\d,.]*$/.test(text)) return true;
-
-  // Short generic words that are likely placeholders
-  const genericWords = [
-    'city', 'name', 'address', 'date', 'amount', 'number', 'value',
-    'company', 'person', 'party', 'bank', 'account', 'iban', 'bic',
-    'street', 'country', 'zip', 'email', 'phone', 'title', 'position'
-  ];
-  if (genericWords.includes(text.toLowerCase())) return true;
-
-  // Single capitalized word that looks like a placeholder
-  if (/^[A-Z][a-z]+$/.test(text) && text.length <= 15) {
-    // Could be a placeholder like "City", "Name", "Amount"
-    // Check if it's a common English word (less likely to be a placeholder)
-    const commonWords = ['the', 'and', 'for', 'with', 'this', 'that', 'from', 'have', 'will'];
-    if (!commonWords.includes(text.toLowerCase())) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-/**
- * Find matches in document using context pattern (keywords + structure) instead of exact text
- * This enables matching "In City, on" → "In Paris, on"
- */
-function findByContextPattern(
-  documentText: string,
-  pattern: Pattern
-): Array<{ position: { start: number; end: number }; text: string; confidence: number }> {
-  const results: Array<{ position: { start: number; end: number }; text: string; confidence: number }> = [];
-
-  // Extract keywords from pattern context
-  const beforeKeywords = extractKeywords(pattern.contextBefore || '');
-  const afterKeywords = extractKeywords(pattern.contextAfter || '');
-  const allKeywords = [...beforeKeywords, ...afterKeywords];
-
-  // Get placeholder type to know what kind of text to look for
-  const placeholderType = detectPlaceholderType(pattern.originalText, pattern.annotationType);
-
-  // Get the last few chars of contextBefore and first few chars of contextAfter for structural matching
-  const contextBeforeSuffix = (pattern.contextBefore || '').slice(-15).trim().toLowerCase();
-  const contextAfterPrefix = (pattern.contextAfter || '').slice(0, 15).trim().toLowerCase();
-
-  // Scan document for potential matches
-  const words = documentText.split(/(\s+)/);
-  let currentPos = 0;
-
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    const wordStart = currentPos;
-    currentPos += word.length;
-
-    // Skip whitespace
-    if (/^\s+$/.test(word)) continue;
-
-    // Skip already annotated text
-    if (word.startsWith('[') || word.endsWith(']')) continue;
-
-    // Get surrounding text for context checking
-    const textBefore = documentText.substring(Math.max(0, wordStart - 50), wordStart).toLowerCase();
-    const textAfter = documentText.substring(wordStart + word.length, Math.min(documentText.length, wordStart + word.length + 50)).toLowerCase();
-
-    // Check structural match: does the immediate context match?
-    let structuralScore = 0;
-    if (contextBeforeSuffix && textBefore.includes(contextBeforeSuffix)) {
-      structuralScore += 0.5;
-    }
-    if (contextAfterPrefix && textAfter.includes(contextAfterPrefix)) {
-      structuralScore += 0.5;
-    }
-
-    // Check keyword match
-    const surroundingText = documentText.substring(
-      Math.max(0, wordStart - 100),
-      Math.min(documentText.length, wordStart + word.length + 100)
-    );
-    const keywordsFound = allKeywords.filter(kw =>
-      surroundingText.toLowerCase().includes(kw.toLowerCase())
-    );
-    const keywordScore = allKeywords.length > 0 ? keywordsFound.length / allKeywords.length : 0;
-
-    // Combined score: structural match is worth more than keyword match
-    const combinedScore = structuralScore * 0.7 + keywordScore * 0.3;
-
-    // Match if good structural match OR good keyword match
-    if (combinedScore >= 0.3 || structuralScore >= 0.5 || keywordScore >= 0.6) {
-      // Verify the word type matches what we're looking for
-      const wordType = detectWordType(word);
-
-      if (wordTypeMatches(wordType, placeholderType, pattern.annotationType)) {
-        results.push({
-          position: { start: wordStart, end: wordStart + word.length },
-          text: word,
-          confidence: Math.min(0.9, pattern.confidence * Math.max(combinedScore, structuralScore, keywordScore * 0.8)),
-        });
-      }
-    }
-  }
-
-  return results;
-}
-
-/**
- * Detect what type of value a word represents
- */
-function detectWordType(word: string): 'DATE' | 'AMOUNT' | 'TEXT' {
-  // Date pattern
-  if (/^\d{1,2}[./-]\d{1,2}[./-]\d{2,4}$/.test(word)) return 'DATE';
-  if (/^[XD]{1,2}[./-][XM]{1,2}[./-][XY]{2,4}$/i.test(word)) return 'DATE';
-
-  // Amount/number pattern
-  if (/^[\d,.]+$/.test(word) && word.length >= 2) return 'AMOUNT';
-  if (/^[X]+$/i.test(word)) return 'AMOUNT'; // XXX placeholder
-
-  // Text (names, cities, etc.)
-  return 'TEXT';
-}
-
-/**
- * Check if detected word type matches the pattern's expected type
- */
-function wordTypeMatches(
-  wordType: 'DATE' | 'AMOUNT' | 'TEXT',
-  placeholderType: 'DATE' | 'AMOUNT' | 'TEXT',
-  annotationType: AnnotationType
-): boolean {
-  // Exact type match
-  if (wordType === placeholderType) return true;
-
-  // Annotation type specific matching
-  if (annotationType === 'Date' && wordType === 'DATE') return true;
-  if (annotationType === 'Money' && wordType === 'AMOUNT') return true;
-  if (annotationType === 'TextInput' && wordType === 'TEXT') return true;
-
-  // TEXT is flexible - can match various annotation types
-  if (wordType === 'TEXT' && ['TextInput', 'Text', 'Select'].includes(annotationType)) return true;
-
-  return false;
-}
-
-/**
- * Generate appropriate annotation text for a matched word
- * Adapts the pattern's annotation to the actual matched text
- */
-function generateAnnotationForMatch(pattern: Pattern, matchedText: string): string {
-  // If the pattern annotation contains the original text as label, replace it
-  // e.g., [TextInput: City] → [TextInput: Paris] if matchedText is "Paris"
-
-  const annotatedText = pattern.annotatedText;
-
-  // Check if it's a labeled annotation like [Type: Label]
-  const labelMatch = annotatedText.match(/^\[([^:]+):\s*([^\]]+)\]$/);
-  if (labelMatch) {
-    const [, type, originalLabel] = labelMatch;
-    // If original label matches the original text, use the new matched text
-    if (originalLabel.toLowerCase() === pattern.originalText.toLowerCase()) {
-      return `[${type}: ${matchedText}]`;
-    }
-  }
-
-  // Otherwise return the pattern's annotation as-is
-  return annotatedText;
-}
+// Note: Context-based smart matching removed - now using AI semantic context + preprocessor
 
 /**
  * Find all occurrences of a substring in text
@@ -797,37 +310,6 @@ function findAllOccurrences(text: string, substring: string): number[] {
   return positions;
 }
 
-/**
- * Verify that the context around a match is similar to the pattern context
- */
-function verifyContext(
-  text: string,
-  position: number,
-  matchLength: number,
-  expectedBefore: string | null,
-  expectedAfter: string | null,
-  patternOriginal?: string
-): { beforeScore: number; afterScore: number } | null {
-  const actualBefore = getContextBefore(text, position);
-  const actualAfter = getContextAfter(text, position + matchLength);
-
-  const beforeScore = expectedBefore
-    ? calculateSimilarity(actualBefore, expectedBefore)
-    : 1.0;
-  const afterScore = expectedAfter
-    ? calculateSimilarity(actualAfter, expectedAfter)
-    : 1.0;
-
-  // Lowered threshold to 0.2 for better matching now that context is from original text
-  const threshold = 0.2;
-  if (beforeScore < threshold && afterScore < threshold) {
-    console.log(`[verifyContext] REJECT "${patternOriginal || '?'}": beforeScore=${beforeScore.toFixed(2)}, afterScore=${afterScore.toFixed(2)}`);
-    return null;
-  }
-
-  console.log(`[verifyContext] ACCEPT "${patternOriginal || '?'}": beforeScore=${beforeScore.toFixed(2)}, afterScore=${afterScore.toFixed(2)}`);
-  return { beforeScore, afterScore };
-}
 
 /**
  * Calculate text similarity (simple Jaccard-like similarity)
@@ -845,25 +327,6 @@ function calculateSimilarity(text1: string, text2: string): number {
   const union = new Set([...words1, ...words2]);
 
   return intersection.size / union.size;
-}
-
-/**
- * Calculate confidence for a match based on pattern and context scores
- */
-function calculateMatchConfidence(
-  pattern: Pattern,
-  contextBeforeScore: number,
-  contextAfterScore: number
-): number {
-  // Base confidence from pattern
-  const baseConfidence = pattern.confidence * pattern.successRate;
-
-  // Context similarity weight
-  const contextWeight = 0.3;
-  const contextScore = (contextBeforeScore + contextAfterScore) / 2;
-
-  // Combined confidence
-  return baseConfidence * (1 - contextWeight) + contextScore * contextWeight;
 }
 
 /**
@@ -1008,29 +471,33 @@ export function deduplicatePatterns(
 }
 
 /**
- * Check if two patterns are similar enough to merge
+ * Check if two patterns are similar enough to merge.
+ *
+ * STRICT DEDUPLICATION: Only consider patterns as duplicates if BOTH:
+ * 1. Original text is the same (or very similar)
+ * 2. Annotated text is the same
+ *
+ * This allows the same original text (e.g., "Creditor's name") to have
+ * multiple annotations (e.g., [TextInput] for first occurrence, [Link] for signature).
  */
 function isSimilarPattern(
   pattern1: Pattern | Omit<Pattern, 'id' | 'userId' | 'createdAt'>,
   pattern2: Omit<Pattern, 'id' | 'userId' | 'createdAt'>
 ): boolean {
-  // Same annotation type
-  if (pattern1.annotationType !== pattern2.annotationType) {
-    return false;
-  }
+  // BOTH original AND annotated text must match to be considered a duplicate
 
-  // Same annotated text
+  // Check annotated text - must be exactly the same
   if (pattern1.annotatedText !== pattern2.annotatedText) {
     return false;
   }
 
-  // Similar original text (at least 80% similarity)
+  // Check original text - must be same or very similar (90%+)
   const textSimilarity = calculateSimilarity(
-    pattern1.originalText,
-    pattern2.originalText
+    pattern1.originalText.toLowerCase(),
+    pattern2.originalText.toLowerCase()
   );
 
-  return textSimilarity >= 0.8;
+  return textSimilarity >= 0.9;
 }
 
 // ----------------------------------------------------------------------------
