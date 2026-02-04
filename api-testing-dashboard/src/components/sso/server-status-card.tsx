@@ -81,11 +81,12 @@ function StatusBadge({ status }: { status: SsoTestStatus | null }) {
   );
 }
 
-function formatTimeAgo(date: Date | null): string {
+function formatTimeAgo(date: Date | string | null): string {
   if (!date) return 'Never';
 
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
   const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
+  const diffMs = now.getTime() - dateObj.getTime();
   const diffMins = Math.floor(diffMs / 60000);
   const diffHours = Math.floor(diffMins / 60);
   const diffDays = Math.floor(diffHours / 24);

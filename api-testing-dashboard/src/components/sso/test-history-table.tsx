@@ -80,8 +80,9 @@ function formatDuration(ms: number | null): string {
   return `${seconds.toFixed(1)}s`;
 }
 
-function formatTimestamp(date: Date): string {
-  return date.toLocaleString('en-US', {
+function formatTimestamp(date: Date | string): string {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  return dateObj.toLocaleString('en-US', {
     month: 'short',
     day: 'numeric',
     hour: '2-digit',

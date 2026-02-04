@@ -52,3 +52,6 @@ headless-annotator-deploy.zip
 
 # Supabase temp
 supabase/.temp/
+
+.vercel
+.env*.local
