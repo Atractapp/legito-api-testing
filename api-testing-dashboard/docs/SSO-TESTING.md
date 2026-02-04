@@ -133,6 +133,44 @@ Test results are automatically posted to Slack:
 
 ---
 
+## Health Check Endpoint
+
+Automated health check that tests all servers and returns overall status.
+
+**URL:** `https://api-testing-dashboard.vercel.app/api/sso/health-6b8337d6915276df9fef376cd8522cff`
+
+```bash
+curl https://api-testing-dashboard.vercel.app/api/sso/health-6b8337d6915276df9fef376cd8522cff
+```
+
+**Response (200 OK - all passed):**
+```json
+{
+  "healthy": true,
+  "message": "All SSO tests passed",
+  "timestamp": "2026-02-04T15:00:00.000Z",
+  "totalDurationMs": 18500,
+  "results": {
+    "emea": { "server": "EMEA", "success": true, "status": "success", "durationMs": 5200 },
+    "us": { "server": "US", "success": true, "status": "success", "durationMs": 6100 },
+    "quarterly": { "server": "Quarterly", "success": true, "status": "success", "durationMs": 4800 }
+  }
+}
+```
+
+**Response (503 - failure):**
+```json
+{
+  "healthy": false,
+  "message": "One or more SSO tests failed",
+  "results": {
+    "emea": { "success": false, "status": "failure", "error": "Timeout waiting for login" }
+  }
+}
+```
+
+---
+
 ## Support
 
 - **Dashboard:** https://api-testing-dashboard.vercel.app/sso
