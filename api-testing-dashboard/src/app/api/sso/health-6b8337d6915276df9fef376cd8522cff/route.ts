@@ -34,16 +34,20 @@ async function waitForTestCompletion(
       .eq('id', testId)
       .single();
 
-    if (error) {
-      return { success: false, status: 'error', durationMs: null, error: error.message };
+    if (error || !data) {
+      return { success: false, status: 'error', durationMs: null, error: error?.message || 'No data' };
     }
 
-    if (data.status === 'success') {
-      return { success: true, status: 'success', durationMs: data.duration_ms, error: null };
+    const testStatus = data.status as string;
+    const durationMs = data.duration_ms as number | null;
+    const errorMessage = data.error_message as string | null;
+
+    if (testStatus === 'success') {
+      return { success: true, status: 'success', durationMs, error: null };
     }
 
-    if (data.status === 'failure' || data.status === 'error') {
-      return { success: false, status: data.status, durationMs: data.duration_ms, error: data.error_message };
+    if (testStatus === 'failure' || testStatus === 'error') {
+      return { success: false, status: testStatus, durationMs, error: errorMessage };
     }
 
     // Still running, wait and poll again
