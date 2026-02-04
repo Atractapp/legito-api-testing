@@ -29,15 +29,17 @@ async function waitForTestCompletion(
   const startTime = Date.now();
 
   while (Date.now() - startTime < timeoutMs) {
-    const { data, error } = await supabase
+    const response = await supabase
       .from('sso_test_results')
       .select('status, duration_ms, error_message')
       .eq('id', testId)
-      .single<{ status: string; duration_ms: number | null; error_message: string | null }>();
+      .single();
 
-    if (error) {
-      return { success: false, status: 'error', durationMs: null, error: error.message };
+    if (response.error) {
+      return { success: false, status: 'error', durationMs: null, error: response.error.message };
     }
+
+    const data = response.data as { status: string; duration_ms: number | null; error_message: string | null } | null;
 
     if (!data) {
       return { success: false, status: 'error', durationMs: null, error: 'No data returned' };
@@ -99,7 +101,7 @@ export async function GET() {
       const serverConfig = SSO_SERVERS[serverId];
 
       // Create test record
-      const { data: testRecord, error: insertError } = await supabase
+      const insertResponse = await supabase
         .from('sso_test_results')
         .insert({
           server_id: serverId,
@@ -112,6 +114,9 @@ export async function GET() {
         })
         .select()
         .single();
+
+      const testRecord = insertResponse.data as { id: string } | null;
+      const insertError = insertResponse.error;
 
       if (insertError || !testRecord) {
         results[serverId] = {
