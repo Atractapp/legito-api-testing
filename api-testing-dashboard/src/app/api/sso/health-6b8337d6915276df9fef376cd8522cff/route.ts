@@ -21,7 +21,8 @@ function getSupabaseAdmin() {
  * Wait for a test to complete
  */
 async function waitForTestCompletion(
-  supabase: ReturnType<typeof createClient>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
   testId: string,
   timeoutMs: number = 90000
 ): Promise<{ success: boolean; status: string; durationMs: number | null; error: string | null }> {
