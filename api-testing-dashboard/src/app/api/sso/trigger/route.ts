@@ -18,11 +18,72 @@ function getSupabaseAdmin() {
 }
 
 /**
+ * Validate API key for external requests
+ * Internal requests (from dashboard) are allowed without key
+ */
+function validateRequest(request: NextRequest): { valid: boolean; error?: string } {
+  const apiKey = request.headers.get('x-api-key');
+  const origin = request.headers.get('origin');
+  const referer = request.headers.get('referer');
+
+  // Allow requests from the dashboard (same origin)
+  const allowedOrigins = [
+    'https://api-testing-dashboard.vercel.app',
+    'https://api-testing-dashboard-atracts-projects.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:3001',
+  ];
+
+  const isInternalRequest = allowedOrigins.some(
+    (allowed) => origin?.startsWith(allowed) || referer?.startsWith(allowed)
+  );
+
+  if (isInternalRequest) {
+    return { valid: true };
+  }
+
+  // External requests require API key
+  const expectedApiKey = process.env.SSO_API_KEY;
+
+  if (!expectedApiKey) {
+    // If no API key is configured, reject external requests
+    return { valid: false, error: 'API key not configured on server' };
+  }
+
+  if (!apiKey) {
+    return { valid: false, error: 'Missing X-API-Key header' };
+  }
+
+  if (apiKey !== expectedApiKey) {
+    return { valid: false, error: 'Invalid API key' };
+  }
+
+  return { valid: true };
+}
+
+/**
  * POST /api/sso/trigger
  * Trigger an SSO test for a specific server
+ *
+ * Authentication:
+ * - Dashboard requests (same origin): allowed automatically
+ * - External webhook requests: require X-API-Key header
  */
 export async function POST(request: NextRequest): Promise<NextResponse<SsoTriggerResponse>> {
   try {
+    // Validate request authentication
+    const authResult = validateRequest(request);
+    if (!authResult.valid) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized',
+          error: authResult.error,
+        },
+        { status: 401 }
+      );
+    }
+
     const body: SsoTriggerRequest = await request.json();
     const { serverId, triggeredBy = 'manual' } = body;
 
