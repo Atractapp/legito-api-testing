@@ -280,6 +280,71 @@ export const useAnnotatorStore = create<AnnotatorStore>()(
         set({ selectedPatternId: id });
       },
 
+      updatePattern: async (id: string, updates: { originalText?: string; annotatedText?: string; annotationType?: string; userContextHint?: string }) => {
+        try {
+          const response = await fetch(`/api/annotator/patterns/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updates),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Failed to update pattern: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Update local state
+          set((state) => ({
+            patterns: state.patterns.map((p) =>
+              p.id === id
+                ? {
+                    ...p,
+                    originalText: data.pattern.originalText ?? p.originalText,
+                    annotatedText: data.pattern.annotatedText ?? p.annotatedText,
+                    annotationType: data.pattern.annotationType ?? p.annotationType,
+                    semanticContext: data.pattern.semanticContext ?? p.semanticContext,
+                    userContextHint: data.pattern.userContextHint ?? p.userContextHint,
+                  }
+                : p
+            ),
+          }));
+
+          return data.pattern;
+        } catch (error) {
+          set({
+            patternsError: error instanceof Error ? error.message : 'Failed to update pattern',
+          });
+          throw error;
+        }
+      },
+
+      createPattern: async (pattern: { originalText: string; annotatedText: string; annotationType: string; userContextHint?: string }) => {
+        try {
+          const response = await fetch('/api/annotator/patterns', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pattern),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Failed to create pattern: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Reload patterns to get the new one
+          get().loadPatterns();
+
+          return data.pattern;
+        } catch (error) {
+          set({
+            patternsError: error instanceof Error ? error.message : 'Failed to create pattern',
+          });
+          throw error;
+        }
+      },
+
       // ========================================================================
       // Pending Pattern Actions (for review before saving)
       // ========================================================================
@@ -335,8 +400,6 @@ export const useAnnotatorStore = create<AnnotatorStore>()(
             originalText: p.originalText,
             annotatedText: p.isEdited && p.editedAnnotatedText ? p.editedAnnotatedText : p.annotatedText,
             annotationType: p.annotationType,
-            contextBefore: p.contextBefore,
-            contextAfter: p.contextAfter,
             confidence: p.confidence,
           }));
 

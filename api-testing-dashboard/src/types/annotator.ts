@@ -34,6 +34,8 @@ export interface AnnotationSuggestion extends Annotation {
   isAccepted: boolean;
   isEdited: boolean;
   editedText?: string;
+  /** True if this suggestion came from a trained pattern (not auto-detected) */
+  isFromPattern?: boolean;
 }
 
 // ----------------------------------------------------------------------------
@@ -97,16 +99,29 @@ export interface Pattern {
   originalText: string;
   annotatedText: string;
   annotationType: AnnotationType;
-  contextBefore: string | null;
-  contextAfter: string | null;
   confidence: number;
   usageCount: number;
   successRate: number;
   trainingPairId: string | null;
   createdAt: Date;
-  // Semantic context rules for smart matching
-  contextRules?: ContextRules | null;
+  /**
+   * AI-generated semantic description for intelligent pattern matching.
+   * This is NOT document text - it describes what the field represents.
+   * Example: "Party name field. Could match: Seller, Buyer, Lessor, Lessee"
+   */
+  semanticContext?: string | null;
+  /**
+   * User-provided hint for the AI to understand when to use this pattern.
+   * Example: "Use Link when in signature section, TextInput when first occurrence"
+   */
+  userContextHint?: string | null;
 }
+
+/**
+ * Alias for Pattern - used in semantic matching context to emphasize
+ * these are patterns that have been trained/confirmed by users
+ */
+export type TrainedPattern = Pattern;
 
 export interface PatternMatch {
   pattern: Pattern;
@@ -321,12 +336,12 @@ export interface PatternSuggestion {
   originalText: string;
   annotatedText: string;
   annotationType: AnnotationType;
-  contextBefore: string | null;
-  contextAfter: string | null;
   confidence: number;
   isAccepted: boolean;
   isEdited: boolean;
   editedAnnotatedText?: string;
+  /** AI-generated semantic context */
+  semanticContext?: string | null;
 }
 
 // ----------------------------------------------------------------------------
@@ -380,6 +395,16 @@ export interface AnnotatorActions {
   deletePattern: (id: string) => Promise<void>;
   deleteAllPatterns: () => Promise<number>;
   selectPattern: (id: string | null) => void;
+  updatePattern: (
+    id: string,
+    updates: { originalText?: string; annotatedText?: string; annotationType?: string; userContextHint?: string }
+  ) => Promise<Pattern>;
+  createPattern: (pattern: {
+    originalText: string;
+    annotatedText: string;
+    annotationType: string;
+    userContextHint?: string;
+  }) => Promise<Pattern>;
 
   // Pending pattern actions (for review before saving)
   setPendingPatterns: (
