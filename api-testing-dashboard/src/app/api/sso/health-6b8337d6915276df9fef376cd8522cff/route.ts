@@ -20,12 +20,6 @@ function getSupabaseAdmin() {
 /**
  * Wait for a test to complete
  */
-interface TestResultRow {
-  status: string;
-  duration_ms: number | null;
-  error_message: string | null;
-}
-
 async function waitForTestCompletion(
   supabase: ReturnType<typeof createClient>,
   testId: string,
@@ -34,17 +28,19 @@ async function waitForTestCompletion(
   const startTime = Date.now();
 
   while (Date.now() - startTime < timeoutMs) {
-    const response = await supabase
+    const { data, error } = await supabase
       .from('sso_test_results')
       .select('status, duration_ms, error_message')
       .eq('id', testId)
-      .single();
+      .single<{ status: string; duration_ms: number | null; error_message: string | null }>();
 
-    if (response.error || !response.data) {
-      return { success: false, status: 'error', durationMs: null, error: response.error?.message || 'No data' };
+    if (error) {
+      return { success: false, status: 'error', durationMs: null, error: error.message };
     }
 
-    const data = response.data as TestResultRow;
+    if (!data) {
+      return { success: false, status: 'error', durationMs: null, error: 'No data returned' };
+    }
 
     if (data.status === 'success') {
       return { success: true, status: 'success', durationMs: data.duration_ms, error: null };
