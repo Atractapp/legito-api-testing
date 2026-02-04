@@ -117,11 +117,18 @@ export function ServerStatusCard({ server }: ServerStatusCardProps) {
           const updatedStatus = useSsoStore.getState().serverStatuses[server.id];
           if (updatedStatus && !updatedStatus.isRunning) {
             clearInterval(pollInterval);
+            // Clear the running state in the store
+            useSsoStore.getState().setTestRunning(server.id, false);
+            // Refresh results list
+            useSsoStore.getState().fetchResults(undefined, 5);
           }
-        }, 3000);
+        }, 2000);
 
-        // Stop polling after 2 minutes
-        setTimeout(() => clearInterval(pollInterval), 120000);
+        // Stop polling after 2 minutes and clear running state
+        setTimeout(() => {
+          clearInterval(pollInterval);
+          useSsoStore.getState().setTestRunning(server.id, false);
+        }, 120000);
       }
     } finally {
       setIsTriggering(false);
