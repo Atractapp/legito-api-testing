@@ -317,6 +317,7 @@ export function convertDuplicatesToLinks(
   const seenTextInputs = new Map<string, { count: number; firstAnnotation: string }>();
   const seenTitleSelects = new Map<string, { count: number; firstAnnotation: string }>();
   const seenDatePlaceholders = new Map<string, { count: number; firstAnnotation: string }>();
+  const seenMoneyPlaceholders = new Map<string, { count: number; firstAnnotation: string }>();
 
   return suggestions.map((suggestion) => {
     // Debug: Log what's coming in
@@ -327,11 +328,12 @@ export function convertDuplicatesToLinks(
     // Rule 1: Dates - distinguish between placeholders and date patterns
     if (suggestion.type === 'Date') {
       const isBracketedDatePlaceholder = /^\[date\]$/i.test(suggestion.originalText);
+      const isAngleBracketDatePlaceholder = /^<<.*(date|datum).*>>$/i.test(suggestion.originalText);
 
-      if (isBracketedDatePlaceholder) {
+      if (isBracketedDatePlaceholder || isAngleBracketDatePlaceholder) {
         const key = suggestion.originalText.toLowerCase();
         if (seenDatePlaceholders.has(key)) {
-          console.log(`[convertDuplicatesToLinks] Converting duplicate [date] placeholder to [Link]`);
+          console.log(`[convertDuplicatesToLinks] Converting duplicate date placeholder "${suggestion.originalText}" to [Link]`);
           return {
             ...suggestion,
             annotatedText: '[Link]',
@@ -344,12 +346,34 @@ export function convertDuplicatesToLinks(
         }
       }
 
-      // Regular date pattern - never becomes Link
+      // Regular date pattern (DD.MM.YYYY etc) - never becomes Link
       return suggestion;
     }
 
-    // Rule 2: Money and Calculation never become Links
-    if (suggestion.type === 'Money' || suggestion.type === 'Calculation') {
+    // Rule 2: Money - angle-bracket money placeholders can become Links on duplicates
+    if (suggestion.type === 'Money') {
+      const isAngleBracketMoney = /^(\$)?<<.+>>$/.test(suggestion.originalText);
+      if (isAngleBracketMoney) {
+        const key = suggestion.originalText.toLowerCase();
+        if (seenMoneyPlaceholders.has(key)) {
+          console.log(`[convertDuplicatesToLinks] Converting duplicate money placeholder "${suggestion.originalText}" to [Link]`);
+          return {
+            ...suggestion,
+            annotatedText: '[Link]',
+            type: 'Link' as AnnotationType,
+            confidence: Math.min(suggestion.confidence, 0.95),
+          };
+        } else {
+          seenMoneyPlaceholders.set(key, { count: 1, firstAnnotation: suggestion.annotatedText });
+          return suggestion;
+        }
+      }
+      // Regular money pattern - never becomes Link
+      return suggestion;
+    }
+
+    // Rule 2b: Calculation never becomes Link
+    if (suggestion.type === 'Calculation') {
       return suggestion;
     }
 
@@ -397,21 +421,16 @@ export function convertDuplicatesToLinks(
       const seen = seenTextInputs.get(originalLower)!;
       seen.count++;
 
-      // IMPORTANT: Angle-bracket placeholders <<...>> should NEVER become Links
-      // They represent template fields that should always be independent TextInputs
+      // Check if this is a placeholder pattern that should become Link on duplicates
       const isAngleBracketPlaceholder = /^(\$)?<<.+>>$/.test(suggestion.originalText);
-      if (isAngleBracketPlaceholder) {
-        console.log(`[convertDuplicatesToLinks] KEEPING angle-bracket placeholder as TextInput: "${suggestion.originalText}"`);
-        return suggestion;
-      }
-
       const isPartyNamePattern =
         /\b(name|creditor|debtor|buyer|seller|lessor|lessee|landlord|tenant|employer|employee)\b/i.test(
           originalLower
         );
       const isBracketPlaceholder = /^\[.+\]$/.test(suggestion.originalText);
 
-      if (isPartyNamePattern || isBracketPlaceholder) {
+      // Convert to Link if duplicate of: angle-bracket, party name, or bracket placeholder
+      if (isAngleBracketPlaceholder || isPartyNamePattern || isBracketPlaceholder) {
         console.log(`[convertDuplicatesToLinks] Converting duplicate "${suggestion.originalText}" to [Link]`);
         return {
           ...suggestion,

@@ -11,8 +11,40 @@ import {
   errorResponse,
   handleError,
   withRateLimit,
+  generateSemanticContextBatch,
 } from '@/lib/annotator';
 import type { Annotation, AnnotationType, Pattern } from '@/types/annotator';
+
+/**
+ * Check if text is a REAL annotation (like [Textinput: Name]) vs a placeholder (like [**], {Name})
+ * We should only skip real annotations, NOT placeholders which are valid original text
+ */
+function isRealAnnotation(text: string): boolean {
+  // Must be in [xxx] format - curly braces like {Name} are NOT annotations
+  if (!/^\[.+\]$/.test(text)) return false;
+
+  const content = text.slice(1, -1).trim().toLowerCase();
+
+  // Check if it starts with known annotation types
+  const annotationTypes = ['textinput', 'text', 'date', 'money', 'link', 'select', 'calculation', 'number', 'checkbox'];
+  for (const type of annotationTypes) {
+    if (content === type || content.startsWith(type + ':') || content.startsWith(type + ' :')) {
+      return true;
+    }
+  }
+
+  // If content is only special characters like *, _, -, it's a placeholder, not annotation
+  if (/^[\*_\-●○•\#\?\.\s\[\]]+$/.test(content)) {
+    return false;
+  }
+
+  // Very short content (1-2 chars) is likely a placeholder
+  if (content.length <= 2) {
+    return false;
+  }
+
+  return false; // Default: not a real annotation
+}
 
 /**
  * POST /api/annotator/annotate/generate
@@ -138,36 +170,26 @@ export async function POST(request: NextRequest) {
         .filter((ann) => {
           // Skip if original text is same as annotated (no real replacement)
           if (ann.originalText === ann.annotatedText) return false;
-          // Skip if original text is already an annotation format
-          if (/^\[.+\]$/.test(ann.originalText)) return false;
+          // Skip if original text is already a REAL annotation (like [Textinput: Name])
+          // But allow placeholders like [**], {Name}, etc.
+          if (isRealAnnotation(ann.originalText)) {
+            console.log(`[Generate] Skipping real annotation: "${ann.originalText}"`);
+            return false;
+          }
           // Skip empty
           if (!ann.originalText || !ann.originalText.trim()) return false;
+          console.log(`[Generate] Valid pattern: "${ann.originalText}" → "${ann.annotatedText}"`);
           return true;
         })
-        .map((ann) => {
-          // Extract context from input text
-          const inputText = session.input_text || '';
-          const contextLength = 100;
-
-          const contextBefore = inputText
-            .substring(Math.max(0, ann.position.start - contextLength), ann.position.start)
-            .trim();
-          const contextAfter = inputText
-            .substring(ann.position.end, Math.min(inputText.length, ann.position.end + contextLength))
-            .trim();
-
-          return {
-            originalText: ann.originalText,
-            annotatedText: ann.annotatedText,
-            annotationType: ann.type,
-            contextBefore,
-            contextAfter,
-            confidence: 1.0,
-            usageCount: 1,
-            successRate: 1.0,
-            trainingPairId: null,
-          };
-        });
+        .map((ann) => ({
+          originalText: ann.originalText,
+          annotatedText: ann.annotatedText,
+          annotationType: ann.type,
+          confidence: 1.0,
+          usageCount: 1,
+          successRate: 1.0,
+          trainingPairId: null,
+        }));
 
       if (newPatterns.length > 0) {
         // Fetch existing patterns for deduplication
@@ -183,32 +205,41 @@ export async function POST(request: NextRequest) {
           originalText: p.original_text,
           annotatedText: p.annotated_text,
           annotationType: p.annotation_type as AnnotationType,
-          contextBefore: p.context_before,
-          contextAfter: p.context_after,
           confidence: p.confidence,
           usageCount: p.usage_count,
           successRate: p.success_rate,
           trainingPairId: p.training_pair_id,
           createdAt: new Date(p.created_at),
+          semanticContext: p.semantic_context,
         }));
 
         // Deduplicate
         const { toAdd, toUpdate } = deduplicatePatterns(existingPatterns, newPatterns);
 
-        // Insert new patterns
+        // Insert new patterns with AI-generated semantic context
         if (toAdd.length > 0) {
+          console.log('[Generate] Generating AI semantic context for', toAdd.length, 'patterns...');
+
+          // Generate semantic context for all new patterns
+          const semanticContextMap = await generateSemanticContextBatch(
+            toAdd.map((p) => ({
+              originalText: p.originalText,
+              annotatedText: p.annotatedText,
+              annotationType: p.annotationType,
+            }))
+          );
+
           const { error: insertError } = await supabase.from('annotator_patterns').insert(
             toAdd.map((p) => ({
               user_id: user.id,
               original_text: p.originalText,
               annotated_text: p.annotatedText,
               annotation_type: p.annotationType,
-              context_before: p.contextBefore,
-              context_after: p.contextAfter,
               confidence: p.confidence,
               usage_count: p.usageCount,
               success_rate: p.successRate,
               training_pair_id: p.trainingPairId,
+              semantic_context: semanticContextMap.get(p.originalText) || null,
             }))
           );
 
@@ -216,6 +247,7 @@ export async function POST(request: NextRequest) {
             console.error('[Generate] Failed to insert patterns:', insertError);
           } else {
             patternsSaved = toAdd.length;
+            console.log('[Generate] Patterns saved with AI context:', patternsSaved);
           }
         }
 

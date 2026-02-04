@@ -406,14 +406,12 @@ export function transformDbPattern(p: {
   original_text: string;
   annotated_text: string;
   annotation_type: string;
-  context_before: string | null;
-  context_after: string | null;
   confidence: number;
   usage_count: number;
   success_rate: number;
   training_pair_id: string | null;
   created_at: string;
-  context_rules?: unknown;
+  semantic_context?: string | null;
 }): Pattern {
   return {
     id: p.id,
@@ -421,14 +419,12 @@ export function transformDbPattern(p: {
     originalText: p.original_text,
     annotatedText: p.annotated_text,
     annotationType: p.annotation_type as AnnotationType,
-    contextBefore: p.context_before,
-    contextAfter: p.context_after,
     confidence: p.confidence,
     usageCount: p.usage_count,
     successRate: p.success_rate,
     trainingPairId: p.training_pair_id,
     createdAt: new Date(p.created_at),
-    contextRules: p.context_rules as Pattern['contextRules'],
+    semanticContext: p.semantic_context,
   };
 }
 

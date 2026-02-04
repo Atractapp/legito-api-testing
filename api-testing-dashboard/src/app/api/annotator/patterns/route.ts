@@ -6,6 +6,7 @@ import {
   errorResponse,
   handleError,
   withRateLimit,
+  generateSemanticContext,
 } from '@/lib/annotator';
 import type { Pattern, AnnotationType } from '@/types/annotator';
 
@@ -65,8 +66,8 @@ export async function GET(request: NextRequest) {
       originalText: p.original_text,
       annotatedText: p.annotated_text,
       annotationType: p.annotation_type as AnnotationType,
-      contextBefore: p.context_before,
-      contextAfter: p.context_after,
+      semanticContext: p.semantic_context,
+      userContextHint: p.user_context_hint,
       confidence: p.confidence,
       usageCount: p.usage_count,
       successRate: p.success_rate,
@@ -154,5 +155,80 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error) {
     return handleError(error, 'Patterns DELETE');
+  }
+}
+
+/**
+ * POST /api/annotator/patterns
+ * Create a new pattern manually
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const rateLimit = withRateLimit(request, 30, 60000);
+    if ('error' in rateLimit) return rateLimit.error;
+
+    const supabase = getSupabaseAdmin();
+    const user = getAuthenticatedUser(request);
+
+    const body = await request.json();
+    const { originalText, annotatedText, annotationType, userContextHint } = body;
+
+    if (!originalText || !annotatedText || !annotationType) {
+      return errorResponse(
+        'INVALID_REQUEST',
+        'originalText, annotatedText, and annotationType are required',
+        400
+      );
+    }
+
+    // Generate semantic context using AI (include user hint if provided)
+    console.log(`[Patterns POST] Creating pattern: "${originalText}" → "${annotatedText}"`);
+    if (userContextHint) {
+      console.log(`[Patterns POST] User context hint: "${userContextHint}"`);
+    }
+    const semanticContext = await generateSemanticContext(
+      originalText,
+      annotatedText,
+      annotationType as AnnotationType,
+      userContextHint // Pass user hint to enhance AI context
+    );
+
+    // Insert the new pattern
+    const { data: pattern, error } = await supabase
+      .from('annotator_patterns')
+      .insert({
+        user_id: user.id,
+        original_text: originalText,
+        annotated_text: annotatedText,
+        annotation_type: annotationType,
+        semantic_context: semanticContext,
+        user_context_hint: userContextHint || null,
+        confidence: 1.0,
+        usage_count: 0,
+        success_rate: 1.0,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Failed to create pattern:', error);
+      return errorResponse('CREATE_FAILED', error.message, 500);
+    }
+
+    console.log(`[Patterns POST] Created pattern ${pattern.id}`);
+
+    return NextResponse.json({
+      success: true,
+      pattern: {
+        id: pattern.id,
+        originalText: pattern.original_text,
+        annotatedText: pattern.annotated_text,
+        annotationType: pattern.annotation_type,
+        semanticContext: pattern.semantic_context,
+        confidence: pattern.confidence,
+      },
+    });
+  } catch (error) {
+    return handleError(error, 'Patterns POST');
   }
 }

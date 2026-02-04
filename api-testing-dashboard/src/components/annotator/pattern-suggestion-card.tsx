@@ -97,21 +97,12 @@ export function PatternSuggestionCard({
           </div>
         </div>
 
-        {/* Context display with highlighted original text */}
+        {/* Original text display */}
         <div className="text-sm font-mono bg-muted/50 rounded p-2 mb-3 overflow-x-auto">
-          {pattern.contextBefore && (
-            <span className="text-muted-foreground">
-              ...{pattern.contextBefore.slice(-40)}
-            </span>
-          )}
-          <span className="bg-yellow-200 dark:bg-yellow-800 px-1 mx-1 font-semibold">
+          <span className="text-muted-foreground mr-2">Original:</span>
+          <span className="bg-yellow-200 dark:bg-yellow-800 px-1 font-semibold">
             {pattern.originalText}
           </span>
-          {pattern.contextAfter && (
-            <span className="text-muted-foreground">
-              {pattern.contextAfter.slice(0, 40)}...
-            </span>
-          )}
         </div>
 
         {/* Annotation transformation line with edit capability */}

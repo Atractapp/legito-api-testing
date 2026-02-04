@@ -129,27 +129,25 @@ export async function POST(
       originalText: p.original_text,
       annotatedText: p.annotated_text,
       annotationType: p.annotation_type as AnnotationType,
-      contextBefore: p.context_before,
-      contextAfter: p.context_after,
       confidence: p.confidence,
       usageCount: p.usage_count,
       successRate: p.success_rate,
       trainingPairId: p.training_pair_id,
       createdAt: new Date(p.created_at),
+      semanticContext: p.semantic_context,
     }));
 
     // Deduplicate patterns
     const { toAdd, toUpdate } = deduplicatePatterns(existingPatternsTyped, newPatterns);
 
     // Insert new patterns
+    // Note: semantic_context will be null - should use /confirm route for AI context
     if (toAdd.length > 0) {
       const patternsToInsert = toAdd.map((pattern) => ({
         user_id: user.id,
         original_text: pattern.originalText,
         annotated_text: pattern.annotatedText,
         annotation_type: pattern.annotationType,
-        context_before: pattern.contextBefore,
-        context_after: pattern.contextAfter,
         confidence: pattern.confidence,
         usage_count: pattern.usageCount,
         success_rate: pattern.successRate,

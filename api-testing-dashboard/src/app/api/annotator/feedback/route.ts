@@ -5,6 +5,7 @@ import {
   errorResponse,
   handleError,
   withRateLimit,
+  autoLearnFromRejections,
 } from '@/lib/annotator';
 import type { FeedbackInput, FeedbackType, AnnotationType } from '@/types/annotator';
 
@@ -94,6 +95,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Insert feedback records
+    // Phase 4: Include used_for_learning flag for pattern learning system
     const feedbackRows = validFeedback.map((item) => ({
       user_id: user.id,
       session_id: item.sessionId,
@@ -109,6 +111,7 @@ export async function POST(request: NextRequest) {
       source: item.source,
       pattern_id: item.patternId || null,
       original_confidence: item.originalConfidence || null,
+      used_for_learning: false, // Phase 4: Track if feedback was used for learning
     }));
 
     const { data: inserted, error: insertError } = await supabase
@@ -124,15 +127,29 @@ export async function POST(request: NextRequest) {
     // Count pattern updates (the trigger handles the actual updates)
     const patternsAffected = validFeedback.filter((f) => f.patternId).length;
 
+    // Phase 4: Trigger auto-learning if there are rejected items
+    // This analyzes rejection patterns and creates skip patterns for repeatedly rejected text
+    const rejectedCount = validFeedback.filter((f) => f.feedbackType === 'rejected').length;
+    let patternsLearned = 0;
+    if (rejectedCount > 0) {
+      console.log(`[Feedback POST] Triggering auto-learning for ${rejectedCount} rejections`);
+      patternsLearned = await autoLearnFromRejections(user.id);
+      if (patternsLearned > 0) {
+        console.log(`[Feedback POST] Auto-learned ${patternsLearned} skip patterns from rejections`);
+      }
+    }
+
     console.log('[Feedback POST] Saved:', {
       feedbackSaved: inserted?.length || 0,
       patternsAffected,
+      patternsLearned,
     });
 
     return NextResponse.json({
       success: true,
       feedbackSaved: inserted?.length || 0,
       patternsUpdated: patternsAffected,
+      patternsLearned, // Phase 4: Return count of newly learned skip patterns
       validationErrors: errors.length > 0 ? errors : undefined,
     });
   } catch (error) {

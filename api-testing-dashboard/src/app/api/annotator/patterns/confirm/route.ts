@@ -6,6 +6,7 @@ import {
   errorResponse,
   handleError,
   withRateLimit,
+  generateSemanticContextBatch,
 } from '@/lib/annotator';
 import type { Pattern, AnnotationType } from '@/types/annotator';
 
@@ -13,9 +14,42 @@ interface PatternInput {
   originalText: string;
   annotatedText: string;
   annotationType: AnnotationType;
-  contextBefore: string | null;
-  contextAfter: string | null;
   confidence: number;
+  contextKeywords?: {
+    before: string[];
+    after: string[];
+  };
+}
+
+/**
+ * Check if text is a REAL annotation (like [Textinput: Name]) vs a placeholder (like [**], [___])
+ * We should only skip real annotations, NOT placeholders which are valid original text
+ */
+function isRealAnnotation(text: string): boolean {
+  // Must be in [xxx] format
+  if (!/^\[.+\]$/.test(text)) return false;
+
+  const content = text.slice(1, -1).trim().toLowerCase();
+
+  // Check if it starts with known annotation types
+  const annotationTypes = ['textinput', 'text', 'date', 'money', 'link', 'select', 'calculation', 'number', 'checkbox'];
+  for (const type of annotationTypes) {
+    if (content === type || content.startsWith(type + ':') || content.startsWith(type + ' :')) {
+      return true;
+    }
+  }
+
+  // If content is only special characters like *, _, -, it's a placeholder, not annotation
+  if (/^[\*_\-●○•\#\?\.\s\[\]]+$/.test(content)) {
+    return false;
+  }
+
+  // Very short content (1-2 chars) is likely a placeholder
+  if (content.length <= 2) {
+    return false;
+  }
+
+  return false; // Default: not a real annotation
 }
 
 /**
@@ -47,10 +81,15 @@ export async function POST(request: NextRequest) {
     const validPatterns: PatternInput[] = patterns.filter((p: PatternInput) => {
       // Skip if original text is same as annotated
       if (p.originalText === p.annotatedText) return false;
-      // Skip if original text is already an annotation format
-      if (/^\[.+\]$/.test(p.originalText)) return false;
+      // Skip if original text is already a REAL annotation (like [Textinput: Name])
+      // BUT allow placeholders like [**], [___], [***] which are valid original text
+      if (isRealAnnotation(p.originalText)) {
+        console.log(`[Patterns Confirm] Skipping real annotation: "${p.originalText}"`);
+        return false;
+      }
       // Skip empty
       if (!p.originalText || !p.originalText.trim()) return false;
+      console.log(`[Patterns Confirm] Valid pattern: "${p.originalText}" → "${p.annotatedText}"`);
       return true;
     });
 
@@ -76,13 +115,12 @@ export async function POST(request: NextRequest) {
       originalText: p.original_text,
       annotatedText: p.annotated_text,
       annotationType: p.annotation_type as AnnotationType,
-      contextBefore: p.context_before,
-      contextAfter: p.context_after,
       confidence: p.confidence,
       usageCount: p.usage_count,
       successRate: p.success_rate,
       trainingPairId: p.training_pair_id,
       createdAt: new Date(p.created_at),
+      semanticContext: p.semantic_context,
     }));
 
     // Build new patterns with required fields
@@ -90,13 +128,20 @@ export async function POST(request: NextRequest) {
       originalText: p.originalText,
       annotatedText: p.annotatedText,
       annotationType: p.annotationType,
-      contextBefore: p.contextBefore,
-      contextAfter: p.contextAfter,
       confidence: p.confidence || 1.0,
       usageCount: 1,
       successRate: 1.0,
       trainingPairId: source === 'training' ? trainingPairId : null,
     }));
+
+    // Keep a map of context keywords for semantic context generation (keyed by originalText + annotationType)
+    const contextKeywordsMap = new Map<string, { before: string[]; after: string[] }>();
+    for (const p of validPatterns) {
+      if (p.contextKeywords) {
+        const key = `${p.originalText}|||${p.annotationType}`;
+        contextKeywordsMap.set(key, p.contextKeywords);
+      }
+    }
 
     // Deduplicate
     const { toAdd, toUpdate } = deduplicatePatterns(existingPatterns, newPatterns);
@@ -112,20 +157,43 @@ export async function POST(request: NextRequest) {
 
     // Insert new patterns
     if (toAdd.length > 0) {
-      const { error: insertError } = await supabase.from('annotator_patterns').insert(
-        toAdd.map((p) => ({
+      // Generate AI semantic context for new patterns
+      // This is the key: semantic context is AI-generated, NOT document text chunks
+      // Context keywords help AI understand WHEN to use each type (e.g., "In [**]" → City, "On [**]" → Date)
+      console.log('[Patterns Confirm] Generating AI semantic context for', toAdd.length, 'patterns...');
+      const semanticContextMap = await generateSemanticContextBatch(
+        toAdd.map((p) => {
+          const key = `${p.originalText}|||${p.annotationType}`;
+          return {
+            originalText: p.originalText,
+            annotatedText: p.annotatedText,
+            annotationType: p.annotationType,
+            contextKeywords: contextKeywordsMap.get(key),
+          };
+        })
+      );
+
+      // DEBUG: Log what we got back
+      console.log('[Patterns Confirm] semanticContextMap size:', semanticContextMap.size);
+      console.log('[Patterns Confirm] semanticContextMap keys:', Array.from(semanticContextMap.keys()));
+
+      const patternsToInsert = toAdd.map((p) => {
+        const context = semanticContextMap.get(p.originalText);
+        console.log(`[Patterns Confirm] Pattern "${p.originalText}" → context: ${context ? 'YES' : 'NULL'}`);
+        return {
           user_id: user.id,
           original_text: p.originalText,
           annotated_text: p.annotatedText,
           annotation_type: p.annotationType,
-          context_before: p.contextBefore,
-          context_after: p.contextAfter,
           confidence: p.confidence,
           usage_count: p.usageCount,
           success_rate: p.successRate,
           training_pair_id: p.trainingPairId,
-        }))
-      );
+          semantic_context: context || null,
+        };
+      });
+
+      const { error: insertError } = await supabase.from('annotator_patterns').insert(patternsToInsert);
 
       if (insertError) {
         console.error('[Patterns Confirm] Failed to insert patterns:', insertError);
