@@ -41,3 +41,14 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+.env*.local
+
+# Local data
+/data/
+
+# Headless deploy artifacts
+headless-annotator-deploy/
+headless-annotator-deploy.zip
+
+# Supabase temp
+supabase/.temp/

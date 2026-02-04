@@ -12,13 +12,24 @@ import { Send, Bot, User, Settings, Loader2, AlertCircle, Eye, EyeOff, Plus, Tra
 import { useMcpStore } from '@/store/mcp-store';
 import { useChatStore, useConversations, useActiveMessages } from '@/store/chat-store';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
-type AIProvider = 'openai' | 'anthropic' | 'google';
+type AIProvider = 'openai' | 'anthropic' | 'google' | 'groq';
 
 const providerLabels: Record<AIProvider, string> = {
   openai: 'OpenAI',
   anthropic: 'Anthropic (Claude)',
   google: 'Google (Gemini)',
+  groq: 'Groq (Llama)',
 };
 
 export default function McpChatPage() {
@@ -48,6 +59,7 @@ export default function McpChatPage() {
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [storeHydrated, setStoreHydrated] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   // Wait for store hydration
   useEffect(() => {
@@ -237,7 +249,7 @@ export default function McpChatPage() {
                         className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100"
                         onClick={(e) => {
                           e.stopPropagation();
-                          deleteConversation(conv.id);
+                          setDeleteConfirmId(conv.id);
                         }}
                       >
                         <Trash2 className="h-3 w-3 text-muted-foreground" />
@@ -249,6 +261,31 @@ export default function McpChatPage() {
             </ScrollArea>
           </CardContent>
         </Card>
+
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog open={!!deleteConfirmId} onOpenChange={(open) => !open && setDeleteConfirmId(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Chat?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently delete this conversation. This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  if (deleteConfirmId) {
+                    deleteConversation(deleteConfirmId);
+                    setDeleteConfirmId(null);
+                  }
+                }}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* Settings Panel */}
         {showSettings && (
@@ -275,6 +312,7 @@ export default function McpChatPage() {
                         <SelectItem value="google">{providerLabels.google}</SelectItem>
                         <SelectItem value="openai">{providerLabels.openai}</SelectItem>
                         <SelectItem value="anthropic">{providerLabels.anthropic}</SelectItem>
+                        <SelectItem value="groq">{providerLabels.groq}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -286,7 +324,7 @@ export default function McpChatPage() {
                         type={showApiKey ? 'text' : 'password'}
                         value={aiApiKey}
                         onChange={(e) => setAiApiKey(e.target.value)}
-                        placeholder={`Enter your ${aiProvider === 'google' ? 'Gemini' : aiProvider === 'openai' ? 'OpenAI' : 'Anthropic'} API key`}
+                        placeholder={`Enter your ${aiProvider === 'google' ? 'Gemini' : aiProvider === 'openai' ? 'OpenAI' : aiProvider === 'groq' ? 'Groq' : 'Anthropic'} API key`}
                         className="pr-10"
                       />
                       <Button

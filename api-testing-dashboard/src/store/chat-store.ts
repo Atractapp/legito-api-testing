@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { useShallow } from 'zustand/shallow';
 
-type AIProvider = 'openai' | 'anthropic' | 'google';
+type AIProvider = 'openai' | 'anthropic' | 'google' | 'groq';
 
 interface Message {
   id: string;

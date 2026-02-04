@@ -341,6 +341,72 @@ export class LegitoMcpClient {
   async listTimezones() {
     return this.get('/timezone');
   }
+
+  // Document download
+  async downloadDocument(code: string, format: string) {
+    return this.get(`/document-version/download/${code}/${format}`);
+  }
+
+  // Additional sharing operations
+  async updateExternalLink(linkId: number, data: unknown) {
+    return this.put(`/share/external-link/${linkId}`, data);
+  }
+
+  async getDocumentShares(code: string) {
+    return this.get(`/share/${code}`);
+  }
+
+  async removeUserShare(code: string, userId: number) {
+    return this.delete(`/share/user/${code}/${userId}`);
+  }
+
+  async removeGroupShare(code: string, groupId: number) {
+    return this.delete(`/share/user-group/${code}/${groupId}`);
+  }
+
+  // File operations
+  async listFiles(documentCode: string) {
+    return this.get(`/file/${documentCode}`);
+  }
+
+  async uploadFile(documentCode: string, fileName: string, content: string) {
+    // File upload uses multipart form data
+    return this.post(`/file/${documentCode}`, { fileName, content });
+  }
+
+  async downloadFile(fileId: number) {
+    return this.get(`/file/download/${fileId}`);
+  }
+
+  async deleteFile(fileId: number) {
+    return this.delete(`/file/${fileId}`);
+  }
+
+  // Label operations
+  async listLabels() {
+    return this.get('/label');
+  }
+
+  async createLabel(name: string) {
+    return this.post('/label', { name });
+  }
+
+  async deleteLabel(labelId: number) {
+    return this.delete(`/label/${labelId}`);
+  }
+
+  // Push connection (webhook) operations
+  async listPushConnections() {
+    return this.get('/push-connection');
+  }
+
+  async createPushConnection(data: unknown) {
+    return this.post('/push-connection', data);
+  }
+
+  async deletePushConnection(id: number) {
+    return this.delete(`/push-connection/${id}`);
+  }
 }
 
 /**

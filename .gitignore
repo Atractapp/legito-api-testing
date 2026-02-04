@@ -52,3 +52,41 @@ yarn-error.log*
 
 # Performance results
 artillery-report-*.json
+
+# Analysis/Research files (temporary)
+*_ANALYSIS*.md
+*_ANALYSIS*.txt
+AI_*.md
+ANNOTATOR_*.md
+CONTEXT_*.md
+README_ANALYSIS.md
+*.pdf
+
+# Debug/test scripts (local)
+check_*.ps1
+check_*.py
+compare_*.ps1
+compare_*.py
+debug_*.ps1
+debug_*.py
+detailed_*.ps1
+detailed_*.py
+test_*.ps1
+test_*.py
+test_*.cs
+trace_*.py
+analyze_*.py
+dotnet-install.ps1
+
+# Test/temp folders
+output/
+debug/
+testing/
+test-deploy/
+test_regex_project/
+nul
+800
+
+# Separate repos
+legito-annotator-csharp/
+docs/LEGITO Spain GEM users 27012026.xlsx

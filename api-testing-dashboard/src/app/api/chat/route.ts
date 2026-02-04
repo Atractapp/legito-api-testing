@@ -7,6 +7,7 @@
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createAnthropic } from '@ai-sdk/anthropic';
+import { createGroq } from '@ai-sdk/groq';
 import { generateText, tool, stepCountIs } from 'ai';
 import { z } from 'zod';
 import { createLegitoMcpClient, LegitoMcpClient } from '@/lib/mcp/legito-mcp-client';
@@ -15,7 +16,7 @@ import type { LegitoCredentials, McpRequestResult } from '@/types/mcp';
 // Allow streaming responses up to 60 seconds
 export const maxDuration = 60;
 
-type AIProvider = 'openai' | 'anthropic' | 'google';
+type AIProvider = 'openai' | 'anthropic' | 'google' | 'groq';
 
 // Helper to get credentials from request headers
 function getLegitoCredentials(request: Request): LegitoCredentials | null {
@@ -49,6 +50,10 @@ function getModel(provider: AIProvider, apiKey: string) {
       const client = createGoogleGenerativeAI({ apiKey });
       return client('models/gemini-2.0-flash');
     }
+    case 'groq': {
+      const client = createGroq({ apiKey });
+      return client('llama-3.3-70b-versatile');
+    }
     default:
       throw new Error(`Unknown provider: ${provider}`);
   }
@@ -67,16 +72,25 @@ function buildLegitoTools(client: LegitoMcpClient) {
   return {
     // ============ DOCUMENT OPERATIONS ============
     createDocument: tool({
-      description: 'Create a new document from a template suite ID. IMPORTANT: For option/choice elements, value MUST be UUID not label (e.g., use "6df8e483-..." not "B").',
+      description: 'Create a new document from a template. Money: {number:"25000",currency:1}. Options: use UUID not label. Can link to parent document.',
       inputSchema: z.object({
-        templateSuiteId: z.number().describe('Template suite ID (e.g. 64004)'),
+        templateSuiteId: z.number().describe('Template suite ID'),
         elements: z.array(z.object({
           name: z.string().describe('Element system name/code'),
-          value: z.unknown().optional().describe('Element value. For options use UUID!'),
-        })).optional().default([]).describe('Elements with values. Use UUIDs for option/choice types!'),
+          value: z.unknown().optional().describe('Money: {number:"X",currency:1}. Options: use UUID!'),
+        })).optional().default([]).describe('Elements with values'),
+        parentDocumentCode: z.string().optional().describe('Parent document code to link as child (Related Documents)'),
       }),
       execute: async (params) => {
-        const result = await client.createDocument(params.templateSuiteId, params.elements || []);
+        const body = params.elements || [];
+        const queryParams = params.parentDocumentCode
+          ? { parentDocumentRecordCode: params.parentDocumentCode }
+          : undefined;
+        const result = await client.post(
+          `/document-version/data/${params.templateSuiteId}`,
+          body,
+          queryParams
+        );
         return unwrapResult(result);
       },
     }),
@@ -437,42 +451,34 @@ function buildLegitoTools(client: LegitoMcpClient) {
 
     // ============ TEMPLATE OPERATIONS ============
     listTemplates: tool({
-      description: 'Search and list template suites. ALWAYS use search param to filter by name. Example: search="contractor" finds "Contractor Agreement". Excludes deleted templates.',
-      inputSchema: z.object({
-        search: z.string().optional().describe('Search term to filter templates by name. Use partial name like "contractor" or "agreement".'),
-      }),
-      execute: async (params) => {
-        console.log('[listTemplates] Called with search:', params.search);
+      description: 'Get ALL templates with names. Returns formatted list. AI filters by searching the text.',
+      inputSchema: z.object({}),
+      execute: async () => {
         const result = await client.listTemplateSuites();
-        console.log('[listTemplates] API returned:', result.success, 'count:', Array.isArray(result.data) ? result.data.length : 'not array');
         if (result.success && Array.isArray(result.data)) {
-          // Filter out deleted templates and templates with "do not use" in name
-          type Template = { deleted?: number; name?: string; id?: number };
-          let templates = (result.data as Template[]).filter((t) => {
-            if (t.deleted === 1) return false;
-            if (t.name?.toLowerCase().includes('do not use')) return false;
-            return true;
-          });
-          console.log('[listTemplates] After filtering deleted/donotuse:', templates.length);
-          if (params.search) {
-            // Split search into words and match templates containing ALL words
-            const searchWords = params.search.toLowerCase().split(/\s+/).filter(w => w.length > 2);
-            console.log('[listTemplates] Search words:', searchWords);
-            templates = templates.filter((t) => {
-              const name = t.name?.toLowerCase() || '';
-              const matches = searchWords.every(word => name.includes(word));
-              if (name.includes('contractor')) {
-                console.log('[listTemplates] Checking:', name, '- matches:', matches);
-              }
-              return matches;
-            });
-            console.log('[listTemplates] After search filter:', templates.length);
-          }
-          // Return simplified data: just id and name
-          const simplified = templates.map(t => ({ id: t.id, name: t.name }));
-          return { success: true, data: simplified, count: simplified.length };
+          type Template = Record<string, unknown>;
+          const templates = (result.data as Template[])
+            .filter(t => t.deleted !== 1)
+            .map(t => {
+              // Try multiple possible field names for template name
+              const name = (t.name || t.title || t.label || t.displayName || `Template ${t.id}`) as string;
+              return { id: t.id as number, name };
+            })
+            .filter(t => !t.name.toLowerCase().includes('do not use'));
+
+          // Format as readable list so AI can search it
+          const formatted = templates
+            .map(t => `- ${t.name} (ID: ${t.id})`)
+            .join('\n');
+
+          return {
+            success: true,
+            count: templates.length,
+            templateList: formatted,
+            note: 'Search this list for matching template names. Show relevant matches to user.',
+          };
         }
-        return unwrapResult(result);
+        return { success: false, error: 'Failed to fetch templates' };
       },
     }),
 
@@ -656,6 +662,188 @@ function buildLegitoTools(client: LegitoMcpClient) {
         return unwrapResult(result);
       },
     }),
+
+    // ============ DOCUMENT DOWNLOAD ============
+    downloadDocument: tool({
+      description: 'Download a document in PDF or DOCX format',
+      inputSchema: z.object({
+        code: z.string().describe('Document record code'),
+        format: z.enum(['pdf', 'docx']).describe('Download format'),
+      }),
+      execute: async (params) => {
+        const result = await client.downloadDocument(params.code, params.format);
+        return unwrapResult(result);
+      },
+    }),
+
+    // ============ ADDITIONAL SHARING ============
+    updateExternalLink: tool({
+      description: 'Update an external sharing link settings',
+      inputSchema: z.object({
+        linkId: z.number().describe('External link ID'),
+        permission: z.enum(['LIST', 'READ', 'EDIT']).optional().describe('Permission level'),
+        useMax: z.number().optional().describe('Maximum uses (0 = unlimited)'),
+      }),
+      execute: async (params) => {
+        const result = await client.updateExternalLink(params.linkId, params);
+        return unwrapResult(result);
+      },
+    }),
+
+    getDocumentShares: tool({
+      description: 'Get all shares (users, groups, external links) for a document',
+      inputSchema: z.object({
+        code: z.string().describe('Document record code'),
+      }),
+      execute: async (params) => {
+        const result = await client.getDocumentShares(params.code);
+        return unwrapResult(result);
+      },
+    }),
+
+    removeUserShare: tool({
+      description: 'Remove a user share from a document',
+      inputSchema: z.object({
+        code: z.string().describe('Document record code'),
+        userId: z.number().describe('User ID to remove share from'),
+      }),
+      execute: async (params) => {
+        const result = await client.removeUserShare(params.code, params.userId);
+        return unwrapResult(result);
+      },
+    }),
+
+    removeGroupShare: tool({
+      description: 'Remove a user group share from a document',
+      inputSchema: z.object({
+        code: z.string().describe('Document record code'),
+        groupId: z.number().describe('Group ID to remove share from'),
+      }),
+      execute: async (params) => {
+        const result = await client.removeGroupShare(params.code, params.groupId);
+        return unwrapResult(result);
+      },
+    }),
+
+    // ============ FILE OPERATIONS ============
+    listFiles: tool({
+      description: 'List all external files attached to a document',
+      inputSchema: z.object({
+        documentCode: z.string().describe('Document record code'),
+      }),
+      execute: async (params) => {
+        const result = await client.listFiles(params.documentCode);
+        return unwrapResult(result);
+      },
+    }),
+
+    uploadFile: tool({
+      description: 'Upload a file to a document',
+      inputSchema: z.object({
+        documentCode: z.string().describe('Document record code'),
+        fileName: z.string().describe('File name with extension'),
+        fileContent: z.string().describe('Base64 encoded file content'),
+      }),
+      execute: async (params) => {
+        const result = await client.uploadFile(params.documentCode, params.fileName, params.fileContent);
+        return unwrapResult(result);
+      },
+    }),
+
+    downloadFile: tool({
+      description: 'Download a file by ID',
+      inputSchema: z.object({
+        fileId: z.number().describe('File ID'),
+      }),
+      execute: async (params) => {
+        const result = await client.downloadFile(params.fileId);
+        return unwrapResult(result);
+      },
+    }),
+
+    deleteFile: tool({
+      description: 'Delete a file from a document',
+      inputSchema: z.object({
+        fileId: z.number().describe('File ID to delete'),
+      }),
+      execute: async (params) => {
+        const result = await client.deleteFile(params.fileId);
+        return unwrapResult(result);
+      },
+    }),
+
+    // ============ LABEL OPERATIONS ============
+    listLabels: tool({
+      description: 'List all labels in the workspace',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.listLabels();
+        return unwrapResult(result);
+      },
+    }),
+
+    createLabel: tool({
+      description: 'Create a new label',
+      inputSchema: z.object({
+        name: z.string().describe('Label name'),
+      }),
+      execute: async (params) => {
+        const result = await client.createLabel(params.name);
+        return unwrapResult(result);
+      },
+    }),
+
+    deleteLabel: tool({
+      description: 'Delete a label',
+      inputSchema: z.object({
+        labelId: z.number().describe('Label ID to delete'),
+      }),
+      execute: async (params) => {
+        const result = await client.deleteLabel(params.labelId);
+        return unwrapResult(result);
+      },
+    }),
+
+    // ============ PUSH CONNECTION (WEBHOOK) OPERATIONS ============
+    listPushConnections: tool({
+      description: 'List all webhook push connections',
+      inputSchema: z.object({}),
+      execute: async () => {
+        const result = await client.listPushConnections();
+        return unwrapResult(result);
+      },
+    }),
+
+    createPushConnection: tool({
+      description: 'Create a webhook push connection to receive events',
+      inputSchema: z.object({
+        name: z.string().describe('Connection name'),
+        url: z.string().describe('Webhook URL to receive events'),
+        eventTypes: z.array(z.string()).describe('Event types to subscribe to (e.g., DocumentRecordCreated)'),
+      }),
+      execute: async (params) => {
+        const result = await client.createPushConnection({
+          name: params.name,
+          url: params.url,
+          enabled: true,
+          eventTypes: params.eventTypes,
+          templateSuiteAll: true,
+          documentRecordTypeAll: true,
+        });
+        return unwrapResult(result);
+      },
+    }),
+
+    deletePushConnection: tool({
+      description: 'Delete a push connection',
+      inputSchema: z.object({
+        id: z.number().describe('Push connection ID'),
+      }),
+      execute: async (params) => {
+        const result = await client.deletePushConnection(params.id);
+        return unwrapResult(result);
+      },
+    }),
   };
 }
 
@@ -681,26 +869,37 @@ export async function POST(request: Request) {
     const legitoTools = client ? buildLegitoTools(client) : {};
 
     const systemPrompt = legitoCredentials
-      ? `You are a Legito API assistant.
+      ? `You are a Legito API assistant. ALWAYS use tools - never make up data.
 
-MANDATORY WORKFLOW FOR CREATING DOCUMENTS:
+TEMPLATE SEARCH:
+- Call listTemplates() to get all templates
+- Search the templateList for keywords
+- SHOW matches: "Found: TemplateName (ID: X), ..."
+- When creating related documents (amendments, addendums), SEARCH for the template first!
 
-1. listTemplates(search="keyword") - find template
-2. getTemplate(id) - get element names (REQUIRED before step 4!)
-3. Map user data to elements from step 2
-4. Show mapping and ask "Proceed?"
-5. createDocument only after user says yes
+DOCUMENT CREATION WORKFLOW (MUST FOLLOW):
+1. Search template with listTemplates()
+2. Call getTemplate(id) to discover ALL element names and types
+3. Map user data to elements. Show user: "Will set: elementName = value"
+4. IMPORTANT FORMATS:
+   - Money: {number: "25000", currency: 1} where currency 1=EUR, 2=USD, 3=CZK
+   - Date: {date: "2024-01-15", monthByWord: true}
+   - Options: use UUID, not label text
+5. Confirm with user before creating
+6. Call createDocument with ALL elements filled - never create empty!
 
-FORBIDDEN:
-- DO NOT call createDocument without first calling getTemplate
-- DO NOT skip showing the element mapping confirmation
-- DO NOT ask user for element codes - discover them via getTemplate
+PARENT-CHILD DOCUMENTS (Related Documents):
+- To link documents (e.g., Amendment to Contract), use parentDocumentCode parameter
+- Example: createDocument({templateSuiteId: 9906, elements: [...], parentDocumentCode: "abc-123"})
 
-RULES:
-- Use ONLY data user provided
-- Create with partial data - empty fields OK
-- "John Doe" for user → firstName:"John", lastName:"Doe"`
-      : `You are a helpful AI assistant. To access Legito data, configure your Legito API credentials in MCP Workspaces settings.`;
+WHEN USER SAYS "create amendment/addendum to X":
+1. Search for amendment/addendum template using listTemplates()
+2. Remember the parent document code
+3. Create with parentDocumentCode to link them
+
+ALWAYS CONFIRM BEFORE: creating, deleting
+EXECUTE IMMEDIATELY: list, get, read, share operations`
+      : `You are a helpful AI assistant. Configure Legito credentials in settings.`;
 
     const model = getModel(provider, aiApiKey);
 
@@ -711,7 +910,7 @@ RULES:
       messages,
       tools: legitoTools,
       maxRetries: 0,
-      stopWhen: stepCountIs(8), // Allow more steps for complex workflows
+      stopWhen: stepCountIs(12), // Allow more steps for complex workflows
     });
 
     return new Response(text, {

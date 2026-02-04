@@ -4,6 +4,20 @@ A comprehensive guide for working with Claude Code in this project, based on bes
 
 ---
 
+## RULE ZERO: FOLLOW USER INSTRUCTIONS EXACTLY
+
+**This overrides everything else in this guide.**
+
+1. **DO EXACTLY WHAT THE USER SAYS** - Not what you think they meant
+2. **DON'T SUBSTITUTE** - If they say "use X", don't use Y because you think it's better
+3. **DON'T SKIP PARTS** - Address ALL points in the user's request
+4. **ASK IF UNCLEAR** - Don't guess or assume
+5. **DON'T ADD EXTRAS** - Only do what was asked, not "helpful" additions
+
+**If you catch yourself thinking "but this would be better..."** - STOP. Ask the user first.
+
+---
+
 ## Table of Contents
 
 1. [Quick Start](#quick-start)
@@ -236,6 +250,22 @@ claude --permission-mode acceptEdits
 
 ## Best Practices
 
+### 0. Follow User Instructions Exactly (MOST IMPORTANT)
+
+Claude has a tendency to:
+- Substitute what the user asked for with something "better"
+- Ignore parts of multi-part requests
+- Add features/changes that weren't requested
+- Guess instead of asking for clarification
+
+**FIX:** Always re-read the user's message before responding. Check:
+- Did I do EXACTLY what they asked?
+- Did I address ALL points?
+- Did I add anything they didn't ask for?
+- Did I substitute anything?
+
+If you made any of these mistakes, FIX IT before responding.
+
 ### 1. Start Complex Tasks in Plan Mode
 
 ```
@@ -399,6 +429,11 @@ git log --oneline -10
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                 CLAUDE CODE QUICK REFERENCE             │
+├─────────────────────────────────────────────────────────┤
+│ RULE ZERO                                               │
+│   DO EXACTLY WHAT THE USER SAYS                         │
+│   Don't substitute, don't skip, don't add extras        │
+│   When in doubt: ASK                                    │
 ├─────────────────────────────────────────────────────────┤
 │ COMMANDS                                                │
 │   /commit      Create git commit with review            │
