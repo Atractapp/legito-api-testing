@@ -157,9 +157,13 @@ export async function POST(request: NextRequest): Promise<NextResponse<SsoTrigge
 
     // Trigger the worker (fire and forget - worker will update DB directly)
     try {
+      const workerApiKey = process.env.SSO_API_KEY;
       const workerResponse = await fetch(`${workerUrl}/test`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(workerApiKey && { 'X-API-Key': workerApiKey }),
+        },
         body: JSON.stringify({
           testId: testRecord.id,
           serverId,

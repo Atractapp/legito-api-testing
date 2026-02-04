@@ -19,6 +19,32 @@ const PORT = process.env.PORT || 3000;
 const activeTests = new Set<string>();
 
 /**
+ * Middleware to validate API key for protected endpoints
+ */
+function validateApiKey(req: Request, res: Response, next: () => void) {
+  const apiKey = req.headers['x-api-key'];
+  const expectedKey = process.env.SSO_API_KEY;
+
+  if (!expectedKey) {
+    console.warn('[Worker] SSO_API_KEY not configured - rejecting request');
+    res.status(500).json({ error: 'API key not configured on server' });
+    return;
+  }
+
+  if (!apiKey) {
+    res.status(401).json({ error: 'Missing X-API-Key header' });
+    return;
+  }
+
+  if (apiKey !== expectedKey) {
+    res.status(401).json({ error: 'Invalid API key' });
+    return;
+  }
+
+  next();
+}
+
+/**
  * Get Supabase client
  */
 function getSupabase(): SupabaseClient {
@@ -48,8 +74,9 @@ app.get('/health', (_req: Request, res: Response) => {
  * Trigger SSO test endpoint
  * POST /test
  * Body: { testId, serverId, serverUrl }
+ * Requires X-API-Key header
  */
-app.post('/test', async (req: Request, res: Response) => {
+app.post('/test', (req, res, next) => validateApiKey(req, res, next), async (req: Request, res: Response) => {
   const { testId, serverId, serverUrl } = req.body as SsoTestRequest;
 
   // Validate request
@@ -229,4 +256,5 @@ app.listen(PORT, () => {
   console.log(`  - SLACK_WEBHOOK_URL: ${process.env.SLACK_WEBHOOK_URL ? 'configured' : 'NOT SET'}`);
   console.log(`  - SUPABASE_URL: ${process.env.SUPABASE_URL ? 'configured' : 'NOT SET'}`);
   console.log(`  - SUPABASE_SERVICE_KEY: ${process.env.SUPABASE_SERVICE_KEY ? 'configured' : 'NOT SET'}`);
+  console.log(`  - SSO_API_KEY: ${process.env.SSO_API_KEY ? 'configured' : 'NOT SET'}`);
 });
