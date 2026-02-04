@@ -20,6 +20,12 @@ function getSupabaseAdmin() {
 /**
  * Wait for a test to complete
  */
+interface TestResultRow {
+  status: string;
+  duration_ms: number | null;
+  error_message: string | null;
+}
+
 async function waitForTestCompletion(
   supabase: ReturnType<typeof createClient>,
   testId: string,
@@ -28,26 +34,24 @@ async function waitForTestCompletion(
   const startTime = Date.now();
 
   while (Date.now() - startTime < timeoutMs) {
-    const { data, error } = await supabase
+    const response = await supabase
       .from('sso_test_results')
       .select('status, duration_ms, error_message')
       .eq('id', testId)
       .single();
 
-    if (error || !data) {
-      return { success: false, status: 'error', durationMs: null, error: error?.message || 'No data' };
+    if (response.error || !response.data) {
+      return { success: false, status: 'error', durationMs: null, error: response.error?.message || 'No data' };
     }
 
-    const testStatus = data.status as string;
-    const durationMs = data.duration_ms as number | null;
-    const errorMessage = data.error_message as string | null;
+    const data = response.data as TestResultRow;
 
-    if (testStatus === 'success') {
-      return { success: true, status: 'success', durationMs, error: null };
+    if (data.status === 'success') {
+      return { success: true, status: 'success', durationMs: data.duration_ms, error: null };
     }
 
-    if (testStatus === 'failure' || testStatus === 'error') {
-      return { success: false, status: testStatus, durationMs, error: errorMessage };
+    if (data.status === 'failure' || data.status === 'error') {
+      return { success: false, status: data.status, durationMs: data.duration_ms, error: data.error_message };
     }
 
     // Still running, wait and poll again
