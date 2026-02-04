@@ -1,6 +1,6 @@
-import { Activity, Tags, Plug, Sparkles, LucideIcon } from 'lucide-react';
+import { Activity, Tags, Plug, Sparkles, Shield, LucideIcon } from 'lucide-react';
 
-export type AppId = 'api-tester' | 'tagger' | 'mcp' | 'annotator';
+export type AppId = 'api-tester' | 'tagger' | 'mcp' | 'annotator' | 'sso';
 
 export interface AppDefinition {
   id: AppId;
@@ -39,6 +39,13 @@ export const APPS: Record<AppId, AppDefinition> = {
     description: 'AI-powered document annotation learning',
     basePath: '/annotator',
   },
+  'sso': {
+    id: 'sso',
+    name: 'SSO Testing',
+    icon: Shield,
+    description: 'Automated Azure SSO login testing',
+    basePath: '/sso',
+  },
 };
 
 export const APP_LIST = Object.values(APPS);
@@ -52,6 +59,9 @@ export function getAppFromPath(pathname: string): AppId {
   }
   if (pathname.startsWith('/annotator')) {
     return 'annotator';
+  }
+  if (pathname.startsWith('/sso')) {
+    return 'sso';
   }
   return 'api-tester';
 }

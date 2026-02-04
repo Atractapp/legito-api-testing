@@ -21,6 +21,8 @@ import {
   Sparkles,
   GraduationCap,
   Wand2,
+  Shield,
+  History,
   LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -69,6 +71,11 @@ const annotatorNavigation: NavItem[] = [
   { name: 'Patterns', href: '/annotator/patterns', icon: Layers },
 ];
 
+const ssoNavigation: NavItem[] = [
+  { name: 'Dashboard', href: '/sso', icon: Shield },
+  { name: 'History', href: '/sso/history', icon: History },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
@@ -81,7 +88,9 @@ export function Sidebar() {
         ? mcpNavigation
         : currentApp === 'annotator'
           ? annotatorNavigation
-          : apiTesterNavigation;
+          : currentApp === 'sso'
+            ? ssoNavigation
+            : apiTesterNavigation;
 
   const isActiveLink = (href: string) => {
     if (currentApp === 'tagger') {
@@ -99,6 +108,12 @@ export function Sidebar() {
     if (currentApp === 'annotator') {
       if (href === '/annotator') {
         return pathname === '/annotator';
+      }
+      return pathname.startsWith(href);
+    }
+    if (currentApp === 'sso') {
+      if (href === '/sso') {
+        return pathname === '/sso';
       }
       return pathname.startsWith(href);
     }
