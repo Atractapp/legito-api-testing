@@ -1,0 +1,4335 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\Contrato plan precio de contado.docx",
+  "paragraph_count": 18,
+  "table_count": 0,
+  "highlight_count": 0,
+  "colored_text_count": 0,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "CONTRATO DE APERTURA DE CREDITO BANCARIO CON GARANTIA MOBILIARIA Y FIDUCIARIA.",
+      "runs": [
+        {
+          "text": "CONTRATO DE APERTURA DE CREDITO BANCARIO CON GARANTIA MOBILIARIA Y FIDUCIARIA.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "En la ciudad de Guatemala, el [Date{\"system-name\":\"dia-contrato\"}]de [TextInput{\"system-name\":\"mes-contrato\"}] del año [TextInput{\"system-name\":\"anio-contrato\"}] comparecemos: A) [TextInput{\"system-name\":\"nombre-representante-legal\"}], de [TextInput{\"system-name\":\"edad-representante-legal\"}]  años, [TextInput{\"system-name\":\"texto-representante-legal\"}], entidad que en el transcurso del presente instrumento público se le podrá denominar indistintamente como El Banco, Banco o Acreedor Garantizado. Yo, [Link:nombre-representante-legal], me encuentro debidamente facultado para este acto, de conformidad con lo dispuesto en la resolución de Gerencia número [TextInput{\"system-name\":\"resolucion-gerencia-letras\"}] ([TextInput{\"system-name\":\"resolucion-gerencia-numeros\"}]), de fecha [Date{\"system-name\":\"fecha-resolucion-gerencia\"}] B) [TextInput{\"system-name\":\"nombre-deudor\"}], declaro ser de [TextInput{\"system-name\":\"edad-deudor\"}] años, [TextInput{\"system-name\":\"estado-civil-deudor\"}], [TextInput{\"system-name\":\"nacionalidad-deudor\"}], [TextInput{\"system-name\":\"profesion-deudor\"}],  [TextInput{\"system-name\":\"domicilio-deudor\"}] y me identifico con el documento personal de identificación (DPI) con código único de identificación (CUI) número [TextInput{\"system-name\":\"id-deudor-letras\"}] ([TextInput{\"system-name\":\"id-deudor-numeros\"}]) extendido por el Registro Nacional de las Personas. C) [TextInput{\"system-name\":\"nombre-depositario\"}] declaro ser de [TextInput{\"system-name\":\"edad-depositario\"}] años, [TextInput{\"system-name\":\"estado-civil-depositario\"}], [TextInput{\"system-name\":\"nacionalidad-depositario\"}], [TextInput{\"system-name\":\"profesion-depositario\"}],  [TextInput{\"system-name\":\"domicilio-depositario\"}] y me identifico con el documento personal de identificación (DPI) con código único de identificación (CUI) número [TextInput{\"system-name\":\"id-depositario-letras\"}] ([TextInput{\"system-name\":\"id-depositario-numeros\"}]) extendido por el Registro Nacional de las Personas. Los comparecientes manifestamos que la representación que se ejercita es suficientemente amplia para la celebración del presente contrato, de encontrarnos en el libre ejercicio de nuestros derechos civiles, ser de los datos de identificación personal antes consignados; y en las calidades con que comparecemos, por el presente acto convenimos en celebrar CONTRATO DE CRÉDITO BANCARIO CON GARANTÍA MOBILIARIA Y FIDUCIARIA de conformidad con las siguientes cláusulas: PRIMERA: DEL CREDITO: El Banco abrirá un crédito por la cantidad de [TextInput{\"system-name\":\"monto-credito-letras\"}] (Q. [Money{\"system-name\":\"monto-credito-numeros\"}]), a favor de [Link:nombre-deudor] (en adelante referido simple e indistintamente como la “Parte Deudora”) por dicho valor me reconozco liso y llano deudor del Banco. Como Parte Deudora me comprometo expresamente a presentar oportunamente al Banco la siguiente documentación: a) El presente documento con firmas legalizadas y una fotocopia simple del mismo; b) Constancia del referido Registro en donde conste que la garantía mobiliaria constituida a favor del Banco, tiene prelación sobre cualquier otro derecho y que el bien mueble objeto de la garantía mobiliaria se encuentra libre de anotaciones, gravámenes y limitaciones, salvo aquellas constituidas a favor del Banco, así como una fotocopia simple de la misma. SEGUNDA: CONDICIONES GENERALES. Este contrato se regirá por las siguientes estipulaciones, sin perjuicio de cualesquiera otras que aparezcan mencionadas en esta misma escritura: A) FORMA DE ENTREGA: Como Parte Deudora instruyo irrevocablemente al Banco para que la totalidad del monto del presente crédito se pague de manera inmediata y directa a la entidad vendedora que se identifica más adelante. B) DESTINO: El importe de este crédito será destinado a la compra del vehículo que se ofrece en garantía, y por lo tanto el producto de este crédito se destinará exclusivamente para el pago de dicho vehículo. C) PLAZO: El plazo para pagar la suma debida es de [TextInput{\"system-name\":\"plazo-prestamo-letras\"}] ([TextInput{\"system-name\":\"plazo-prestamo-numeros\"}]) MESES, contados a partir del quinto (5) día calendario del mes más próximo de la fecha de su desembolso, y, en consecuencia, vencerá en la fecha del último pago, lo cual el Banco podrá probar con la emisión del documento que éste considere conveniente. Para futuras modificaciones al plazo del crédito podrá ser modificado, a criterio del Banco, contra la simple solicitud firmada por La Parte Deudora, para cuyo efecto, el Banco emitirá la resolución que corresponda y el documento legal será firmado únicamente por éste. D) FORMA DE PAGO: El monto total de la presente deuda lo pagará mediante: [TextInput{\"system-name\":\"cantidad-cuotas-letras\"}] ([Link:cantidad-cuotas-letras]) amortizaciones a capital mensuales y consecutivas de [TextInput{\"system-name\":\"monto-cuotas-letras\"}] [TextInput{\"system-name\":\"moneda\"}]  ([TextInput{\"system-name\":\"simbolo-moneda\"}] [Money{\"system-name\":\"monto-cuotas-numeros\"}]) correspondiendo efectuarlas el quinto (5) día calendario de cada mes a partir del mes siguiente del inicio de la vigencia del plazo y el saldo si hubiere al vencimiento del plazo. En caso de no ser posible realizarla en el último día pactado para el pago, deberá efectuarse el día hábil inmediato anterior al que correspondía. Las amortizaciones comprenden: Amortizaciones a capital. Las amortizaciones y/o cuotas, según lo que corresponda, no incluyen las primas del seguro del vehículo, los gastos por conceptos de comisiones, intereses moratorios, gastos judiciales, la variabilidad de la tasa de interés y las demás que no figuren expresamente en las literales que anteceden. Asimismo, las partes convienen que la Parte Deudora podrá hacer amortizaciones anticipadas a capital, las que, salvo pacto en contrario, se aplicarán como pago anticipado de la o las amortizaciones mensuales inmediatas siguientes pactadas y que en forma completa se alcance a cubrir. Al agotarse las sumas entregadas en forma anticipada, la Parte Deudora deberá continuar con el pago de las amortizaciones en la forma pactada originalmente al principio de esta cláusula. En tal virtud, al efectuarse los pagos anticipados en la forma anteriormente señalada, el Banco tendrá por cubiertas y por bien pagadas las amortizaciones inmediatas subsiguientes a la fecha en la que se hizo el pago anticipado tal y como si La Parte Deudora hubiese efectuado dichos pagos en la forma y con la periodicidad pactada por lo que la obligación de pago pactada deberá reasumirse por La Parte Deudora al momento que los fondos entregados en forma anticipada se agoten. Se deja expresamente pactado que, al momento de agotarse los fondos pagados en forma anticipada, si por cualquier motivo no se cubre una amortización completa en la forma pactada en el presente contrato, La Parte Deudora deberá pagar el faltante de dicha amortización, a más tardar, en la fecha pactada en el presente contrato para cada amortización mensual y posteriormente deberá continuar con los pagos en la forma y tiempos acordados en el presente instrumento. Todo pago adeudado en virtud del presente contrato y por cualquier concepto deberá ser efectuado sin necesidad de cobro ni requerimiento alguno. Para futuras modificaciones a la forma de pago de este crédito se podrá hacer de la siguiente forma, a discreción del Banco: El deudor presentará solicitud firmada únicamente por éste, indicando la forma de pago que desea. Si el Banco autoriza dicha modificación, éste emitirá la resolución correspondiente, elaborando para el efecto, el documento interno de respaldo el cual será firmado únicamente por el Banco. Penalización: En caso el deudor desee realizar la cancelación anticipada del monto total del crédito, en cualquier tiempo, el deudor deberá pagar al Banco, en concepto de penalización, la cantidad de QUINIENTOS QUETZALES (Q.500.00). E) INTERESES: TASA ANUAL FIJA: Las partes pactamos libre y expresamente una tasa de interés variable, la que la Parte Deudora reconoce y pagara al Banco así: E.a.) La tasa de interés se establece en el [TextInput{\"system-name\":\"tasa-primer-anio-letras\"}] POR CIENTO ([TextInput{\"system-name\":\"tasa-primer-anio-numeros\"}] %) ANUAL FIJA, Por el plazo inicialmente establecido, dichos intereses seran pagados en forma anticipada por el Distribuidor del Vehiculo, según convenio descrito. En caso de prorroga del plazo o mora en pago de las cuotas niveladas, la tasa de interes será variable. La tasa de interés anual equivalente es del [TextInput{\"system-name\":\"tasa-anual-equivalente-letras\"}] por ciento ([TextInput{\"system-name\":\"tasa-anual-equivalente-numeros\"}] %). La tasa fijada inicialmente en ninguna forma podrá entenderse como tasa pactada o fija, toda vez que la variabilidad de la misma podrá exceder a esta fijación inicial en la formas establecidas anteriormente, lo cual como Parte Deudora acepto expresamente. Sobre los intereses que no sean pagados en las fechas pactadas y al vencimiento y, hasta que se cancele totalmente este crédito, el Banco cargará y cobrará un recargo por intereses en mora, la cual se fija por el momento en doce por ciento (12.00%) anual, sobre el capital vencido, sin perjuicio de dar por vencido el plazo del presente contrato y cobrar ejecutivamente cualquier saldo que se le adeude. El Banco podrá durante la vigencia del presente crédito, variar la tasa de interés moratoria, fijando para tal efecto su importe, lo que me comunicará en la forma que considere conveniente. La obligación de pago de los intereses bajo las estipulaciones convenidas en este contrato subsistirá aún después de vencido el plazo y hasta el efectivo pago total de la deuda; y, E.b.) Sobre las amortizaciones y/o cuotas, según lo que corresponda, que no sean pagados en las fechas pactadas y al vencimiento y, hasta que se cancele totalmente este crédito, el Banco a su discreción cargará y cobrará un recargo por intereses en mora en la forma y condiciones establecidas en el punto anterior; E.c.) Conforme el Banco vaya fijando nuevas tasas de interés en el futuro, la tasa de interés inicial aquí pactada irá variando, ya sea aumentando o disminuyendo, y en todo caso ajustándose automáticamente a partir de la fecha en que el Banco resuelva la variación de la tasa y la misma cobre vigencia. El Banco comunicará dicho cambio a La Parte Deudora por cualquier medio escrito o de difusión que estime conveniente; E.d.) En caso de variación de la tasa de interés en este crédito, no será necesario formalizar la misma, salvo el procedimiento ya indicado. F) COMISION: Como Parte Deudora reconozco y acepto expresamente que El Banco podrá fijar su importe y cobrar adicionalmente al monto de las amortizaciones y/o cuotas, según lo que corresponda, comisiones durante la vigencia de este crédito y por sus prórrogas, lo que comunicará a la Parte Deudora por cualquier medio. El Banco también podrá fijar su importe y cobrar un recargo por mora por la falta de pago de cualquier comisión, que será igual al recargo por mora de los intereses, el cual se cobrará sobre el valor total de la comisión no pagada y referido al período de la misma o motivo de la comisión. COMISIÓN POR ADMINISTRACIÓN DE CRÉDITO EN MORA: El Banco establece una comisión por administración de crédito en mora, la cual se fija en este momento en doscientos quetzales (Q.200.00), que cobrará de forma directa y se cargará a la cuota que sea pagada en fecha posterior a la fecha de pago establecida. El Banco podrá durante la vigencia del presente crédito, variar la comisión anteriormente establecida y cobrar otro tipo de comisiones, fijando para tal efecto su importe, lo que me comunicará en la forma que considere conveniente. G) SEGURO: Como parte deudora me obligo a tomar y mantener en vigor durante todo el plazo de esta obligación un seguro sobre el bien mueble que da en garantía que cubra todo tipo de riesgo y siniestro, por un monto no menor de [TextInput{\"system-name\":\"seguro-total-letras\"}] [Link:moneda] ([Link:simbolo-moneda] [Money{\"system-name\":\"seguro-total-numeros\"}]), anuales, y a endosar a favor del Banco la póliza respectiva, excluyendo de la misma la cláusula de coaseguro, para que en cualesquiera de los casos de indemnización se pague preferentemente al Banco cualquier saldo pendiente de este crédito. En todo caso la parte deudora es la única y entera responsable por contratar la cobertura adicional para menores de veintiún años de edad. En virtud de la contratación del seguro por la parte deudora con Seguros G&T, Sociedad Anónima, en adelante indistintamente Seguros G&T; como parte deudora pagaré el seguro contratado por medio del Banco, siendo la única obligada frente a Seguros G&T, por lo que el Banco no asume responsabilidad alguna ya que únicamente recibirá en nombre de Seguros G&T el valor de la prima correspondiente; y se compromete a cancelarle al Banco en la forma adelante indicada, las primas del seguro contratado, para que en su nombre realice los pagos correspondientes los cuales quedarán de la siguiente forma: a) Pagos anticipados, [TextInput{\"system-name\":\"forma-pago-prima-seguro\"}] y consecutivos, de [TextInput{\"system-name\":\"cuota-seguro-letras\"}] [Link:moneda] ([Link:simbolo-moneda][Money{\"system-name\":\"cuota-seguro-numeros\"}]). b) Durante el plazo del financiamiento, prima iniciará a partir del quinto (5) dia calendario del mes mas proximo a partir de la fecha de su desembolso, y en consecuencia vencerá en la fecha del ultimo pago. Las partes acuerdan, que el procedimiento para modificar la forma de pago del seguro antes relacionado, podrá ser, a criterio del Banco, contra la simple solicitud firmada por La Parte Deudora, la cual podrá solicitar únicamente, una vez durante la vigencia del crédito, para cuyo efecto el Banco emitirá la resolución que corresponda y el documento legal será firmado únicamente por éste, la póliza contratada debe de ser una póliza Producto AFIN de Seguros G&T, Sociedad Anónima. Tanto el monto del seguro como las primas del mismo podrán variar, ya sea aumentar o disminuir, en un futuro a juicio de la entidad aseguradora, lo cual acepto expresamente como parte deudora. En caso de siniestro, el Banco podrá dar por vencido el plazo de esta obligación y hacerse pago total o parcial con el producto de dicho seguro. Las partes convenimos expresamente en que los pagos del seguro los pagará la parte deudora en las mismas fechas en que se paguen las amortizaciones y/o cuotas, según lo que corresponda, de este crédito y sin necesidad de cobro o requerimiento alguno en las cajas del Banco, entidad que se obliga a entregar dichos montos a la Compañía Aseguradora en los tiempos que para el efecto convenga con esta última. Asimismo, las partes manifestamos que las primas del Seguro no forman parte de las amortizaciones y/o cuotas, según lo que corresponda, por lo que a las mismas deberán cargarse o sumárseles las cantidades correspondientes al Seguro contratado. Como parte deudora por este acto faculto al Banco para el caso en que no pague las primas del seguro en su oportunidad, las pague éste por mí y en tal caso me cargue su importe y cobre intereses sobre tales cargos, pudiendo el Banco incrementar dicha cantidad en forma proporcional y adicional al monto de las cuotas del seguro, y a falta de pago de la prima del seguro correspondiente, se podrá dar por vencido el plazo de este contrato. La disminución de las primas del seguro correspondientes se entiende relacionada directamente con la depreciación a que el vehículo objeto de este contrato está afecto por su uso y desgaste normal. Como parte deudora reconozco y acepto expresamente que los pagos del seguro podrán variar en el futuro, ya sea aumentar o disminuir de conformidad con las condiciones del mercado. La Parte deudora y el depositario respectivamente entienden que la aseguradora con la cual se contrate el seguro relacionado, tomará ante el evento de un riesgo o siniestro de los contemplados en la póliza de mérito, para los efectos de la indemnización correspondiente, el valor real de mercado del vehículo identificado en este instrumento. H) AMBIENTAL: Declaro: (i) Que a mi leal saber y entender, no me encuentra en violación de ley o regulación alguna en materia ambiental y/o laboral vigente en la República de Guatemala; (ii) Que cumpliré con la regulación ambiental o laboral que me sea aplicable; y, (iii) Que no he recibido ni tengo conocimiento de que exista alguna denuncia, orden, reclamo, citación, notificación, demanda o cualquier otra queja, documento o proceso legal judicial, extrajudicial, o administrativo, público o privado, en mi contra, por temas de índole ambiental. Como Parte Deudora expresamente reconozco y acepto que el Banco podrá dar por terminado anticipadamente el presente crédito, sin responsabilidad alguna de su parte, y exigir el pago total e inmediato del mismo, adicionalmente a cualesquiera otros casos contemplados en el presente contrato y/o en la ley, si a criterio único y exclusivo del Banco, éste considera que cualquiera de las declaraciones contenidas en el presente apartado son falsas o inexactas; I). AUSENCIA DE PRÁCTICAS NO ÉTICAS: La Parte Deudora y Parte Garante: (I) Declaramos y afirmamos que, previo a la firma del presente contrato, no hemos cometido, inducido a, participado en, o nos hemos beneficiado de forma alguna de “prácticas no éticas”, especialmente las siguientes: (I.i) Perjudicar o dañar, o la amenaza de perjudicar o dañar, de manera directa o indirecta al Banco, a las entidades del grupo financiero al que éste pertenece, sus Directores, empleados, funcionarios, asesores y/o terceras personas o la propiedad de éstos, a fin de influir de manera impropia en sus acciones; (I.ii) Promover, participar o influir para que se lleven a cabo acuerdos entre dos o más partes diseñados para lograr un propósito deshonesto o ilegal, incluyendo el influenciar de manera deshonesta o ilegal las acciones de un tercero; (I.iii) Ofrecer, dar, recibir o solicitar, directa o indirectamente, cualquier bien o acción para influir de manera impropia o ilegal en las acciones de otra parte; (I.iv) Promover, llevar a cabo o influir para que se lleve a cabo cualquier acción u omisión, incluyendo declaraciones falsas, que conscientemente o imprudentemente induzcan al error, o pretendan inducir al error, a una parte para obtener un beneficio de cualquier tipo o para evitar el cumplimiento de una obligación; (I.v) Destruir, falsificar, alterar u ocultar evidencia importante para una investigación o realizar declaraciones falsas a investigadores o cualquier entidad o funcionario público o privado a efecto de impedir una investigación sobre acusaciones de actos de corrupción o prácticas no éticas y/o amenazar, acosar o intimidar a cualquier parte para evitar que revele lo que conoce respecto del asunto que sea relevante a la investigación; y/o, (I.vi) Promover, participar o influir para que se lleven a cabo actos tendientes a impedir de manera significativa el ejercicio de los derechos de los Bancos para acceder a información contractualmente requerida en relación con una investigación sobre acusaciones de un acto de corrupción (distinto a una práctica obstructiva). (II) Declaramos que conocemos los principios, normas y procedimientos contemplados en las Leyes de la República de Guatemala, especialmente la Ley Contra el Lavado de Dinero u Otros Activos y la Ley Para Prevenir y Reprimir el Financiamiento del Terrorismo y sus reglamentos, en virtud de lo cual, nos comprometemos y obligamos al estricto cumplimiento y observancia de dichas Leyes y que no hemos violado ninguna de dichas normas previo a la firma del presente contrato. (III) Nos comprometemos y obligamos, ahora y en un futuro, a no cometer, inducir a, participar en, o beneficiarse de cualesquiera “prácticas no éticas”, y a no violar en forma alguna cualesquiera principios, normas y procedimientos contenidos en las leyes detalladas en la literal (II) que antecede y/o en cualesquiera leyes o reglamentos actuales o futuros relacionados a materias iguales o similares a las leyes anteriormente relacionadas. (IV) Nos obligamos a informar al Banco en forma inmediata y por escrito de cualquier situación o potencial situación que involucre o pueda involucrar a la Parte Deudora y/o Parte Garante (en forma conjunta o separada) en cualquier caso o situación de “prácticas no éticas”. La Parte Deudora y Parte Garante expresamente reconocemos y aceptamos que el Banco podrá dar por terminado anticipadamente el presente crédito, sin responsabilidad alguna de su parte y sin justificación alguna, y exigir el pago total e inmediato del mismo, adicionalmente a cualesquiera otros casos contemplados en el presente contrato y/o en la ley, en cualquiera de los siguientes casos: (a) En caso cualquiera de nosotros (en forma conjunta o separada) haya incurrido en cualquier tipo de “práctica no ética” (antes o después de la firma del presente contrato) o cualquiera de nosotros sea señalada de esto (aunque no exista resolución judicial, o de cualquier otro tipo); y/o, (b) En caso cualquiera de nosotros sea señalada ahora o en un futuro de haber violado, o haya violado o viole en el futuro (aunque no exista resolución judicial, o de cualquier otro tipo en cualquier caso) la Ley Contra el Lavado de Dinero u Otros Activos y/o la Ley Para Prevenir y Reprimir el Financiamiento del Terrorismo y sus reglamentos, y/o cualesquiera otras leyes o reglamentos actuales o futuros relacionados a materias iguales o similares a las de las leyes anteriormente relacionadas; y/o, (c) Si la Parte Deudora fuere incluida en las listas para el control de lavado de activos y financiación del terrorismo administradas por cualquier autoridad nacional o extranjera, tales como la lista de la Oficina de Control de Activos en el Extranjero (“OFAC” por sus siglas en inglés) de la Oficina del Departamento del Tesoro de los Estados Unidos de América, la lista de la Organización de las Naciones Unidas y/u otras listas publicas relacionadas con los temas de lavado de activos y financiación del terrorismo; y/o (d) Si a criterio único y exclusivo del Banco, éste considera que cualquiera de las declaraciones relacionadas con este apartado de “ausencia de prácticas no éticas” son falsas o inexactas, o que existen indicios para creer que se ha incurrido en “prácticas no éticas” por cualquiera de ellas y/o que se ha violado cualquiera de las normas antes señaladas (presentes o futuras) o si los señalamientos a la Parte Deudora y/o Parte Garante (en forma conjunta o separada) en este sentido pueden afectar el crédito y/o la reputación del Banco; y/o, (e) Por incumplimiento de cualesquiera obligaciones impuestas en el presente apartado de “ausencia de prácticas no éticas”. TERCERA: GARANTIAS: A) GARANTÍA MOBILIARIA: En garantía del pago [TextInput{\"system-name\":\"monto-garantia-mobiliaria-letras\"}] [Link:moneda] ([Link:simbolo-moneda][Money{\"system-name\":\"monto-garantia-mobiliaria-numeros\"}]), más intereses, costas, gastos de cobranza y cualesquiera otras obligaciones exigibles en virtud de la ley o de este contrato, [TextInput{\"system-name\":\"garante-propietario\"}], en este contrato indistintamente el Garante o el Propietario del bien, constituyo expresamente a favor del BANCO G&T CONTINENTAL, SOCIEDAD ANÓNIMA, garantía mobiliaria sin posesión, sobre el vehículo de mi propiedad identificado de la manera siguiente: TIPO: [TextInput{\"system-name\":\"tipo-vehiculo\"}], MARCA: [TextInput{\"system-name\":\"marca-vehiculo\"}], MODELO: [TextInput{\"system-name\":\"modelo-vehiculo\"}], COLOR: [TextInput{\"system-name\":\"color-vehiculo\"}], LINEA: [TextInput{\"system-name\":\"linea-vehiculo\"}], PASAJEROS: [TextInput{\"system-name\":\"cantidad-pasajeros\"}], COMBUSTIBLE: [TextInput{\"system-name\":\"tipo-combustible\"}], PUERTAS: [TextInput{\"system-name\":\"cantidad-puertas\"}], CILINDROS: [TextInput{\"system-name\":\"cilindraje-motor\"}], EJES: [TextInput{\"system-name\":\"cantidad-ejes\"}], CENTÍMETROS CÚBICOS: [TextInput{\"system-name\":\"cc-motor\"}], SERIE, CHASIS Y VIN: [TextInput{\"system-name\":\"numero-vin\"}], MOTOR NÚMERO: [TextInput{\"system-name\":\"numero-motor\"}], (a lo largo del presente contrato podrá denominarse indistintamente como el bien). B) GARANTÍA FIDUCIARIA: Para garantizar al Banco cualquier saldo insoluto que pudiese dejar la garantía mobiliaria sobre el capital, intereses, comisiones y gastos judiciales, así como por la cantidad de [TextInput{\"system-name\":\"monto-garantia-fiduciaria-letras\"}] [Link:moneda] ([Link:simbolo-moneda].[Money{\"system-name\":\"monto-garantia-fiduciaria-numeros\"}]) la Parte Deudora me reconozco del Banco como tal, por dichos conceptos dejando afectos para el cumplimiento de esta obligación todos sus bienes, derechos y acciones presentes y futuros. Las partes otorgantes expresamente convenimos en que las amortizaciones que efectúe la Parte Deudora sobre el monto total del presente crédito, se aplicarán en primer lugar a la parte del crédito que se encuentra garantizada con la garantía fiduciaria antes mencionada, y hasta que la misma este totalmente pagada, las amortizaciones siguientes se aplicarán a la parte garantizada con garantía mobiliaria. CUARTA: Como Propietario del bien objeto de garantía mobiliaria antes identificado, declaro: a) Que el bien antes identificado nunca ha sido inscrito o registrado, razón por la cual el mismo carece de inscripción registral. b) Que dicho bien lo estimo en el precio de [TextInput{\"system-name\":\"valor-total-vehiculo-letras\"}] [Link:moneda] ([Link:simbolo-moneda].[Money{\"system-name\":\"valor-total-vehiculo-numeros\"}]); c) Que el bien fue adquirido por compra directa a [TextInput{\"system-name\":\"nombre-concesionario\"}], lo que acredito con la [TextInput{\"system-name\":\"serie-factura-numeros\"}] ([Link:serie-factura-numeros]) [TextInput{\"system-name\":\"serie-factura-letras\"}] ([TextInput{\"system-name\":\"numero-factura\"}]) de fecha [Date{\"system-name\":\"fecha-factura\"}], emitida por la entidad antes mencionada, documento que será suficiente para acreditar el dominio y propiedad del mismo en caso de incumplimiento, no obstante si fuere necesario su inscripción desde ya autoriza al Banco a registrarlo en el momento que corresponda, quedando dicha factura en custodia del Banco en tanto este crédito no se pague en su totalidad. Asimismo, el Garante desde ya se obliga a entregar el certificado de propiedad al Banco, quien lo guardará y entregará hasta que La Parte Deudora cancele totalmente lo adeudado, bajo pena que en caso de no hacerlo será causal de terminación anticipada del contrato. Queda terminantemente prohibido al Deudor o Garante la reimpresión del Certificado de Propiedad durante la vigencia de este contrato, salvo autorización del Acreedor Garantizado; d) Que, sobre el bien mueble antes identificado, no pesan gravámenes, anotaciones, arrendamientos, embargos, limitaciones, cuestiones administrativas o judiciales pendientes de resolución o cualesquiera otras limitaciones que pudiesen afectar los derechos del Banco, y en todo caso se somete al saneamiento de ley. e) Origen y uso lícito de fondos/bienes: (I) Todos los valores y/o bienes que entregue o utilice en virtud del presente contrato o que se relacionen con el mismo tendrán un origen lícito y en ningún caso provendrán o se originarán de actividades ilícitas en general, provenientes de lavado de dinero o relacionadas con cultivo, producción, fabricación, almacenamiento, transporte, tráfico ilícito de drogas, sustancias estupefacientes o psicotrópicas, con fondos vinculados a la estafa calificada, tráfico ilegal de armas, tráfico de personas, secuestro, extorsión, peculado, corrupción de servicios públicos, actos o financiamiento de terrorismo, y robo o tráfico internacional de vehículos o de cualquier otro tipo de bienes; (II) Que cualquier suma de dinero que proceda de o se relacione con el presente contrato y negocio jurídico subyacente no será utilizada para fines ilícitos o actividades que sean consideradas como ilícitas u operaciones conexas con los mismos y en especial, a los mencionados en el inciso (I) de la presente literal; (III) Autorizo en forma irrevocable para que durante el tiempo de existencia de la relación con dicha entidad (y el Grupo Financiero G&T Continental al cual pertenece), dentro de las normas de la confidencialidad aplicables, el Banco efectúe todas las indagaciones y averiguaciones que deba realizar para comprobar el origen de los fondos que ingresen, egresen, sean parte de una transacción o mantengan en depósitos de cualquier naturaleza o como inversión en dicha entidad o en cualquier otra entidad que forme parte del Grupo Financiero G&T Continental; (IV) Autorizo al Banco para que, en caso se inicien investigaciones en contra de la Parte Deudora o el propietario, relacionadas con las actividades que se mencionan en el inciso (I) de la presente literal, de este contrato o de cualquier otra naturaleza, pueda proporcionar a las autoridades competentes, la información requerida; (V) Reconozco y acepto que el Banco podrá dar por terminado anticipadamente el presente contrato, sin responsabilidad alguna de su parte y sin justificación alguna, así como exigir el pago total e inmediato de cualquier suma adeudada en virtud del mismo, adicionalmente a cualesquiera otros casos contemplados en el presente contrato y/o en la ley, en cualquiera de los siguientes casos: (v.a) En caso La Parte Deudora cometo una infracción o incumplimiento a lo establecido en la presente literal (antes o después de la firma del presente contrato) o sea señalada de esto (aunque no exista resolución judicial, o de cualquier otro tipo); y/o, (v.b) Si a criterio único y exclusivo del Banco, éste considera que cualquiera de las declaraciones relacionadas con este apartado de “Origen y uso lícito de fondos/bienes” son falsas o inexactas, o que existen indicios para creer que la Parte Deudora ha incurrido en actos ilegales o si los señalamientos a la Parte Deudora en este sentido pueden afectar el crédito y/o la reputación del Banco; y/o, (v.c) Por incumplimiento de cualesquiera obligaciones impuestas en el presente apartado de “Origen y uso lícito de fondos/bienes”. f) En tal virtud, como Parte Deudora libero al Banco de toda responsabilidad, daño o perjuicio que se derive o pueda causarse de la errónea, falsa o inexacta información que hubiere proporcionado o de la violación del mismo. Adicionalmente, exonero al Banco de toda responsabilidad por la cancelación de operaciones con la Parte Deudora, sin perjuicio de que esta acción pudiere haberse derivado de informaciones erróneas, falsas o inexactas que hubiere proporcionado o hubieren llegado a manos del Banco. QUINTA: DE LA GARANTÍA MOBILIARIA. Para los fines de la garantía mobiliaria aquí constituida se conviene entre las partes: a) Que como propietario del bien objeto de la garantía mobiliaria, me obligo a no vender, gravar o en cualquier otra forma enajenar su derecho sobre el mismo sin previa autorización dada por escrito por el Banco; b) [Link:garante-propietario], seré llamado indistintamente en el presente instrumento como el “Depositario” declaro expresamente que acepto el cargo que me ha sido asignado, que desempeñaré dicho cargo en forma gratuita, que tengo recibido y a mi entera satisfacción el bien objeto de garantía mobiliaria anteriormente identificado, y que ya me encuentro en la plena y pacífica posesión de su cargo así como del bien; que estoy enterado de mis derechos y obligaciones que como Depositario se me impone y me atribuye la Ley y el presente contrato, y que prometo desempeñar el cargo fiel y cumplidamente; c) La Parte Deudora y el Depositario aceptamos expresamente que El Banco tiene el derecho de solicitar la devolución del vehículo y/o remover al Depositario previamente designado, en ambos casos extrajudicialmente, en cualquier tiempo y sin necesidad invocar o expresar causa alguna. Si el Banco optare por solicitar de manera judicial la entrega del vehículo antes relacionado, el juez ante quien acuda, de plano y sin formar artículo, decretará la inmediata remoción de la persona que se encuentre fungiendo como Depositario en ese momento, y confirmará el nombramiento del nuevo Depositario que el Banco proponga, ordenando que de inmediato se le ponga en posesión efectiva del bien gravado; d) Los gastos de mantenimiento y conservación del bien corresponden única y exclusivamente a la Parte Deudora y/o el Depositario, no siendo el Banco responsable de éstos. Asimismo, la Parte Deudora y el Depositario exoneramos expresamente al Banco de cualquier daño o perjuicio que el depósito ampliamente relacionado pudiese haberle ocasionado. SEXTA: DE LA EJECUCIÓN DE LA GARANTÍA. El Deudor y Garante, así como el Acreedor Garantizado, de mutuo acuerdo declaran que en caso de incumplimiento en la obligación del presente crédito, el Acreedor Garantizado desde ya está facultado expresamente por El Deudor y Garante de ejecutar la garantía mobiliaria, a su propia y libre decisión, en consecuencia, aceptan expresamente someterse al procedimiento de ejecución de la garantía mobiliaria de conformidad con lo regulado en La Ley de Garantías Mobiliarias en especial los artículos cincuenta y ocho (58) y cincuenta y ocho bis (58 bis) y demás artículos relacionados en dicha Ley y leyes conexas, y aceptan expresamente que el Acreedor Garantizado a su libre decisión iniciar cualquiera de los procedimientos de ejecución privados o bien por la vía judicial de subasta pública, venta directa, o adjudicación en pago de la garantía mobiliaria, de conformidad con la Ley antes relacionada. En todo caso ambas partes pactan que, en caso de incumplimiento de La Parte Deudora, el Acreedor Garantizado puede adjudicarse en pago los bienes en garantía. Las partes acuerdan expresamente que el procedimiento antes indicado, es sin perjuicio del proceso que corresponda para ejecutar la garantía fiduciaria. SEPTIMA: OTRAS CONDICIONES: La Parte Deudora y Depositario expresamente: A) Acepto que el presente crédito pueda ser cedido, enajenado, gravado o negociado total o parcialmente, sin previa ni posterior notificación o autorización de la Parte Deudora. B) Acepto como buenas y exactas las cuentas que el Banco presente respecto de este negocio y como válido, líquido y ejecutivamente exigible el saldo que se le demande y como título ejecutivo el presente contrato. C) Acepto que todos los gastos notariales, judiciales y extrajudiciales que se originen del presente negocio, sus ampliaciones, modificaciones hasta su efectiva cancelación, son por cuenta y cargo exclusivo de la Parte Deudora. D) Renuncio al fuero de mi domicilio o cualquier otro que pudiere corresponderme, y me someto a los tribunales que el Banco elija para el caso de ejecución. E) Reconozco y acepto que la ejecución del presente crédito y la acción judicial del cobro del mismo se regirá por las disposiciones legales bancarias correspondientes, la Ley de Garantías Mobiliarias y sus reformas, y lo no contemplado en dichas leyes y resoluciones se regirá por el Derecho común. El Depositario que designe el Banco, no estará obligado a prestar garantía alguna ni el Banco se responsabiliza de su actuación y podrá bajo su responsabilidad, para el cumplimiento de su cargo, nombrar a uno o más auxiliares pactando con éstos las condiciones en que hayan de prestar sus servicios. F) Señalo como domicilio especial y como lugar para recibir todo tipo de comunicación, citación o notificaciones la siguiente dirección: [TextInput{\"system-name\":\"domicilio-especial-notificaciones\"}], y acepto que se tengan como válidas y bien hechas las practicadas o realizadas en dicho lugar, a no ser que hubiese dado aviso por escrito con por lo menos quince días de anticipación al Banco de cualquier cambio en la misma y obre en poder de la Parte Deudora aviso o constancia de recepción del Banco. G) En caso de ejecución, acepto que en los remates sirva de base a discreción del ejecutante, si se tratare de bienes muebles, la primera postura que se presente o el saldo del crédito más intereses, intereses moratorios y costas procesales o bien el valor resultante del avalúo de los bienes y si se trata de inmuebles el valor consignado en la matrícula fiscal o bien el saldo del crédito más intereses, intereses moratorios y costas procesales. H) La obligación a presentar, cuando el Banco así lo requiera, y en un plazo no mayor a treinta días a partir del requerimiento, los estados patrimoniales o los financieros debidamente auditados, según corresponda, cerrados a la fecha más próxima al requerimiento del Banco, así como los balances e información contable interna cuando el Banco se lo requiera cuando aplique. I) Autorizo al Banco para que éste, a través de las personas que designe, pueda realizar y practicar inspecciones sobre los bienes y derechos de la Parte Deudora, así como para comprobar el correcto destino de este crédito. J) Reconozco que fue con base a los bienes y derechos declarados en los estados patrimoniales o financieros presentados, que el Banco calificó y autorizó este crédito, razón por la cual me obligo expresamente a mantener dentro de mi patrimonio cuando menos, bienes y derechos que respalden el pago de esta obligación durante todo el plazo de vigencia de la misma y sus prórrogas si las hubiere. Como Parte Deudora entiendo que haber declarado información y datos inexactos o falsos al Banco son hechos constitutivos de delito. K) Reconozco que mientras estén vigentes las obligaciones a que se refiere este contrato no se podrá sin contar con la anuencia del Banco expresada por escrito, enajenar o dar en garantía mobiliaria, bajo ningún concepto el referido bien, constituir limitación sobre el mismo, ni darlo en uso, usufructo, arrendamiento, comodato o depositarlo en tercera persona, así como destinarlo a servicio de Taxi o transporte colectivo de personas o cosas, sacarlo del territorio nacional por plazos mayores a veinte días calendario sin la autorización del Banco o disponer en forma distinta a lo dispuesto en este contrato. L) En el caso de la Parte Deudora, para el evento de que tuviese diversas obligaciones o garantías por una obligación a favor del Banco, renuncia a cualquier derecho de imputación de pago y autoriza irrevocablemente al Banco para que aplique a la liberación de la obligación o del gravamen que estime conveniente cualquier pago que por el concepto de capital e intereses haga la deudora como consecuencia del presente crédito. En consecuencia, el Banco podrá aplicar a su elección los pagos por capital, intereses, comisiones, seguro y gastos, a la liberación de las obligaciones o de los gravámenes relacionados en este u otro documento bajo el principio de que se liberará en último orden la obligación o el gravamen que ofrezca más garantía al crédito. M) Reconozco que el Banco puede iniciar acción ejecutiva en mi contra y me embargue bienes de mi propiedad y los lleve a remate y adjudicación en forma totalmente independiente a lo contemplado en la Ley de Garantías Mobiliarias, para la ejecución de la garantía mobiliaria. N) El Banco podrá dar por vencido el plazo del presente contrato y exigir el cumplimiento de la obligación, si dentro de los treinta días previos a la fecha de valuación, la cual el Banco dará a conocer en la forma que considere conveniente, o previos al vencimiento del plazo del presente crédito, no hubiese entregado la Parte Deudora al Banco la siguiente documentación: N.a.) En caso de sociedades mercantiles, estados financieros auditados al cierre del último período contable y estados financieros administrativos con integraciones de las principales cuentas, y que no excedan de seis meses de antigüedad con referencia la fecha de valuación, o previos a la fecha de la solicitud de dicha prórroga, según lo que corresponda; N.b.) Flujo de caja proyectado para el periodo del financiamiento, en forma mensual para el primer año, y en forma anual para los años restantes del plazo del crédito, incluyendo los supuestos utilizados para su elaboración y las variables que darán los resultados esperados, que permitan establecer la factibilidad del cumplimiento de sus obligaciones con el Banco, firmado por el representante legal; y, N.c.) Actualización del perfil del deudor y el propietario del bien, si fuere el caso, según los requerimientos del Banco. Ñ) Declaro que no tengo impedimento o limitación alguna, para la contratación de este crédito, en virtud de cualquier relación o vinculación con personas naturales y/o jurídicas que constituyan una misma unidad de riesgo. O) Acepto, en el caso de la Parte Deudora, que el Banco le pueda trasladar y cobrar el costo financiero que las autoridades monetarias, bancarias y financieras fijaren en concepto de reserva sobre este crédito. OCTAVA: VENCIMIENTO ANTICIPADO. El Banco podrá dar por vencido en forma anticipada el plazo del presente crédito, en forma inmediata y sin necesidad de declaración judicial previa, y podrá solicitar el pago íntegro del saldo del crédito, intereses, comisiones y demás sumas adeudadas al Banco, por cualesquiera de las siguientes razones: A) Si como Parte Deudora invierto o destino este crédito en forma distinta de la estipulada. B) Por el incumplimiento de cualquiera de las obligaciones que contraigo como Parte Deudora y/o Depositario mediante el presente documento y de las establecidas en las leyes y disposiciones monetarias correspondientes. C) Por falta de pago de uno de los pagos a capital, comisiones, intereses, seguro y gastos que corresponden a la Parte Deudora. D) Cuando a juicio del Banco, los estados patrimoniales o financieros, según corresponda, reflejen una baja considerable y en todo caso en los mismos conste que la persona se encuentra insolvente o en estado de quiebra. E) Si la Parte Deudora fuere objeto de cualquier tipo de ejecución con motivo de cualquier otra deuda con el Banco y/o con cualquier tercero. F) Si los bienes de la Parte Deudora fueren objeto de embargo o en el caso de insolvencia o quiebra de la Parte Deudora. G) Cuando se ha iniciado un proceso de ejecución en contra del Deudor, el Depositario o Fiador (en caso exista Fiador). H) En el caso que La Parte Deudora fuere una persona jurídica, y sus accionistas realizaran la venta, cesión, endoso, transmisión, administración, usufructo, deposito, garantía, traspaso y/o cualquier otra forma de disposición o acto traslativo de dominio de las acciones que conforman el capital pagado de la sociedad deudora y/o que exista un cambio parcial o total del control accionario de la sociedad, sin previa autorización, expresa y por escrito del BANCO. NOVENA: Como Parte Deudora por este acto acepto y autorizo al Banco así como a cualquier otra entidad que pertenezca al Grupo Financiero G&T Continental, que para el pago de los gastos por cualquier concepto derivados del presente contrato, intereses, comisiones tanto presentes como las futuras que el Banco llegue a establecer, las cuales desde ya acepto como Parte Deudora, seguro y capital, puedan ser debitados directamente o por requerimiento del Banco de cualquier cuenta de depósito, inversión, certificado, título o derecho que posea en el Banco así como a cualquier otra entidad que pertenezca al Grupo Financiero G&T Continental, para cuyo efecto les extiendo autorización irrevocable y me comprometo a mantener saldos suficientes para tal propósito durante todo el plazo de la obligación o sus prórrogas. DÉCIMA: Como Banco acepto por medio de mi representante legal en forma expresa la garantía mobiliaria constituida a mi favor. DECIMA PRIMERA: Los otorgantes, en el carácter con que actuamos, declaramos expresamente nuestra aceptación a este contrato. Los comparecientes hacemos constar: A) De lo relacionado; B) Que hemos tenido a la vista la documentación antes relacionada, así como el título con el cual se acredita la propiedad del bien dado en garantía; C) De estar conscientes del contenido, validez, objeto y efectos legales de este contrato, así como de su obligación de registro; y, D) De que leímos íntegramente el contenido de este contrato, por lo que lo aceptamos, ratificamos y firmamos. ",
+      "runs": [
+        {
+          "text": "En la ciudad de Guatemala, el ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Date{\"system-name\":\"dia-contrato\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "de ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"mes-contrato\"}] ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "del año ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"anio-contrato\"}] ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "comparecemos: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "A) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"nombre-representante-legal\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"edad-representante-legal\"}]  ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "años, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"texto-representante-legal\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": ", entidad que en el transcurso del presente instrumento público se le podrá denominar indistintamente como El Banco, Banco o Acreedor Garantizado. Yo, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "[Link:nombre-representante-legal]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "me encuentro debidamente facultado para este acto, de conformidad con lo dispuesto en la resolución de Gerencia número ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"resolucion-gerencia-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "(",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"resolucion-gerencia-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "de fecha ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": "[Date{\"system-name\":\"fecha-resolucion-gerencia\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": " B)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"nombre-deudor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": ",",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": " declaro ser de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"edad-deudor\"}] ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 31
+        },
+        {
+          "text": "años, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 32
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"estado-civil-deudor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 33
+        },
+        {
+          "text": ", ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 34
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"nacionalidad-deudor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 35
+        },
+        {
+          "text": ", ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 36
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"profesion-deudor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 37
+        },
+        {
+          "text": ",  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 38
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"domicilio-deudor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 39
+        },
+        {
+          "text": " y me identifico con el documento personal de identificación (DPI) con código único de identificación (CUI) número ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 40
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"id-deudor-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 41
+        },
+        {
+          "text": " (",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 42
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"id-deudor-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 43
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 44
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 45
+        },
+        {
+          "text": "extendido por el Registro Nacional de las Personas.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 46
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 47
+        },
+        {
+          "text": "C) ",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 48
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"nombre-depositario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 49
+        },
+        {
+          "text": " declaro ser de ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 50
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"edad-depositario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 51
+        },
+        {
+          "text": " años, ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 52
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"estado-civil-depositario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 53
+        },
+        {
+          "text": ", ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 54
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"nacionalidad-depositario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 55
+        },
+        {
+          "text": ", ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 56
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"profesion-depositario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 57
+        },
+        {
+          "text": ",  ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 58
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"domicilio-depositario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 59
+        },
+        {
+          "text": " y me identifico con el documento personal de identificación (DPI) con código único de identificación (CUI) número ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 60
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"id-depositario-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 61
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 62
+        },
+        {
+          "text": "(",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 63
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"id-depositario-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 64
+        },
+        {
+          "text": ") ",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 65
+        },
+        {
+          "text": "extendido por el Registro Nacional de las Personas",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 66
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 67
+        },
+        {
+          "text": " Los comparecientes manifestamos que la representación que se ejercita es suficientemente amplia para la celebración del presente contrato, de encontrarnos en el libre ejercicio de nuestros derechos civiles, ser de los datos de identificación personal antes consignados; y en las calidades con que comparecemos, por el presente acto convenimos en celebrar ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 68
+        },
+        {
+          "text": "CONTRATO DE CRÉDITO BANCARIO CON GARANTÍA MOBILIARIA Y FIDUCIARIA",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 69
+        },
+        {
+          "text": " de conformidad con las siguientes cláusulas: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 70
+        },
+        {
+          "text": "PRIMERA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 71
+        },
+        {
+          "text": ": DEL CREDITO",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 72
+        },
+        {
+          "text": ": El Banco abrirá un crédito por la cantidad de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 73
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"monto-credito-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 74
+        },
+        {
+          "text": " (Q.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 75
+        },
+        {
+          "text": " [Money{\"system-name\":\"monto-credito-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 76
+        },
+        {
+          "text": ")",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 77
+        },
+        {
+          "text": ", a favor de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 78
+        },
+        {
+          "text": "[Link:nombre-deudor]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 79
+        },
+        {
+          "text": " (en adelante referido simple e indistintamente como la “",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 80
+        },
+        {
+          "text": "Parte Deudora",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 81
+        },
+        {
+          "text": "”)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 82
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 83
+        },
+        {
+          "text": "por dicho valor me reconozco liso y llano deudor del Banco. Como Parte Deudora me comprometo expresamente a presentar oportunamente al Banco la siguiente documentación: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 84
+        },
+        {
+          "text": "a)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 85
+        },
+        {
+          "text": " El presente documento con firmas legalizadas y una fotocopia simple del mismo; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 86
+        },
+        {
+          "text": "b)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 87
+        },
+        {
+          "text": " Constancia del referido Registro en donde conste que la garantía mobiliaria constituida a favor del Banco, tiene prelación sobre cualquier otro derecho y que el bien mueble objeto de la garantía mobiliaria se encuentra libre de anotaciones, gravámenes y limitaciones, salvo aquellas constituidas a favor del Banco, así como una fotocopia simple de la misma. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 88
+        },
+        {
+          "text": "SEGUNDA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 89
+        },
+        {
+          "text": ": CONDICIONES GENERALES. ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 90
+        },
+        {
+          "text": "Este contrato se regirá por las siguientes estipulaciones, sin perjuicio de cualesquiera otras que aparezcan mencionadas en esta misma escritura: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 91
+        },
+        {
+          "text": "A)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 92
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 93
+        },
+        {
+          "text": "FORMA DE ENTREGA: Como Parte Deudora instruyo irrevocablemente al Banco para que la totalidad del monto del presente crédito se pague de manera inmediata y directa a la entidad vendedora que se identifica más adelante. B)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 94
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 95
+        },
+        {
+          "text": "DESTINO:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 96
+        },
+        {
+          "text": " El importe de este crédito será destinado a ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 97
+        },
+        {
+          "text": "la compra del vehículo que se ofrece en garantía",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 98
+        },
+        {
+          "text": ", y por lo tanto el producto de este crédito se destinará exclusivamente para el pago de dicho vehículo. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 99
+        },
+        {
+          "text": "C) PLAZO:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 100
+        },
+        {
+          "text": " El plazo para pagar la suma debida es de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 101
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"plazo-prestamo-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 102
+        },
+        {
+          "text": " (",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 103
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"plazo-prestamo-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 104
+        },
+        {
+          "text": ")",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 105
+        },
+        {
+          "text": " MESES",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 106
+        },
+        {
+          "text": ", contados a partir del quinto (5) día calendario del mes más próximo de la fecha de su desembolso, y, en consecuencia, vencerá en la fecha del último pago, lo cual el Banco podrá probar con la emisión del documento que éste considere conveniente",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 107
+        },
+        {
+          "text": ".",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 108
+        },
+        {
+          "text": " Para futuras modificaciones al plazo del crédito podrá ser modificado, a criterio del Banco, contra la simple solicitud firmada por La Parte Deudora, para cuyo efecto, el Banco emitirá la resolución que corresponda y el documento legal será firmado únicamente por éste.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 109
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 110
+        },
+        {
+          "text": "D) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 111
+        },
+        {
+          "text": "FORMA DE PAGO",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 112
+        },
+        {
+          "text": ":",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 113
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 114
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 115
+        },
+        {
+          "text": "El monto total de la presente deuda lo pagará mediante:",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 116
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 117
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"cantidad-cuotas-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 118
+        },
+        {
+          "text": " (",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 119
+        },
+        {
+          "text": "[Link:cantidad-cuotas-letras]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 120
+        },
+        {
+          "text": ")",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 121
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 122
+        },
+        {
+          "text": "amortizaciones a capital mensuales y consecutivas de",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 123
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 124
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 125
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"monto-cuotas-letras\"}] [TextInput{\"system-name\":\"moneda\"}] ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 126
+        },
+        {
+          "text": " (",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 127
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"simbolo-moneda\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 128
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 129
+        },
+        {
+          "text": "[Money{\"system-name\":\"monto-cuotas-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 130
+        },
+        {
+          "text": ")",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 131
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 132
+        },
+        {
+          "text": "correspondiendo efectuarlas el quinto (5) día calendario de cada mes a partir del mes siguiente del inicio de la vigencia del plazo y el saldo si hubiere al vencimiento del plazo. En caso de no ser posible realizarla en el último día pactado para el pago, deberá efectuarse el día hábil inmediato anterior al que correspondía. ",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 133
+        },
+        {
+          "text": "Las amortizaciones comprenden: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 134
+        },
+        {
+          "text": "Amortizaciones a capital. Las amortizaciones y/o cuotas, según lo que corresponda, no incluyen las primas del seguro del vehículo, los gastos por conceptos de comisiones, intereses moratorios, gastos judiciales, la variabilidad de la tasa de interés y las demás que no figuren expresamente en las literales que anteceden. Asimismo, las partes convienen que la Parte Deudora podrá hacer amortizaciones anticipadas a capital, las que, salvo pacto en contrario, se aplicarán como pago anticipado de la o las amortizaciones mensuales inmediatas siguientes pactadas y que en forma completa se alcance a cubrir. Al agotarse las sumas entregadas en forma anticipada, la Parte Deudora deberá continuar con el pago de las amortizaciones en la forma pactada originalmente al principio de esta cláusula. En tal virtud, al efectuarse los pagos anticipados en la forma anteriormente señalada, el Banco tendrá por cubiertas y por bien pagadas las amortizaciones inmediatas subsiguientes a la fecha en la que se hizo el pago anticipado tal y como si La Parte Deudora hubiese efectuado dichos pagos en la forma y con la periodicidad pactada por lo que la obligación de pago pactada deberá reasumirse por La Parte Deudora al momento que los fondos entregados en forma anticipada se agoten. Se deja expresamente pactado que, al momento de agotarse los fondos pagados en forma anticipada, si por cualquier motivo no se cubre una amortización completa en la forma pactada en el presente contrato, La Parte Deudora deberá pagar el faltante de dicha amortización, a más tardar, en la fecha pactada en el presente contrato para cada amortización mensual y posteriormente deberá continuar con los pagos en la forma y tiempos acordados en el presente instrumento. Todo pago adeudado en virtud del presente contrato y por cualquier concepto deberá ser efectuado sin necesidad de cobro ni requerimiento alguno. Para futuras modificaciones a la forma de pago de este crédito se podrá hacer de la siguiente forma, a discreción del Banco: El deudor presentará solicitud firmada únicamente por éste, indicando la forma de pago que desea. Si el Banco autoriza dicha modificación, éste emitirá la resolución correspondiente, elaborando para el efecto, el documento interno de respaldo el cual será firmado únicamente por el Banco",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 135
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 136
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 137
+        },
+        {
+          "text": "Penalización:",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 138
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 139
+        },
+        {
+          "text": "En caso el deudor desee realizar la cancelación anticipada del monto total del crédito, en cualquier tiempo, el deudor deberá pagar al Banco, en concepto de penalización, la cantidad de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 140
+        },
+        {
+          "text": "QUINIENTOS QUETZALES (Q.500.00).",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 141
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 142
+        },
+        {
+          "text": "E) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 143
+        },
+        {
+          "text": "I",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 144
+        },
+        {
+          "text": "NTERESES: TASA ANUAL FIJA:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 145
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 146
+        },
+        {
+          "text": " Las partes pactamos libre y expresamente una tasa de interés variable, la que la Parte Deudora reconoce y pagara al Banco así: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 147
+        },
+        {
+          "text": "E.a.)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 148
+        },
+        {
+          "text": " La tasa de interés se establece en el",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 149
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 150
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"tasa-primer-anio-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 151
+        },
+        {
+          "text": " POR CIENTO (",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 152
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"tasa-primer-anio-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 153
+        },
+        {
+          "text": " %) ANUAL FIJA",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 154
+        },
+        {
+          "text": ", Por el plazo inicialmente establecido, dichos intereses seran pagados en forma anticipada por el Distribuidor del Vehiculo, según convenio descrito. En caso de prorroga del plazo o mora en pago de las cuotas niveladas, la tasa de interes será variable. La tasa de interés anual equivalente es del ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 155
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"tasa-anual-equivalente-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 156
+        },
+        {
+          "text": " por ciento (",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 157
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"tasa-anual-equivalente-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 158
+        },
+        {
+          "text": " %).",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 159
+        },
+        {
+          "text": " La tasa fijada inicialmente en ninguna forma podrá entenderse como tasa pactada o fija, toda vez que la variabilidad de la misma podrá exceder a esta fijación inicial en la formas establecidas anteriormente, lo cual como Parte Deudora acepto expresamente. Sobre los intereses que no sean pagados en las fechas pactadas y al vencimiento y, hasta que se cancele totalmente este crédito, el Banco cargará y cobrará un recargo por intereses en mora, la cual se fija por el momento en doce por ciento (12.00%) anual, sobre el capital vencido, sin perjuicio de dar por vencido el plazo del presente contrato y cobrar ejecutivamente cualquier saldo que se le adeude. El Banco podrá durante la vigencia del presente crédito, variar la tasa de interés moratoria, fijando para tal efecto su importe, lo que me comunicará en la forma que considere conveniente. La obligación de pago de los intereses bajo las estipulaciones convenidas en este contrato subsistirá aún después de vencido el plazo y hasta el efectivo pago total de la deuda; y, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 160
+        },
+        {
+          "text": "E.b.) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 161
+        },
+        {
+          "text": "Sobre las amortizaciones y/o cuotas, según lo que corresponda, que no sean pagados en las fechas pactadas y al vencimiento y, hasta que se cancele totalmente este crédito, el Banco a su discreción cargará y cobrará un recargo por intereses en mora en la forma y condiciones establecidas en el punto anterior; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 162
+        },
+        {
+          "text": "E.c.) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 163
+        },
+        {
+          "text": "Conforme el Banco vaya fijando nuevas tasas de interés en el futuro, la tasa de interés inicial aquí pactada irá variando, ya sea aumentando o disminuyendo, y en todo caso ajustándose automáticamente a partir de la fecha en que el Banco resuelva la variación de la tasa y la misma cobre vigencia. El Banco comunicará dicho cambio a La Parte Deudora por cualquier medio escrito o de difusión que estime conveniente;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 164
+        },
+        {
+          "text": " E.d.) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 165
+        },
+        {
+          "text": "En caso de variación de la tasa de interés en este crédito, no será necesario formalizar la misma, salvo el procedimiento ya indicado. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 166
+        },
+        {
+          "text": "F) COMISION:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 167
+        },
+        {
+          "text": " Como Parte Deudora reconozco y acepto expresamente que El Banco podrá fijar su importe y cobrar adicionalmente al monto de las amortizaciones y/o cuotas, según lo que corresponda, comisiones durante la vigencia de este crédito y por sus prórrogas, lo que comunicará a la Parte Deudora por cualquier medio. El Banco también podrá fijar su importe y cobrar un recargo por mora por la falta de pago de cualquier comisión, que será igual al recargo por mora de los intereses, el cual se cobrará sobre el valor total de la comisión no pagada y referido al período de la misma o motivo de la comisión. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 168
+        },
+        {
+          "text": "COMISIÓN POR ADMINISTRACIÓN DE CRÉDITO EN MORA: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 169
+        },
+        {
+          "text": "El Banco establece una comisión por administración de crédito en mora, la cual se fija en este momento en doscientos quetzales (Q.200.00), que cobrará de forma directa y se cargará a la cuota que sea pagada en fecha posterior a la fecha de pago establecida. El Banco podrá durante la vigencia del presente crédito, variar la comisión anteriormente establecida y cobrar otro tipo de comisiones, fijando para tal efecto su importe, lo que me comunicará en la forma que considere conveniente. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 170
+        },
+        {
+          "text": "G) SEGURO:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 171
+        },
+        {
+          "text": " Como parte deudora me obligo a tomar y mantener en vigor durante todo el plazo de esta obligación un seguro sobre el bien mueble que da en garantía que cubra todo tipo de riesgo y siniestro, por un monto no menor de",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 172
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 173
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"seguro-total-letras\"}] [Link:moneda]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 174
+        },
+        {
+          "text": " (",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 175
+        },
+        {
+          "text": "[Link:simbolo-moneda] [Money{\"system-name\":\"seguro-total-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 176
+        },
+        {
+          "text": "),",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 177
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 178
+        },
+        {
+          "text": "anuales, y a endosar a favor del Banco la póliza respectiva, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 179
+        },
+        {
+          "text": "excluyendo de la misma la cláusula de coaseguro,",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 180
+        },
+        {
+          "text": " para que en cualesquiera de los casos de indemnización se pague preferentemente al Banco cualquier saldo pendiente de este crédito. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 181
+        },
+        {
+          "text": "En todo caso la parte deudora es la única y entera responsable por contratar la cobertura adicional para menores de veintiún años de edad. ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 182
+        },
+        {
+          "text": "En virtud de la contratación del seguro por la parte deudora con Seguros G&T, Sociedad Anónima, en adelante indistintamente Seguros G&T; como parte deudora pagaré el seguro contratado por medio del Banco, siendo la única obligada frente a Seguros G&T, por lo que el Banco no asume responsabilidad alguna ya que únicamente recibirá en nombre de Seguros G&T el valor de la prima correspondiente; y se compromete a cancelarle al Banco en la forma adelante indicada, las primas del seguro contratado, para que en su nombre realice los pagos correspondientes los cuales quedarán de la siguiente forma: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 183
+        },
+        {
+          "text": "a) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 184
+        },
+        {
+          "text": "Pagos anticipados, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 185
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"forma-pago-prima-seguro\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 186
+        },
+        {
+          "text": " y consecutivos, de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 187
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"cuota-seguro-letras\"}] [Link:moneda]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 188
+        },
+        {
+          "text": " (",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 189
+        },
+        {
+          "text": "[Link:simbolo-moneda][Money{\"system-name\":\"cuota-seguro-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 190
+        },
+        {
+          "text": ")",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 191
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 192
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 193
+        },
+        {
+          "text": "b",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 194
+        },
+        {
+          "text": ") ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 195
+        },
+        {
+          "text": "Durante el plazo del financiamiento, prima iniciará a partir del quinto (5) dia calendario del mes mas proximo a partir de la fecha de su desembolso, y en consecuencia vencerá en la fecha del ultimo pago. Las partes acuerdan, que el procedimiento para modificar la forma de pago del seguro antes relacionado, podrá ser, a criterio del Banco, contra la simple solicitud firmada por La Parte Deudora, la cual podrá solicitar únicamente, una vez durante la vigencia del crédito, para cuyo efecto el Banco emitirá la resolución que corresponda y el documento legal será firmado únicamente por éste, la póliza contratada debe de ser una póliza Producto AFIN de Seguros G&T, Sociedad Anónima. ",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 196
+        },
+        {
+          "text": "Tanto el monto del seguro como las primas del mismo podrán variar, ya sea aumentar o disminuir, en un futuro a juicio de la entidad aseguradora, lo cual acepto expresamente como parte deudora. En caso de siniestro, el Banco podrá dar por vencido el plazo de esta obligación y hacerse pago total o parcial con el producto de dicho seguro. Las partes convenimos expresamente en que los pagos del seguro los pagará la parte deudora en las mismas fechas en que se paguen las amortizaciones y/o cuotas, según lo que corresponda, de este crédito y sin necesidad de cobro o requerimiento alguno en las cajas del Banco, entidad que se obliga a entregar dichos montos a la Compañía Aseguradora en los tiempos que para el efecto convenga con esta última. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 197
+        },
+        {
+          "text": "Asimismo, las partes manifestamos que las primas del Seguro no forman parte de las amortizaciones y/o cuotas, según lo que corresponda,",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 198
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 199
+        },
+        {
+          "text": "por lo que a las mismas deberán cargarse o sumárseles las cantidades correspondientes al Seguro contratado.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 200
+        },
+        {
+          "text": " Como parte deudora por este acto faculto al Banco para el caso en que no pague las primas del seguro en su oportunidad, las pague éste por mí y en tal caso me cargue su importe y cobre intereses sobre tales cargos, pudiendo el Banco incrementar dicha cantidad en forma proporcional y adicional al monto de las cuotas del seguro, y a falta de pago de la prima del seguro correspondiente, se podrá dar por vencido el plazo de este contrato. La disminución de las primas del seguro correspondientes se entiende relacionada directamente con la depreciación a que el vehículo objeto de este contrato está afecto por su uso y desgaste normal. Como parte deudora reconozco y acepto expresamente que los pagos del seguro podrán variar en el futuro, ya sea aumentar o disminuir de conformidad con las condiciones del mercado. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 201
+        },
+        {
+          "text": "La Parte deudora y el depositario respectivamente entienden que la aseguradora con la cual se contrate el seguro relacionado, tomará ante el evento de un riesgo o siniestro de los contemplados en la póliza de mérito, para los efectos de la indemnización correspondiente, el valor real de mercado del vehículo identificado en este instrumento. H)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 202
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 203
+        },
+        {
+          "text": "AMBIENTAL",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 204
+        },
+        {
+          "text": ": ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 205
+        },
+        {
+          "text": "Declaro: (i) Que a mi leal saber y entender, no me encuentra en violación de ley o regulación alguna en materia ambiental y/o laboral vigente en la República de Guatemala; (ii) Que cumpliré con la regulación ambiental o laboral que me sea aplicable; y, (iii) Que no he recibido ni tengo conocimiento de que exista alguna denuncia, orden, reclamo, citación, notificación, demanda o cualquier otra queja, documento o proceso legal judicial, extrajudicial, o administrativo, público o privado, en mi contra, por temas de índole ambiental. Como Parte Deudora expresamente reconozco y acepto que el Banco podrá dar por terminado anticipadamente el presente crédito, sin responsabilidad alguna de su parte, y exigir el pago total e inmediato del mismo, adicionalmente a cualesquiera otros casos contemplados en el presente contrato y/o en la ley, si a criterio único y exclusivo del Banco, éste considera que cualquiera de las declaraciones contenidas en el presente apartado son falsas o inexactas; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 206
+        },
+        {
+          "text": "I).",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 207
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 208
+        },
+        {
+          "text": "AUSENCIA DE PRÁCTICAS NO ÉTICAS:",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 209
+        },
+        {
+          "text": " La Parte Deudora y Parte Garante: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 210
+        },
+        {
+          "text": "(I) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 211
+        },
+        {
+          "text": "Declaramos y afirmamos que, previo a la firma del presente contrato, no hemos cometido, inducido a, participado en, o nos hemos beneficiado de forma alguna de “prácticas no éticas”, especialmente las siguientes: (I.i) Perjudicar o dañar, o la amenaza de perjudicar o dañar, de manera directa o indirecta al Banco, a las entidades del grupo financiero al que éste pertenece, sus Directores, empleados, funcionarios, asesores y/o terceras personas o la propiedad de éstos, a fin de influir de manera impropia en sus acciones; (I.ii) Promover, participar o influir para que se lleven a cabo acuerdos entre dos o más partes diseñados para lograr un propósito deshonesto o ilegal, incluyendo el influenciar de manera deshonesta o ilegal las acciones de un tercero; (I.iii) Ofrecer, dar, recibir o solicitar, directa o indirectamente, cualquier bien o acción para influir de manera impropia o ilegal en las acciones de otra parte; (I.iv) Promover, llevar a cabo o influir para que se lleve a cabo cualquier acción u omisión, incluyendo declaraciones falsas, que conscientemente o imprudentemente induzcan al error, o pretendan inducir al error, a una parte para obtener un beneficio de cualquier tipo o para evitar el cumplimiento de una obligación; (I.v) Destruir, falsificar, alterar u ocultar evidencia importante para una investigación o realizar declaraciones falsas a investigadores o cualquier entidad o funcionario público o privado a efecto de impedir una investigación sobre acusaciones de actos de corrupción o prácticas no éticas y/o amenazar, acosar o intimidar a cualquier parte para evitar que revele lo que conoce respecto del asunto que sea relevante a la investigación; y/o, (I.vi) Promover, participar o influir para que se lleven a cabo actos tendientes a impedir de manera significativa el ejercicio de los derechos de los Bancos para acceder a información contractualmente requerida en relación con una investigación sobre acusaciones de un acto de corrupción (distinto a una práctica obstructiva). ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 212
+        },
+        {
+          "text": "(II)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 213
+        },
+        {
+          "text": " Declaramos que conocemos los principios, normas y procedimientos contemplados en las Leyes de la República de Guatemala, especialmente la Ley Contra el Lavado de Dinero u Otros Activos y la Ley Para Prevenir y Reprimir el Financiamiento del Terrorismo y sus reglamentos, en virtud de lo cual, nos comprometemos y obligamos al estricto cumplimiento y observancia de dichas Leyes y que no hemos violado ninguna de dichas normas previo a la firma del presente contrato. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 214
+        },
+        {
+          "text": "(III) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 215
+        },
+        {
+          "text": "Nos comprometemos y obligamos, ahora y en un futuro, a no cometer, inducir a, participar en, o beneficiarse de cualesquiera “prácticas no éticas”, y a no violar en forma alguna cualesquiera principios, normas y procedimientos contenidos en las leyes detalladas en la literal (II) que antecede y/o en cualesquiera leyes o reglamentos actuales o futuros relacionados a materias iguales o similares a las leyes anteriormente relacionadas. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 216
+        },
+        {
+          "text": "(IV) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 217
+        },
+        {
+          "text": "Nos obligamos a informar al Banco en forma inmediata y por escrito de cualquier situación o potencial situación que involucre o pueda involucrar a la Parte Deudora y/o Parte Garante (en forma conjunta o separada) en cualquier caso o situación de “prácticas no éticas”. La Parte Deudora y Parte Garante expresamente reconocemos y aceptamos que el Banco podrá dar por terminado anticipadamente el presente crédito, sin responsabilidad alguna de su parte y sin justificación alguna, y exigir el pago total e inmediato del mismo, adicionalmente a cualesquiera otros casos contemplados en el presente contrato y/o en la ley, en cualquiera de los siguientes casos: (a) En caso cualquiera de nosotros (en forma conjunta o separada) haya incurrido en cualquier tipo de “práctica no ética” (antes o después de la firma del presente contrato) o cualquiera de nosotros sea señalada de esto (aunque no exista resolución judicial, o de cualquier otro tipo); y/o, (b) En caso cualquiera de nosotros sea señalada ahora o en un futuro de haber violado, o haya violado o viole en el futuro (aunque no exista resolución judicial, o de cualquier otro tipo en cualquier caso) la Ley Contra el Lavado de Dinero u Otros Activos y/o la Ley Para Prevenir y Reprimir el Financiamiento del Terrorismo y sus reglamentos, y/o cualesquiera otras leyes o reglamentos actuales o futuros relacionados a materias iguales o similares a las de las leyes anteriormente relacionadas; y/o, (c) Si la Parte Deudora fuere incluida en las listas para el control de lavado de activos y financiación del terrorismo administradas por cualquier autoridad nacional o extranjera, tales como la lista de la Oficina de Control de Activos en el Extranjero (“OFAC” por sus siglas en inglés) de la Oficina del Departamento del Tesoro de los Estados Unidos de América, la lista de la Organización de las Naciones Unidas y/u otras listas publicas relacionadas con los temas de lavado de activos y financiación del terrorismo; y/o (d) Si a criterio único y exclusivo del Banco, éste considera que cualquiera de las declaraciones relacionadas con este apartado de “ausencia de prácticas no éticas” son falsas o inexactas, o que existen indicios para creer que se ha incurrido en “prácticas no éticas” por cualquiera de ellas y/o que se ha violado cualquiera de las normas antes señaladas (presentes o futuras) o si los señalamientos a la Parte Deudora y/o Parte Garante (en forma conjunta o separada) en este sentido pueden afectar el crédito y/o la reputación del Banco; y/o, (e) Por incumplimiento de cualesquiera obligaciones impuestas en el presente apartado de “ausencia de prácticas no éticas”.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 218
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 219
+        },
+        {
+          "text": "TERCERA:",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 220
+        },
+        {
+          "text": " GARANTIAS: A)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 221
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 222
+        },
+        {
+          "text": "GARANTÍA MOBILIARIA:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 223
+        },
+        {
+          "text": " En garantía del pago ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 224
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"monto-garantia-mobiliaria-letras\"}] [Link:moneda]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 225
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 226
+        },
+        {
+          "text": "(",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 227
+        },
+        {
+          "text": "[Link:simbolo-moneda][Money{\"system-name\":\"monto-garantia-mobiliaria-numeros\"}])",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 228
+        },
+        {
+          "text": ", más intereses, costas, gastos de cobranza y cualesquiera otras obligaciones exigibles en virtud de la ley o de este contrato, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 229
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"garante-propietario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 230
+        },
+        {
+          "text": ", en este contrato indistintamente el Garante o el Propietario del bien, ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 231
+        },
+        {
+          "text": "constituyo expresamente a favor del ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 232
+        },
+        {
+          "text": "BANCO G&T CONTINENTAL, SOCIEDAD ANÓNIMA",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 233
+        },
+        {
+          "text": ", garantía mobiliaria sin posesión, sobre el vehículo de mi propiedad identificado de la manera siguiente: TIPO: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 234
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"tipo-vehiculo\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 235
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 236
+        },
+        {
+          "text": "MARCA: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 237
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"marca-vehiculo\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 238
+        },
+        {
+          "text": ", MODELO:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 239
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 240
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"modelo-vehiculo\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 241
+        },
+        {
+          "text": ", COLOR: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 242
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"color-vehiculo\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 243
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 244
+        },
+        {
+          "text": "LINEA: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 245
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"linea-vehiculo\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 246
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 247
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 248
+        },
+        {
+          "text": "PASAJEROS: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 249
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"cantidad-pasajeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 250
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 251
+        },
+        {
+          "text": "COMBUSTIBLE: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 252
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"tipo-combustible\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 253
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 254
+        },
+        {
+          "text": "PUERTAS:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 255
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 256
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"cantidad-puertas\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 257
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 258
+        },
+        {
+          "text": "CILINDROS: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 259
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"cilindraje-motor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 260
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 261
+        },
+        {
+          "text": "EJES: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 262
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"cantidad-ejes\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 263
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 264
+        },
+        {
+          "text": "CENTÍMETROS CÚBICOS: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 265
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"cc-motor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 266
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 267
+        },
+        {
+          "text": "SERIE, CHASIS Y VIN: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 268
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"numero-vin\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 269
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 270
+        },
+        {
+          "text": "MOTOR NÚMERO: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 271
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"numero-motor\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 272
+        },
+        {
+          "text": ", (a lo largo del presente contrato podrá denominarse indistintamente como el bien). B) GARANTÍA FIDUCIARIA: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 273
+        },
+        {
+          "text": "Para garantizar al Banco cualquier saldo insoluto que pudiese dejar la garantía mobiliaria sobre el capital, intereses, comisiones y gastos judiciales, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 274
+        },
+        {
+          "text": "así como por la cantidad de",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 275
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 276
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"monto-garantia-fiduciaria-letras\"}] [Link:moneda]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 277
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 278
+        },
+        {
+          "text": "(",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 279
+        },
+        {
+          "text": "[Link:simbolo-moneda]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 280
+        },
+        {
+          "text": ".",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 281
+        },
+        {
+          "text": "[Money{\"system-name\":\"monto-garantia-fiduciaria-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 282
+        },
+        {
+          "text": ") ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 283
+        },
+        {
+          "text": "la Parte Deudora me reconozco del Banco como tal, por dichos conceptos dejando afectos para el cumplimiento de esta obligación todos sus bienes, derechos y acciones presentes y futuros. Las partes otorgantes expresamente convenimos en que las amortizaciones que efectúe la Parte Deudora sobre el monto total del presente crédito, se aplicarán en primer lugar a la parte del crédito que se encuentra garantizada con la garantía fiduciaria antes mencionada, y hasta que la misma este totalmente pagada, las amortizaciones siguientes se aplicarán a la parte garantizada con garantía mobiliaria. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 284
+        },
+        {
+          "text": "CUARTA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 285
+        },
+        {
+          "text": ": ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 286
+        },
+        {
+          "text": "Como Propietario del bien objeto de garantía mobiliaria antes identificado",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 287
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 288
+        },
+        {
+          "text": "declaro: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 289
+        },
+        {
+          "text": "a) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 290
+        },
+        {
+          "text": "Que el bien antes identificado nunca ha sido inscrito o registrado, razón por la cual el mismo carece de inscripción registral. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 291
+        },
+        {
+          "text": "b) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 292
+        },
+        {
+          "text": "Que dicho bien lo estimo en el precio de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 293
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"valor-total-vehiculo-letras\"}] [Link:moneda]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 294
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 295
+        },
+        {
+          "text": "([Link:simbolo-moneda]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 296
+        },
+        {
+          "text": ".",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 297
+        },
+        {
+          "text": "[Money{\"system-name\":\"valor-total-vehiculo-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 298
+        },
+        {
+          "text": ")",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 299
+        },
+        {
+          "text": ";",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 300
+        },
+        {
+          "text": " c)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 301
+        },
+        {
+          "text": " Que el bien fue adquirido por compra directa a ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 302
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"nombre-concesionario\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 303
+        },
+        {
+          "text": ", lo que acredito con la ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 304
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"serie-factura-numeros\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 305
+        },
+        {
+          "text": " (",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 306
+        },
+        {
+          "text": "[Link:serie-factura-numeros]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 307
+        },
+        {
+          "text": ") ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 308
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"serie-factura-letras\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 309
+        },
+        {
+          "text": " (",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 310
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"numero-factura\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 311
+        },
+        {
+          "text": ") de fecha ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 312
+        },
+        {
+          "text": "[Date{\"system-name\":\"fecha-factura\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 313
+        },
+        {
+          "text": ", emitida por la entidad antes mencionada, documento que será suficiente para acreditar el dominio y propiedad del mismo en caso de incumplimiento, no obstante si fuere necesario su inscripción desde ya autoriza al Banco a registrarlo en el momento que corresponda, quedando dicha factura en custodia del Banco en tanto este crédito no se pague en su totalidad. ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 314
+        },
+        {
+          "text": "Asimismo, el Garante desde ya se obliga a entregar el certificado de propiedad al Banco, quien lo guardará y entregará hasta que La Parte Deudora cancele totalmente lo adeudado, bajo pena que en caso de no hacerlo será causal de terminación anticipada del contrato. Queda terminantemente prohibido al Deudor o Garante la reimpresión del Certificado de Propiedad durante la vigencia de este contrato, salvo autorización del Acreedor Garantizado; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 315
+        },
+        {
+          "text": "d) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 316
+        },
+        {
+          "text": "Que, sobre el bien mueble antes identificado, no pesan gravámenes, anotaciones, arrendamientos, embargos, limitaciones, cuestiones administrativas o judiciales pendientes de resolución o cualesquiera otras limitaciones que pudiesen afectar los derechos del Banco, y en todo caso se somete al saneamiento de ley. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 317
+        },
+        {
+          "text": "e)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 318
+        },
+        {
+          "text": " Origen y uso lícito de fondos/bienes: (I) Todos los valores y/o bienes que entregue o utilice en virtud del presente contrato o que se relacionen con el mismo tendrán un origen lícito y en ningún caso provendrán o se originarán de actividades ilícitas en general, provenientes de lavado de dinero o relacionadas con cultivo, producción, fabricación, almacenamiento, transporte, tráfico ilícito de drogas, sustancias estupefacientes o psicotrópicas, con fondos vinculados a la estafa calificada, tráfico ilegal de armas, tráfico de personas, secuestro, extorsión, peculado, corrupción de servicios públicos, actos o financiamiento de terrorismo, y robo o tráfico internacional de vehículos o de cualquier otro tipo de bienes; (II) Que cualquier suma de dinero que proceda de o se relacione con el presente contrato y negocio jurídico subyacente no será utilizada para fines ilícitos o actividades que sean consideradas como ilícitas u operaciones conexas con los mismos y en especial, a los mencionados en el inciso (I) de la presente literal; (III) Autorizo en forma irrevocable para que durante el tiempo de existencia de la relación con dicha entidad (y el Grupo Financiero G&T Continental al cual pertenece), dentro de las normas de la confidencialidad aplicables, el Banco efectúe todas las indagaciones y averiguaciones que deba realizar para comprobar el origen de los fondos que ingresen, egresen, sean parte de una transacción o mantengan en depósitos de cualquier naturaleza o como inversión en dicha entidad o en cualquier otra entidad que forme parte del Grupo Financiero G&T Continental; (IV) Autorizo al Banco para que, en caso se inicien investigaciones en contra de la Parte Deudora o el propietario, relacionadas con las actividades que se mencionan en el inciso (I) de la presente literal, de este contrato o de cualquier otra naturaleza, pueda proporcionar a las autoridades competentes, la información requerida; (V) Reconozco y acepto que el Banco podrá dar por terminado anticipadamente el presente contrato, sin responsabilidad alguna de su parte y sin justificación alguna, así como exigir el pago total e inmediato de cualquier suma adeudada en virtud del mismo, adicionalmente a cualesquiera otros casos contemplados en el presente contrato y/o en la ley, en cualquiera de los siguientes casos: (v.a) En caso La Parte Deudora cometo una infracción o incumplimiento a lo establecido en la presente literal (antes o después de la firma del presente contrato) o sea señalada de esto (aunque no exista resolución judicial, o de cualquier otro tipo); y/o, (v.b) Si a criterio único y exclusivo del Banco, éste considera que cualquiera de las declaraciones relacionadas con este apartado de “Origen y uso lícito de fondos/bienes” son falsas o inexactas, o que existen indicios para creer que la Parte Deudora ha incurrido en actos ilegales o si los señalamientos a la Parte Deudora en este sentido pueden afectar el crédito y/o la reputación del Banco; y/o, (v.c) Por incumplimiento de cualesquiera obligaciones impuestas en el presente apartado de “Origen y uso lícito de fondos/bienes”. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 319
+        },
+        {
+          "text": "f)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 320
+        },
+        {
+          "text": " En tal virtud, como Parte Deudora libero al Banco de toda responsabilidad, daño o perjuicio que se derive o pueda causarse de la errónea, falsa o inexacta información que hubiere proporcionado o de la violación del mismo. Adicionalmente, exonero al Banco de toda responsabilidad por la cancelación de operaciones con la Parte Deudora, sin perjuicio de que esta acción pudiere haberse derivado de informaciones erróneas, falsas o inexactas que hubiere proporcionado o hubieren llegado a manos del Banco. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 321
+        },
+        {
+          "text": "QUINTA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 322
+        },
+        {
+          "text": ":",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 323
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 324
+        },
+        {
+          "text": "DE LA GARANTÍA MOBILIARIA. ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 325
+        },
+        {
+          "text": "Para los fines de la garantía mobiliaria aquí constituida se conviene entre las partes: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 326
+        },
+        {
+          "text": "a) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 327
+        },
+        {
+          "text": "Que como propietario del bien objeto de la garantía mobiliaria, me obligo a no vender, gravar o en cualquier otra forma enajenar su derecho sobre el mismo sin previa autorización dada por escrito por el Banco; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 328
+        },
+        {
+          "text": "b)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 329
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 330
+        },
+        {
+          "text": "[Link:garante-propietario]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 331
+        },
+        {
+          "text": ", seré llamado indistintamente en el presente instrumento como el “",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 332
+        },
+        {
+          "text": "Depositario",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 333
+        },
+        {
+          "text": "” declaro expresamente que acepto el cargo que me ha sido asignado, que desempeñaré dicho cargo en forma gratuita, que tengo recibido y a mi entera satisfacción el bien objeto de garantía mobiliaria anteriormente identificado, y que ya me encuentro en la plena y pacífica posesión de su cargo así como del bien; que estoy enterado de mis derechos y obligaciones que como Depositario se me impone y me atribuye la Ley y el presente contrato, y que prometo desempeñar el cargo fiel y cumplidamente; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 334
+        },
+        {
+          "text": "c)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 335
+        },
+        {
+          "text": " La Parte Deudora y el Depositario aceptamos expresamente que El Banco tiene el derecho de solicitar la devolución del vehículo y/o remover al Depositario previamente designado, en ambos casos extrajudicialmente, en cualquier tiempo y sin necesidad invocar o expresar causa alguna. Si el Banco optare por solicitar de manera judicial la entrega del vehículo antes relacionado, el juez ante quien acuda, de plano y sin formar artículo, decretará la inmediata remoción de la persona que se encuentre fungiendo como Depositario en ese momento, y confirmará el nombramiento del nuevo Depositario que el Banco proponga, ordenando que de inmediato se le ponga en posesión efectiva del bien gravado; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 336
+        },
+        {
+          "text": "d)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 337
+        },
+        {
+          "text": " Los gastos de mantenimiento y conservación del bien corresponden única y exclusivamente a la Parte Deudora y/o el Depositario, no siendo el Banco responsable de éstos. Asimismo, la Parte Deudora y el Depositario exoneramos expresamente al Banco de cualquier daño o perjuicio que el depósito ampliamente relacionado pudiese haberle ocasionado",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 338
+        },
+        {
+          "text": ". SEXTA: DE LA EJECUCIÓN DE LA GARANTÍA",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 339
+        },
+        {
+          "text": ". El Deudor y Garante, así como el Acreedor Garantizado, de mutuo acuerdo declaran que en caso de incumplimiento en la obligación del presente crédito, el Acreedor Garantizado desde ya está facultado expresamente por El Deudor y Garante de ejecutar la garantía mobiliaria, a su propia y libre decisión, en consecuencia, aceptan expresamente someterse al procedimiento de ejecución de la garantía mobiliaria de conformidad con lo regulado en La Ley de Garantías Mobiliarias en especial los artículos cincuenta y ocho (58) y cincuenta y ocho bis (58 bis) y demás artículos relacionados en dicha Ley y leyes conexas, y aceptan expresamente que el Acreedor Garantizado a su libre decisión iniciar cualquiera de los procedimientos de ejecución privados o bien por la vía judicial de subasta pública, venta directa, o adjudicación en pago de la garantía mobiliaria, de conformidad con la Ley antes relacionada. En todo caso ambas partes pactan que, en caso de incumplimiento de La Parte Deudora, el Acreedor Garantizado puede adjudicarse en pago los bienes en garantía. Las partes acuerdan expresamente que el procedimiento antes indicado, es sin perjuicio del proceso que corresponda para ejecutar la garantía fiduciaria.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 340
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 341
+        },
+        {
+          "text": "SEPTIMA: OTRAS CONDICIONES: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 342
+        },
+        {
+          "text": "La Parte Deudora y Depositario expresamente: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 343
+        },
+        {
+          "text": "A)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 344
+        },
+        {
+          "text": " Acepto que el presente crédito pueda ser cedido, enajenado, gravado o negociado total o parcialmente, sin previa ni posterior notificación o autorización de la Parte Deudora. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 345
+        },
+        {
+          "text": "B)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 346
+        },
+        {
+          "text": " Acepto como buenas y exactas las cuentas que el Banco presente respecto de este negocio y como válido, líquido y ejecutivamente exigible el saldo que se le demande y como título ejecutivo el presente contrato. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 347
+        },
+        {
+          "text": "C)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 348
+        },
+        {
+          "text": " Acepto que todos los gastos notariales, judiciales y extrajudiciales que se originen del presente negocio, sus ampliaciones, modificaciones hasta su efectiva cancelación, son por cuenta y cargo exclusivo de la Parte Deudora. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 349
+        },
+        {
+          "text": "D)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 350
+        },
+        {
+          "text": " Renuncio al fuero de mi domicilio o cualquier otro que pudiere corresponderme, y me someto a los tribunales que el Banco elija para el caso de ejecución. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 351
+        },
+        {
+          "text": "E)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 352
+        },
+        {
+          "text": " Reconozco y acepto que la ejecución del presente crédito y la acción judicial del cobro del mismo se regirá por las disposiciones legales bancarias correspondientes, la Ley de Garantías Mobiliarias y sus reformas, y lo no contemplado en dichas leyes y resoluciones se regirá por el Derecho común. El Depositario que designe el Banco, no estará obligado a prestar garantía alguna ni el Banco se responsabiliza de su actuación y podrá bajo su responsabilidad, para el cumplimiento de su cargo, nombrar a uno o más auxiliares pactando con éstos las condiciones en que hayan de prestar sus servicios. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 353
+        },
+        {
+          "text": "F)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 354
+        },
+        {
+          "text": " Señalo como domicilio especial y como lugar para recibir todo tipo de comunicación, citación o notificaciones la siguiente dirección: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 355
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"domicilio-especial-notificaciones\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 356
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 357
+        },
+        {
+          "text": "y acepto que se tengan como válidas y bien hechas las practicadas o realizadas en dicho lugar, a no ser que hubiese dado aviso por escrito con por lo menos quince días de anticipación al Banco de cualquier cambio en la misma y obre en poder de la Parte Deudora aviso o constancia de recepción del Banco. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 358
+        },
+        {
+          "text": "G)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 359
+        },
+        {
+          "text": " En caso de ejecución, acepto que en los remates sirva de base a discreción del ejecutante, si se tratare de bienes muebles, la primera postura que se presente o el saldo del crédito más intereses, intereses moratorios y costas procesales o bien el valor resultante del avalúo de los bienes y si se trata de inmuebles el valor consignado en la matrícula fiscal o bien el saldo del crédito más intereses, intereses moratorios y costas procesales. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 360
+        },
+        {
+          "text": "H)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 361
+        },
+        {
+          "text": " La obligación a presentar, cuando el Banco así lo requiera, y en un plazo no mayor a treinta días a partir del requerimiento, los estados patrimoniales o los financieros debidamente auditados, según corresponda, cerrados a la fecha más próxima al requerimiento del Banco, así como los balances e información contable interna cuando el Banco se lo requiera cuando aplique. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 362
+        },
+        {
+          "text": "I)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 363
+        },
+        {
+          "text": " Autorizo al Banco para que éste, a través de las personas que designe, pueda realizar y practicar inspecciones sobre los bienes y derechos de la Parte Deudora, así como para comprobar el correcto destino de este crédito. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 364
+        },
+        {
+          "text": "J)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 365
+        },
+        {
+          "text": " Reconozco que fue con base a los bienes y derechos declarados en los estados patrimoniales o financieros presentados, que el Banco calificó y autorizó este crédito, razón por la cual me obligo expresamente a mantener dentro de mi patrimonio cuando menos, bienes y derechos que respalden el pago de esta obligación durante todo el plazo de vigencia de la misma y sus prórrogas si las hubiere. Como Parte Deudora entiendo que haber declarado información y datos inexactos o falsos al Banco son hechos constitutivos de delito. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 366
+        },
+        {
+          "text": "K) Reconozco que mientras estén vigentes las obligaciones a que se refiere este contrato no se podrá sin contar con la anuencia del Banco expresada por escrito, enajenar o dar en garantía mobiliaria, bajo ningún concepto el referido bien, constituir limitación sobre el mismo, ni darlo en uso, usufructo, arrendamiento, comodato o depositarlo en tercera persona, así como destinarlo a servicio de Taxi o transporte colectivo de personas o cosas, sacarlo del territorio nacional por plazos mayores a veinte días calendario sin la autorización del Banco o disponer en forma distinta a lo dispuesto en este contrato",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 367
+        },
+        {
+          "text": ". ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 368
+        },
+        {
+          "text": "L)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 369
+        },
+        {
+          "text": " En el caso de la Parte Deudora, para el evento de que tuviese diversas obligaciones o garantías por una obligación a favor del Banco, renuncia a cualquier derecho de imputación de pago y autoriza irrevocablemente al Banco para que aplique a la liberación de la obligación o del gravamen que estime conveniente cualquier pago que por el concepto de capital e intereses haga la deudora como consecuencia del presente crédito. En consecuencia, el Banco podrá aplicar a su elección los pagos por capital, intereses, comisiones, seguro y gastos, a la liberación de las obligaciones o de los gravámenes relacionados en este u otro documento bajo el principio de que se liberará en último orden la obligación o el gravamen que ofrezca más garantía al crédito. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 370
+        },
+        {
+          "text": "M) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 371
+        },
+        {
+          "text": "Reconozco que el Banco puede iniciar acción ejecutiva en mi contra y me embargue bienes de mi propiedad y los lleve a remate y adjudicación en forma totalmente independiente a lo contemplado en la Ley de Garantías Mobiliarias, para la ejecución de la garantía mobiliaria. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 372
+        },
+        {
+          "text": "N) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 373
+        },
+        {
+          "text": "El Banco podrá dar por vencido el plazo del presente contrato y exigir el cumplimiento de la obligación, si dentro de los ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 374
+        },
+        {
+          "text": "treinta días previos",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 375
+        },
+        {
+          "text": " a la fecha",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 376
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 377
+        },
+        {
+          "text": "de valuación, la cual el Banco dará a conocer en la forma que considere conveniente, o previos al vencimiento del plazo del presente crédito, no hubiese entregado la Parte Deudora al Banco la siguiente documentación: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 378
+        },
+        {
+          "text": "N.a.)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 379
+        },
+        {
+          "text": " En caso de sociedades mercantiles, estados financieros auditados al cierre del último período contable y estados financieros administrativos con integraciones de las principales cuentas, y que no excedan de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 380
+        },
+        {
+          "text": "seis meses ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 381
+        },
+        {
+          "text": "de antigüedad con referencia la fecha de valuación, o previos a la fecha de la solicitud de dicha prórroga, según lo que corresponda; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 382
+        },
+        {
+          "text": "N.b.) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 383
+        },
+        {
+          "text": "Flujo de caja proyectado para el periodo del financiamiento, en forma mensual para el primer año, y en forma anual para los años restantes del plazo del crédito, incluyendo los supuestos utilizados para su elaboración y las variables que darán los resultados esperados, que permitan establecer la factibilidad del cumplimiento de sus obligaciones con el Banco, firmado por el representante legal; y, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 384
+        },
+        {
+          "text": "N.c.)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 385
+        },
+        {
+          "text": " Actualización del perfil del deudor y el propietario del bien, si fuere el caso, según los requerimientos del Banco. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 386
+        },
+        {
+          "text": "Ñ)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 387
+        },
+        {
+          "text": " Declaro que no tengo impedimento o limitación alguna, para la contratación de este crédito, en virtud de cualquier relación o vinculación con personas naturales y/o jurídicas que constituyan una misma unidad de riesgo. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 388
+        },
+        {
+          "text": "O) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 389
+        },
+        {
+          "text": "Acepto, en el caso de la Parte Deudora, que el Banco le pueda trasladar y cobrar el costo financiero que las autoridades monetarias, bancarias y financieras fijaren en concepto de reserva sobre este crédito. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 390
+        },
+        {
+          "text": "OCTAVA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 391
+        },
+        {
+          "text": ": VENCIMIENTO ANTICIPADO. ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 392
+        },
+        {
+          "text": "El Banco podrá dar por vencido en forma anticipada el plazo del presente crédito, en forma inmediata y sin necesidad de declaración judicial previa, y podrá solicitar el pago íntegro del saldo del crédito, intereses, comisiones y demás sumas adeudadas al Banco, por cualesquiera de las siguientes razones: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 393
+        },
+        {
+          "text": "A)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 394
+        },
+        {
+          "text": " Si como Parte Deudora invierto o destino este crédito en forma distinta de la estipulada. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 395
+        },
+        {
+          "text": "B)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 396
+        },
+        {
+          "text": " Por el incumplimiento de cualquiera de las obligaciones que contraigo como Parte Deudora y/o Depositario mediante el presente documento y de las establecidas en las leyes y disposiciones monetarias correspondientes. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 397
+        },
+        {
+          "text": "C)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 398
+        },
+        {
+          "text": " Por falta de pago de uno de los pagos a capital, comisiones, intereses, seguro y gastos que corresponden a la Parte Deudora. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 399
+        },
+        {
+          "text": "D) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 400
+        },
+        {
+          "text": "Cuando a juicio del Banco, los estados patrimoniales o financieros, según corresponda, reflejen una baja considerable y en todo caso en los mismos conste que la persona se encuentra insolvente o en estado de quiebra. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 401
+        },
+        {
+          "text": "E) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 402
+        },
+        {
+          "text": "Si la Parte Deudora fuere objeto de cualquier tipo de ejecución con motivo de cualquier otra deuda con el Banco y/o con cualquier tercero. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 403
+        },
+        {
+          "text": "F)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 404
+        },
+        {
+          "text": " Si los bienes de la Parte Deudora fueren objeto de embargo o en el caso de insolvencia o quiebra de la Parte Deudora. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 405
+        },
+        {
+          "text": "G)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 406
+        },
+        {
+          "text": " Cuando se ha iniciado un proceso de ejecución en contra del Deudor, el Depositario o Fiador (en caso exista Fiador).",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 407
+        },
+        {
+          "text": " H) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 408
+        },
+        {
+          "text": "En el caso que La Parte Deudora fuere una persona jurídica, y sus accionistas realizaran la venta, cesión, endoso, transmisión, administración, usufructo, deposito, garantía, traspaso y/o cualquier otra forma de disposición o acto traslativo de dominio de las acciones que conforman el capital pagado de la sociedad deudora y/o que exista un cambio parcial o total del control accionario de la sociedad, sin previa autorización, expresa y por escrito del BANCO. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 409
+        },
+        {
+          "text": "NOVENA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 410
+        },
+        {
+          "text": ":",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 411
+        },
+        {
+          "text": " Como Parte Deudora por este acto acepto y autorizo al Banco así como a cualquier otra entidad que pertenezca al Grupo Financiero G&T Continental, que para el pago de los gastos por cualquier concepto derivados del presente contrato, intereses, comisiones tanto presentes como las futuras que el Banco llegue a establecer, las cuales desde ya acepto como Parte Deudora, seguro y capital, puedan ser debitados directamente o por requerimiento del Banco de cualquier cuenta de depósito, inversión, certificado, título o derecho que posea en el Banco así como a cualquier otra entidad que pertenezca al Grupo Financiero G&T Continental, para cuyo efecto les extiendo autorización irrevocable y me comprometo a mantener saldos suficientes para tal propósito durante todo el plazo de la obligación o sus prórrogas. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 412
+        },
+        {
+          "text": "DÉCIMA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 413
+        },
+        {
+          "text": ":",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 414
+        },
+        {
+          "text": " Como Banco acepto por medio de mi representante legal en forma expresa la garantía mobiliaria constituida a mi favor. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 415
+        },
+        {
+          "text": "DECIMA PRIMERA",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 416
+        },
+        {
+          "text": ": ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 417
+        },
+        {
+          "text": "Los otorgantes, en el carácter con que actuamos, declaramos expresamente nuestra aceptación a este contrato. Los comparecientes hacemos constar: A) De lo relacionado; B) Que hemos tenido a la vista la documentación antes relacionada, así como el título con el cual se acredita la propiedad del bien dado en garantía; C) De estar conscientes del contenido, validez, objeto y efectos legales de este contrato, así como de su obligación de registro; y, D) De que leímos íntegramente el contenido de este contrato, por lo que lo aceptamos, ratificamos y firmamos. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 418
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "F._________________________ \t\t\tF.______________________________ ",
+      "runs": [
+        {
+          "text": "F._________________________ \t\t\tF.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "______________________________ ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "[Link:nombre-representante-legal]\t\t\t[Link:nombre-deudor]",
+      "runs": [
+        {
+          "text": "[Link:nombre-representante-legal]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t\t\t",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Link:nombre-deudor]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "F._________________________ \t\t\t ",
+      "runs": [
+        {
+          "text": "F._________________________ \t\t\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "[Link:nombre-depositario]\t\t\t",
+      "runs": [
+        {
+          "text": "[Link:nombre-depositario]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t\t\t",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "AUTÉNTICA",
+      "runs": [
+        {
+          "text": "AUTÉNTICA",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "En la ciudad de Guatemala, el [Link:dia-contrato] de [Link:mes-contrato] del año [Link:anio-contrato] ,como Notario DOY FE que las firmas que anteceden son auténticas por haber sido puestas en mi presencia el día de hoy por: a) [Link:nombre-representante-legal],quien es persona de mi conocimiento; b) [Link:nombre-deudor], quien se identifica con el Documento Personal de Identificación (DPI) con Código Único de Identificación (CUI) número [Link:id-deudor-letras] ([Link:id-deudor-numeros]) extendido por el Registro Nacional de las Personas; c) [Link:nombre-depositario], quien se identifica con el Documento Personal de Identificación (DPI) con Código Único de Identificación (CUI) número [Link:id-depositario-letras] ([Link:id-depositario-numeros]) extendido por el Registro Nacional de las Personas;  firmas que calzan al pie de un contrato de crédito bancario con garantía mobiliaria y fiduciaria, otorgado con fecha [Link:dia-contrato] de [Link:mes-contrato] del año [Link:anio-contrato] , quienes previa lectura de la presente acta, la ratifican, aceptan y firman junto con el suscrito Notario.",
+      "runs": [
+        {
+          "text": "En la ciudad de Guatemala, el",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Link:dia-contrato]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Link:mes-contrato]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "del año ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "[Link:anio-contrato]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": ",como Notario DOY FE que las firmas que anteceden son auténticas por haber sido puestas en mi presencia el día de hoy por: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "a) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "[Link:nombre-representante-legal]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": ",quien es persona de mi conocimiento; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "b) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "[Link:nombre-deudor]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": ", quien se identifica con el Documento Personal de Identificación (DPI) con Código Único de Identificación (CUI) ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "número ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "[Link:id-deudor-letras]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " (",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "[Link:id-deudor-numeros]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": "extendido por el Registro Nacional de las Personas; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "c) ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "[Link:nombre-depositario]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": ", quien se identifica con el Documento Personal de Identificación (DPI) con Código Único de Identificación (CUI) ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": "número ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": "[Link:id-depositario-letras]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": "(",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": "[Link:id-depositario-numeros]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        },
+        {
+          "text": ") ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 31
+        },
+        {
+          "text": "extendido",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 32
+        },
+        {
+          "text": " por el Registro Nacional de las Personas; ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 33
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 34
+        },
+        {
+          "text": "firmas que calzan al pie de un contrato de crédito bancario con garantía mobiliaria y fiduciaria, otorgado con fecha ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 35
+        },
+        {
+          "text": "[Link:dia-contrato]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 36
+        },
+        {
+          "text": " de ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 37
+        },
+        {
+          "text": "[Link:mes-contrato]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 38
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 39
+        },
+        {
+          "text": "del año ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 40
+        },
+        {
+          "text": "[Link:anio-contrato]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 41
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 42
+        },
+        {
+          "text": ", quienes previa lectura de la presente acta, la ratifican, aceptan y firman junto con el suscrito Notario.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 43
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 44
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "\n",
+      "runs": [
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "F._________________________ \t\t\tF.______________________________ ",
+      "runs": [
+        {
+          "text": "F._________________________ \t\t\tF.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "______________________________ ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "[Link:nombre-representante-legal]\t\t\t[Link:nombre-deudor]",
+      "runs": [
+        {
+          "text": "[Link:nombre-representante-legal]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t\t\t",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Link:nombre-deudor]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "F._________________________ \t\t\t ",
+      "runs": [
+        {
+          "text": "F._________________________ \t\t\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "[Link:nombre-depositario]",
+      "runs": [
+        {
+          "text": "[Link:nombre-depositario]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "body"
+    }
+  ],
+  "tables": [],
+  "headers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": true,
+          "italic": true,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "normal",
+      "source": "header"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "header"
+    },
+    {
+      "index": 0,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": true,
+          "italic": true,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "normal",
+      "source": "header"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "footer"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "normal",
+      "source": "footer"
+    },
+    {
+      "index": 0,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "normal",
+      "source": "footer"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "normal",
+      "source": "footer"
+    }
+  ],
+  "comments": [
+    {
+      "id": "2",
+      "author": "Andres Lemus",
+      "date": "2025-04-11T22:05:49Z",
+      "text": "Esta clasula es una de las que cambia con relación a los otros contratos.",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 1,
+      "anchor_text": "En la ciudad de Guatemala, el [Date{\"system-name\":\"dia-contrato\"}]de [TextInput{\"system-name\":\"mes-contrato\"}] del año [TextInput{\"system-name\":\"anio-contrato\"}] comparecemos: A) [TextInput{\"system-na"
+    },
+    {
+      "id": "0",
+      "author": "Andres Lemus",
+      "date": "2025-04-11T22:02:21Z",
+      "text": "Esta clasula es una de las que cambia con relación a los otros contratos.",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 1,
+      "anchor_text": "En la ciudad de Guatemala, el [Date{\"system-name\":\"dia-contrato\"}]de [TextInput{\"system-name\":\"mes-contrato\"}] del año [TextInput{\"system-name\":\"anio-contrato\"}] comparecemos: A) [TextInput{\"system-na"
+    },
+    {
+      "id": "1",
+      "author": "Andres Lemus",
+      "date": "2025-04-11T22:02:55Z",
+      "text": "Este texto puntualmente cambio entre el contrato plan tasa escalonada y este.",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 1,
+      "anchor_text": "En la ciudad de Guatemala, el [Date{\"system-name\":\"dia-contrato\"}]de [TextInput{\"system-name\":\"mes-contrato\"}] del año [TextInput{\"system-name\":\"anio-contrato\"}] comparecemos: A) [TextInput{\"system-na"
+    }
+  ],
+  "highlights": [],
+  "colored_text": [],
+  "dropdowns": []
+}

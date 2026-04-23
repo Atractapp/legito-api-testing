@@ -1,0 +1,1532 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\Certificate of Guarantor.docx",
+  "paragraph_count": 26,
+  "table_count": 0,
+  "highlight_count": 0,
+  "colored_text_count": 0,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "Certificate of GUARANTOR",
+      "runs": [
+        {
+          "text": "Certificate",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "GUARANTOR",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Atrafin Title",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "The undersigned hereby certify that they are the duly elected and acting Directors of [TextInput{\"system-name\":\"guarantor-company\"}], a [TextInput{\"system-name\":\"company-type\"}] company organized and existing under the laws of [TextInput{\"system-name\":\"country\"}] (the \"Company\"), and as such have custody of the records of the Company and are authorized to execute and deliver this Certificate on behalf of the Company; and with reference to the loan being made by ATRAFIN LLC, dba AMERICAN TRADE & FINANCE COMPANY (the \"Lender\") to [TextInput{\"system-name\":\"borrower\"}], the undersigned hereby further certify as follows:",
+      "runs": [
+        {
+          "text": "The undersigned hereby certify",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " that ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "they are",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " the duly elected and acting ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "Directors ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-company\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": ", ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "a ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"company-type\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": " company organized and existing under the laws of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"country\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "(the \"Company\"), and as such have",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " custody of the records of the Company and ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "are",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " authorized to execute and deliver this Certificate on behalf of the Company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "; and",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " with reference to the loan b",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "eing made by ATRAFIN LLC, dba ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "AMERICAN TRADE & FINANCE COMPANY (the \"Lender\") to ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"borrower\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": ", the unde",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "rsigned hereby further certify",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": " as follows:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        }
+      ],
+      "style": "Atrafin Normal",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "Attached hereto as Schedule A is a full, true and correct copy of the Resolutions duly adopted by the Directors of the Company by a unanimous written consent effective [Date{\"system-name\":\"resolution-date\"}], in accordance with [TextInput{\"system-name\":\"borrowers-country\"}] company law and the laws of the Company.",
+      "runs": [
+        {
+          "text": "Attached hereto as ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Schedule A",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "is a full, true and correct copy of the Resolutions duly adopted by the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "Director",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "s ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "Company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " by a unanimous written consent effective ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "[Date{\"system-name\":\"resolution-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "in ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "accordance with ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"borrowers-country\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "company law and the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "laws of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "Company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "The Resolutions attached as Schedule A hereto have not been amended, modified, or rescinded and are in full force and effect on the date hereof.",
+      "runs": [
+        {
+          "text": "The Resolutions attached as ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Schedule A",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "hereto have not been amended, modified",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " or rescinded and are in full force and effect on the date hereof.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "The undersigned directors have been duly elected, and are qualified to act in such capacities and execute documents on behalf of the Company, and the signature appearing opposite each name is the authentic signature of each such director.",
+      "runs": [
+        {
+          "text": "The undersigned directors have been duly ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "elected, and",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " are qualified",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "to act in such capacities and execute documents on behalf of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ", and the signature appearing opposite each name is the authentic signature of each such director.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "The Company is duly organized and existing under the laws of [Link:country]. ",
+      "runs": [
+        {
+          "text": "The ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " is duly organized and existing under the laws of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "[Link:country]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "All taxes required to maintain the Company's existence have been paid and no such taxes are delinquent.",
+      "runs": [
+        {
+          "text": "All taxes required to maintain the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Company's",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " existence have been paid and no such taxes are delinquent.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "No proceedings are pending for the forfeiture of the Company's authority to do business or to force its dissolution, voluntarily or involuntarily.",
+      "runs": [
+        {
+          "text": "No proceedings are pending for the forfeiture of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Company's",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " authority to do business or to force its dissolution, voluntarily or involuntarily.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "There is no provision in the laws of the Company limiting the above-described resolutions, and said resolutions are in conformity with the provisions of the Company's laws, and with the proceedings of the Directors or Members/Shareholders.",
+      "runs": [
+        {
+          "text": "There is no provision in the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "laws of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " limiting the above",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "-described resolutions, and said resolutions are in conformity with the provisions of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Company's",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "laws, and with the proceedings of the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "Director",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "s or Members/Shareholders",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "The laws of the Company attached hereto as Schedule B are in full force and effect and have not been amended or modified except as may have been disclosed in writing to the Lender.",
+      "runs": [
+        {
+          "text": "The ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "l",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "aws of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " attached hereto as ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Schedule B",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "are in full force and effect and have not been amended or modified except as may have been disclosed in writing to the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "Lender",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        }
+      ],
+      "style": "Atrafin Numbered 1",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "",
+      "runs": [],
+      "style": "Body Single Sp .5 J",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "Dated effective as of: [Date{\"system-name\":\"effective-date\"}].",
+      "runs": [
+        {
+          "text": "D",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "ated effective as of",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ":",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Date{\"system-name\":\"effective-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "The undersigned hereby certifies that [TextInput{\"system-name\":\"director-1-name\"}] and [TextInput{\"system-name\":\"director-2-name\"}] are Directors of the Company and are authorized to execute and deliver this Certificate for and on behalf of the Company.",
+      "runs": [
+        {
+          "text": "T",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "he un",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "dersigned hereby certifies that",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"director-1-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " and [TextInput{\"system-name\":\"director-2-name\"}] are",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "Director",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "s",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " of the Company and ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "are",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " authorized to execute and deliver this Certificate for and on behalf of the Company.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        }
+      ],
+      "style": "Atrafin Normal",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "Schedule A",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Schedule A",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Atrafin Normal",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "RESOLVED, that [TextInput{\"system-name\":\"guarantor\"}] (the \"Company\") has agreed to guarantee a trade financing loan obtained by [Link:borrower] from ATRAFIN LLC, dba AMERICAN TRADE & FINANCE COMPANY (the \"Lender\"), under which the Lender agrees, subject to certain terms and conditions, to provide trade financing in the amount of [Money{\"system-name\":\"loan-amount\"}] (the \"Medium Term Credit Facility\") in favor of [Link:borrower]; and ",
+      "runs": [
+        {
+          "text": "RESOLVED, that ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "(the \"Company\") has agreed to guarantee a trade financing loan obtained by ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Link:borrower]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "from ATRAFIN LLC, dba AMERICAN TRADE & FINANCE COMPANY (the \"Lender\"), under which the Lender agrees, subject to certain terms and conditions, to provide trade financing ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "in the amount of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "[Money{\"system-name\":\"loan-amount\"}] ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "(the \"Medium Term Credit Facility\") in favor of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "[Link:borrower]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "; and ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "RESOLVED, further, in regard to the Medium-Term Credit Facility, that any Director of the Company is hereby authorized and directed to execute and deliver, for and on behalf of the Company, documents as may be deemed necessary or desirable by such Directors or required by Lender in regard to the Medium-Term Credit Facility; and further ",
+      "runs": [
+        {
+          "text": "RESOLVED, further, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "in regard to",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Medium-Term",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " Credit Facility, that any Director of the Company is hereby authorized and directed to execute and deliver, for and on behalf of the Company, documents as may be deemed necessary or desirable by such Directors or required by Lender in regard to the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Medium-Term",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " Credit Facility; and further ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "RESOLVED, that the drafts of such documents presented to the Directors of the Company are hereby approved; and further ",
+      "runs": [
+        {
+          "text": "RESOLVED, that the drafts of such documents presented to the Directors of the Company are hereby approved; and further ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "RESOLVED, that the Directors executing and delivering any of the above described documents are hereby authorized and empowered to execute and deliver the same in the name and on behalf of the Company, and in such manner of counterparts as the Director or Directors executing the same shall deem necessary or desirable, and with such terms, conditions and provisions, including modifications from the drafts presented to the Directors, as the Directors or Director executing the same may approve, the execution of such documents to evidence such approval conclusively; and further ",
+      "runs": [
+        {
+          "text": "RESOLVED, that the Directors executing and delivering any of the above described documents are hereby authorized and empowered to execute and deliver the same in the name and on behalf of the Company, and in such manner of counterparts as the Director or Directors executing the same shall deem necessary or desirable, and with such terms, conditions and provisions, including modifications from the drafts presented to the Directors, as the Directors or Director executing the same may approve, the execution of such documents to evidence such approval conclusively; and further ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "RESOLVED, that any and all instruments executed and delivered on behalf of the Company in connection with the foregoing resolutions by any person purporting to be a Director of the Company shall be deemed to be the act of the Company and shall be in all respects binding against the Company; and further ",
+      "runs": [
+        {
+          "text": "RESOLVED, that ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "any and all",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " instruments executed and delivered on behalf of the Company in connection with the foregoing resolutions by any person purporting to be a Director of the Company shall be deemed to be the act of the Company and shall be in all respects binding against the Company; and further ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "RESOLVED, that the Directors of the Company be, and they hereby are, authorized and empowered on behalf of and in the name of the Company to take or cause to be taken in the name of the Company all such other and further action, to make all payments and to execute, acknowledge and deliver any and all certificates, opinions, documents and other instruments in such form and under the corporate seal as required, as in the judgment of such Director or Directors may be necessary, proper or convenient in order to carry out the foregoing resolutions, to consummate the Medium Term Credit Facility, and to comply with the terms and provisions of all the documents described above; and further ",
+      "runs": [
+        {
+          "text": "RESOLVED, that the Directors of the Company be, and they hereby are, authorized and empowered on behalf of and in the name of the Company to take or cause to be taken in the name of the Company all such other and further action, to make all payments and to execute, acknowledge and deliver any and all certificates, opinions, documents and other instruments in such form and under the corporate seal as required, as in the judgment of such Director or Directors may be necessary, proper or convenient in order to carry out the foregoing resolutions, to consummate the Medium Term Credit Facility, and to comply with the terms and provisions of all the documents described above; and further ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "RESOLVED, that all actions by any and all Directors of the Company taken or performed up to the date hereof and in respect to the preparation, execution and delivering of the documents, certificates or other instruments required pursuant to the provisions of the above described documents, and the taking prior to the date hereof of any and all actions otherwise required by the terms and provisions of said documents or any other documents executed in connection therewith be, and they are hereby, in all respects approved, ratified and confirmed.",
+      "runs": [
+        {
+          "text": "RESOLVED, that all actions by any and all Directors of the Company taken or performed up to the date hereof and in respect to the preparation, execution and delivering of the documents, certificates or other instruments required pursuant to the provisions of the above described documents, and the taking prior to the date hereof of any and all actions otherwise required by the terms and provisions of said documents or any other documents executed in connection therewith be, and they are hereby, in all respects approved, ratified and confirmed.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Atrafin Normal Indented",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "Schedule B",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Schedule B",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Atrafin Schedule Title",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "Bylaws",
+      "runs": [
+        {
+          "text": "By",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "l",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "aws",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Atrafin Centered - Single Line",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "(attached)",
+      "runs": [
+        {
+          "text": "(attached)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Atrafin Centered - Single Line",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    }
+  ],
+  "tables": [],
+  "headers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Header",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Footer",
+      "source": "footer"
+    },
+    {
+      "index": 1,
+      "text": "[TextInput{\"system-name\":\"borrower-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput{\"system-name\":\"borrower-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Footer",
+      "source": "footer"
+    },
+    {
+      "index": 2,
+      "text": "Transaction #[TextInput{\"system-name\":\"transaction-number\"}]",
+      "runs": [
+        {
+          "text": "Transaction #",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"transaction-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Footer",
+      "source": "footer"
+    },
+    {
+      "index": 3,
+      "text": "",
+      "runs": [],
+      "style": "Footer",
+      "source": "footer"
+    },
+    {
+      "index": 4,
+      "text": "",
+      "runs": [],
+      "style": "Footer",
+      "source": "footer"
+    },
+    {
+      "index": 5,
+      "text": " 3 ",
+      "runs": [
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "3",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Footer",
+      "source": "footer"
+    }
+  ],
+  "comments": [],
+  "highlights": [],
+  "colored_text": [],
+  "dropdowns": []
+}

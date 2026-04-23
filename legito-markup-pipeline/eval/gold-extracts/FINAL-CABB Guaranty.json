@@ -1,0 +1,1674 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\FINAL-CABB Guaranty.docx",
+  "paragraph_count": 44,
+  "table_count": 0,
+  "highlight_count": 0,
+  "colored_text_count": 0,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "GUARANTY",
+      "runs": [
+        {
+          "text": "GUARANTY",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "_Hdg Center Bold",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "THIS GUARANTY (\"Guaranty\") is made as of [Date{\"system-name\":\"guaranty-date\"}], by [TextInput{\"system-name\":\"guarantor-name\"}] (\"Guarantor\"), in favor of [TextInput{\"system-name\":\"lender-name\"}] (\"Lender\").   ",
+      "runs": [
+        {
+          "text": "THIS GUARANTY (\"Guaranty\") is made as of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Date{\"system-name\":\"guaranty-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ", by ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "(\"Guarantor\"), in favor of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"lender-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " (\"Lender\").   ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "_1.0sp 0.5\"",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "RECITALS",
+      "runs": [
+        {
+          "text": "RECITALS",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "_Hdg Center Bold",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "Lender is the payee under a Secured Promissory Note (“Note”) made by [TextInput{\"system-name\":\"borrower-name\"}], (\"Borrower\") on or about the above date in the following principal amount of [Money{\"system-name\":\"principal-amount\"}].",
+      "runs": [
+        {
+          "text": "Lender is the payee under a Secured Promissory Note (“Note”) made by ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"borrower-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "(\"Borrower\") on or about the above date in the following principal amount of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Money{\"system-name\":\"principal-amount\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "_1.0sp 0.5\"",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "The Note evidences a loan from Lender to Borrower in the principal amount of the Note (the \"Loan\"). ",
+      "runs": [
+        {
+          "text": "The Note evidences a loan from Lender to Borrower in the principal amount of the Note (the \"Loan\"). ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "_1.0sp 0.5\"",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "Guarantor’s execution and delivery of this Guaranty is a condition precedent to Lender agreeing to make the Loan.  Guarantor has an interest in Borrower and will directly benefit from Lender making the Loan and is therefore willing to enter into this Guaranty to induce Lender to make the Loan.  ",
+      "runs": [
+        {
+          "text": "Guarantor’s execution and delivery of this Guaranty is a condition precedent to Lender agreeing to make the Loan.  Guarantor has an interest in Borrower and will directly benefit from Lender making the Loan and is therefore willing to ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "enter into",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " this Guaranty to induce Lender to make the Loan.  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "_1.0sp 0.5\"",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "AGREEMENT",
+      "runs": [
+        {
+          "text": "AGREEMENT",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "_Hdg Center Bold",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "Guaranty.  Guarantor unconditionally and irrevocably guarantees the full and prompt payment of all principal, interest, fees, costs and other sums owed under the Note at the times and according to the terms expressed in the Note, including any interest, default interest, fees and costs (including reasonable attorneys' fees) that have accrued under the Note.",
+      "runs": [
+        {
+          "text": "Guaranty",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  Guarantor unconditionally and irrevocably guarantees the full and prompt payment of all ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "principal",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", interest, fees, costs and other sums owed under the Note at the times and according to the terms expressed in the Note, including any interest, default interest, fees and costs (including reasonable attorneys' fees) that have accrued under the Note.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level 1",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "Changes Do Not Affect Liability.  Guarantor agrees that Lender may without notice to the Guarantor and without limiting the Guarantor’s liability under, or affecting the enforceability of, this Guaranty:",
+      "runs": [
+        {
+          "text": "Changes Do Not Affect Liability",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  Guarantor agrees that Lender may with",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "out",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " notice to the Guarantor and with",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "out",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " limiting the Guarantor’s liability under, or affecting the enforceability of, this Guaranty:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Level 1",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "Grant extensions of time, renewals or other indulgences and modifications to Borrower or any other party under the Note;",
+      "runs": [
+        {
+          "text": "G",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "rant extensions of time, renewals or other indulgences and modifications to Borrower or any other party under the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Note;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "Change, amend or modify the Note with consent of the Borrower (provided that such changes do not increase Guarantor’s potential liability hereunder);",
+      "runs": [
+        {
+          "text": "C",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "hange, amend or modify the Note with consent of the Borrower (provided that such changes do not increase Guarantor’s potential liability hereunder",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ");",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "Accept or make compositions or other arrangements or file or refrain from filing a claim in any bankruptcy proceeding of Borrower, any other guarantor of the Loan, any pledgor of collateral for any person's obligations to Lender or any other person related to the Loan;",
+      "runs": [
+        {
+          "text": "A",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "ccept or make compositions or other arrangements or file or refrain from filing a claim in any bankruptcy proceeding of Borrower, any other guarantor of the Loan, any pledgor of collateral for any person's obligations to Lender or any other person related to the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Loan;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "Credit payments in such manner and order of priority to principal, interest or other obligations as Lender may determine; and",
+      "runs": [
+        {
+          "text": "C",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "redit payments in such manner and order of priority to principal, interest or other obligations as Lender may determine; and",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "Otherwise deal with Borrower, any other guarantor of the Loan, any pledgor of collateral for any person's obligations to Lender or any other person related to the Loan as Lender may determine in its discretion.",
+      "runs": [
+        {
+          "text": "O",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "therwise deal with Borrower, any other guarantor of the Loan, any pledgor of collateral for any person's obligations to Lender or any other person related to the Loan as Lender may determine in its discretion.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "Guarantor’s Knowledge.  Guarantor acknowledges that Guarantor has had an opportunity to review the Note and Borrower's financial condition and ability to repay the Loan.  Guarantor agrees to keep fully informed of all aspects of Borrower's financial condition and the performance of Borrower's obligations to Lender.",
+      "runs": [
+        {
+          "text": "Guarantor’s ",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Knowledge",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ".  Guarantor acknowledges that ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Guarantor has",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " had an opportunity to review the Note and Borrower's financial condition and ability to repay the Loan.  Guarantor agrees to keep fully informed of all aspects of Borrower's financial condition and the performance of Borrower's obligations to Lender.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Level 1",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "Representations and Warranties.  Guarantor makes the following representations and warranties to Lender:",
+      "runs": [
+        {
+          "text": "Representations and Warranties",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  Guarantor makes the following representations and warranties to Lender:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 1",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "This Guaranty has been duly executed and delivered and is the legal, valid and binding obligation of the Guarantor, enforceable against the Guarantor in accordance with its terms.",
+      "runs": [
+        {
+          "text": "This Guaranty has been duly executed and delivered and is the legal, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "valid",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " and binding obligation of the Guarantor, enforceable against the Guarantor in accordance with its terms.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "Guarantor’s execution and delivery of, and Guarantor’s performance of the obligations under, this Guaranty do not and will not conflict with any (i) contractual or legal restriction or obligation, or (ii) court or regulatory order, binding on or affecting Guarantor.",
+      "runs": [
+        {
+          "text": "Guarantor’s execution and delivery of, and ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Guarantor’s ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "performance of the obligations under, this Guaranty do not and will not conflict with any (",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "i",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ") contractual or legal restriction or obligation, or (ii) court or regulatory order, binding on or affecting Guarantor.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "Guarantor is not insolvent.  After giving effect to the transactions contemplated by the Note, Guarantor will not have intended to incur, or believe that Guarantor has incurred, debts beyond Guarantor’s ability to pay such debts as they mature.",
+      "runs": [
+        {
+          "text": "Guarantor is not insolvent.  After giving effect to the transactions contemplated by the Note, Guarantor will not have intended to incur, or believe that ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Guarantor ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "has incurred, debts beyond ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Guarantor’s ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "ability to pay such debts as they mature.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "None of Guarantor’s representations or warranties contained in this Guaranty or any other document, certificate or written statement furnished to Lender on behalf of Guarantor contain any untrue statement of a material fact or omits to state a material fact necessary in order to make the statements contained in this Guaranty or in such other document, certificate or written statement (when taken in their entirety) not misleading.  There is no fact known to Guarantor which materially or adversely affects Guarantor’s financial condition which has not been disclosed to Lender by Borrower or Guarantor.",
+      "runs": [
+        {
+          "text": "None of Guarantor’s representations or warranties contained in this Guaranty or any other document, certificate or written statement furnished to Lender on behalf of Guarantor contain any untrue statement of a material fact or omits to state a material fact necessary ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "in order to",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " make the statements contained in this Guaranty or in such other document, certificate or written statement (when taken in their entirety) not misleading.  There is no fact known to Guarantor which materially or adversely affects ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Guarantor’s ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "financial condition which has not been disclosed to Lender by Borrower or Guarantor.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "Opportunity to Review.  Guarantor acknowledges that Guarantor has had the opportunity to review the matters discussed and contemplated by the Note, including the remedies Lender may pursue against Borrower in the event of a default under the Note, the value of the security or collateral for the Loan and Borrower's financial condition and ability to perform under the Loan.  Guarantor further has had the opportunity to review this Guaranty with counsel.",
+      "runs": [
+        {
+          "text": "Opportunity to Review",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  Guarantor acknowledges that ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Guarantor ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "has had the opportunity to review the matters discussed and contemplated by the Note, including the remedies Lender may pursue against Borrower in the event of a default under the Note, the value of the security or collateral for the Loan and Borrower's financial condition and ability to perform under the Loan.  Guarantor further has had the opportunity to review this Guaranty with counsel.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level 1",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "Termination.  This Guaranty and all of Guarantor’s obligations hereunder shall terminate upon full repayment of the Note and satisfaction of all of Borrower’s obligations thereunder.",
+      "runs": [
+        {
+          "text": "Termination",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  This Guaranty and all of Guarantor’s obligations hereunder shall terminate upon full repayment of the Note and satisfaction of all of Borrower’s obligations thereunder.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 1",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "Miscellaneous.",
+      "runs": [
+        {
+          "text": "Miscellaneous",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 1",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "Notices.  Any notice, demand or request required under this Guaranty shall be deemed given and received if delivered pursuant to the notice terms described in the Purchase Agreement as described in the Note among Lender, Borrower and the other parties named therein.  ",
+      "runs": [
+        {
+          "text": "Notices",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  Any notice, demand or request required under this Guaranty shall be deemed given and received if delivered pursuant to the notice terms described in the Purchase Agreement ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "as described in the Note",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " among Lender, Borrower and the other parties named therein.  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 26,
+      "text": "Rights of Guarantor.  Guarantor shall have no more and no fewer rights under this Guaranty than Borrower does under the Note.",
+      "runs": [
+        {
+          "text": "Rights of Guarantor",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  Guarantor shall have no more and no ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "fewer ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "rights under this Guaranty than Borrower does under the Note.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 27,
+      "text": "Governing Law.  All questions with respect to the construction of this Guaranty and the rights and liabilities of the parties to this Guaranty shall be governed by the laws of the State of California.",
+      "runs": [
+        {
+          "text": "Governing Law",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  All questions with respect to the construction of this Guaranty and the rights and liabilities of the parties to this Guaranty shall be governed by the laws of the State of California.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 28,
+      "text": "Binding on Successors.  This Guaranty shall inure to the benefit of, and shall be binding upon, the successors and assigns of each of the parties to this Guaranty.  ",
+      "runs": [
+        {
+          "text": "Binding on Successors",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  This Guaranty shall inure to the benefit of, and shall be binding upon, the successors and assigns of each of the parties to this Guaranty.  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 29,
+      "text": "Attorneys' Fees.  In the event of any litigation or other proceedings relating to this Guaranty, the prevailing party shall be entitled to recover its attorneys’ fees and associated costs from the losing party.   The prevailing party shall also be entitled to its attorneys' fees, costs and expenses incurred in any post-judgment proceedings to collect and enforce the judgment.  This provision is separate and several and shall survive the merger of this Guaranty into any judgment on this Guaranty.",
+      "runs": [
+        {
+          "text": "Attorneys' Fees",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  In the event of any litigation or other proceedings relating to this Guaranty, the prevailing party shall be entitled to recover its attorneys’ fees and associated costs from the losing party.   The prevailing party shall also be entitled to its attorneys' fees, costs and expenses incurred in any post-judgment proceedings to collect and enforce the judgment.  This provision is separate and several and shall survive the merger of this Guaranty into any judgment on this Guaranty.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 30,
+      "text": "Entire Agreement.  This Guaranty constitutes the entire agreement and understanding between the parties in respect of the subject matter of this Guaranty and supersedes all prior agreements and understandings with respect to such subject matter, whether oral or written.",
+      "runs": [
+        {
+          "text": "Entire Agreement",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  This Guaranty constitutes the entire agreement and understanding between the parties in respect of the subject matter of this Guaranty and supersedes all prior agreements and understandings with respect to such subject matter, whether oral or written.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 31,
+      "text": "Waivers.  Waiver by Lender of any term, covenant or condition under this Guaranty or the Note, or of any default by Guarantor under this Guaranty or the Note, or any failure by Lender to insist upon strict performance by Guarantor of any term, covenant or condition contained in this Guaranty or the Note, shall not be construed as waiving any other provision of this Guaranty or Note.",
+      "runs": [
+        {
+          "text": "Waivers",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Waiver by Lender of any term, covenant or condition under this Guaranty or the Note, or of any default by Guarantor under this Guaranty or the Note, or any failure by Lender to insist upon strict performance by Guarantor of any term, covenant or condition contained in this Guaranty or the Note, shall not be construed as waiving any other provision of this Guaranty or Note",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 32,
+      "text": "Severability.  If any part of this Guaranty is declared invalid for any reason, such shall not affect the validity of the rest of the Guaranty and the other parts of this Guaranty shall remain in effect.",
+      "runs": [
+        {
+          "text": "Severability",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ".  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "If any part of this Guaranty is declared invalid for any reason, such shall not affect the validity of the rest of the Guaranty and the other parts of this Guaranty shall remain in effect",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 33,
+      "text": "THE CALIFORNIA ASSOCIATION OF BUSINESS BROKERS MAKES NO REPRESENTATION AS TO THE LEGAL VALIDITY OR ADEQUACY OF ANY PROVISION OF THIS FORM IN ANY SPECIFIC TRANSACTION. A BUSINESS BROKER IS NOT LICENSED OR QUALIFIED TO PROVIDE LEGAL, ACCOUNTING OR TAX ADVICE. GUARANTOR IS ADVISED TO CONSULT WITH INDEPENDENT ATTORNEYS, ACCOUNTANTS AND OTHER COMPETENT PROFESSIONALS IN ENTERING INTO THIS GUARANTY.",
+      "runs": [
+        {
+          "text": "THE CALIFORNIA ASSOCIATION OF BUSINESS BROKERS MAKES NO REPRESENTATION AS TO THE LEGAL VALIDITY OR ADEQUACY OF ANY PROVISION OF THIS FORM IN ANY SPECIFIC TRANSACTION. A BUSINESS BROKER IS NOT LICENSED OR QUALIFIED TO PROVIDE LEGAL, ACCOUNTING OR TAX ADVICE. ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "GUARANTOR IS",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ADVISED TO CONSULT WITH INDEPENDENT ATTORNEYS, ACCOUNTANTS AND OTHER COMPETENT PROFESSIONALS IN ENTERING INTO ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "THIS GUARANTY",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ".",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Body Text",
+      "source": "body"
+    },
+    {
+      "index": 34,
+      "text": "",
+      "runs": [],
+      "style": "Level 2",
+      "source": "body"
+    },
+    {
+      "index": 35,
+      "text": "Guarantor",
+      "runs": [
+        {
+          "text": "Guarantor",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 36,
+      "text": "",
+      "runs": [],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 37,
+      "text": "",
+      "runs": [],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 38,
+      "text": "By: \t\t\t\t\t\t\t",
+      "runs": [
+        {
+          "text": "By: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 39,
+      "text": "",
+      "runs": [],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 40,
+      "text": "Printed Name: [TextInput{\"system-name\":\"guarantor-printed-name\"}]",
+      "runs": [
+        {
+          "text": "Printed Name: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-printed-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 41,
+      "text": "",
+      "runs": [],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 42,
+      "text": "Date: [Date{\"system-name\":\"signing-date\"}]",
+      "runs": [
+        {
+          "text": "Date: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Date{\"system-name\":\"signing-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Body",
+      "source": "body"
+    },
+    {
+      "index": 43,
+      "text": "",
+      "runs": [],
+      "style": "List Paragraph",
+      "source": "body"
+    }
+  ],
+  "tables": [],
+  "headers": [
+    {
+      "index": 0,
+      "text": "Lender \t\tGuarantor \t\tDate \t",
+      "runs": [
+        {
+          "text": "Lender",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "Guarantor",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "\tDate ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 8
+        }
+      ],
+      "style": "Normal",
+      "source": "header"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "\t\t\t\t______\t______",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t______",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t______",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Footer",
+      "source": "footer"
+    },
+    {
+      "index": 1,
+      "text": "\t\t\tInitials\tInitials",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Initials",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Initials",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Footer",
+      "source": "footer"
+    },
+    {
+      "index": 2,
+      "text": "©2021 California Association of Business Brokers\tPage 3 of 3\t\t",
+      "runs": [
+        {
+          "text": "©",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "20",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "21",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " California Association of Business Brokers",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Page",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "3",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": " of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "3",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        }
+      ],
+      "style": "Footer",
+      "source": "footer"
+    }
+  ],
+  "comments": [],
+  "highlights": [],
+  "colored_text": [],
+  "dropdowns": []
+}

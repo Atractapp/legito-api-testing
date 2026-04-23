@@ -1,0 +1,2393 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\Dayshape NDA (mutual).docx",
+  "paragraph_count": 128,
+  "table_count": 0,
+  "highlight_count": 0,
+  "colored_text_count": 0,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "THIS CONFIDENTIALITY AGREEMENT is made on the [Date{\"system-name\":\"agreement-date\",\"label\":\"Agreement Date\"}] day of [TextInput{\"system-name\":\"agreement-month\",\"label\":\"Agreement Month\"}] [TextInput{\"system-name\":\"agreement-year\",\"label\":\"Agreement Year\"}] between:",
+      "runs": [
+        {
+          "text": "THIS CONFIDENTIALITY AGREEMENT ",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "is made on the [Date{\"system-name\":\"agreement-date\",\"label\":\"Agreement Date\"}] day of [TextInput{\"system-name\":\"agreement-month\",\"label\":\"Agreement Month\"}] [TextInput{\"system-name\":\"agreement-year\",\"label\":\"Agreement Year\"}] between:",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Heading 2",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [],
+      "style": "Heading 2",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "DAYSHAPE SOFTWARE LTD whose company number is SC446814 and whose registered address is at Floor 3, 1-4 Atholl Crescent, Edinburgh, EH3 8HA of the one part",
+      "runs": [
+        {
+          "text": "DAYSHAPE SOFTWARE LTD ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "whose company number is",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "SC446814",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "and whose registered address is at Floor 3, 1-4 ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "Atholl",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " Crescent, Edinburgh, EH3 8HA of the one part",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "",
+      "runs": [],
+      "style": "Heading 2",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "and ",
+      "runs": [
+        {
+          "text": "and ",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Heading 2",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "[TextInput{\"system-name\":\"company-name\",\"label\":\"Registered Company Name\"}] whose company number is [TextInput{\"system-name\":\"company-number\",\"label\":\"Company Number\"}] and whose registered address is [TextInput{\"system-name\":\"company-address\",\"label\":\"Registered Address\"}] of the other part.",
+      "runs": [
+        {
+          "text": "[TextInput{\"system-name\":\"company-name\",\"label\":\"Registered Company Name\"}] ",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "whose company number is [TextInput{\"system-name\":\"company-number\",\"label\":\"Company Number\"}] and whose registered address is [TextInput{\"system-name\":\"company-address\",\"label\":\"Registered Address\"}] of the other part.",
+          "bold": true,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Heading 2",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "WHEREAS the parties, for their mutual benefit, may have exchanged and wish further to exchange certain information of a confidential nature and wish to protect such information in the manner set out in this Agreement. ",
+      "runs": [
+        {
+          "text": "WHEREAS the parties, for the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "ir mutual benefit, may have exchanged and wish further to exchange certain information of a confidential nature and wish to protect such information in the manner set out in this Agreement. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "NOW IT IS HEREBY AGREED AS FOLLOWS:",
+      "runs": [
+        {
+          "text": "NOW IT IS HEREBY AGREED AS FOLLOWS:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "1.\tDefinitions",
+      "runs": [
+        {
+          "text": "1.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tDefinitions",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "‘Purpose’ shall mean any discussions and negotiations between or within the parties concerning or in connection with the establishment of a business relationship between the parties and review requirements for a potential business opportunity. ",
+      "runs": [
+        {
+          "text": "‘Purpose’ shall mean any discussions and negotiations between or within the parties concerning or in connection with the establishment of a business relationship between the parties and review requirements for a potential business opportunity. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "‘Confidential Information’ shall mean for the purpose of this Agreement any information or data relating to a party’s business or affairs (including but not limited to any analyses, computer files (whether or not reduced to written form), compilations, software, information ascertainable by the inspection or analysis of samples, memoranda, notes, reports, studies, data, drawings, films, information and documentation of all kinds (including copies, extracts and summaries thereof) and all other material containing or based in whole or part on any such information), disclosed whether in writing, orally, electronically or by any other means directly or indirectly to one party (the “Receiving Party”) by the other party (the “Disclosing Party”) or which comes into the possession or knowledge of the Receiving Party as a result of the Purpose, or the relationship of the parties hereto arising from this Agreement, or by a third party on behalf of the other party, whether before or after the date of this Agreement, but shall exclude any part of such disclosed information or data which:",
+      "runs": [
+        {
+          "text": "‘Confident",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "ial Information’ shall mean for the purpose of this Agreement any information or data relating to a party’s business or affairs (including but not limited to any analyses, computer files (whether or not reduced to written form), compilations, software, inf",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "ormation ascertainable by the inspection or analysis of samples, memoranda, notes, reports, studies, data, drawings, films, information and documentation of all kinds (including copies, extracts and summaries thereof) and all other material containing or b",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "ased in whole or part on any such information), disclosed whether in writing, orally, electronically or by any other means directly or indirectly to one party (the “Receiving Party”) by the other party (the “Disclosing Party”) or which comes into the posse",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "ssion or knowledge of the Receiving Party as a result of the Purpose, or the relationship of the parties hereto arising from this Agreement, or by a third party on behalf of the other party, whether before or after the date of this Agreement, but shall exc",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "lude any part of such disclosed information or data which:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "(a)\tis now or becomes public knowledge otherwise than by breach of this Agreement by the Receiving Party; or ",
+      "runs": [
+        {
+          "text": "(a)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tis now or becomes public knowledge otherwise than by breach of this Agreement by the Receiving Party; or ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "(b)\tthe Receiving Party can show: ",
+      "runs": [
+        {
+          "text": "(b)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tthe Receiving Party can show: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "(i)\twas in its possession or known to it by being in its use or being recorded in its files or computers or other recording media prior to receipt from the Disclosing Party and was not previously acquired by the Receiving Party from the Disclosing Party under an obligation of confidence; or ",
+      "runs": [
+        {
+          "text": "(",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "i",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\twas in its possession or known to it by being",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " in its use or being recorded in its files or computers or other recording media prior to receipt from the Disclosing Party and was not previously acquired by the Receiving Party from the Disclosing Party under an obligation of confidence; or ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "(ii)\tto have been developed by or for the Receiving Party at any time independently of any information disclosed to it by the Disclosing Party; ",
+      "runs": [
+        {
+          "text": "(ii)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tto hav",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "e been developed by or for the Receiving Party at any time independently of any information disclosed to it by the Disclosing ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Party;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 26,
+      "text": "(c)\tis lawfully disclosed to the Receiving Party by a third party without breach by the Receiving Party or such third party of any obligation of confidentiality or non-use towards the Disclosing Party; or",
+      "runs": [
+        {
+          "text": "(c)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tis lawfully disclosed to the Receiving Party by a third party without breach by the Receiving Party or such third par",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "ty of any obligation of confidentiality or non-use towards the Disclosing Party; or",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 27,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 28,
+      "text": "(d)\tis required to be disclosed by order of a court of a competent jurisdiction or to any government department or any governmental or regulatory agency or pursuant to the rules of any recognised Stock Exchange but only to the extent that disclosure thereto is compellable by law, provided always that wherever possible the Disclosing Party shall be given by the Receiving Party not less than two days prior notice of any disclosure and the Receiving Party shall consult with the Disclosing Party in respect thereof;  or",
+      "runs": [
+        {
+          "text": "(d)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tis required to be disclosed by order of a court of a competent jurisdiction or to any government department or any governmental or regulatory agency or pursuant to the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " rules of any recognised Stock Exchange but only to the extent that disclosure thereto is compellable by law, provided always that wherever possible the Disclosing Party shall be given by the Receiving Party not less than two days prior notice of any discl",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "osure and the Receiving Party shall consult with the Disclosing Party in respect thereof;  or",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 29,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 30,
+      "text": "(e)\tis disclosed by the Receiving Party with the prior written approval of the Disclosing Party.",
+      "runs": [
+        {
+          "text": "(e)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tis disclosed by the Receiving Party with the prior written approval of the Disclosing Party.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 31,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 32,
+      "text": "2.\tHandling of Confidential Information",
+      "runs": [
+        {
+          "text": "2.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tHandling of Confidential Information",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 33,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 34,
+      "text": "Copies or reproductions shall not be made except to the extent reasonably necessary for the Purpose and all copies made shall be the property of the Disclosing Party. All Confidential Information and copies thereof shall be returned to the Disclosing Party or destroyed (at the Disclosing Party’s option) within 30 days of receipt of a written request from the Disclosing Party.",
+      "runs": [
+        {
+          "text": "Copies or reproductions shall not be made except to the extent reasonably necessary for the Purpose and all copies made shall be the property of the Disclosing Party. All Confidential Information and copies thereof shall be returned to the Disclosing Party",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " or destroyed (at the Disclosing Party’s option) within 30 days of receipt of a written request from the Disclosing Party.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 35,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 36,
+      "text": "3.\tLimitations and Warranty",
+      "runs": [
+        {
+          "text": "3.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tLimitations and Warranty",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 37,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 38,
+      "text": "(a)\tThe Receiving Party shall not:",
+      "runs": [
+        {
+          "text": "(a)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tThe Receiving Party shall not:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 39,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 40,
+      "text": "(i)\tdivulge the Disclosing Party’s Confidential Information, in whole or in part, to any third party, and shall maintain the Disclosing Party's Confidential Information in confidence and shall exercise in relation thereto no lesser security measures and degree of care than that which the Receiving Party applies to its own confidential information;",
+      "runs": [
+        {
+          "text": "(",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "i",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\tdivulge the Disclosing Party’s Confidential Information, in who",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "le or in part, to any third party, and shall maintain the Disclosing Party's Confidential Information in confidence and shall exercise in relation thereto no lesser security measures and degree of care than that which the Receiving Party applies to its own",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " confidential ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "information;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 41,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 42,
+      "text": "(ii)\twithout the prior written consent of the Disclosing Party, disclose the Confidential Information, other than to such of its directors, officers or employees who need to know it for the Purpose, or to the Receiving Party's lawyers, accountants, bankers and other professional advisers who need to know it for advising in relation to the Purpose and provided that, (a) such disclosure is made under obligations of confidentiality on terms substantially the same as those contained herein, or (b) such employees, officers and directors are obliged by their contracts of employment or service not to disclose the same;",
+      "runs": [
+        {
+          "text": "(ii)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\twithout the prior written consent of the Disclosing Party, disclose the Confidential Information, other than to such of its directors, officers or employees who need to know it for the Purpose, or to the Receiving Party's l",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "awyers, accountants, bankers and other professional advisers who need to know it for advising in relation to the Purpose and provided that, (a) such disclosure is made under obligations of confidentiality on terms substantially the same as those contained ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "herein, or (b) such employees, officers and directors are obliged by their contracts of employment or service not to disclose the same;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 43,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 44,
+      "text": "(iii)\tuse or permit the use of the Confidential Information disclosed to it pursuant to this Agreement other than for or in connection with the Purpose;",
+      "runs": [
+        {
+          "text": "(iii)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tuse or permit the use of the Confidential Information disclosed to it pursuant to this Agreement other than for o",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "r in connection with the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Purpose;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 45,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 46,
+      "text": "(iv)\tpermit the disclosure and shall use its reasonable endeavours to prevent the disclosure of Confidential Information to or by any third party, without the Disclosing Party's prior consent in writing therefor;",
+      "runs": [
+        {
+          "text": "(iv)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tpermit the disclosure and shall use its reasonable endeavours to prevent the disclosure of Confidential Information to or by any third party, without the Disclosing Party's prior consent in writing ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "therefor;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 47,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 48,
+      "text": "(v)\tmake any commercial use of the Confidential Information or any part thereof without the prior written consent of the Disclosing Party.",
+      "runs": [
+        {
+          "text": "(v)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tmak",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "e any commercial use of the Confidential Information or any part thereof without the prior written consent of the Disclosing Party.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 49,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 50,
+      "text": "(vi)\tcopy, reproduce or reduce to writing any material part of the Confidential Information except as may be reasonably necessary for the Purpose;",
+      "runs": [
+        {
+          "text": "(vi)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tcopy, reproduce or reduce to writing any material part of the Confidential Information except as may be reasonably nec",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "essary for the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Purpose;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 51,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 52,
+      "text": "3.1\tEach party warrants its right to disclose its Confidential Information to the other party and to authorise the other party to use the same for the Purpose.",
+      "runs": [
+        {
+          "text": "3.1",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tEach party warrants its right to disclose its Confidential Information to the other party and to authorise the other party to use the same for the Purpose.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 53,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 54,
+      "text": "4.\tNotices",
+      "runs": [
+        {
+          "text": "4.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tNotices",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 55,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 56,
+      "text": "All notices under this Agreement shall be in writing, sent by facsimile or first-class registered or recorded delivery post to the party being served at its address specified above or at such other address of which such party shall have given notice as aforesaid, and marked for the attention of that party’s signatory of this Agreement. The date of service shall be deemed to be the day following the day on which the notice was transmitted or posted as the case may be.",
+      "runs": [
+        {
+          "text": "All notices under this Agreement shall be in writing, sent by facsimile or first-class registered or recorded delivery post to the party being served at its address specified above or at such other address of which such party shall have given notice as afo",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "resaid, and marked for the attention of that party’s signatory of this Agreement. The date of service shall be deemed to be the day following the day on which the notice was transmitted or ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "posted as the case may be",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 57,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 58,
+      "text": "5.\tTermination",
+      "runs": [
+        {
+          "text": "5.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tTermination",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 59,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 60,
+      "text": "This Agreement shall continue in force from the date hereof until terminated by mutual consent or by either party by giving to the other not less than one month’s prior notice. The provisions of Clauses 1, 2, 3 and 12 shall survive any such termination for a period of 5 years from the date hereof.",
+      "runs": [
+        {
+          "text": "This Agreement shall co",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "ntinue in force from the date hereof until terminated by mutual consent or by either party by giving to the other not less than one month’s prior notice. The provisions of Clauses 1, 2, 3 and 12 shall survive any such termination for a period of 5 years fr",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "om the date hereof.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 61,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 62,
+      "text": "6.\tNon-Assignment",
+      "runs": [
+        {
+          "text": "6.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tNon-Assignment",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 63,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 64,
+      "text": "This Agreement is personal to the parties and shall not be assigned or otherwise transferred in whole or in part by either party without the prior written consent of the other party.",
+      "runs": [
+        {
+          "text": "This Agreement is personal to the parties and shall not be assigned or otherwise transferred in whole or in part by either party without the prior written consent of the other party.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 65,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 66,
+      "text": "7.\tNo Licence",
+      "runs": [
+        {
+          "text": "7.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tNo Licence",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 67,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 68,
+      "text": "The Disclosing Party reserves all rights in the Confidential Information and no rights or obligations other than those expressly recited herein are granted or to be implied from this Agreement.  In particular, no licence is hereby granted directly or indirectly under any patent, invention, discovery, copyright or other intellectual or industrial property right now or in the future held, made, obtained or licensable by the Disclosing Party.",
+      "runs": [
+        {
+          "text": "The Disclosing Party reserves all rights in the Confident",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "ial Information and no rights or obligations other than those expressly recited herein are granted or to be implied from this Agreement.  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "In particular, no",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " licence is hereby granted directly or indirectly under any patent, invention, discovery, copyright o",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "r other intellectual or industrial property right now or in the future held, made, obtained or licensable by the Disclosing Party.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 69,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 70,
+      "text": "8.\tNo Publicity",
+      "runs": [
+        {
+          "text": "8.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tNo Publicity",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 71,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 72,
+      "text": "Each party agrees to keep the existence and nature of this Agreement and the discussions between the parties regarding the Purpose confidential and not to release or make any publicity statement, advertisement or other disclosure with regard to this Agreement without the prior written consent of the other party.",
+      "runs": [
+        {
+          "text": "Each party agrees to keep the existence and nature of this Agreement and the discussions between the parties regarding the Purpose confidential and not to release or make any publicity statement, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "advertisement",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " or other disclosure with regard to this Agreem",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "ent without the prior written consent of the other party.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 73,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 74,
+      "text": "9.\tNo Warranty",
+      "runs": [
+        {
+          "text": "9.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tNo Warranty",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 75,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 76,
+      "text": "The Disclosing Party makes no representation or warranty as to the accuracy or completeness of the Confidential Information which is provided by or on behalf of the Disclosing Party to the Receiving Party and the Disclosing Party shall have no liability to the Receiving Party resulting from the use of such Confidential Information, any such use being at the risk of the Receiving Party.",
+      "runs": [
+        {
+          "text": "The Disclosing Party makes no representation or warranty as to the accuracy or completeness of the Confidential Information which is provided by or on behalf of the Disclosing Party",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " to the Receiving Party and the Disclosing Party shall have no liability to the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Receiving Party resulting from the use of such Confidential Information, any such use being at the risk of the Receiving Party.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 77,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 78,
+      "text": "10.\tNo Obligation",
+      "runs": [
+        {
+          "text": "10.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tNo Obligation",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 79,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 80,
+      "text": "Nothing in this Agreement shall be construed or implied to obligate the Disclosing Party to furnish any specific type of information hereunder, whether confidential or not. It is understood that this Agreement is not intended to, and does not, oblige either party to enter into any further agreements or to proceed with any relationship or other transaction.",
+      "runs": [
+        {
+          "text": "Nothing in this Agreement sh",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "all be construed or implied to obligate the Disclosing Party to furnish any specific type of information hereunder, whether confidential or not. It is understood that this Agreement is not intended to, and does not, oblige either party to enter into any fu",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "rther agreements or to proceed with any relationship or other transaction.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 81,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 82,
+      "text": "11.\tWaiver",
+      "runs": [
+        {
+          "text": "11.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tWaiver",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 83,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 84,
+      "text": "No failure or delay by any party in exercising rights, powers or privileges under this Agreement shall constitute a waiver thereof nor shall any single or partial exercise of such rights, powers or privileges preclude any further exercise thereof.",
+      "runs": [
+        {
+          "text": "No failure or delay by any party in exercising rights, powers or privileges under this Agreement shall constitute a waiver thereof nor shall any single or partial exercise of such rights, powers or privileges preclude any further exercise thereof.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 85,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 86,
+      "text": "12.\tEquitable Remedies",
+      "runs": [
+        {
+          "text": "12.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tEqu",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "itable Remedies",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 87,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 88,
+      "text": "The parties acknowledge and agree that damages may not be an adequate remedy for any breach by a party of the provisions of this Agreement. Without prejudice to any other rights that it may have in this regard, the Disclosing Party shall be entitled to seek equitable relief including injunctive relief and specific performance in the event of any threatened or actual breach by the Receiving Party of the provisions of this Agreement.",
+      "runs": [
+        {
+          "text": "The parties acknowledge and agree that damages may not be an adequate remedy for any breach by a party of the provisions of this Agreement. Without prejudice to any other rights that it may have in this regard, the Disclosing Party shall b",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "e entitled to seek equitable relief including injunctive relief and specific performance in the event of any threatened or actual breach by the Receiving Party of the provisions of this Agreement.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 89,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 90,
+      "text": "13.\tHeadings",
+      "runs": [
+        {
+          "text": "13.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tHeadings",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 91,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 92,
+      "text": "The headings in this Agreement are provided for ease of reference only and shall not be taken into account in the construction or interpretation thereof.",
+      "runs": [
+        {
+          "text": "The headings in this Agreement are provided ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "for ease of reference only and shall not be ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "taken into account",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " in the construction or interpretation thereof.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 93,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 94,
+      "text": "14.\tCounterparts",
+      "runs": [
+        {
+          "text": "14.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tCounterparts",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 95,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 96,
+      "text": "14.1\tThis agreement may be executed in any number of counterparts, each of which when executed shall constitute a duplicate original, but all the counterparts shall together constitute the one agreement.",
+      "runs": [
+        {
+          "text": "14.1",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "This agreement may be executed in any number of counterparts, each of which when executed shall constitute a duplicate original, but all the counterparts shall together constitute the one agreement.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 97,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 98,
+      "text": "14.2 \tTransmission of an executed counterpart of this agreement (but for the avoidance of doubt not just a signature page) by (a) fax; or (b) e-mail (in PDF, JPEG or other agreed format); shall take effect as delivery of an executed counterpart of this agreement. If either method of delivery is adopted, without prejudice to the validity of the agreement thus made, each party shall provide the others with the original of such counterpart as soon as reasonably possible thereafter.",
+      "runs": [
+        {
+          "text": "14.2 ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tTransmission of an executed counterpart of this ag",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "reement (but for the avoidance of doubt not just a signature page) by (a) fax; or (b) e-mail (in PDF, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "JPEG",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " or other agreed format); shall take effect as delivery of an executed counterpart of this agreement. If either method of delivery is adopted, without",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " prejudice to the validity of the agreement thus made, each party shall provide the others with the original of such counterpart as soon as reasonably possible thereafter.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 99,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 100,
+      "text": "15.\tEntire Agreement, Governing Law and Jurisdiction",
+      "runs": [
+        {
+          "text": "15.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tEntire Agreement, Governing Law and Jurisdiction",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 101,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 102,
+      "text": "This Agreement constitutes the entire Agreement and understanding between the parties in respect of Confidential Information and supersedes all previous agreements, understandings and undertakings in such respect. This Agreement cannot be changed except by written agreement between the parties. The interpretation construction and effect of this Agreement shall be governed and construed in all respects in accordance with the laws of Scotland and the parties hereby submit to the exclusive jurisdiction of the Scottish courts.",
+      "runs": [
+        {
+          "text": "This Agreement constitutes th",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "e entire Agreement and understanding between the parties in respect of Confidential Information and supersedes all previous agreements, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "understandings",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " and undertakings in such respect. This Agreement cannot be changed except by written agreement between th",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "e parties. The interpretation construction and effect of this Agreement shall be governed and construed in all respects in accordance ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "with the laws of Scotland and the parties hereby submit to the exclusive jurisdiction of the Scottish courts.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 103,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 104,
+      "text": "AS WITNESS this Agreement has been signed on behalf of each party by its duly authorised representative as of the day and year first above written.",
+      "runs": [
+        {
+          "text": "AS WITNESS ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "this Agreement has been signed on behalf of each party by its duly authorised representative as of the day and year first above written.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 105,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 106,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 107,
+      "text": "SIGNED for and on behalf of DAYSHAPE SOFTWARE LTD",
+      "runs": [
+        {
+          "text": "SIGNED for and on behalf of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "DAYSHAPE SOFTWARE LTD",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 108,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 109,
+      "text": "Authorised Signatory: [TextInput{\"system-name\":\"dayshape-signatory\",\"label\":\"Dayshape Signatory\"}]",
+      "runs": [
+        {
+          "text": "Authorised Signatory: [TextInput{\"system-name\":\"dayshape-signatory\",\"label\":\"Dayshape Signatory\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 110,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 111,
+      "text": "Print Name: [TextInput{\"system-name\":\"dayshape-print-name\",\"label\":\"Dayshape Print Name\"}]",
+      "runs": [
+        {
+          "text": "Print Name: [TextInput{\"system-name\":\"dayshape-print-name\",\"label\":\"Dayshape Print Name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 112,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 113,
+      "text": "Position: [TextInput{\"system-name\":\"dayshape-position\",\"label\":\"Dayshape Position\"}]",
+      "runs": [
+        {
+          "text": "Position: [TextInput{\"system-name\":\"dayshape-position\",\"label\":\"Dayshape Position\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 114,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 115,
+      "text": "Date: [Date{\"system-name\":\"dayshape-signing-date\",\"label\":\"Dayshape Signing Date\"}]",
+      "runs": [
+        {
+          "text": "Date: [Date{\"system-name\":\"dayshape-signing-date\",\"label\":\"Dayshape Signing Date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 116,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 117,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 118,
+      "text": "SIGNED for and on behalf of [Link:company-name]",
+      "runs": [
+        {
+          "text": "SIGNED for and on behalf of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Link:company-name]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 119,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 120,
+      "text": "Authorised Signatory: [TextInput{\"system-name\":\"counterparty-signatory\",\"label\":\"Counterparty Signatory\"}]",
+      "runs": [
+        {
+          "text": "Authorised Signatory: [TextInput{\"system-name\":\"counterparty-signatory\",\"label\":\"Counterparty Signatory\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 121,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 122,
+      "text": "Print Name: [TextInput{\"system-name\":\"counterparty-print-name\",\"label\":\"Counterparty Print Name\"}]",
+      "runs": [
+        {
+          "text": "Print Name: [TextInput{\"system-name\":\"counterparty-print-name\",\"label\":\"Counterparty Print Name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 123,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 124,
+      "text": "Position: [TextInput{\"system-name\":\"counterparty-position\",\"label\":\"Counterparty Position\"}]",
+      "runs": [
+        {
+          "text": "Position: [TextInput{\"system-name\":\"counterparty-position\",\"label\":\"Counterparty Position\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 125,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 126,
+      "text": "Date: [Date{\"system-name\":\"counterparty-signing-date\",\"label\":\"Counterparty Signing Date\"}]",
+      "runs": [
+        {
+          "text": "Date: [Date{\"system-name\":\"counterparty-signing-date\",\"label\":\"Counterparty Signing Date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 127,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    }
+  ],
+  "tables": [],
+  "headers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Header",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "Confidential\tPage 1\t",
+      "runs": [
+        {
+          "text": "Confidential",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tPage ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "1",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "Normal",
+      "source": "footer"
+    }
+  ],
+  "comments": [],
+  "highlights": [],
+  "colored_text": [],
+  "dropdowns": []
+}

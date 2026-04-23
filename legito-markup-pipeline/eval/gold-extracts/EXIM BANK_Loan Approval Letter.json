@@ -1,0 +1,2923 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\EXIM BANK_Loan Approval Letter.docx",
+  "paragraph_count": 33,
+  "table_count": 0,
+  "highlight_count": 10,
+  "colored_text_count": 1,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "\t\t\t\t\t\t\t\t\t\t\t[Date{\"system-name\":\"letter-date\"}]",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "[Date{\"system-name\":\"letter-date\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 11
+        }
+      ],
+      "style": "Heading 1",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "[TextInput: Borrower Name{\"system-name\":\"borrower-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Borrower Name{\"system-name\":\"borrower-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 0
+        }
+      ],
+      "style": "Notice Normal",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "[TextInput: Borrower Address Line 1{\"system-name\":\"borrower-address-1\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Borrower Address Line 1{\"system-name\":\"borrower-address-1\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "[TextInput: Borrower Address Line 2{\"system-name\":\"borrower-address-2\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Borrower Address Line 2{\"system-name\":\"borrower-address-2\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "[TextInput: Borrower Address Line 3{\"system-name\":\"borrower-address-3\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Borrower Address Line 3{\"system-name\":\"borrower-address-3\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "",
+      "runs": [],
+      "style": "Heading 1",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "RE: NOTIFICATTION OF EX-IM BANK LOAN APPROVAL – TRANSACTION NO. [TextInput: Transaction Number{\"system-name\":\"transaction-number\"}]",
+      "runs": [
+        {
+          "text": "RE: NOTIFICATTION OF ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "EX-IM ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "BANK",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "LOAN APPROVAL ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "– TRANSACTION NO. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "[TextInput: Transaction Number{\"system-name\":\"transaction-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 6
+        }
+      ],
+      "style": "Heading 1",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "\nWe are pleased to inform you that the Export-Import Bank of the United States (“Ex-Im Bank”) has approved our application to finance the purchase by ([Link:borrower-name]) of ([TextInput: Goods Description{\"system-name\":\"goods-description\"}]) (the “Goods”) exported from the United Sates by ([TextInput: Exporter Name{\"system-name\":\"exporter-name\"}]) to the ([TextInput: Borrower's Country{\"system-name\":\"borrower-country\"}]). This financing was applied for in accordance with our mutually signed proposal dated as of ([Date{\"system-name\":\"proposal-date\"}]). The financing was officially approved on ([Date{\"system-name\":\"approval-date\"}]). The terms and conditions of the final approval may differ in some respect to the original proposal. We request that you please review the section below titled “TERMS OF ATRAFIN’S LOAN AS APPROVED BY EX-IM BANK” in detail. \n\nThe next steps in the process are outlined below:\n\n1. Atrafin will prepare the U.S. governed loan documentation. This will include a credit agreement, promissory note, and supporting documentation. The agreements will reflect the terms and conditions as approved by Ex-Im Bank.  ",
+      "runs": [
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "We are pleased to inform you that the Export-Import Bank of the United States (“Ex-Im Bank”) has approved our application to finance the purchase by ([Link:borrower-name]) ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "of",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ([TextInput: Goods Description{\"system-name\":\"goods-description\"}]) (the “Goods”) exported from the United Sates by ([TextInput: Exporter Name{\"system-name\":\"exporter-name\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " to the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "([TextInput: Borrower's Country{\"system-name\":\"borrower-country\"}]).",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 5
+        },
+        {
+          "text": " This financing was ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "applied for ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "in accordance with our mutually signed proposal",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " dated as of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "([Date{\"system-name\":\"proposal-date\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 10
+        },
+        {
+          "text": ". The financing was officially approved on ([Date{\"system-name\":\"approval-date\"}]).",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": " The terms and conditions of the final approval may differ in some ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "respect",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " to the original proposal. We request ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "that ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "you ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "please ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "review the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "section below ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "titled “",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": "TERMS OF ATRAFIN’S LOAN AS APPROVED BY EX-IM BANK",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": "”",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": " in detail. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": "\nThe next steps in the process are outlined below:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": "\n1. Atrafin ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": "will prepare the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": " U.S.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": " governed",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        },
+        {
+          "text": " loan documentation. This will include a credit agreement, promissory note, and supporting ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 31
+        },
+        {
+          "text": "documentation",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 32
+        },
+        {
+          "text": ". The agreements will reflect the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 33
+        },
+        {
+          "text": "terms and conditions as approved by Ex-Im Bank. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 34
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 35
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "[Question\"Security type\": No Security / Security Required{\"system-name\":\"security-type\"}]",
+      "runs": [
+        {
+          "text": "[Question\"Security type\": No Security / Security Required{\"system-name\":\"security-type\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "[Clause{\"condition\":\"security-type is set to No Security\"}]\n2. We will not be required to take security in the financed Goods. We will however require a “negative pledge”, which means that your company will agree to not give a mortgage, pledge or any similar security interest over the financed Goods to anyone else. We do not anticipate any material legal costs at this time. Atrafin will prepare the U.S. governed loan documentation in-house, and we will not need local legal counsel as there is no security being taken over the Goods. I am pleased to inform you that there will be little to no legal costs anticipated for your loan at this time.",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"security-type is set to No Security\"}]\n2. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "We will not ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "be required to take security ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "in the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "financed ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "Goods. We will ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "however ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "require a “negative pledge”, which means that your company will agree to not give a mortgage",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": ", pledge or any similar security interest",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "over the financed Goods ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "to ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "anyone else",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": ". We do not anticipate any material legal costs ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "at this time",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": ". Atrafin will prepare the U.S. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "governed",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "loan ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "documentation in-house,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": " and we will not need local ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": "legal ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "counsel as there is no ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "security being taken over the Goods",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": ". I am pleased to inform you that there will be little ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": "to",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": " no legal costs anticipated ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": "for your loan ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": "at this time.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]We will require a valid and enforceable first-priority security interest in the financed Goods in the ([TextInput: Country where Goods are located{\"system-name\":\"goods-country\"}]) in the form of ([TextInput: Description of Security Agreement{\"system-name\":\"security-agreement-desc\"}]), (the “Security Agreement”).",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]We will ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "require a valid and enforceable first-priority security interest in the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " financed",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " Goods in the ([TextInput: Country where Goods are located{\"system-name\":\"goods-country\"}]) in the form of ([TextInput: Description of Security Agreement{\"system-name\":\"security-agreement-desc\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ", (the “Security Agreement”)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Normal (Web)",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]In this case, we will need to:",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]In this case, we will need to:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal (Web)",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]Engage local legal counsel to draft the Security Agreement and provide a legal opinion, to the satisfaction of Ex-Im Bank, confirming that the perfected first priority security interest is valid and enforceable under the laws of ([Link:borrower-country]).",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]Engage local ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "legal ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "counsel to draft the Security Agreement and provide a legal opinion",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " to the satisfaction of Ex-Im Bank",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " confirming that the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "perfected",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "first priority",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "security interest is valid",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": " and",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "enforceable under the laws of ([Link:borrower-country])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        }
+      ],
+      "style": "Normal (Web)",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]Arrange for the execution and, if applicable, registration of the Security Agreement with the appropriate local authority.",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]Arrange for the execution and",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ", if applicable,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " registration of the Security Agreement with the appropriate local authority.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal (Web)",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]All fees of local legal counsel and all registration costs will be borne by ([Link:borrower-name]). Atrafin will obtain the necessary quotes from local legal counsel and a separate email will be sent to you with the Engagement Letter for your signature, should the terms and fees be acceptable to you.\n",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"security-type is set to Security Required\"}]All fees of local ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "legal ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "counsel and all registration costs will be borne by ([Link:borrower-name]). Atrafin will obtain the necessary quotes from local ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "legal ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "counsel and a separate email will be sent to you with the Engagement Letter for your signature, should the terms and fees be acceptable to you.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Normal (Web)",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "3. Atrafin will provide the loan documentation from the U.S. side for review and signature by ([Link:borrower-name]) and ([TextInput: Guarantor/Guarantors{\"system-name\":\"guarantor-names\"}]). The loan documentation will need to be signed and the originals returned to Atrafin’s address in the USA via courier.",
+      "runs": [
+        {
+          "text": "3. Atrafin will provide",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " loan documentation from the U",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "S",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " side for review and signature by ([Link:borrower-name]) and ([TextInput: Guarantor/Guarantors{\"system-name\":\"guarantor-names\"}]). The loan document",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "ation will need to be",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "signed",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": " and ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "originals ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "returned to Atrafin",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "’s address",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "in the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "USA",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " via courier",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        }
+      ],
+      "style": "Normal (Web)",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "\n4. Once all loan conditions are met, Ex-Im Bank will make the loan “operative” and Atrafin is at this point authorized to make payments under the loan.",
+      "runs": [
+        {
+          "text": "\n4. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Once a",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "ll loan ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "conditions are met, Ex-Im Bank ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "will make ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "the loan “operative” and Atrafin",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " is",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "at this point authorized",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " to make payments under the loan.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "[Question\"Guarantor type\": Personal Guarantor / Corporate Guarantor / Both{\"system-name\":\"guarantor-type\"}]",
+      "runs": [
+        {
+          "text": "[Question\"Guarantor type\": Personal Guarantor / Corporate Guarantor / Both{\"system-name\":\"guarantor-type\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "\n5. Approved local costs will be financed as a reimbursement to the ([Link:borrower-name]) upon presentment to Atrafin of an invoice and proof of payment of the local costs invoice. Payments are made at the exchange rate in effect no more than 5 business days before the disbursement.\n\nTHE TERMS OF ATRAFIN’S LOAN AS APPROVED BY EX-IM BANK ARE AS FOLLOWS:\n\nBorrower: ([Link:borrower-name])\nPersonal Guarantor: ([TextInput: Personal Guarantor Name{\"system-name\":\"personal-guarantor-name\",\"condition\":\"guarantor-type is not set to Corporate Guarantor\"}])\nCorporate Guarantor: ([TextInput: Corporate Guarantor Name{\"system-name\":\"corporate-guarantor-name\",\"condition\":\"guarantor-type is not set to Personal Guarantor\"}])",
+      "runs": [
+        {
+          "text": "\n5. Approved local costs ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "will be ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "financed as a reimbursement to ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "([Link:borrower-name])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "upon",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "presentment to Atrafin",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " of an invoice and proof of payment of the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "local costs in",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "voice",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "P",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "ayments are made at the exchange rate in effect ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "no more than 5 busine",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "ss days ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "before the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": " disbursement",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "THE TERMS OF ATRAFIN’S LOAN AS APPROVED BY EX-IM BANK ARE AS FOLLOWS:",
+          "bold": true,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": "Borrower: ([Link:borrower-name])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": "Personal Guarantor: ([TextInput: Personal Guarantor Name{\"system-name\":\"personal-guarantor-name\",\"condition\":\"guarantor-type is not set to Corporate Guarantor\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": "\nCorporate Guarantor: ([TextInput: Corporate Guarantor Name{\"system-name\":\"corporate-guarantor-name\",\"condition\":\"guarantor-type is not set to Personal Guarantor\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "[Switcher: Include End User{\"system-name\":\"has-end-user\"}]",
+      "runs": [
+        {
+          "text": "[Switcher: Include End User{\"system-name\":\"has-end-user\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "[End User: ([TextInput: End User Name{\"system-name\":\"end-user-name\"}]){\"condition\":\"has-end-user is turned on\"}]",
+      "runs": [
+        {
+          "text": "[End User: ([TextInput: End User Name{\"system-name\":\"end-user-name\"}]){\"condition\":\"has-end-user is turned on\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "Lender: Atrafin LLC dba American Trade & Finance Company (“Atrafin”)\nU.S. Exporter: ([Link:exporter-name])\nLocal Cost Provider(s): ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}])\nEquipment to be Financed: ([TextInput: Equipment Description{\"system-name\":\"equipment-description\"}])\nLocal costs to be Financed: \n - ([TextInput: Local Costs Description{\"system-name\":\"local-cost-desc-1\"}])\n - ([TextInput: Local Costs Description{\"system-name\":\"local-cost-desc-2\"}])\n\nLOAN AMOUNT: U.S.$[Money{\"system-name\":\"loan-amount\"}]\n\nThe loan amount is calculated as follows:\nTotal Contract Value: \t\t\t\t[Money{\"system-name\":\"total-contract-value\"}]\nLess Down Payment ([TextInput: Down Payment %{\"system-name\":\"down-payment-pct\"}]%) \t\t\t[Money{\"system-name\":\"down-payment-amount\"}] \nEquals Financed Amount ([TextInput: Financed %{\"system-name\":\"financed-pct\"}]%): \t\t[Money{\"system-name\":\"financed-amount\"}]\nPlus Local Costs:\t\t\t\t [Money{\"system-name\":\"local-costs-total\"}]\nSub-total: \t\t\t\t\t[Money{\"system-name\":\"subtotal\"}]\nPlus Ex-Im Bank Exposure Fee ([TextInput: Exposure Fee %{\"system-name\":\"exposure-fee-pct\"}]%): \t[Money{\"system-name\":\"exposure-fee\"}]\nLoan Amount: \t\t\t\t$[Link:loan-amount]\n\nPlease note that the exposure fee is paid by Atrafin to Ex-Im Bank on your behalf, and this is repaid as part of the loan over the ([TextInput: Loan Term Years{\"system-name\":\"loan-term-years\"}]) year term of the loan.\n\nREPAYMENT TERMS: \n\nPrincipal is repayable[Select: Semi-Annually / Quarterly / Monthly{\"system-name\":\"payment-frequency\"}] on each Payment Date in not more than ([TextInput: Number of Installments{\"system-name\":\"installment-count\"}]) approximately equal instalments on each ([Date{\"system-name\":\"repayment-date-1\"}]), ([Date{\"system-name\":\"repayment-date-2\"}]), beginning ([Date{\"system-name\":\"first-repayment-date\"}]) (the \"Repayment Dates\"). ",
+      "runs": [
+        {
+          "text": "Lender: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Atrafin LLC dba American Trade & Finance Company (“Atrafin”)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "212121",
+          "index": 1
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "U.S. Exporter: ([Link:exporter-name])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "Local Cost Provider",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "(",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "s",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": ": ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "\nEquipment to be Financed: ([TextInput: Equipment Description{\"system-name\":\"equipment-description\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "\nLocal costs to be Financed: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " -",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " ([TextInput: Local Costs Description{\"system-name\":\"local-cost-desc-1\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "\n - ([TextInput: Local Costs Description{\"system-name\":\"local-cost-desc-2\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": "LOAN AMOUNT:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "U.S.$[Money{\"system-name\":\"loan-amount\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": "The loan amount is calculated as follows:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": "\nTotal Contract Value: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 31
+        },
+        {
+          "text": "[Money{\"system-name\":\"total-contract-value\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 32
+        },
+        {
+          "text": "\nLess Down Payment ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 33
+        },
+        {
+          "text": "([TextInput: Down Payment %{\"system-name\":\"down-payment-pct\"}]%) ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 34
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 35
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 36
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 37
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 38
+        },
+        {
+          "text": "[Money{\"system-name\":\"down-payment-amount\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 39
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 40
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 41
+        },
+        {
+          "text": "Equals ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 42
+        },
+        {
+          "text": "Financed Amount ([TextInput: Financed %{\"system-name\":\"financed-pct\"}]%): ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 43
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 44
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 45
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 46
+        },
+        {
+          "text": "[Money{\"system-name\":\"financed-amount\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 47
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 48
+        },
+        {
+          "text": "Plus ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 49
+        },
+        {
+          "text": "Local Costs:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 50
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 51
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 52
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 53
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 54
+        },
+        {
+          "text": " [Money{\"system-name\":\"local-costs-total\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 55
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 56
+        },
+        {
+          "text": "Sub-total: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 57
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 58
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 59
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 60
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 61
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 62
+        },
+        {
+          "text": "[Money{\"system-name\":\"subtotal\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 63
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 64
+        },
+        {
+          "text": "Plus ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 65
+        },
+        {
+          "text": "Ex-Im Bank Exposure Fee ([TextInput: Exposure Fee %{\"system-name\":\"exposure-fee-pct\"}]%): ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 66
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 67
+        },
+        {
+          "text": "[Money{\"system-name\":\"exposure-fee\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 68
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 69
+        },
+        {
+          "text": "Loan Amount: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 70
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 71
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 72
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 73
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 74
+        },
+        {
+          "text": "$[Link:loan-amount]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 75
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 76
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 77
+        },
+        {
+          "text": "\nPlease note that the exposure fee is paid by Atrafin to E",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 78
+        },
+        {
+          "text": "x-",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 79
+        },
+        {
+          "text": "I",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 80
+        },
+        {
+          "text": "m",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 81
+        },
+        {
+          "text": " Bank on your behalf, and this is repaid",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 82
+        },
+        {
+          "text": " as part of the loan",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 83
+        },
+        {
+          "text": " over the ([TextInput: Loan Term Years{\"system-name\":\"loan-term-years\"}]) year term of the loan.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 84
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 85
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 86
+        },
+        {
+          "text": "REPAYMENT TERMS:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 87
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 88
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 89
+        },
+        {
+          "text": "\nPrincipal ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 90
+        },
+        {
+          "text": "is repayable",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 91
+        },
+        {
+          "text": "[Select: Semi-Annually / Quarterly / Monthly{\"system-name\":\"payment-frequency\"}] on each Payment Date in not more than ([TextInput: Number of Installments{\"system-name\":\"installment-count\"}]) approximately equal ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 92
+        },
+        {
+          "text": "instalments",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 93
+        },
+        {
+          "text": " on each ([Date{\"system-name\":\"repayment-date-1\"}]), ([Date{\"system-name\":\"repayment-date-2\"}]), beginning ([Date{\"system-name\":\"first-repayment-date\"}]) (the \"Repayment Dates\"). ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 94
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "[Question\"Interest rate type\": Fixed / Variable{\"system-name\":\"interest-rate-type\"}]",
+      "runs": [
+        {
+          "text": "[Question\"Interest rate type\": Fixed / Variable{\"system-name\":\"interest-rate-type\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "Interest shall be payable [Link:payment-frequency] on each ([Link:repayment-date-1]), ([Link:repayment-date-2]), beginning ([Link:first-repayment-date]) (the \"Interest Payment Dates\").\n\nInterest Rate: [Option1: Fixed interest rate of ([Select: 3YR UST / 5YR UST{\"system-name\":\"fixed-rate-benchmark\"}]) plus the margin of ([TextInput: Fixed Rate Margin{\"system-name\":\"fixed-rate-margin\"}])%.{\"condition\":\"interest-rate-type is set to Fixed\"}] [Option 2: Variable rate of ([Select: 3 MONTH SOFR / 6 MONTH SOFR{\"system-name\":\"variable-rate-benchmark\"}]) plus the margin of ([TextInput: Variable Rate Margin{\"system-name\":\"variable-rate-margin\"}])%.{\"condition\":\"interest-rate-type is set to Variable\"}]",
+      "runs": [
+        {
+          "text": "Interest shall be payable [Link:payment-frequency] on each ([Link:repayment-date-1]), ([Link:repayment-date-2]), beginning ([Link:first-repayment-date]) (the \"Interest Payment Dates\").",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\nInterest Rate: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "[Option1: Fixed interest rate of ([Select: 3YR UST / 5YR UST{\"system-name\":\"fixed-rate-benchmark\"}]) plus the margin of ([TextInput: Fixed Rate Margin{\"system-name\":\"fixed-rate-margin\"}])%.{\"condition\":\"interest-rate-type is set to Fixed\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " [Option 2: Variable rate of ([Select: 3 MONTH SOFR / 6 MONTH SOFR{\"system-name\":\"variable-rate-benchmark\"}]) plus the margin of ([TextInput: Variable Rate Margin{\"system-name\":\"variable-rate-margin\"}])%.{\"condition\":\"interest-rate-type is set to Variable\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "\nFees and Expenses: Atrafin’s Fees and expenses are set forth in the attached Upfront Fee Invoice. Payment of the fees and expenses is due within 10 days of the date of this letter. We encourage you to process the payment as soon as possible to expedite the closing of the loan.\n\nSecurity: [No mortgage. Negative pledge.{\"condition\":\"security-type is set to No Security\"}] [first priority security interest in the Goods the form of ([TextInput: Security Agreement{\"system-name\":\"security-agreement-name\"}]).{\"condition\":\"security-type is set to Security Required\"}]",
+      "runs": [
+        {
+          "text": "\nFees and Expenses: Atrafin’s Fees and expenses are set forth in the attached ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Upfront Fee I",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "nvoice. Payment of",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "fees and expenses is due within 10 days of the date of this letter. We encourage you to process the payment as soon as possible to expedite the closing of the loan.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\nSecurity: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "[No mortgage. Negative pledge.{\"condition\":\"security-type is set to No Security\"}] [first priority security interest in the Goods the form of ([TextInput: Security Agreement{\"system-name\":\"security-agreement-name\"}]).{\"condition\":\"security-type is set to Security Required\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 7
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 26,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 27,
+      "text": "Other terms and conditions will be documented in the loan documentation.\n\nWe will be in direct contact with you on all matters related to the closing of the loan.\n\nBecause this loan is backed by Ex-Im Bank, an agency of the U.S. government, it may be exempt from withholding or other taxes or fees. Please consult your legal and/or tax counsel for information on any withholding and other applicable taxes or fees.\n\nWe are delighted to have the opportunity to work with your company and are looking forward to closing the loan as soon as possible.",
+      "runs": [
+        {
+          "text": "Other terms and conditions will be documented in the loan ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "documentation.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\nWe will be in direct contact with you on all matters related to the closing of the loan.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\nBecause this loan is backed by",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "Ex-Im Bank, an agency of the U.S. government, it may be exempt from withholding or other taxes or fees. Please consult your legal and/or tax counsel for information on any withholding and other applicable taxes or fees.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "\nWe are delighted to have the opportunity to work with your company and are looking forward to closing the loan as soon as possible.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 28,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 29,
+      "text": "Sincerely, ",
+      "runs": [
+        {
+          "text": "Sincerely, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 30,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 31,
+      "text": "[TextInput: Signatory Name{\"system-name\":\"signatory-name\"}]\n[TextInput: Signatory Title{\"system-name\":\"signatory-title\"}]\n",
+      "runs": [
+        {
+          "text": "[TextInput: Signatory Name{\"system-name\":\"signatory-name\"}]\n[TextInput: Signatory Title{\"system-name\":\"signatory-title\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": "yellow",
+          "index": 0
+        },
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 32,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    }
+  ],
+  "tables": [],
+  "headers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Header",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Footer",
+      "source": "footer"
+    }
+  ],
+  "comments": [
+    {
+      "id": "0",
+      "author": "Galya Oster",
+      "date": "2025-08-27T13:24:00Z",
+      "text": "Mark please include these as options as there are sometimes one or the other or both depending on the loan",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 18,
+      "anchor_text": "5. Approved local costs will be financed as a reimbursement to the ([Link:borrower-name]) upon presentment to Atrafin of an invoice and proof of payment of the local costs invoice. Payments are made a"
+    },
+    {
+      "id": "1",
+      "author": "Galya Oster",
+      "date": "2025-08-27T13:25:00Z",
+      "text": "Mark - please include an option to add more than one U.S. Exporter",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 21,
+      "anchor_text": "Lender: Atrafin LLC dba American Trade & Finance Company (“Atrafin”)U.S. Exporter: ([Link:exporter-name])Local Cost Provider(s): ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}"
+    },
+    {
+      "id": "2",
+      "author": "Galya Oster",
+      "date": "2025-08-27T13:25:00Z",
+      "text": "Mark - please include an option to add more than one local cost provider",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 21,
+      "anchor_text": "Lender: Atrafin LLC dba American Trade & Finance Company (“Atrafin”)U.S. Exporter: ([Link:exporter-name])Local Cost Provider(s): ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}"
+    },
+    {
+      "id": "3",
+      "author": "Galya Oster",
+      "date": "2025-08-27T21:04:00Z",
+      "text": "please allow additional local cost providers",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 21,
+      "anchor_text": "Lender: Atrafin LLC dba American Trade & Finance Company (“Atrafin”)U.S. Exporter: ([Link:exporter-name])Local Cost Provider(s): ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}"
+    },
+    {
+      "id": "5",
+      "author": "Galya Oster",
+      "date": "2025-08-27T13:26:00Z",
+      "text": "input field for the down payment %",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 21,
+      "anchor_text": "Lender: Atrafin LLC dba American Trade & Finance Company (“Atrafin”)U.S. Exporter: ([Link:exporter-name])Local Cost Provider(s): ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}"
+    },
+    {
+      "id": "6",
+      "author": "Galya Oster",
+      "date": "2025-08-27T13:26:00Z",
+      "text": "this will be 100% minus the down payment amount",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 21,
+      "anchor_text": "Lender: Atrafin LLC dba American Trade & Finance Company (“Atrafin”)U.S. Exporter: ([Link:exporter-name])Local Cost Provider(s): ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}"
+    },
+    {
+      "id": "4",
+      "author": "Galya Oster",
+      "date": "2025-08-27T21:07:00Z",
+      "text": "Please build in these calculations",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 21,
+      "anchor_text": "Lender: Atrafin LLC dba American Trade & Finance Company (“Atrafin”)U.S. Exporter: ([Link:exporter-name])Local Cost Provider(s): ([TextInput: Local Cost Providers{\"system-name\":\"local-cost-providers\"}"
+    },
+    {
+      "id": "7",
+      "author": "Galya Oster",
+      "date": "2025-08-27T21:11:00Z",
+      "text": "these are options from which we will select one",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 24,
+      "anchor_text": "Interest shall be payable [Link:payment-frequency] on each ([Link:repayment-date-1]), ([Link:repayment-date-2]), beginning ([Link:first-repayment-date]) (the \"Interest Payment Dates\").Interest Rate: ["
+    },
+    {
+      "id": "8",
+      "author": "Galya Oster",
+      "date": "2025-08-27T21:11:00Z",
+      "text": "these are options from which we will select one",
+      "anchor_source": "body",
+      "anchor_paragraph_index": 24,
+      "anchor_text": "Interest shall be payable [Link:payment-frequency] on each ([Link:repayment-date-1]), ([Link:repayment-date-2]), beginning ([Link:first-repayment-date]) (the \"Interest Payment Dates\").Interest Rate: ["
+    }
+  ],
+  "highlights": [
+    {
+      "source": "body",
+      "paragraph_index": 0,
+      "text": "[Date{\"system-name\":\"letter-date\"}]",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 1,
+      "text": "[TextInput: Borrower Name{\"system-name\":\"borrower-name\"}]",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 2,
+      "text": "[TextInput: Borrower Address Line 1{\"system-name\":\"borrower-address-1\"}]",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 3,
+      "text": "[TextInput: Borrower Address Line 2{\"system-name\":\"borrower-address-2\"}]",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 4,
+      "text": "[TextInput: Borrower Address Line 3{\"system-name\":\"borrower-address-3\"}]",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 6,
+      "text": "[TextInput: Transaction Number{\"system-name\":\"transaction-number\"}]",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 7,
+      "text": "([TextInput: Borrower's Country{\"system-name\":\"borrower-country\"}]).",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 7,
+      "text": "([Date{\"system-name\":\"proposal-date\"}])",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 25,
+      "text": "[No mortgage. Negative pledge.{\"condition\":\"security-type is set to No Security\"}] [first priority security interest in the Goods the form of ([TextInput: Security Agreement{\"system-name\":\"security-agreement-name\"}]).{\"condition\":\"security-type is set to Security Required\"}]",
+      "highlight_color": "yellow"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 31,
+      "text": "[TextInput: Signatory Name{\"system-name\":\"signatory-name\"}]\n[TextInput: Signatory Title{\"system-name\":\"signatory-title\"}]",
+      "highlight_color": "yellow"
+    }
+  ],
+  "colored_text": [
+    {
+      "source": "body",
+      "paragraph_index": 21,
+      "text": "Atrafin LLC dba American Trade & Finance Company (“Atrafin”)",
+      "color": "212121"
+    }
+  ],
+  "dropdowns": []
+}

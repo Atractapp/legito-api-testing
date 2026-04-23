@@ -1,0 +1,1389 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\Notice of Assignment - Guarantor_Template.docx",
+  "paragraph_count": 64,
+  "table_count": 0,
+  "highlight_count": 0,
+  "colored_text_count": 0,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "NOTICE TO GUARANTOR",
+      "runs": [
+        {
+          "text": "NOTICE TO GUARANTOR",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "Medium-Term Facilities",
+      "runs": [
+        {
+          "text": "Medium-Term Facilities",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "Annex 10   ",
+      "runs": [
+        {
+          "text": "Annex 10",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "   ",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "[TextInput{\"system-name\":\"guarantor-name-address\"}]",
+      "runs": [
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-name-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "Reference is made to the loan extended by us as Lender to [TextInput{\"system-name\":\"borrower-name\"}] as Borrower and guaranteed by yourselves and further guaranteed by the Export-Import Bank of the United States (“Ex-Im Bank”).",
+      "runs": [
+        {
+          "text": "Reference is made to the loan extended by us as Lender to [TextInput{\"system-name\":\"borrower-name\"}] as Borrower and guaranteed by yourselves and further guaranteed by the Export-Import Bank of the United States (“Ex-Im Bank”).",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "Borrower \t\t[TextInput{\"system-name\":\"borrower-name\"}]",
+      "runs": [
+        {
+          "text": "Borrower ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t[TextInput{\"system-name\":\"borrower-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "Credit Agreement\t dated \t[Date{\"system-name\":\"credit-agreement-date\"}]",
+      "runs": [
+        {
+          "text": "Credit Agreement",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t dated ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t[Date{\"system-name\":\"credit-agreement-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "Loan amount \t\t[Money{\"system-name\":\"loan-amount\"}]",
+      "runs": [
+        {
+          "text": "Loan amount ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t[Money{\"system-name\":\"loan-amount\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "Promissory Notes\t \t[TextInput{\"system-name\":\"promissory-notes-number\"}]",
+      "runs": [
+        {
+          "text": "Promissory Notes",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t[TextInput{\"system-name\":\"promissory-notes-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "Ex-Im Bank Approval\t[TextInput{\"system-name\":\"exim-approval-number\"}]",
+      "runs": [
+        {
+          "text": "Ex-Im Bank Approval",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t[TextInput{\"system-name\":\"exim-approval-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "In accordance with our rights under the Credit Agreement, we have sold, assigned and transferred the Promissory Note described below to Private Export Funding Corporation (\"PEFCO\").",
+      "runs": [
+        {
+          "text": "In accordance with our rights under the Credit Agreement, we have sold, assigned and transferred the Promissory Note described below to Private Export Funding Corporation (\"PEFCO\").",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "Note \t\t\t[TextInput{\"system-name\":\"note-number\"}]",
+      "runs": [
+        {
+          "text": "Note ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t[TextInput{\"system-name\":\"note-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "Note date \t\t[Date{\"system-name\":\"note-date\"}]",
+      "runs": [
+        {
+          "text": "Note date ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t[Date{\"system-name\":\"note-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "Note face amount \t[Money{\"system-name\":\"note-face-amount\"}]",
+      "runs": [
+        {
+          "text": "Note face amount ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t[Money{\"system-name\":\"note-face-amount\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "Effective immediately, the following terms will apply to the Note:",
+      "runs": [
+        {
+          "text": "Effective immediately, the following terms will apply to the Note:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "[Question\"Billing arrangement\": Lender as billing agent/PEFCO bills directly{\"system-name\":\"billing-arrangement\"}]",
+      "runs": [
+        {
+          "text": "[Question\"Billing arrangement\": Lender as billing agent/PEFCO bills directly{\"system-name\":\"billing-arrangement\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "[Clause{\"condition\":\"billing-arrangement is set to Lender as billing agent\"}]",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"billing-arrangement is set to Lender as billing agent\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "1. We shall continue to communicate with the Borrower and you as billing agent for the Note on behalf of PEFCO.  For all other matters, you should communicate directly with PEFCO, as follows.  ",
+      "runs": [
+        {
+          "text": "1. We shall continue to communicate with the Borrower and you as billing agent for the Note on behalf of PEFCO.  For all other matters, you should communicate directly with PEFCO, as follows.  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body Text",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "[Clause{\"condition\":\"billing-arrangement is set to PEFCO bills directly\"}]",
+      "runs": [
+        {
+          "text": "[Clause{\"condition\":\"billing-arrangement is set to PEFCO bills directly\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "1. PEFCO will bill you directly.  For all matters including billing, you should communicate directly with PEFCO, as follows.",
+      "runs": [
+        {
+          "text": "1. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "PEFCO will bill you directly.  For all matters including billing, you should communicate directly with PEFCO, as follows.",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Body Text",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "",
+      "runs": [],
+      "style": "Body Text",
+      "source": "body"
+    },
+    {
+      "index": 26,
+      "text": "Private Export Funding Corporation    \tTel. USA (212) 916-0300",
+      "runs": [
+        {
+          "text": "Private Export Funding Corporation    ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Tel",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ". USA (212) 916-0300",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 27,
+      "text": "675 Third Avenue Suite 425\t  \tFax. USA (212) 286-0304 \t",
+      "runs": [
+        {
+          "text": "675 Third Avenue Suite 425",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Fax",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ". USA (212) 286-0304 ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 28,
+      "text": "New York, New York 10017",
+      "runs": [
+        {
+          "text": "New York, New York 10017",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 29,
+      "text": " ",
+      "runs": [
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body Text",
+      "source": "body"
+    },
+    {
+      "index": 30,
+      "text": "2. All payments due under the Note must be made directly to PEFCO by wire transfer in immediately available funds into the bank account identified in the Note, repeated here as follows. ",
+      "runs": [
+        {
+          "text": "2. All payments due under the Note must be made directly to PEFCO by wire transfer in immediately available funds into the bank account identified in the Note, repeated here as follows. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body Text",
+      "source": "body"
+    },
+    {
+      "index": 31,
+      "text": "JPMorgan Chase Bank, New York, NY USA",
+      "runs": [
+        {
+          "text": "JPMorgan Chase Bank, New York, NY USA",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 32,
+      "text": "ABA Routing #0210-0002-1 ",
+      "runs": [
+        {
+          "text": "ABA Routing #0210-0002-1 ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 33,
+      "text": "A/c Private Export Funding Corporation - #910-2-764546 ",
+      "runs": [
+        {
+          "text": "A/c Private Export Funding Corporation - #910-2-764546 ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 34,
+      "text": "Borrower name: [TextInput{\"system-name\":\"borrower-name\"}]\tEx-Im Approval [TextInput{\"system-name\":\"exim-approval-full\"}]",
+      "runs": [
+        {
+          "text": "Borrower name: [TextInput{\"system-name\":\"borrower-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tEx-Im Approval [TextInput{\"system-name\":\"exim-approval-full\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 35,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 36,
+      "text": "3. Only PEFCO may change the payment schedule, the place of payment, amounts payable under the Note or accelerate the Note.  Only PEFCO may revoke or amend this notice in any respect.  You may accept only such written instructions that are signed by PEFCO.",
+      "runs": [
+        {
+          "text": "3. Only PEFCO may change the ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "payment schedule, the place of payment, amounts payable under the Note or accelerate the Note.  Only PEFCO may",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " revoke or amend this notice in any respect.  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "You may accept only such written",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "instructions",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " that are signed by PEFCO.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 37,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 38,
+      "text": "Please acknowledge your receipt of and agreement with these instructions by signing and returning the enclosed copy of this notice to us.   ",
+      "runs": [
+        {
+          "text": "Please acknowledge your receipt of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "and",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " agreement with these instructions by signing and returning the enclosed copy of this notice to us.   ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 39,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 40,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 41,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 42,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 43,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 44,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 45,
+      "text": "Atrafin LLC",
+      "runs": [
+        {
+          "text": "Atrafin LLC",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 46,
+      "text": "\t\t\t\t\t\t\t\t\t[TextInput{\"system-name\":\"lender-name\"}]\t\t",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"lender-name\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 47,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 48,
+      "text": "\t\t\t\t\t\t\tBy:             ",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\tBy:             ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 49,
+      "text": "\t\t\t\t\t\t\t  [TextInput{\"system-name\":\"lender-signatory-name\"}]",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\t  [TextInput{\"system-name\":\"lender-signatory-name\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 50,
+      "text": "\t\t\t\t\t\t\t  [TextInput{\"system-name\":\"lender-signatory-title\"}]",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "\t  [TextInput{\"system-name\":\"lender-signatory-title\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 51,
+      "text": "  [Date{\"system-name\":\"lender-signing-date\"}]",
+      "runs": [
+        {
+          "text": "  [Date{\"system-name\":\"lender-signing-date\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 52,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 53,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 54,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 55,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 56,
+      "text": "Acknowledged and agreed to by:",
+      "runs": [
+        {
+          "text": "Acknowledged and agreed to by:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 57,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 58,
+      "text": "By: ___________________________ ",
+      "runs": [
+        {
+          "text": "By: ___________________________ ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 59,
+      "text": "[TextInput{\"system-name\":\"guarantor-signatory-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-signatory-name\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 60,
+      "text": "[TextInput{\"system-name\":\"guarantor-signatory-title\"}]",
+      "runs": [
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-signatory-title\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 61,
+      "text": "[Date{\"system-name\":\"guarantor-signing-date\"}]",
+      "runs": [
+        {
+          "text": "[Date{\"system-name\":\"guarantor-signing-date\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 62,
+      "text": "[TextInput{\"system-name\":\"guarantor-telephone\"}]",
+      "runs": [
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-telephone\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 63,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    }
+  ],
+  "tables": [],
+  "headers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Header",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Footer",
+      "source": "footer"
+    }
+  ],
+  "comments": [],
+  "highlights": [],
+  "colored_text": [],
+  "dropdowns": []
+}

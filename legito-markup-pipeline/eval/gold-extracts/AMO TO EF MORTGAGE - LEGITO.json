@@ -1,0 +1,1819 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\AMO TO EF MORTGAGE - LEGITO.docx",
+  "paragraph_count": 33,
+  "table_count": 3,
+  "highlight_count": 0,
+  "colored_text_count": 0,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "This instrument was prepared by:",
+      "runs": [
+        {
+          "text": "This instrument was prepared by:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "RBI Header Address Spaced",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "RBI MORTGAGES LLC",
+      "runs": [
+        {
+          "text": "RBI MORTGAGES LLC",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "19495 Biscayne Blvd. Ste 801",
+      "runs": [
+        {
+          "text": "19495 Biscayne Blvd. Ste 801",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "RBI Header Address",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "Miami, FL 33180",
+      "runs": [
+        {
+          "text": "Miami, FL 33180",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "RBI Header Address Spaced",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "ASSIGNMENT OF NOTE, MORTGAGE  OTHER DOCUMENTS",
+      "runs": [
+        {
+          "text": "ASSIGNMENT OF NOTE, MORTGAGE ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " OTHER DOCUMENTS",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "RBI Title",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "\tKNOW  BY THESE PRESENTS that RBI MORTGAGES LLC, a Florida limited liability company, whose address is 19495 Biscayne Blvd., Suite 801, Miami, Florida, 33180, hereinafter called Assignor, the owner and holder of the note and mortgage hereinafter described, in consideration of ten dollars and other good and valuable considerations in hand paid by [TextInput: Mortgage Company{\"system-name\":\"mortgage-company\"}], a Delaware limited liability company, whose address is [TextInput: Mortgage Company Address{\"system-name\":\"mortgage-company-address\"}], hereinafter called Assignee, receipt whereof is hereby acknowledged, does hereby assign, sell, transfer and set over unto the said Assignee all of the Assignor's right, title and interest in and to the following (the \"Assigned Documents\") and the indebtedness and other obligations secured thereby:",
+      "runs": [
+        {
+          "text": "\tKNOW ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " BY THESE PRESENTS that",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "RBI MORTGAGES LLC",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ", a Florida ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "limited liability company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ", whose address is ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "19",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "495 Biscayne Blvd., Suite 801, Miami",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": ", Florida",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": ", 33",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "180",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": ", hereinafter called Assignor, the owner ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "and holder of the note and mortgage hereinafter described, in consideration of ten dollars and other good and valuable considerations in hand paid by ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "[TextInput: Mortgage Company{\"system-name\":\"mortgage-company\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": ", ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "a Delaware limited liability company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " whose address is ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "[TextInput: Mortgage Company Address{\"system-name\":\"mortgage-company-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": " hereinafter called Assignee, receipt whereof is hereby acknowledged, does hereby assign, sell, transfer and set over unto the said Assignee all of the Assignor's right, title and interest in and to the following (the \"Assigned Documents\") and the indebtedness and other obligations secured thereby:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        }
+      ],
+      "style": "RBI Normal",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "Promissory Note (the “Note”) from [TextInput: Borrower Name{\"system-name\":\"borrower-name\"}], a [Select: Florida / Delaware{\"system-name\":\"borrower-state\"}] [Select: Limited Liability Company / Corporation / Partnership{\"system-name\":\"borrower-entity-type\"}], as \"Borrower\", and RBI MORTGAGES LLC, a Florida limited liability company, as \"Lender\", dated [Date{\"system-name\":\"note-date\"}], in the original principal amount of [Money{\"system-name\":\"principal-amount\"}]; AND",
+      "runs": [
+        {
+          "text": "Promissory",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " Note (the “Note”) from ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Borrower Name{\"system-name\":\"borrower-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", a ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Select: Florida / Delaware{\"system-name\":\"borrower-state\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "[Select: Limited Liability Company / Corporation / Partnership{\"system-name\":\"borrower-entity-type\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": ", ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "as \"Borrower\", and ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "RBI MORTGAGES LLC",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": ", a Florida ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "limited liability company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "as",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "\"Lender\"",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " dated ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "[Date{\"system-name\":\"note-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": " in",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "the",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": "original",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": "principal",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": "amount",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        },
+        {
+          "text": "of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 31
+        },
+        {
+          "text": "[Money{\"system-name\":\"principal-amount\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 32
+        },
+        {
+          "text": ";",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 33
+        },
+        {
+          "text": " AND",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 34
+        }
+      ],
+      "style": "RBI Numbered",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "Mortgage Assignment of Leases and Rents given by [Link:borrower-name], a [Link:borrower-state] [Link:borrower-entity-type] in favor of RBI MORTGAGES LLC, a Florida limited liability company, in the principal amount of [Link:principal-amount], recorded on [Date{\"system-name\":\"recording-date\"}] in Official Records Book [TextInput{\"system-name\":\"records-book\"}], Page [TextInput{\"system-name\":\"records-page\"}], of the Public Records of [TextInput{\"system-name\":\"records-county\"}] County, Florida",
+      "runs": [
+        {
+          "text": "Mortgage",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Assignment of Leases and Rent",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "s",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " given by [Link:borrower-name], a [Link:borrower-state] [Link:borrower-entity-type] in favor of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "RBI MORTGAGES LLC",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ", a Florida ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "limited liability company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " in the principal amount of [Link:principal-amount], recorded on ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "[Date{\"system-name\":\"recording-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " in Official Records Book [TextInput{\"system-name\":\"records-book\"}], ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "P",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "age [TextInput{\"system-name\":\"records-page\"}], of the Public Records of [TextInput{\"system-name\":\"records-county\"}] County, ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "Florida",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        }
+      ],
+      "style": "RBI Numbered",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "That Guaranty of Payment and Performance executed on [Date{\"system-name\":\"guaranty-date\"}] by [TextInput{\"system-name\":\"guarantor-name\"}], as Guarantor, in favor of Assignor.",
+      "runs": [
+        {
+          "text": "Th",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "at",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " Guarant",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "y",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " of Payment and Performance executed on ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[Date{\"system-name\":\"guaranty-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "by",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " as Guarantor, in favor of Assignor.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        }
+      ],
+      "style": "RBI Numbered",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "The Assigned Documents encumber the real property in [Link:records-county] County, Florida described in Exhibit \"A\" attached hereto.",
+      "runs": [
+        {
+          "text": "The Assigned Documents encumber the real property in ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Link:records-county] County, Florida ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "described in ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "Exhibit \"A\"",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " attached hereto.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "RBI Normal",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "\tTHIS ASSIGNMENT IS MADE WITHOUT RECOURSE, REPRESENTATION OR WARRANTY OF ANY KIND, except that the Assignor represents and warrants that (1) the Assignor is the owner and holder of the Assigned Documents; (2) the Assignor has full right, title and authority to transfer same; and (3) the Assignor has not heretofore assigned, sold or encumbered all or any part thereof.",
+      "runs": [
+        {
+          "text": "\tTHIS ASSIGNMENT IS MADE WITHOUT RECOURSE, REPRESENTATION OR WARRANTY OF ANY KIND, except that the Assignor represents and warrants that (1) the Assignor is the owner and holder of the Assigned Documents; (2) the Assignor has full right, title and authority to transfer same; and (3) the Assignor has not heretofore assigned, sold or encumbered all or any part thereof.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "RBI Normal",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "\tIN WITNESS WHEREOF, the Assignor has executed this instrument as of this [TextInput{\"system-name\":\"execution-day\"}] day of [TextInput{\"system-name\":\"execution-month\"}] 20[TextInput{\"system-name\":\"execution-year-suffix\"}].",
+      "runs": [
+        {
+          "text": "\tIN WITNESS WHEREOF, the Assignor has executed this instrument as of thi",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "s [TextInput{\"system-name\":\"execution-day\"}] day of [TextInput{\"system-name\":\"execution-month\"}] 20[TextInput{\"system-name\":\"execution-year-suffix\"}].",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "RBI Normal",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "\n",
+      "runs": [
+        {
+          "text": "\n",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "",
+      "runs": [],
+      "style": "RBI Normal",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "\tThe foregoing instrument was acknowledged before me, by means of [Select: physical presence / online notarization{\"system-name\":\"notarization-presence\"}], this [TextInput{\"system-name\":\"notarization-day\"}] day of [TextInput{\"system-name\":\"notarization-month\"}] [TextInput{\"system-name\":\"notarization-year\"}], by [TextInput{\"system-name\":\"acknowledged-person\"}], as the Manager of RBI MORTGAGES LLC, a Florida limited liability company, on behalf of the company who [Select: is personally known to me / has produced identification{\"system-name\":\"identification-type\"}] [TextInput{\"system-name\":\"identification-document\"}] as identification.",
+      "runs": [
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "The foregoing instrument was acknowledged before me, by means of [Select: physical presence / online notarization{\"system-name\":\"notarization-presence\"}], this [TextInput{\"system-name\":\"notarization-day\"}] day of [TextInput{\"system-name\":\"notarization-month\"}] [TextInput{\"system-name\":\"notarization-year\"}], by ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"acknowledged-person\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": true,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", as the Manager of ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "RBI",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " MORTGAGES LLC",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ", a Florida ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "limited liability company",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": ", on behalf of the company who [Select: is personally known to me / has produced identification{\"system-name\":\"identification-type\"}] [TextInput{\"system-name\":\"identification-document\"}] as identification.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        }
+      ],
+      "style": "RBI Normal",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "",
+      "runs": [],
+      "style": "RBI Normal",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "",
+      "runs": [],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "",
+      "runs": [],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    },
+    {
+      "index": 26,
+      "text": "",
+      "runs": [],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    },
+    {
+      "index": 27,
+      "text": "",
+      "runs": [],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    },
+    {
+      "index": 28,
+      "text": "",
+      "runs": [],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    },
+    {
+      "index": 29,
+      "text": "",
+      "runs": [],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    },
+    {
+      "index": 30,
+      "text": "",
+      "runs": [],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    },
+    {
+      "index": 31,
+      "text": "EXHIBIT “A”",
+      "runs": [
+        {
+          "text": "EXHIBIT “A”",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "RBI Title",
+      "source": "body"
+    },
+    {
+      "index": 32,
+      "text": "",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body Sgl Sp J .5",
+      "source": "body"
+    }
+  ],
+  "tables": [
+    {
+      "table_index": 0,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Signed in the presence of:",
+              "runs": [
+                {
+                  "text": "Signed in the presence of:",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "RBI MORTGAGES LLC, a Florida limited liability company ",
+              "runs": [
+                {
+                  "text": "RBI",
+                  "bold": true,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                },
+                {
+                  "text": " MORTGAGES LLC",
+                  "bold": true,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 1
+                },
+                {
+                  "text": ", a Florida ",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 2
+                },
+                {
+                  "text": "limited liability company",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 3
+                },
+                {
+                  "text": " ",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 4
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            },
+            {
+              "index": 1,
+              "text": "",
+              "runs": [],
+              "style": "RBI Signature Table",
+              "source": "table"
+            },
+            {
+              "index": 2,
+              "text": "",
+              "runs": [],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "[TextInput{\"system-name\":\"witness-1-signature\"}]",
+              "runs": [
+                {
+                  "text": "[TextInput{\"system-name\":\"witness-1-signature\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "By:[TextInput{\"system-name\":\"signatory-signature\"}]",
+              "runs": [
+                {
+                  "text": "By:",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                },
+                {
+                  "text": "[TextInput{\"system-name\":\"signatory-signature\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 1
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Print:\t[TextInput{\"system-name\":\"witness-1-print-name\"}]",
+              "runs": [
+                {
+                  "text": "Print:",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                },
+                {
+                  "text": "\t[TextInput{\"system-name\":\"witness-1-print-name\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 1
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Name: [TextInput{\"system-name\":\"signatory-name\"}]",
+              "runs": [
+                {
+                  "text": "Name: [TextInput{\"system-name\":\"signatory-name\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Title: Manager",
+              "runs": [
+                {
+                  "text": "Title: Manager",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "\t[TextInput{\"system-name\":\"witness-2-signature\"}]",
+              "runs": [
+                {
+                  "text": "\t[TextInput{\"system-name\":\"witness-2-signature\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Print:\t[TextInput{\"system-name\":\"witness-2-print-name\"}]",
+              "runs": [
+                {
+                  "text": "Print:",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                },
+                {
+                  "text": "\t",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 1
+                },
+                {
+                  "text": "[TextInput{\"system-name\":\"witness-2-print-name\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 2
+                }
+              ],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "RBI Signature Table",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 18
+    },
+    {
+      "table_index": 1,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "STATE OF FLORIDA",
+              "runs": [
+                {
+                  "text": "STATE OF FLORIDA",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "}",
+              "runs": [
+                {
+                  "text": "}",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "}",
+              "runs": [
+                {
+                  "text": "}",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "ss:",
+              "runs": [
+                {
+                  "text": "ss:",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "COUNTY OF [TextInput{\"system-name\":\"notarization-county\"}]",
+              "runs": [
+                {
+                  "text": "COUNTY OF ",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                },
+                {
+                  "text": "[TextInput{\"system-name\":\"notarization-county\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 1
+                }
+              ],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "}",
+              "runs": [
+                {
+                  "text": "}",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 19
+    },
+    {
+      "table_index": 2,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "RBI Notary Table",
+              "source": "table"
+            },
+            {
+              "index": 1,
+              "text": "",
+              "runs": [],
+              "style": "RBI Notary Table",
+              "source": "table"
+            },
+            {
+              "index": 2,
+              "text": "AFFIX STAMP",
+              "runs": [
+                {
+                  "text": "AFFIX STAMP",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Notary Table",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "[TextInput{\"system-name\":\"notary-signature\"}]",
+              "runs": [
+                {
+                  "text": "[TextInput{\"system-name\":\"notary-signature\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Notary Table",
+              "source": "table"
+            },
+            {
+              "index": 1,
+              "text": "Notary Public",
+              "runs": [
+                {
+                  "text": "Notary Public",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Notary Table",
+              "source": "table"
+            },
+            {
+              "index": 2,
+              "text": "My commission expires: [Date{\"system-name\":\"commission-expiry\"}]",
+              "runs": [
+                {
+                  "text": "My commission expires: [Date{\"system-name\":\"commission-expiry\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "RBI Notary Table",
+              "source": "table"
+            },
+            {
+              "index": 3,
+              "text": "",
+              "runs": [],
+              "style": "RBI Notary Table",
+              "source": "table"
+            },
+            {
+              "index": 4,
+              "text": "",
+              "runs": [],
+              "style": "RBI Notary Table",
+              "source": "table"
+            },
+            {
+              "index": 5,
+              "text": "",
+              "runs": [],
+              "style": "RBI Notary Table",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 23
+    }
+  ],
+  "headers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "footer"
+    }
+  ],
+  "comments": [],
+  "highlights": [],
+  "colored_text": [],
+  "dropdowns": []
+}

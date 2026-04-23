@@ -1,0 +1,6322 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\Kupní smlouva- Fincentrum.docx",
+  "paragraph_count": 129,
+  "table_count": 6,
+  "highlight_count": 0,
+  "colored_text_count": 0,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "FCR č. [TextInput: FCR číslo{\"system-name\":\"fcr-number\"}]",
+      "runs": [
+        {
+          "text": "FCR č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: FCR číslo{\"system-name\":\"fcr-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Body2",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "Kupní smlouva",
+      "runs": [
+        {
+          "text": "Kupní smlouva",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "O PŘEVODU VLASTNICTVÍ NEMOVITÉ VĚCI",
+      "runs": [
+        {
+          "text": "O PŘEVODU VLASTNICTVÍ NEMOVITÉ VĚCI",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "A O ÚSCHOVĚ FINANČNÍCH PROSTŘEDKŮ",
+      "runs": [
+        {
+          "text": "A O ÚSCHOVĚ FINANČNÍCH PROSTŘEDKŮ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "A DODATEK Č. [TextInput: Číslo dodatku{\"system-name\":\"amendment-number\"}] K DOHODĚ O ZABLOKOVÁNÍ PRODEJE NEMOVITOSTI ZE DNE [Date{\"system-name\":\"blocking-date\"}]",
+      "runs": [
+        {
+          "text": "A DODATEK Č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Číslo dodatku{\"system-name\":\"amendment-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "K DOHODĚ O ZABLOKOVÁNÍ PRODEJE NEMOVITOSTI ZE DNE",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "[Date{\"system-name\":\"blocking-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Body2",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "Smluvní strany:",
+      "runs": [
+        {
+          "text": "Smluvní strany:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "[TextInput: Jméno prodávající 1{\"system-name\":\"seller1-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Jméno prodávající 1{\"system-name\":\"seller1-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "nar. [Date{\"system-name\":\"seller1-birth-date\"}], r.č. [TextInput: Rodné číslo prodávající 1{\"system-name\":\"seller1-rc\"}]",
+      "runs": [
+        {
+          "text": "nar.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Date{\"system-name\":\"seller1-birth-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", r.č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[TextInput: Rodné číslo prodávající 1{\"system-name\":\"seller1-rc\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "trvale bytem [TextInput: Adresa prodávající 1{\"system-name\":\"seller1-address\"}]",
+      "runs": [
+        {
+          "text": "trvale bytem",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Adresa prodávající 1{\"system-name\":\"seller1-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "adresa pro doručování [TextInput: Doručovací adresa prodávající 1{\"system-name\":\"seller1-delivery-address\"}]",
+      "runs": [
+        {
+          "text": "adresa pro doručování",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Doručovací adresa prodávající 1{\"system-name\":\"seller1-delivery-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "e-mail: [TextInput: E-mail prodávající 1{\"system-name\":\"seller1-email\"}]",
+      "runs": [
+        {
+          "text": "e-mail:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: E-mail prodávající 1{\"system-name\":\"seller1-email\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "a",
+      "runs": [
+        {
+          "text": "a",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "[TextInput: Jméno prodávající 2{\"system-name\":\"seller2-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Jméno prodávající 2{\"system-name\":\"seller2-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "nar. [Date{\"system-name\":\"seller2-birth-date\"}], r.č. [TextInput: Rodné číslo prodávající 2{\"system-name\":\"seller2-rc\"}]",
+      "runs": [
+        {
+          "text": "nar.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Date{\"system-name\":\"seller2-birth-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", r.č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[TextInput: Rodné číslo prodávající 2{\"system-name\":\"seller2-rc\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "trvale bytem [TextInput: Adresa prodávající 2{\"system-name\":\"seller2-address\"}]",
+      "runs": [
+        {
+          "text": "trvale bytem",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Adresa prodávající 2{\"system-name\":\"seller2-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "adresa pro doručování [TextInput: Doručovací adresa prodávající 2{\"system-name\":\"seller2-delivery-address\"}]",
+      "runs": [
+        {
+          "text": "adresa pro doručování",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Doručovací adresa prodávající 2{\"system-name\":\"seller2-delivery-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "e-mail: [TextInput: E-mail prodávající 2{\"system-name\":\"seller2-email\"}]",
+      "runs": [
+        {
+          "text": "e-mail:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: E-mail prodávající 2{\"system-name\":\"seller2-email\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "(dále oba společně jen „Strana prodávající“) na straně jedné",
+      "runs": [
+        {
+          "text": "(dále",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "oba společně",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "jen „",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Strana prodávající",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "“) na straně jedné",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "a",
+      "runs": [
+        {
+          "text": "a",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "manželé",
+      "runs": [
+        {
+          "text": "manželé",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "[TextInput: Jméno kupující 1{\"system-name\":\"buyer1-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Jméno kupující 1{\"system-name\":\"buyer1-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "nar. [Date{\"system-name\":\"buyer1-birth-date\"}], r.č. [TextInput: Rodné číslo kupující 1{\"system-name\":\"buyer1-rc\"}]",
+      "runs": [
+        {
+          "text": "nar.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Date{\"system-name\":\"buyer1-birth-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", r.č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[TextInput: Rodné číslo kupující 1{\"system-name\":\"buyer1-rc\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "trvale bytem [TextInput: Adresa kupující 1{\"system-name\":\"buyer1-address\"}]",
+      "runs": [
+        {
+          "text": "trvale bytem",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Adresa kupující 1{\"system-name\":\"buyer1-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "adresa pro doručování [TextInput: Doručovací adresa kupující 1{\"system-name\":\"buyer1-delivery-address\"}]",
+      "runs": [
+        {
+          "text": "adresa pro doručování",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Doručovací adresa kupující 1{\"system-name\":\"buyer1-delivery-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "e-mail: [TextInput: E-mail kupující 1{\"system-name\":\"buyer1-email\"}]",
+      "runs": [
+        {
+          "text": "e-mail:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: E-mail kupující 1{\"system-name\":\"buyer1-email\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "a",
+      "runs": [
+        {
+          "text": "a",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 26,
+      "text": "[TextInput: Jméno kupující 2{\"system-name\":\"buyer2-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Jméno kupující 2{\"system-name\":\"buyer2-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 27,
+      "text": "nar. [Date{\"system-name\":\"buyer2-birth-date\"}], r.č. [TextInput: Rodné číslo kupující 2{\"system-name\":\"buyer2-rc\"}]",
+      "runs": [
+        {
+          "text": "nar.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Date{\"system-name\":\"buyer2-birth-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", r.č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[TextInput: Rodné číslo kupující 2{\"system-name\":\"buyer2-rc\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 28,
+      "text": "trvale bytem [TextInput: Adresa kupující 2{\"system-name\":\"buyer2-address\"}]",
+      "runs": [
+        {
+          "text": "trvale bytem",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Adresa kupující 2{\"system-name\":\"buyer2-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 29,
+      "text": "adresa pro doručování [TextInput: Doručovací adresa kupující 2{\"system-name\":\"buyer2-delivery-address\"}]",
+      "runs": [
+        {
+          "text": "adresa pro doručování",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Doručovací adresa kupující 2{\"system-name\":\"buyer2-delivery-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 30,
+      "text": "e-mail: [TextInput: E-mail kupující 2{\"system-name\":\"buyer2-email\"}]",
+      "runs": [
+        {
+          "text": "e-mail:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: E-mail kupující 2{\"system-name\":\"buyer2-email\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 31,
+      "text": "(dále oba společně jen „Strana Kupující“) na straně druhé",
+      "runs": [
+        {
+          "text": "(dále",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "oba společně",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "jen „",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "Strana Kupující",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "“) na straně druhé",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 32,
+      "text": "a",
+      "runs": [
+        {
+          "text": "a",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 33,
+      "text": "[TextInput: Zprostředkovatel{\"system-name\":\"intermediary-name\"}]",
+      "runs": [
+        {
+          "text": "[TextInput: Zprostředkovatel{\"system-name\":\"intermediary-name\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 34,
+      "text": "IČO: [TextInput: IČO zprostředkovatele{\"system-name\":\"intermediary-ico\"}]",
+      "runs": [
+        {
+          "text": "IČO: [TextInput: IČO zprostředkovatele{\"system-name\":\"intermediary-ico\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 35,
+      "text": "se sídlem [TextInput: Sídlo zprostředkovatele{\"system-name\":\"intermediary-address\"}]",
+      "runs": [
+        {
+          "text": "se sídlem [TextInput: Sídlo zprostředkovatele{\"system-name\":\"intermediary-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 36,
+      "text": "adresa pro doručování [TextInput: Doručovací adresa zprostředkovatele{\"system-name\":\"intermediary-delivery-address\"}]",
+      "runs": [
+        {
+          "text": "adresa pro doručování [TextInput: Doručovací adresa zprostředkovatele{\"system-name\":\"intermediary-delivery-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 37,
+      "text": "zapsaná v obchodním rejstříku vedeném [TextInput: Rejstříkový soud{\"system-name\":\"intermediary-court\"}],  sp. zn. [TextInput: Spisová značka{\"system-name\":\"intermediary-file-ref\"}]",
+      "runs": [
+        {
+          "text": "zapsaná v obchodním rejstříku vedeném [TextInput: Rejstříkový soud{\"system-name\":\"intermediary-court\"}],  sp. zn. [TextInput: Spisová značka{\"system-name\":\"intermediary-file-ref\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 38,
+      "text": "zastoupená [TextInput: Zástupce zprostředkovatele{\"system-name\":\"intermediary-rep-name\"}], na základě plné moci",
+      "runs": [
+        {
+          "text": "zastoupená",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Zástupce zprostředkovatele{\"system-name\":\"intermediary-rep-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", na základě plné moci",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 39,
+      "text": "(dále jen „Zprostředkovatel“) na straně třetí",
+      "runs": [
+        {
+          "text": "(dále jen „",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Zprostředkovatel",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "“) na straně třetí",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 40,
+      "text": "uzavírají tuto kupní smlouvu o převodu vlastnictví k nemovité věci dle § 2079 a následujících zákona č. 89/2012 Sb., občanského zákoníku, ve znění pozdějších předpisů:",
+      "runs": [
+        {
+          "text": "uzavírají tuto kupní smlouvu o převodu vlastnictví k nemovité věci dle § 2079 a následujících",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "zákona č. 89/2012 Sb., občanského zákoníku, ve znění pozdějších předpisů:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Head2",
+      "source": "body"
+    },
+    {
+      "index": 41,
+      "text": "Předmět převodu",
+      "runs": [
+        {
+          "text": "Předmět převodu",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 42,
+      "text": "Strana prodávající prohlašuje, že je na základě [TextInput: Nabývací titul{\"system-name\":\"acquisition-title\"}] ze dne [Date{\"system-name\":\"acquisition-date\"}], s právními účinky vkladu práva ke dni [Date{\"system-name\":\"acquisition-effect-date\"}], vlastníkem:",
+      "runs": [
+        {
+          "text": "Strana prodávající",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "prohlašuje, že je na základě",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[TextInput: Nabývací titul{\"system-name\":\"acquisition-title\"}] ze dne [Date{\"system-name\":\"acquisition-date\"}], s právními účinky vkladu práva ke dni [Date{\"system-name\":\"acquisition-effect-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ", vlastníkem:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 43,
+      "text": "jednotky  č. [TextInput: Číslo jednotky{\"system-name\":\"unit-number\"}], způsob využití [TextInput: Způsob využití{\"system-name\":\"unit-usage\"}], nacházející se v bytovém domě č.p. [TextInput: Číslo popisné{\"system-name\":\"building-number\"}], postaveném na pozemkuparc. č. [TextInput: Parcelní číslo{\"system-name\":\"parcel-number\"}], druh pozemku zastavěná plocha a nádvoří (dále též jen „Jednotka“),",
+      "runs": [
+        {
+          "text": "jednotky  č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Číslo jednotky{\"system-name\":\"unit-number\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", způsob využití",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[TextInput: Způsob využití{\"system-name\":\"unit-usage\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ", nacházející se v bytovém domě č.p. [TextInput: Číslo popisné{\"system-name\":\"building-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": ", postaveném na",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "pozemku",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "parc. č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "[TextInput: Parcelní číslo{\"system-name\":\"parcel-number\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": ", druh",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "pozemku",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "zastavěná plocha a nádvoří (dále též jen „",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "Jednotka",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "“),",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        }
+      ],
+      "style": "Bulletlevel3",
+      "source": "body"
+    },
+    {
+      "index": 44,
+      "text": "a ideálního spoluvlastnického podílu o velikosti [TextInput: Spoluvlastnický podíl{\"system-name\":\"coop-share\"}] na společných částech bytového domu č. p. [Link:building-number] (dále též jen „Dům“) a na pozemku parc. č. [Link:parcel-number], druh zastavěná plocha a nádvoří (dále též jen „Pozemek“)",
+      "runs": [
+        {
+          "text": "a ideálního spoluvlastnického podílu o velikosti",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Spoluvlastnický podíl{\"system-name\":\"coop-share\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "na společných částech",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "bytového domu",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "č. p. [Link:building-number]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "(dále též jen „",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "Dům",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "“)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "a na",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "pozemku",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "parc. č.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "[Link:parcel-number]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": ", druh",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "zastavěná plocha a nádvoří",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": "(dále též jen „",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": "Pozemek",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": "“)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        }
+      ],
+      "style": "Bulletlevel3",
+      "source": "body"
+    },
+    {
+      "index": 45,
+      "text": "to vše v k.ú. [TextInput: Katastrální území{\"system-name\":\"cadastral-area\"}], obec [TextInput: Obec{\"system-name\":\"municipality\"}], část obce [TextInput: Část obce{\"system-name\":\"municipality-part\"}], zapsané v katastru nemovitostí vedeném Katastrálním úřadem pro [TextInput: Kraj{\"system-name\":\"cadastral-region\"}], Katastrální pracoviště  [TextInput: Katastrální pracoviště{\"system-name\":\"cadastral-workplace\"}], na LV č. [TextInput: LV jednotky{\"system-name\":\"lv-unit\"}] (Jednotka) a č. [TextInput: LV domu a pozemku{\"system-name\":\"lv-building\"}] (Dům a Pozemek) , to vše společně dále jen„Předmět převodu“.",
+      "runs": [
+        {
+          "text": "to vše v k.ú. [TextInput: Katastrální území{\"system-name\":\"cadastral-area\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ", obec [TextInput: Obec{\"system-name\":\"municipality\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ", část obce",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[TextInput: Část obce{\"system-name\":\"municipality-part\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ", zapsané v katastru nemovitostí vedeném Katastrálním úřadem pro",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "[TextInput: Kraj{\"system-name\":\"cadastral-region\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": ", Katastrální pracoviště  [TextInput: Katastrální pracoviště{\"system-name\":\"cadastral-workplace\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": ", na LV č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "[TextInput: LV jednotky{\"system-name\":\"lv-unit\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "(Jednotka)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "a č.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "[TextInput: LV domu a pozemku{\"system-name\":\"lv-building\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "(Dům a Pozemek",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": ", to vše společně dále jen",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "„",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "Předmět převodu",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": "“.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        }
+      ],
+      "style": "Body2",
+      "source": "body"
+    },
+    {
+      "index": 46,
+      "text": "Předmět smlouvy",
+      "runs": [
+        {
+          "text": "Předmět smlouvy",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 47,
+      "text": "Strana prodávající prodává Předmět převodu popsaný v čl. 1. této smlouvy včetně všech součástí a příslušenství Straně kupující za podmínek dále stanovených touto smlouvou a zavazuje se, že umožní Straně kupující nabýt vlastnické právo k Předmětu převodu. Každý z účastníků na Straně prodávající vlastní a převádí podíl o velikosti id. [TextInput: Podíl prodávajícího{\"system-name\":\"seller-share\"}] z Předmětu převodu.",
+      "runs": [
+        {
+          "text": "Strana prodávající prodává Předmět převodu popsaný v čl. 1. této smlouvy včetně všech součástí a příslušenství Straně kupující za podmínek dále stanovených touto smlouvou a zavazuje se, že umožní Straně kupující nabýt vlastnické právo k Předmětu převodu.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Každý z účastníků na Straně prodávající vlastní a převádí podíl o velikosti id. [TextInput: Podíl prodávajícího{\"system-name\":\"seller-share\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "z Předmětu převodu.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 48,
+      "text": "Strana kupující prohlašuje, že Předmět převodu popsaný v čl. 1. této smlouvy včetně všech jeho součástí a příslušenství od Strany prodávající kupuje, přijímá do společného jmění manželů a zavazuje se zaplatit sjednanou kupní cenu.",
+      "runs": [
+        {
+          "text": "Strana kupující prohlašuje, že Předmět převodu popsaný v čl. 1. této smlouvy včetně všech jeho součástí a příslušenství od Strany prodávající kupuje, přijímá do",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "společného jmění manželů",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "a zavazuje se zaplatit sjednanou kupní cenu.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 49,
+      "text": "Prohlášení smluvních stran",
+      "runs": [
+        {
+          "text": "Prohlášení smluvních stran",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 50,
+      "text": "Strana prodávající prohlašuje, že:",
+      "runs": [
+        {
+          "text": "Strana prodávající prohlašuje, že:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 51,
+      "text": "jí nejsou známy žádné právní vady Předmětu převodu;",
+      "runs": [
+        {
+          "text": "jí nejsou známy žádné právní vady Předmětu převodu;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 52,
+      "text": "na Předmětu převodu neváznou ke dni podpisu této smlouvy žádná zástavní práva, reálná břemena, služebnosti, předkupní práva, práva nájmu, ani jiná práva třetích osob, která by bránila či omezovala výkon vlastnického práva k Předmětu převodu vyjma práv, která by byla výslovně uvedena v této smlouvě;",
+      "runs": [
+        {
+          "text": "na Předmětu převodu neváznou ke dni podpisu této smlouvy žádná zástavní práva, reálná břemena, služebnosti, předkupní práva, práva nájmu, ani jiná práva třetích osob, která by bránila či omezovala výkon vlastnického práva k Předmětu převodu vyjma práv, která by byla výslovně uvedena v této smlouvě;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 53,
+      "text": "ve věci právně související s Předmětem převodu není vedeno soudní ani jiné řízení, které by dispozici s Předmětem převodu jakkoli ovlivňovalo či omezovalo, popřípadě soudní ani jiné řízení, které by se Předmětu převodu jakkoli právně dotýkalo;",
+      "runs": [
+        {
+          "text": "ve věci právně související s Předmětem převodu není vedeno soudní ani jiné řízení, které by dispozici s Předmětem převodu jakkoli ovlivňovalo či omezovalo, popřípadě soudní ani jiné řízení, které by se Předmětu převodu jakkoli právně dotýkalo;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 54,
+      "text": "jí nejsou známy žádné podstatné věcné vady Předmětu převodu;",
+      "runs": [
+        {
+          "text": "jí nejsou známy žádné podstatné věcné vady Předmětu převodu;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 55,
+      "text": "není proti ní vedeno insolvenční řízení ani se nenachází v takové situaci, kdy by tato skutečnost hrozila;",
+      "runs": [
+        {
+          "text": "není proti ní vedeno insolvenční řízení ani se nenachází v takové situaci, kdy by tato skutečnost hrozila;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 56,
+      "text": "nebyla k vymožení pohledávky za ní nařízena exekuce, či soudní výkon rozhodnutí, ani se nenachází v takové situaci, kdy by takováto skutečnost hrozila;",
+      "runs": [
+        {
+          "text": "nebyla k vymožení pohledávky za ní nařízena exekuce, či soudní výkon rozhodnutí, ani se nenachází v takové situaci, kdy by takováto skutečnost hrozila;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 57,
+      "text": "není v prodlení s plněním svých daňových povinností ani jiných veřejných odvodů;",
+      "runs": [
+        {
+          "text": "není v prodlení s plněním svých daňových povinností ani jiných veřejných odvodů;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 58,
+      "text": "Jednotka je vymezena dle zákona č. 72/1994 Sb., kterým se upravují některé spoluvlastnické vztahy k budovám a některé vlastnické vztahy k bytům a nebytovým prostorům a doplňují některé zákony (zákon o vlastnictví bytů);",
+      "runs": [
+        {
+          "text": "Jednotka je vymezena dle zákona č. 72/1994 Sb., kterým se upravují některé spoluvlastnické vztahy k budovám a některé vlastnické vztahy k bytům a nebytovým prostorům a doplňují některé zákony (zákon o vlastnictví bytů);",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 59,
+      "text": "Jednotka je užívána v souladu s kolaudovaným stavem;",
+      "runs": [
+        {
+          "text": "Jednotka je užívána v souladu s kolaudovaným stavem;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 60,
+      "text": "Strana kupující prohlašuje, že:",
+      "runs": [
+        {
+          "text": "Strana kupující prohlašuje, že:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 61,
+      "text": "proti ní není vedeno insolvenční řízení ani se nenachází v takové situaci, kdy by tato skutečnost hrozila;",
+      "runs": [
+        {
+          "text": "proti ní není vedeno insolvenční řízení ani se nenachází v takové situaci, kdy by tato skutečnost hrozila;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 62,
+      "text": "nebyla k vymožení pohledávky za ní nařízena exekuce, či soudní výkon rozhodnutí, ani se nenachází v takové situaci, kdy by takováto skutečnost hrozila;",
+      "runs": [
+        {
+          "text": "nebyla k vymožení pohledávky za ní nařízena exekuce, či soudní výkon rozhodnutí, ani se nenachází v takové situaci, kdy by takováto skutečnost hrozila;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 63,
+      "text": "není v prodlení s plněním svých daňových povinností ani jiných veřejných odvodů;",
+      "runs": [
+        {
+          "text": "není v prodlení s plněním svých daňových povinností ani jiných veřejných odvodů;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 64,
+      "text": "je jí znám současný věcný stav Předmětu převodu v podstatných ohledech a neshledala na něm žádné zjevné vady;",
+      "runs": [
+        {
+          "text": "je jí znám současný věcný stav Předmětu převodu v podstatných ohledech a neshledala na něm žádné zjevné vady;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 65,
+      "text": "Předmět převodu přijímá do svého vlastnictví ve stavu, v jakém se ke dni uzavření této smlouvy nachází.",
+      "runs": [
+        {
+          "text": "Předmět převodu přijímá do svého vlastnictví ve stavu, v jakém se ke dni uzavření této smlouvy nachází.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "abclevel3",
+      "source": "body"
+    },
+    {
+      "index": 66,
+      "text": "Strana kupující i Strana prodávající bere na vědomí a souhlasí s tím, že k Předmětu převodu bude zřízeno zástavní právo ve prospěch [TextInput: Banka{\"system-name\":\"bank-name\"}], IČO: [TextInput: IČO banky{\"system-name\":\"bank-ico\"}], se sídlem [TextInput: Sídlo banky{\"system-name\":\"bank-address\"}] (dále též jen „Banka“), za účelem zajištění hypotečního úvěru, kterým bude Strana kupující hradit část kupní ceny (dále též jen „Nové zástavní právo“).",
+      "runs": [
+        {
+          "text": "Strana kupující i Strana prodávající bere na vědomí a souhlasí s tím, že k Předmětu převodu bude zřízeno zástavní právo ve prospěch",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Banka{\"system-name\":\"bank-name\"}], IČO: [TextInput: IČO banky{\"system-name\":\"bank-ico\"}], se sídlem [TextInput: Sídlo banky{\"system-name\":\"bank-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "(dále též jen",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "„Banka“",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "), za účelem zajištění",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "hypotečního",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "úvěru, kterým bude Strana kupující hradit",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "část kupní ceny",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "(dále též jen",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "„Nové zástavní právo“",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": ").",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 67,
+      "text": "Strana prodávající se zavazuje, že od uzavření této smlouvy do provedení vkladu vlastnického práva dle této smlouvy do katastru nemovitostí neuzavře jakékoliv smlouvy, jimiž by Předmět převodu zcizovala, zatěžovala nebo omezovala jeho užívání, neprovede stavební úpravy bez písemného souhlasu Strany kupující a neučiní nic, čím by zhoršovala stav Předmětu převodu. Povinnost Strany prodávající uzavřít zástavní smlouvu s Bankou Strany kupující není tímto ustanovením dotčena.",
+      "runs": [
+        {
+          "text": "Strana prodávající se zavazuje, že od uzavření této smlouvy do provedení vkladu vlastnického práva dle této smlouvy do katastru nemovitostí neuzavře jakékoliv smlouvy, jimiž by Předmět převodu zcizovala, zatěžovala nebo omezovala jeho užívání, neprovede stavební úpravy bez písemného souhlasu Strany kupující a neučiní nic, čím by zhoršovala stav Předmětu převodu.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Povinnost Strany prodávající uzavřít zástavní smlouvu s Bankou Strany kupující není tímto ustanovením dotčena.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 68,
+      "text": "Strana prodávající i Strana kupující se zavazují zajistit, aby prohlášení a ujištění uvedená v tomto článku smlouvy byla platná, pravdivá a úplná nejméně do doby vkladu vlastnického práva k Předmětu převodu do katastru nemovitostí ve prospěch Strany kupující.",
+      "runs": [
+        {
+          "text": "Strana prodávající i Strana kupující se zavazují zajistit, aby prohlášení a ujištění uvedená v tomto článku smlouvy byla platná, pravdivá a úplná nejméně do doby vkladu vlastnického práva k Předmětu převodu do katastru nemovitostí ve prospěch Strany kupující.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 69,
+      "text": "V případě, že se některé tvrzení Strany prodávající či Strany kupující uvedené v čl. 3 této smlouvy ukáže jako nepravdivé v podstatném ohledu a přes písemnou výzvu druhé strany nebude odstraněn závadný stav ani ve lhůtě třiceti (30) dnů, je takovéto porušení smluvní povinnosti důvodem pro odstoupení od této smlouvy ze strany poškozené s právními účinky k okamžiku doručení písemného oznámení o odstoupení druhé straně. Poškozená strana má rovněž právo na náhradu veškeré škody, která jí v souvislosti s uvedením nepravdivého prohlášení prokazatelně vznikne.",
+      "runs": [
+        {
+          "text": "V případě, že se některé tvrzení Strany prodávající či Strany kupující uvedené v čl. 3 této smlouvy ukáže jako nepravdivé v podstatném ohledu a přes písemnou výzvu druhé strany nebude odstraněn závadný stav ani ve lhůtě třiceti (30) dnů, je takovéto porušení smluvní povinnosti důvodem pro odstoupení od této smlouvy ze strany poškozené s právními účinky k okamžiku doručení písemného oznámení o odstoupení druhé straně. Poškozená strana má rovněž právo na náhradu veškeré škody, která jí v souvislosti s uvedením nepravdivého prohlášení prokazatelně vznikne.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 70,
+      "text": "Platební podmínky",
+      "runs": [
+        {
+          "text": "Platební podmínky",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 71,
+      "text": "Strana prodávající a Strana kupující se dohodly, že kupní cena za Předmět převodu dle čl. 1. této smlouvy činí [Money{\"system-name\":\"purchase-price\"}] (dále též „kupní cena“). Tato kupní cena je konečná.",
+      "runs": [
+        {
+          "text": "Strana prodávající a Strana kupující se dohodly, že kupní cena za Předmět převodu dle čl. 1. této smlouvy činí",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"purchase-price\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "(dále též „",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "kupní cena",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "“)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": ". Tato kupní cena je konečná.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 72,
+      "text": "Před podpisem této smlouvy složila Strana kupující na základě Dohody o zablokování prodeje nemovitosti uzavřené dne [Link:blocking-date] se Stranou prodávající a se Zprostředkovatelem blokační poplatek ve výši [Money{\"system-name\":\"blocking-fee\"}]. Strana kupující i Strana prodávající výslovně souhlasí s tím a činí nesporným, že ke dni uzavření této smlouvy se blokační poplatek započítává na kupní cenu za Předmět převodu a považuje se za plnění poskytnuté Stranou kupující ve prospěch Strany prodávající.Namísto vydání blokačního poplatku Straně prodávající se ke dni uzavření této smlouvy započítává oproti provizi pro Zprostředkovatele, kterou je Strana prodávající povinna uhradit.",
+      "runs": [
+        {
+          "text": "Před podpisem této smlouvy složila Strana kupující na základě Dohody o zablokování prodeje nemovitosti uzavřené dne",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Link:blocking-date]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "se Stranou prodávající",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "a se Zprostředkovatelem",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "blokační poplatek ve výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "[Money{\"system-name\":\"blocking-fee\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "Strana kupující i Strana prodávající výslovně souhlasí s tím a činí nesporným, že ke dni uzavření",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "této smlouvy",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "se blokační poplatek započítává",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": "na kupní cenu za Předmět převodu a považuje se za plnění poskytnuté Stranou kupující ve prospěch Strany prodávající.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "Namísto vydání blokačního poplatku Straně",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": "prodávající",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "se",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": "ke dni uzavření této smlouvy započítává",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": "oproti",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": "provizi",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 31
+        },
+        {
+          "text": "pro Zprostředkovatele, kterou je Strana",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 32
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 33
+        },
+        {
+          "text": "prodávající",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 34
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 35
+        },
+        {
+          "text": "povinna uhradit.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 36
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 73,
+      "text": "Zbývající část kupní ceny ve výši [Money{\"system-name\":\"remaining-amount\"}] Kč (slovy: [TextInput: Zbývající částka slovy{\"system-name\":\"remaining-amount-words\"}] korun českých) bude Strana kupující hradit následujícím způsobem:",
+      "runs": [
+        {
+          "text": "Zbývající část kupní ceny",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "ve výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Money{\"system-name\":\"remaining-amount\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "Kč (slovy:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "[TextInput: Zbývající částka slovy{\"system-name\":\"remaining-amount-words\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "korun českých) bude Strana kupující hradit následujícím způsobem:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 74,
+      "text": "část kupní ceny ve výši [Money{\"system-name\":\"own-funds-amount\"}] (slovy: [TextInput: Vlastní prostředky slovy{\"system-name\":\"own-funds-words\"}]) se Strana kupující zavazuje nejpozději do deseti (10) pracovních dnů ode dne uzavření této smlouvy složit na úschovný účet Zprostředkovatele č. [TextInput: Escrow účet{\"system-name\":\"escrow-account\"}] vedený u Raiffeisenbank a.s., VS: [Link:fcr-number]. Nebude-li tato část kupní ceny připsána na úschovný účet Zprostředkovatele nejpozději ve stanovené lhůtě, je Strana prodávající oprávněna odstoupit od této smlouvy.",
+      "runs": [
+        {
+          "text": "část kupní ceny ve výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"own-funds-amount\"}] (slovy: [TextInput: Vlastní prostředky slovy{\"system-name\":\"own-funds-words\"}])",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "se Strana kupující zavazuje nejpozději do",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "deseti (10)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "pracovních dnů",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "ode dne",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "uzavření této smlouvy",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "složit",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "na úschovný účet Zprostředkovatele",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "č. [TextInput: Escrow účet{\"system-name\":\"escrow-account\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "vedený u Raiffeisenbank a.s.,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": "VS:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        },
+        {
+          "text": "[Link:fcr-number]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 24
+        },
+        {
+          "text": ". Nebude-li tato",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 25
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 26
+        },
+        {
+          "text": "část kupní ceny",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 27
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 28
+        },
+        {
+          "text": "připsána na",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 29
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 30
+        },
+        {
+          "text": "úschovný účet",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 31
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 32
+        },
+        {
+          "text": "Zprostředkovatele",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 33
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 34
+        },
+        {
+          "text": "nejpozději ve stanovené lhůtě, je Strana prodávající oprávněna odstoupit od této smlouvy",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 35
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 36
+        }
+      ],
+      "style": "Level3",
+      "source": "body"
+    },
+    {
+      "index": 75,
+      "text": "část kupní ceny ve výši [Money{\"system-name\":\"mortgage-amount\"}] (slovy: [TextInput: Hypotéka slovy{\"system-name\":\"mortgage-words\"}]) bude Strana kupující hradit z hypotečního úvěru poskytnutého Bankou. Strana prodávající a Strana kupující berou na vědomí, že Banka z hypotečního úvěru převede částku v této výši do úschovy Zprostředkovatele na jeho úschovný účet č. [Link:escrow-account] vedený u Raiffeisenbank a.s., VS: [Link:fcr-number] , poté, kdy budou Bance předloženy následující dokumenty:",
+      "runs": [
+        {
+          "text": "část kupní ceny ve výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"mortgage-amount\"}] (slovy: [TextInput: Hypotéka slovy{\"system-name\":\"mortgage-words\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "bude Strana kupující hradit z hypotečního úvěru poskytnutého Bankou. Strana prodávající a Strana kupující berou na vědomí, že Banka z hypotečního úvěru převede částku v této výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "do úschovy Zprostředkovatele na jeho úschovný účet",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "č. [Link:escrow-account]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "vedený u Raiffeisenbank a.s.,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "VS:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "[Link:fcr-number]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": ", poté, kdy budou Bance předloženy následující dokumenty:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        }
+      ],
+      "style": "Level3",
+      "source": "body"
+    },
+    {
+      "index": 76,
+      "text": "originál nebo ověřená kopie této smlouvy s ověřenými podpisy Strany prodávající a Strany kupující;",
+      "runs": [
+        {
+          "text": "originál nebo ověřená kopie této smlouvy s ověřenými podpisy Strany prodávající a Strany kupující;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body4",
+      "source": "body"
+    },
+    {
+      "index": 77,
+      "text": "originál nebo ověřená kopie návrhu na vklad Nového zástavního práva k Předmětu převodu ve prospěch Banky, opatřený razítkem podatelny katastrálního úřadu;",
+      "runs": [
+        {
+          "text": "originál nebo ověřená kopie návrhu na vklad",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Nového zástavního práva",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "k Předmětu převodu ve prospěch Banky, opatřený razítkem podatelny katastrálního úřadu;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Body4",
+      "source": "body"
+    },
+    {
+      "index": 78,
+      "text": "originál nebo ověřená kopie návrhu na vklad vlastnického práva k Předmětu převodu ve prospěch Strany kupující opatřený razítkem podatelny katastrálního úřadu;",
+      "runs": [
+        {
+          "text": "originál nebo ověřená kopie návrhu na vklad vlastnického práva k Předmětu převodu ve prospěch Strany kupující opatřený razítkem podatelny katastrálního úřadu;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body4",
+      "source": "body"
+    },
+    {
+      "index": 79,
+      "text": "a další podklady podle úvěrové smlouvy uzavřené mezi Stranou kupující a Bankou.",
+      "runs": [
+        {
+          "text": "a další podklady podle úvěrové smlouvy uzavřené mezi Stranou kupující a Bankou.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Body4",
+      "source": "body"
+    },
+    {
+      "index": 80,
+      "text": "Strana kupující je povinna zajistit, aby část kupní ceny byla způsobem uvedeným v čl. 4.3.2. této smlouvy uhrazena nejpozději do třiceti (30) pracovních dnů ode dne uzavření této smlouvy. K tomu se Strana prodávající zavazuje poskytnout Straně kupující potřebnou součinnost, zejména uzavřít s Bankou smlouvu zřizující zástavní právo k Předmětu převodu ve prospěch Banky za účelem zajištění úhrady hypotečního úvěru poskytnutého Straně kupující k zaplacení kupní ceny. Nebude-li tato část kupní ceny uhrazena nejpozději ve stanovené lhůtě, je Strana prodávající oprávněna odstoupit od této smlouvy.",
+      "runs": [
+        {
+          "text": "Strana kupující je povinna zajistit, aby",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "část kupní ceny",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "byla způsobem uvedeným v čl.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "4.3.2.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "této smlouvy uhrazena",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "nejpozději",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "do",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "třiceti (30)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "pracovních dnů",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "ode dne",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "uzavření této smlouvy",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": ". K tomu se Strana prodávající zavazuje poskytnout Straně kupující potřebnou součinnost, zejména uzavřít s Bankou smlouvu zřizující zástavní právo k Předmětu převodu ve prospěch Banky za účelem zajištění úhrady hypotečního úvěru poskytnutého Straně kupující k zaplacení kupní ceny. Nebude-li tato část kupní ceny uhrazena nejpozději ve stanovené lhůtě, je Strana prodávající oprávněna odstoupit od této smlouvy.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 81,
+      "text": "Smluvní strany se dohodly, že Zprostředkovatel uvolní finanční prostředky složené na jeho úschovném účtu ve výši [Link:remaining-amount] Kč (slovy: [TextInput: Uvolnění z úschovy slovy{\"system-name\":\"escrow-release-words\"}]) do deseti (10) pracovních dnů po jejich připsání na tento účet a zároveň po předložení níže požadovaných dokumentů následujícím způsobem:",
+      "runs": [
+        {
+          "text": "Smluvní strany se dohodly, že Zprostředkovatel uvolní finanční prostředky složené na jeho úschovném účtu",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "ve výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Link:remaining-amount] Kč (slovy: [TextInput: Uvolnění z úschovy slovy{\"system-name\":\"escrow-release-words\"}])",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "do deseti (10) pracovních dnů po jejich připsání na tento účet a zároveň po předložení níže požadovaných dokumentů následujícím způsobem:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 82,
+      "text": "část kupní ceny ve výši [Money{\"system-name\":\"seller1-payout\"}] (slovy: [TextInput: Výplata prodávající 1 slovy{\"system-name\":\"seller1-payout-words\"}]) uvolní Zprostředkovatel Straně prodávající paní [TextInput: Jméno prodávající 1 (3. pád){\"system-name\":\"seller1-name-dative\"}], na účet č. [TextInput: Účet prodávající 1{\"system-name\":\"seller1-account\"}] vedený u [TextInput: Banka prodávající 1{\"system-name\":\"seller1-bank\"}], nejpozději do deseti (10) pracovních dnů poté, co mu bude předložen:",
+      "runs": [
+        {
+          "text": "část kupní ceny ve výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"seller1-payout\"}] (slovy: [TextInput: Výplata prodávající 1 slovy{\"system-name\":\"seller1-payout-words\"}])",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "uvolní",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "Zprostředkovatel",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "Straně prodávající",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "paní",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "[TextInput: Jméno prodávající 1 (3. pád){\"system-name\":\"seller1-name-dative\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": ", na účet",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "č.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "[TextInput: Účet prodávající 1{\"system-name\":\"seller1-account\"}] ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "vedený u",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "[TextInput: Banka prodávající 1{\"system-name\":\"seller1-bank\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": ", nejpozději do deseti (10) pracovních dnů poté,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "co mu bude předložen:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        }
+      ],
+      "style": "Level3",
+      "source": "body"
+    },
+    {
+      "index": 83,
+      "text": "návrh na vklad vlastnického práva k Předmětu převodu ve prospěch Strany kupující opatřený razítkem Katastrálního úřadu pro [Link:cadastral-region], Katastrální pracoviště  [Link:cadastral-workplace],  potvrzujícím podání.",
+      "runs": [
+        {
+          "text": "návrh na vklad",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "vlastnického práva k Předmětu převodu ve prospěch Strany kupující opatřený razítkem Katastrálního úřadu pro",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Link:cadastral-region]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ", Katastrální pracoviště  [Link:cadastral-workplace]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ",  potvrzujícím podání",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "Level4",
+      "source": "body"
+    },
+    {
+      "index": 84,
+      "text": "část kupní ceny ve výši [Money{\"system-name\":\"seller2-payout\"}] (slovy: [TextInput: Výplata prodávající 2 slovy{\"system-name\":\"seller2-payout-words\"}]) uvolní Zprostředkovatel Straně prodávající paní [TextInput: Jméno prodávající 2 (3. pád){\"system-name\":\"seller2-name-dative\"}], na účet č. [TextInput: Účet prodávající 2{\"system-name\":\"seller2-account\"}] vedený u [TextInput: Banka prodávající 2{\"system-name\":\"seller2-bank\"}], nejpozději do deseti (10) pracovních dnů poté, co mu bude předložen:",
+      "runs": [
+        {
+          "text": "část kupní ceny ve výši",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"seller2-payout\"}] (slovy: [TextInput: Výplata prodávající 2 slovy{\"system-name\":\"seller2-payout-words\"}])",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "uvolní",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "Zprostředkovatel",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "Straně prodávající",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "paní",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "[TextInput: Jméno prodávající 2 (3. pád){\"system-name\":\"seller2-name-dative\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": ", na účet",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": "č.",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        },
+        {
+          "text": "[TextInput: Účet prodávající 2{\"system-name\":\"seller2-account\"}] ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 17
+        },
+        {
+          "text": "vedený u",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 18
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 19
+        },
+        {
+          "text": "[TextInput: Banka prodávající 2{\"system-name\":\"seller2-bank\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 20
+        },
+        {
+          "text": ", nejpozději do deseti (10) pracovních dnů poté,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 21
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 22
+        },
+        {
+          "text": "co mu bude předložen:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 23
+        }
+      ],
+      "style": "Level3",
+      "source": "body"
+    },
+    {
+      "index": 85,
+      "text": "návrh na vklad vlastnického práva k Předmětu převodu ve prospěch Strany kupující opatřený razítkem Katastrálního úřadu pro [Link:cadastral-region], Katastrální pracoviště  [Link:cadastral-workplace],  potvrzujícím podání.",
+      "runs": [
+        {
+          "text": "návrh na vklad",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "vlastnického práva k Předmětu převodu ve prospěch Strany kupující opatřený razítkem Katastrálního úřadu pro",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "[Link:cadastral-region]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ", Katastrální pracoviště  [Link:cadastral-workplace]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ",  potvrzujícím podání",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        }
+      ],
+      "style": "Level4",
+      "source": "body"
+    },
+    {
+      "index": 86,
+      "text": "Tímto bude kupní cena zcela a beze zbytku vyrovnána a smluvní strany výslovně prohlašují, že s tímto způsobem vypořádání kupní ceny souhlasí.",
+      "runs": [
+        {
+          "text": "Tímto bude kupní cena zcela a beze zbytku vyrovnána a smluvní strany výslovně prohlašují, že s tímto způsobem vypořádání kupní ceny souhlasí.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 87,
+      "text": "V případě, že podmínky pro vyplacení části kupní ceny dle čl. 4.5.1. této smlouvy z úschovy Zprostředkovatele nebudou splněny ani do šesti (6) měsíců od uzavření této smlouvy, je každá ze smluvních stran oprávněna od této smlouvy odstoupit.",
+      "runs": [
+        {
+          "text": "V případě, že podmínky pro vyplacení části kupní ceny dle čl.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "4.5.1.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "této smlouvy z úschovy Zprostředkovatele nebudou splněny ani do šesti (6) měsíců od uzavření této smlouvy, je každá ze smluvních stran oprávněna od této smlouvy odstoupit.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 88,
+      "text": "Poplatníkem daně z nabytí nemovitých věcí je Strana kupující. Strana kupující se zavazuje podat daňové přiznání k dani z nabytí nemovitých věcí a uhradit daň nejpozději do konce třetího (3.) měsíce následujícího po měsíci, v němž byl do katastru nemovitostí zapsán vklad vlastnického práva Strany kupující k Předmětu převodu dle této smlouvy.",
+      "runs": [
+        {
+          "text": "Poplatníkem daně z nabytí nemovitých věcí je",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Strana kupující",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ". Strana kupující se zavazuje podat daňové přiznání k dani z nabytí nemovitých věcí a uhradit daň nejpozději do konce třetího (3.) měsíce následujícího po měsíci, v němž byl do katastru nemovitostí zapsán vklad vlastnického práva Strany kupující k Předmětu převodu dle této smlouvy.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 89,
+      "text": "Strana prodávající a Strana kupující tímto potvrzují, že byly Zprostředkovatelem upozorněny na možnost ověření správnosti čísel účtů Zprostředkovatele uvedených v této smlouvě na internetové stránce Zprostředkovatele www.fincentrumreality.com/o-nas.",
+      "runs": [
+        {
+          "text": "Strana prodávající a Strana kupující tímto potvrzují, že byly Zprostředkovatelem upozorněny na možnost ověření správnosti čísel účtů Zprostředkovatele uvedených v této smlouvě na internetové stránce Zprostředkovatele www.fincentrumreality.com/o-nas.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 90,
+      "text": "Po vyplacení finančních prostředků z úschovy bude případný zůstatek na účtu Zprostředkovatele, představující připsané úroky, použit na zaplacení nákladů za vedení bankovního účtu a ve zbývajícím rozsahu představuje odměnu Zprostředkovatele.",
+      "runs": [
+        {
+          "text": "Po vyplacení finančních prostředků z úschovy bude případný zůstatek na účtu Zprostředkovatele, představující připsané úroky, použit na zaplacení nákladů za vedení bankovního účtu a ve zbývajícím rozsahu představuje odměnu Zprostředkovatele.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 91,
+      "text": "Převod vlastnického práva",
+      "runs": [
+        {
+          "text": "Převod vlastnického práva",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 92,
+      "text": "Vlastnické právo k Předmětu převodu podle této smlouvy nabývá Strana kupující se všemi právy a povinnostmi dnem jeho vkladu do katastru nemovitostí, přičemž právní účinky vkladu vlastnického práva vznikají na základě rozhodnutí o povolení vkladu zpětně k okamžiku, kdy byl návrh na vklad vlastnického práva doručen příslušnému katastrálnímu úřadu.",
+      "runs": [
+        {
+          "text": "Vlastnické právo k Předmětu převodu podle této smlouvy nabývá Strana kupující se všemi právy a povinnostmi dnem jeho vkladu do katastru nemovitostí, přičemž právní účinky vkladu vlastnického práva vznikají na základě rozhodnutí o povolení vkladu zpětně k okamžiku, kdy byl návrh na vklad vlastnického práva doručen příslušnému katastrálnímu úřadu.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 93,
+      "text": "Smluvní strany pověřují Zprostředkovatele, aby podal návrh na vklad vlastnického práva dle této smlouvy do katastru nemovitostí, a to nejpozději do pěti (5) pracovních dnů ode dne, kdy dojde ke složení částky dle čl. 4.3.1. této smlouvy do úschovy Zprostředkovatele. Do tohoto okamžiku zůstane jedno (1) vyhotovení kupní smlouvy s úředně ověřenými podpisy Strany prodávající a Strany kupující určené pro katastr nemovitostí, jakož i návrh na její vklad v úschověZprostředkovatele.",
+      "runs": [
+        {
+          "text": "Smluvní strany pověřují",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Zprostředkovatele",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ", aby podal návrh na vklad vlastnického práva dle této smlouvy do katastru nemovitostí, a to nejpozději do pěti (5) pracovních dnů ode dne",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": ", kdy dojde ke složení částky dle čl.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "4.3.1.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "této smlouvy do úschovy",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "Zprostředkovatele.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "Do tohoto okamžiku zůstane jedno (1) vyhotovení kupní smlouvy s úředně ověřenými podpisy Strany prodávající a Strany kupující určené pro katastr nemovitostí, jakož i návrh na její vklad v úschově",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": "Zprostředkovatele.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 94,
+      "text": "Pokud katastrální úřad vyžádá od účastníků doplnění návrhu, jsou smluvní strany povinny poskytnout si součinnost při řešení této situace, zejména jsou povinny na výzvu katastrálního úřadu v jím stanoveném termínu doplnit listiny nebo předložit požadované listiny.",
+      "runs": [
+        {
+          "text": "Pokud katastrální úřad vyžádá od účastníků doplnění návrhu, jsou smluvní strany povinny poskytnout si součinnost při řešení této situace, zejména jsou povinny na výzvu katastrálního úřadu v jím stanoveném termínu doplnit listiny nebo předložit požadované listiny.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 95,
+      "text": "Smluvní strany se zavazují pro případ, že by nedošlo ke vkladu vlastnického práva do katastru nemovitostí ve prospěch Strany kupující podle této smlouvy pouze z důvodů nesplnění zákonných podmínek pro povolení vkladu, uzavřít do čtrnácti (14) dnů od pravomocného rozhodnutí katastrálního úřadu dodatek k této smlouvě nebo novou kupní smlouvu za stejných podmínek, jako jsou sjednány touto smlouvou tak, aby byly vytýkané vady odstraněny. Kdyby i poté se vyskytly okolnosti, které by znemožňovaly provést vklad vlastnického práva ve prospěch Strany kupující do katastru nemovitostí za podmínek stanovených touto smlouvou a které by nebylo možné odstranit, mají Strana kupující i Strana prodávající právo odstoupit od této smlouvy. V případě odstoupení od smlouvy dle předchozí věty, budou finanční prostředky složené Zprostředkovateli do úschovy dle čl. 4.3 této smlouvy a z této úschovy nevyplacené v souladu s touto smlouvou, vráceny zpět na účty, ze kterých byla kupní cena uhrazena, a to nejpozději do 2 měsíců od zamítnutí vkladu vlastnického práva příslušným katastrálním úřadem.",
+      "runs": [
+        {
+          "text": "Smluvní strany se zavazují pro případ, že by nedošlo ke vkladu vlastnického práva do katastru nemovitostí ve prospěch Strany kupující podle této smlouvy pouze z důvodů nesplnění zákonných podmínek pro povolení vkladu, uzavřít do čtrnácti (14) dnů od pravomocného rozhodnutí katastrálního úřadu dodatek k této smlouvě nebo novou kupní smlouvu za stejných podmínek, jako jsou sjednány touto smlouvou tak, aby byly vytýkané vady odstraněny. Kdyby i poté se vyskytly okolnosti, které by znemožňovaly provést vklad vlastnického práva ve prospěch Strany kupující do katastru nemovitostí za podmínek stanovených touto smlouvou a které by nebylo možné odstranit, mají Strana kupující i Strana prodávající právo odstoupit od této smlouvy.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "V případě odstoupení od smlouvy dle předchozí věty, budou finanční prostředky složené",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "Zprostředkovateli",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "do úschovy dle čl. 4.3 této smlouvy a z této úschovy nevyplacené v souladu s touto smlouvou, vráceny zpět na účty, ze kterých byla kupní cena uhrazena, a to nejpozději do 2 měsíců od zamítnutí vkladu vlastnického práva příslušným katastrálním úřadem.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 96,
+      "text": "V případě, že Strana prodávající nebo Strana kupující nesplní řádně a včas svoji povinnost stanovenou v čl. 5.3 nebo čl. 5.4 této smlouvy, zavazuje se uhradit druhé smluvní straně smluvní pokutu ve výši [Money{\"system-name\":\"penalty-breach\"}] (slovy: [TextInput: Pokuta slovy{\"system-name\":\"penalty-breach-words\"}]). Smluvní pokuta je splatná ve lhůtě pěti (5) dnů od doručení písemné výzvy druhé smluvní strany k úhradě smluvní pokuty. Tím není dotčen nárok na náhradu škody přesahující smluvní pokutu.",
+      "runs": [
+        {
+          "text": "V případě, že Strana prodávající nebo Strana kupující nesplní řádně a včas svoji povinnost stanovenou v čl. 5.3 nebo čl. 5.4 této smlouvy, zavazuje se uhradit druhé smluvní straně smluvní pokutu ve výši [Money{\"system-name\":\"penalty-breach\"}] (slovy: [TextInput: Pokuta slovy{\"system-name\":\"penalty-breach-words\"}]). Smluvní pokuta je splatná ve lhůtě pěti (5) dnů od doručení písemné výzvy druhé smluvní strany k úhradě smluvní pokuty. Tím není dotčen nárok na náhradu škody přesahující smluvní pokutu.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 97,
+      "text": "Další ujednání",
+      "runs": [
+        {
+          "text": "Další ujednání",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 98,
+      "text": "Strana prodávající prohlašuje, že veškeré platby související s vlastnictvím a užíváním Předmětu převodu, byly a jsou řádně hrazeny.",
+      "runs": [
+        {
+          "text": "Strana prodávající prohlašuje, že veškeré platby související s vlastnictvím a užíváním Předmětu převodu, byly a jsou řádně hrazeny.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 99,
+      "text": "Strana prodávající se zavazuje poskytnout Straně kupující veškerou součinnost nutnou k převedení přípojek energií na Stranu kupující, a to co nejdříve po předání Předmětu převodu. Převod energií příslušným dodavatelům oznámí Strana kupující.",
+      "runs": [
+        {
+          "text": "Strana prodávající se zavazuje poskytnout Straně kupující veškerou součinnost nutnou k převedení přípojek energií na Stranu kupující, a to co nejdříve po předání Předmětu převodu. Převod energií příslušným dodavatelům oznámí Strana kupující.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 100,
+      "text": "Strana prodávající se zavazuje uhradit Straně kupující všechny případné nedoplatky plateb za služby poskytované v souvislosti s užíváním Předmětu převodu vztahující se k období přede dnem jeho předání, které bude případně nucena zaplatit. Strana kupující se zavazuje zaplatit Straně prodávající všechny případné přeplatky plateb za služby poskytované v souvislosti s užíváním Předmětu převodu vztahující se k období přede dnem jeho předání, které jí budou případně vyplaceny.",
+      "runs": [
+        {
+          "text": "Strana prodávající se zavazuje uhradit Straně kupující všechny případné nedoplatky plateb za služby poskytované v souvislosti s užíváním Předmětu převodu vztahující se k období přede dnem jeho předání, které bude případně nucena zaplatit. Strana kupující se zavazuje zaplatit Straně prodávající všechny případné přeplatky plateb za služby poskytované v souvislosti s užíváním Předmětu převodu vztahující se k období přede dnem jeho předání, které jí budou případně vyplaceny.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 101,
+      "text": "Strana prodávající se zavazuje Předmět převodu předat Straně kupující nejpozději do pěti (5) pracovních dnů ode dne podání návrhu na vklad vlastnického práva ve prospěch Strany kupující do katastru nemovitostí. O předání a převzetí Předmětu převodu jsou smluvní strany povinny sepsat předávací protokol.",
+      "runs": [
+        {
+          "text": "Strana prodávající se zavazuje Předmět převodu předat Straně kupující nejpozději",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "do",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "pěti (5)",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "pracovních dnů",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "ode dne",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "podání návrhu na vklad",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        },
+        {
+          "text": "vlastnického práva",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 12
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 13
+        },
+        {
+          "text": "ve prospěch Strany kupující do katastru nemovitostí.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 14
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 15
+        },
+        {
+          "text": "O předání a převzetí Předmětu převodu jsou smluvní strany povinny sepsat předávací protokol.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 16
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 102,
+      "text": "Pro případ prodlení Strany prodávající s předáním Předmětu převodu a pro případ prodlení Strany kupující s převzetím Předmětu převodu si smluvní strany sjednaly smluvní pokutu ve výši [Money{\"system-name\":\"penalty-daily\"}] (slovy: [TextInput: Denní pokuta slovy{\"system-name\":\"penalty-daily-words\"}]) za každý den prodlení.",
+      "runs": [
+        {
+          "text": "Pro případ prodlení Strany prodávající s předáním Předmětu převodu a pro případ prodlení Strany kupující s převzetím Předmětu převodu si smluvní strany sjednaly smluvní pokutu ve výši [Money{\"system-name\":\"penalty-daily\"}] (slovy: [TextInput: Denní pokuta slovy{\"system-name\":\"penalty-daily-words\"}]) za každý den prodlení.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 103,
+      "text": "Strana prodávající se zavazuje až do dne předání Předmětu převodu Straně kupující řádně pečovat o Předmět převodu a zdržet se všeho, čím by se mohl stav Předmětu převodu zhoršit nebo čím by mohla být snížena jeho hodnota.",
+      "runs": [
+        {
+          "text": "Strana prodávající se zavazuje až do dne předání Předmětu převodu Straně kupující řádně pečovat o Předmět převodu a zdržet se všeho, čím by se mohl stav Předmětu převodu zhoršit nebo čím by mohla být snížena jeho hodnota.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 104,
+      "text": "Nebezpečí nahodilé zkázy a nahodilého zhoršení Předmětu převodu, jakož i odpovědnost za škodu způsobenou v souvislosti s Předmětem převodu, přechází na Stranu kupující předáním Předmětu převodu.",
+      "runs": [
+        {
+          "text": "Nebezpečí nahodilé zkázy a nahodilého zhoršení Předmětu převodu, jakož i odpovědnost za škodu způsobenou v souvislosti s Předmětem převodu, přechází na Stranu kupující předáním Předmětu převodu.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 105,
+      "text": "Strana prodávající před uzavřením této smlouvy předložila Straně kupující potvrzení ve smyslu ust. § 1186 zákona č. 89/2012 Sb., občanského zákoníku, ve znění pozdějších předpisů od osoby odpovědné za správu Domu, ve kterém se nachází Předmět převodu, o dluzích souvisejících se správou Domu a Pozemku, které přejdou na Stranu kupující.",
+      "runs": [
+        {
+          "text": "Strana prodávající před uzavřením této smlouvy předložila Straně kupující potvrzení ve smyslu ust. § 1186 zákona č. 89/2012 Sb., občanského zákoníku, ve znění pozdějších předpisů od osoby odpovědné za správu Domu, ve kterém se nachází Předmět převodu, o dluzích souvisejících se správou Domu a Pozemku, které přejdou na Stranu kupující.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 106,
+      "text": "Strana prodávající je povinna příslušné ohlašovně ohlásit změnu trvalého pobytu tak, aby nadále nebyla adresa Předmětu převodu vedena jako místo trvalého pobytu Strany prodávající, a to ke dni předání Předmětu převodu. Strana prodávající se zavazuje zajistit, aby ke dni předání Předmětu převodu na adrese Předmětu převodu žádná třetí osoba, které k tomu Strana prodávající udělila souhlas, neměla hlášeno trvalé nebo přechodné bydliště, místo podnikání nebo sídlo. Ode dne provedení vkladu vlastnického práva do katastru nemovitostí je Strana kupující oprávněna bez omezení využívat adresu Předmětu převodu jako adresu trvalého či přechodného bydliště, místa podnikání či sídla, a to jak vlastního, tak i dalších osob, kterým za tímto účelem udělí souhlas.",
+      "runs": [
+        {
+          "text": "Strana prodávající je povinna příslušné ohlašovně ohlásit změnu trvalého pobytu tak, aby nadále nebyla adresa Předmětu převodu vedena jako místo trvalého pobytu Strany prodávající, a to",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "ke dni předání Předmětu převodu",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ". Strana prodávající se zavazuje zajistit, aby ke dni předání Předmětu převodu",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "na adrese Předmětu převodu žádná třetí osoba, které k tomu Strana prodávající udělila souhlas, neměla hlášeno trvalé nebo přechodné bydliště, místo podnikání nebo sídlo. Ode dne provedení vkladu vlastnického práva do katastru nemovitostí je Strana kupující oprávněna bez omezení využívat adresu Předmětu převodu jako adresu trvalého či přechodného bydliště, místa podnikání či sídla, a to jak vlastního, tak i dalších osob, kterým za tímto účelem udělí souhlas.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 107,
+      "text": "Strana kupující prohlašuje, že před uzavřením této smlouvy obdržela od Strany prodávající příslušné dokumenty k prokázání energetické náročnosti Domu ve smyslu zákona č. 406/2000 Sb., o hospodaření energií, ve znění pozdějších předpisů a vyhl. č. 78/2013 Sb.",
+      "runs": [
+        {
+          "text": "Strana kupující prohlašuje, že před uzavřením této smlouvy obdržela od Strany prodávající příslušné dokumenty k prokázání energetické náročnosti Domu ve smyslu zákona č. 406/2000 Sb., o hospodaření energií, ve znění pozdějších předpisů a vyhl. č. 78/2013 Sb.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 108,
+      "text": "Správní poplatek za podání návrhu na zahájení řízení o povolení vkladu vlastnického práva dle této smlouvy do katastru nemovitostí se zavazuje uhradit Strana kupující.",
+      "runs": [
+        {
+          "text": "Správní poplatek za podání návrhu na zahájení řízení o povolení vkladu vlastnického práva dle této smlouvy do katastru nemovitostí se zavazuje uhradit",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Strana kupující",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 109,
+      "text": "Doručování písemností",
+      "runs": [
+        {
+          "text": "Doručování písemností",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 110,
+      "text": "Veškeré písemnosti ve vztahu k této smlouvě jsou si smluvní strany povinny doručovat na adresy uvedené v záhlaví této smlouvy nebo na jiné adresy za tímto účelem druhé smluvní straně oznámené.",
+      "runs": [
+        {
+          "text": "Veškeré písemnosti ve vztahu k této smlouvě jsou si smluvní strany povinny doručovat na adresy uvedené v záhlaví této smlouvy nebo na jiné adresy za tímto účelem druhé smluvní straně oznámené.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 111,
+      "text": "Písemnost určená smluvní straně se považuje za doručenou, není-li prokázán opak, okamžikem jejího převzetí touto smluvní stranou nebo okamžikem odmítnutí jejího převzetí, v ostatních případech pak třetím (3.) pracovním dnem po odeslání písemnosti prostřednictvím přepravce pověřeného doručením zásilky.",
+      "runs": [
+        {
+          "text": "Písemnost určená smluvní straně se považuje za doručenou, není-li prokázán opak, okamžikem jejího převzetí touto smluvní stranou nebo okamžikem odmítnutí jejího převzetí, v ostatních případech pak třetím (3.) pracovním dnem po odeslání písemnosti prostřednictvím přepravce pověřeného doručením zásilky.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 112,
+      "text": "Závěrečná ustanovení",
+      "runs": [
+        {
+          "text": "Závěrečná ustanovení",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level1",
+      "source": "body"
+    },
+    {
+      "index": 113,
+      "text": "Tato smlouva je platná a účinná dnem podpisu všemi smluvními stranami. Účastníci této smlouvy berou na vědomí, závazně prohlašují a souhlasí s tím, že jsou projevy vůle v této smlouvě vyjádřenými vázáni, že tato smlouva je platná vůči třetím osobám a závazky z ní jsou vymahatelné soudní cestou.",
+      "runs": [
+        {
+          "text": "Tato smlouva je platná a účinná dnem podpisu všemi smluvními stranami. Účastníci této smlouvy berou na vědomí, závazně prohlašují a souhlasí s tím, že jsou projevy vůle v této smlouvě vyjádřenými vázáni, že tato smlouva je platná vůči třetím osobám a závazky z ní jsou vymahatelné soudní cestou.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 114,
+      "text": "Ukáže-li se některé ustanovení této smlouvy zdánlivým (nicotným), posoudí se vliv vady na ostatní ustanovení smlouvy obdobně podle § 576 zákona č. 89/2012 Sb., občanského zákoníku, ve znění pozdějších předpisů.",
+      "runs": [
+        {
+          "text": "Ukáže-li se některé ustanovení této smlouvy zdánlivým (nicotným), posoudí se vliv vady na ostatní ustanovení smlouvy obdobně podle § 576 zákona č. 89/2012 Sb., občanského zákoníku, ve znění pozdějších předpisů.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 115,
+      "text": "Smluvní strany se dohodly, že jejich vzájemná práva a povinnosti, jakož i ostatní právní vztahy z této smlouvy vzniklé nebo s ní související se budou řídit právním řádem České republiky, který je tedy rozhodným právem této smlouvy. Smluvní strany se dohodly, že všechny případné spory vznikající z této smlouvy a v souvislosti s ní budou řešeny výlučně před věcně a místně příslušným soudem v České republice.",
+      "runs": [
+        {
+          "text": "Smluvní strany se dohodly, že jejich vzájemná práva a povinnosti, jakož i ostatní právní vztahy z této smlouvy vzniklé nebo s ní související se budou řídit právním řádem České republiky, který je tedy rozhodným právem této smlouvy. Smluvní strany se dohodly, že všechny případné spory vznikající z této smlouvy a v souvislosti s ní budou řešeny výlučně před věcně a místně příslušným soudem v České republice.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 116,
+      "text": "Účastníci této smlouvy po jejím přečtení prohlašují, že jejich svéprávnost není nijak omezena, a že tato kupní smlouva byla sepsána podle jejich pravé a svobodné vůle. Smluvní strany výslovně potvrzují, že základní podmínky této smlouvy jsou výsledkem jednání stran a každá ze stran měla možnost obsah základních podmínek této smlouvy ovlivnit. Na důkaz toho připojují své vlastnoruční podpisy.",
+      "runs": [
+        {
+          "text": "Účastníci této smlouvy po jejím přečtení prohlašují, že jejich svéprávnost není nijak omezena, a že tato kupní smlouva byla sepsána podle jejich pravé a svobodné vůle. Smluvní strany výslovně potvrzují, že základní podmínky této smlouvy jsou výsledkem jednání stran a každá ze stran měla možnost obsah základních podmínek této smlouvy ovlivnit. Na důkaz toho připojují své vlastnoruční podpisy.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 117,
+      "text": "Tato smlouva je provedena v sedmi (7) vyhotoveních, z nichž obdrží:",
+      "runs": [
+        {
+          "text": "Tato smlouva je provedena",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "v sedmi",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "(",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "7",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ")",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "vyhotoveních, z nichž obdrží:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        }
+      ],
+      "style": "Level2",
+      "source": "body"
+    },
+    {
+      "index": 118,
+      "text": "dvě (2) Strana prodávající;",
+      "runs": [
+        {
+          "text": "dvě (2)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Strana prodávající;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Bulletlevel3",
+      "source": "body"
+    },
+    {
+      "index": 119,
+      "text": "dvě (2) Strana kupující;",
+      "runs": [
+        {
+          "text": "dvě (2)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Strana kupující;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Bulletlevel3",
+      "source": "body"
+    },
+    {
+      "index": 120,
+      "text": "jedno (1) vyhotovení s úředně ověřenými podpisy Strany prodávající a Strany kupující obdrží Zprostředkovatel;",
+      "runs": [
+        {
+          "text": "jedno (1) vyhotovení s úředně ověřenými podpisy Strany prodávající a Strany kupující",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "obdrží Zprostředkovatel;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Bulletlevel3",
+      "source": "body"
+    },
+    {
+      "index": 121,
+      "text": "jedno (1) vyhotovení s úředně ověřenými podpisy Strany prodávající a Strany kupující je určeno pro příslušný katastrální úřad v právní věci provedení vkladu vlastnického práva ve prospěch Strany kupující;",
+      "runs": [
+        {
+          "text": "jedno (1) vyhotovení s úředně ověřenými podpisy Strany prodávající a Strany kupující",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "je určeno pro příslušný katastrální úřad v právní věci provedení vkladu vlastnického práva ve prospěch Strany kupující;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Bulletlevel3",
+      "source": "body"
+    },
+    {
+      "index": 122,
+      "text": "jedno (1) vyhotovení s úředně ověřenými podpisy Strany prodávající a Strany kupující Banka;",
+      "runs": [
+        {
+          "text": "jedno (1) vyhotovení s úředně ověřenými podpisy Strany prodávající a Strany kupující Banka;",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Bulletlevel3",
+      "source": "body"
+    },
+    {
+      "index": 123,
+      "text": "Příloha: [TextInput: Odkaz na přílohu{\"system-name\":\"attachment-ref\"}] Plná moc pro zástupce Zprostředkovatele",
+      "runs": [
+        {
+          "text": "Příloha:",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput: Odkaz na přílohu{\"system-name\":\"attachment-ref\"}]",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "Plná moc pro zástupce Zprostředkovatele",
+          "bold": false,
+          "italic": true,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Body2",
+      "source": "body"
+    },
+    {
+      "index": 124,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 125,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 126,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 127,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 128,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    }
+  ],
+  "tables": [
+    {
+      "table_index": 0,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "V [TextInput: Místo podpisu prodávající 1{\"system-name\":\"seller1-signing-place\"}], dne [Date{\"system-name\":\"seller1-signing-date\"}]",
+              "runs": [
+                {
+                  "text": "V [TextInput: Místo podpisu prodávající 1{\"system-name\":\"seller1-signing-place\"}], dne [Date{\"system-name\":\"seller1-signing-date\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "V [TextInput: Místo podpisu kupující 1{\"system-name\":\"buyer1-signing-place\"}], dne [Date{\"system-name\":\"buyer1-signing-date\"}]",
+              "runs": [
+                {
+                  "text": "V [TextInput: Místo podpisu kupující 1{\"system-name\":\"buyer1-signing-place\"}], dne [Date{\"system-name\":\"buyer1-signing-date\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 123
+    },
+    {
+      "table_index": 1,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "________________________",
+              "runs": [
+                {
+                  "text": "________________________",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "________________________",
+              "runs": [
+                {
+                  "text": "________________________",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Strana prodávající",
+              "runs": [
+                {
+                  "text": "Strana prodávající",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Strana kupující",
+              "runs": [
+                {
+                  "text": "Strana kupující",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "[Link:seller1-name]",
+              "runs": [
+                {
+                  "text": "[Link:seller1-name]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "[Link:buyer1-name]",
+              "runs": [
+                {
+                  "text": "[Link:buyer1-name]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 124
+    },
+    {
+      "table_index": 2,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "V [TextInput: Místo podpisu prodávající 2{\"system-name\":\"seller2-signing-place\"}], dne [Date{\"system-name\":\"seller2-signing-date\"}]",
+              "runs": [
+                {
+                  "text": "V [TextInput: Místo podpisu prodávající 2{\"system-name\":\"seller2-signing-place\"}], dne [Date{\"system-name\":\"seller2-signing-date\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "V [TextInput: Místo podpisu kupující 2{\"system-name\":\"buyer2-signing-place\"}], dne [Date{\"system-name\":\"buyer2-signing-date\"}]",
+              "runs": [
+                {
+                  "text": "V [TextInput: Místo podpisu kupující 2{\"system-name\":\"buyer2-signing-place\"}], dne [Date{\"system-name\":\"buyer2-signing-date\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 125
+    },
+    {
+      "table_index": 3,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "________________________",
+              "runs": [
+                {
+                  "text": "________________________",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "________________________",
+              "runs": [
+                {
+                  "text": "________________________",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Strana prodávající",
+              "runs": [
+                {
+                  "text": "Strana prodávající",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Strana kupující",
+              "runs": [
+                {
+                  "text": "Strana kupující",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "[Link:seller2-name]",
+              "runs": [
+                {
+                  "text": "[Link:seller2-name]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "[Link:buyer2-name]",
+              "runs": [
+                {
+                  "text": "[Link:buyer2-name]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 126
+    },
+    {
+      "table_index": 4,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "V [TextInput: Místo podpisu zprostředkovatele{\"system-name\":\"intermediary-signing-place\"}], dne [Date{\"system-name\":\"intermediary-signing-date\"}]",
+              "runs": [
+                {
+                  "text": "V [TextInput: Místo podpisu zprostředkovatele{\"system-name\":\"intermediary-signing-place\"}], dne [Date{\"system-name\":\"intermediary-signing-date\"}]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 127
+    },
+    {
+      "table_index": 5,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "________________________",
+              "runs": [
+                {
+                  "text": "________________________",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "Zprostředkovatel",
+              "runs": [
+                {
+                  "text": "Zprostředkovatel",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "[Link:intermediary-name]",
+              "runs": [
+                {
+                  "text": "[Link:intermediary-name]",
+                  "bold": true,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "v zast. [Link:intermediary-rep-name], na základě plné moci",
+              "runs": [
+                {
+                  "text": "v zast.",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 0
+                },
+                {
+                  "text": " ",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 1
+                },
+                {
+                  "text": "[Link:intermediary-rep-name]",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 2
+                },
+                {
+                  "text": ", na základě plné moci",
+                  "bold": false,
+                  "italic": false,
+                  "underline": false,
+                  "highlight": null,
+                  "index": 3
+                }
+              ],
+              "style": "Body2",
+              "source": "table"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "paragraphs": [
+            {
+              "index": 0,
+              "text": "",
+              "runs": [],
+              "style": "Normal",
+              "source": "table"
+            }
+          ]
+        }
+      ],
+      "body_paragraph_before": 128
+    }
+  ],
+  "headers": [
+    {
+      "index": 0,
+      "text": "FCR-([Link:fcr-number])",
+      "runs": [
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "F",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "CR",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "-",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "(",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "[Link:fcr-number]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": ")",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Normal",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "stránka 8 z 8",
+      "runs": [
+        {
+          "text": "stránka ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "8",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": " z ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 7
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 8
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 9
+        },
+        {
+          "text": "8",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 10
+        },
+        {
+          "text": "",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 11
+        }
+      ],
+      "style": "Footer",
+      "source": "footer"
+    }
+  ],
+  "comments": [],
+  "highlights": [],
+  "colored_text": [],
+  "dropdowns": []
+}

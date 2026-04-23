@@ -1,0 +1,1874 @@
+{
+  "file": "legito-markup-pipeline\\eval\\gold\\RBI Construction.docx",
+  "paragraph_count": 92,
+  "table_count": 0,
+  "highlight_count": 0,
+  "colored_text_count": 23,
+  "dropdown_count": 0,
+  "paragraphs": [
+    {
+      "index": 0,
+      "text": "Date: [Date{\"system-name\":\"term-sheet-date\"}]",
+      "runs": [
+        {
+          "text": "Date: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Date{\"system-name\":\"term-sheet-date\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 1,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 2,
+      "text": "Dear Borrower, ",
+      "runs": [
+        {
+          "text": "Dear ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Borrower",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ",",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 3,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 4,
+      "text": "We are pleased to inform you that RBI Private Lending LLC is able to provide you with financing under the following terms and conditions:",
+      "runs": [
+        {
+          "text": "We are pleased to inform you that RBI ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "Private Lending",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " LLC is able to provide you with financing under the following terms and conditions:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 5,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 6,
+      "text": "BORROWER: [TextInput{\"system-name\":\"borrower-name\"}]",
+      "runs": [
+        {
+          "text": "BORROWER:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"borrower-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 7,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 8,
+      "text": "GUARANTORS: [TextInput{\"system-name\":\"guarantor-name\"}] ",
+      "runs": [
+        {
+          "text": "GUARANTORS:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"guarantor-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 9,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 10,
+      "text": "SUBJECT PROPERTY ADDRESS: [TextInput{\"system-name\":\"property-address\"}] ",
+      "runs": [
+        {
+          "text": "SUBJECT",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 1
+        },
+        {
+          "text": "PROPERTY ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 2
+        },
+        {
+          "text": "ADDRESS: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 3
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"property-address\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 11,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 12,
+      "text": "LOAN PROGRAM: [TextInput{\"system-name\":\"loan-program\"}]",
+      "runs": [
+        {
+          "text": "LOAN PROGRAM",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": ":",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"loan-program\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 13,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 14,
+      "text": "MAX LOAN AMOUNT: [Money{\"system-name\":\"max-loan-amount\"}] - The Total Loan Amount is the maximum amount of Loan Facility proceeds that the Borrower may receive.  This amount is comprised of the Day 1 Loan Amount + Construction Loan Amount + Interest Reserve rolled in (if applicable).  The Total Loan Amount will not exceed the Maximum LTAIV or Maximum LTARV as noted below (as determined by third party appraisals).  ",
+      "runs": [
+        {
+          "text": "MAX LOAN ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": "AMOUNT:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "[Money{\"system-name\":\"max-loan-amount\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " - The Total Loan Amount is the maximum amount of Loan Facility proceeds that the Borrower may receive.  This amount is comprised of the Day 1 Loan Amount + Construction Loan Amount + Interest Reserve rolled in (if applicable).  The Total Loan Amount will not exceed the Maximum LTAIV or Maximum LTARV as noted below (as determined by third party appraisals).  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 15,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 16,
+      "text": "MAX [TextInput{\"system-name\":\"max-ltv-ltc\"}]",
+      "runs": [
+        {
+          "text": "MAX ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"max-ltv-ltc\"}]",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 17,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 18,
+      "text": "DAY 1 LOAN AMOUNT: [TextInput{\"system-name\":\"day1-loan-amount\"}] - The Day 1 Loan Amount is the scheduled loan amount to be disbursed to ",
+      "runs": [
+        {
+          "text": "DAY 1 LOAN AMOUNT",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": ": [TextInput{\"system-name\":\"day1-loan-amount\"}] - ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 1
+        },
+        {
+          "text": "The Day 1 Loan Amount is the scheduled loan amount to be disbursed to ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 19,
+      "text": "at the closing of the Loan Facility.  This includes any Interest Reserve described herein (if applicable).",
+      "runs": [
+        {
+          "text": "at the closing of the Loan Facility.  This includes any Interest Reserve described herein (if applicable).",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 20,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 21,
+      "text": "CONSTRUCTION LOAN AMOUNT: [Money{\"system-name\":\"construction-loan-amount\"}] - The Construction Loan Amount is the scheduled loan amount that may be disbursed to the Borrower upon the verified completion of Construction on the Property at lender’s discretion.  ",
+      "runs": [
+        {
+          "text": "CONSTRUCTION LOAN AMOUNT:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"construction-loan-amount\"}] - ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "The Construction Loan Amount is the scheduled loan amount that may be disbursed to the Borrower upon the verified completion of Construction on the Property at",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": " lender’s discretion",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        },
+        {
+          "text": ".",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 5
+        },
+        {
+          "text": "  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 6
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 22,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 23,
+      "text": "PURPOSE: BUSINESS LOAN",
+      "runs": [
+        {
+          "text": "PURPOSE:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " BUSINESS LOAN",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 24,
+      "text": "INTEREST RATE: [TextInput{\"system-name\":\"interest-rate\"}]",
+      "runs": [
+        {
+          "text": "INTEREST RATE: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"interest-rate\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 25,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 26,
+      "text": "TERMS & REPAYMENT: [TextInput{\"system-name\":\"terms-repayment\"}] ",
+      "runs": [
+        {
+          "text": "TERMS & REPAYMENT: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"terms-repayment\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Default",
+      "source": "body"
+    },
+    {
+      "index": 27,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 28,
+      "text": "PREPAYMENT PENALTY: [TextInput{\"system-name\":\"prepayment-penalty\"}]",
+      "runs": [
+        {
+          "text": "PREPAYMENT PENALTY:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"prepayment-penalty\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 29,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 30,
+      "text": "NON-REFUNDABLE DEPOSIT: [Money{\"system-name\":\"non-refundable-deposit\"}] (credited towards the closing)",
+      "runs": [
+        {
+          "text": "NON-REFUNDABLE DEPOSIT:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"non-refundable-deposit\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " (",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "credited towards the closing)",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 31,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 32,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 33,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 34,
+      "text": "STANDARD EXPENSES:",
+      "runs": [
+        {
+          "text": "STANDARD ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": "EXPENSES:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 35,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 36,
+      "text": "Underwriting Fee: [Money{\"system-name\":\"underwriting-fee\"}]",
+      "runs": [
+        {
+          "text": "Underwriting Fee: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Money{\"system-name\":\"underwriting-fee\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 37,
+      "text": "Brokers Fee: [TextInput{\"system-name\":\"brokers-fee\"}]",
+      "runs": [
+        {
+          "text": "Brokers Fee",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ": [TextInput{\"system-name\":\"brokers-fee\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 38,
+      "text": "Origination Fee: [TextInput{\"system-name\":\"origination-fee\"}] ",
+      "runs": [
+        {
+          "text": "Origination Fe",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "e",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": ": [TextInput{\"system-name\":\"origination-fee\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 39,
+      "text": "Appraisal Fee: [TextInput{\"system-name\":\"appraisal-fee\"}]",
+      "runs": [
+        {
+          "text": "Appraisal Fee",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ": ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"appraisal-fee\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 40,
+      "text": "Legal Fee: [Money{\"system-name\":\"legal-fee\"}]",
+      "runs": [
+        {
+          "text": "Legal Fee: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[Money{\"system-name\":\"legal-fee\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 41,
+      "text": "Feasibility Fees: [Money{\"system-name\":\"feasibility-fees\"}]",
+      "runs": [
+        {
+          "text": "Feasibility Fees:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "[Money{\"system-name\":\"feasibility-fees\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 42,
+      "text": "Other fees: [TextInput{\"system-name\":\"other-fees\"}]",
+      "runs": [
+        {
+          "text": "Other fees: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"other-fees\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 43,
+      "text": "Interest Reserve: [TextInput{\"system-name\":\"interest-reserve\"}] ",
+      "runs": [
+        {
+          "text": "Interest Reserve: ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "[TextInput{\"system-name\":\"interest-reserve\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 44,
+      "text": "Draw Fee: [TextInput{\"system-name\":\"draw-fee\"}] - For each requested Construction Loan Amount draw, Borrower will be required to submit, in Lender’s form, a Draw Request package which will include, in addition to other items/information: Amount requested; description of work complete (including line item expenditures); lien waivers from contractors and subcontractors; the Draw Fee. Lender will have all work inspected by a third-party renovation/construction inspection firm to verify all work complete. Lender will not advance any funds above what the inspection firm confirms has been completed.",
+      "runs": [
+        {
+          "text": "Draw Fee",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": ": [TextInput{\"system-name\":\"draw-fee\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": " - For each requested Construction Loan Amount draw, Borrower will be required to submit, in Lender’s form, a Draw Request package which will include, in addition to other items/information: Amount requested; description of work complete (including line item expenditures); lien waivers from contractors and subcontractors; the Draw Fee. Lender will have all work inspected by a third-party renovation/construction inspection firm to verify all work complete. Lender will not advance any funds above what the inspection firm confirms has been completed.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 45,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 46,
+      "text": "DRAWS: The loan will be funded in draws based on the initial budget presented, after completing on-site inspections (work in place), proof of payment and lien releases.",
+      "runs": [
+        {
+          "text": "DRAWS: ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": "The loan will be funded in draws based on the initial budget presented, after completing on-site inspections (work in place), proof of payment and lien releases.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 47,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 48,
+      "text": "PROPERTY INCURANCE: Property insurance will be required to protect against loss or damage from fire and lighting and other hazards covered by the standard extended coverage endorsement with the following mortgagee clause:",
+      "runs": [
+        {
+          "text": "PROPERTY INCURANCE:",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "color": "1C4587",
+          "index": 0
+        },
+        {
+          "text": " ",
+          "bold": true,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "Property insurance will be required to protect against loss or damage from fire and lighting and other hazards covered by the standard extended coverage endorsement with the following mortgagee clause:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 49,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 50,
+      "text": "RBI MORTGAGES LLC ISAOA/ ATIMA ",
+      "runs": [
+        {
+          "text": "RBI MORTGAGES",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " LLC ISAOA/ ATIMA ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 51,
+      "text": "19495 BISCAYNE BLVD, SUITE 801",
+      "runs": [
+        {
+          "text": "1",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "9",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "495 BISCAYNE BLVD, SUITE 801",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 52,
+      "text": "AVENTURA, FL 33180",
+      "runs": [
+        {
+          "text": "AVENTURA,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": " FL 33180",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 53,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 54,
+      "text": "  \tThe coverage must provide for claims to be settled on a replacement cost basis.  Extended coverage must include, at a minimum, wind civil commotion (including riots), smoke, hail, and damages caused by aircraft, vehicle, or explosions.  RBI PRIVATE LENDING requires coverage equal to the lesser of the following:",
+      "runs": [
+        {
+          "text": "  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\tThe coverage must provide for claims to be settled on a replacement cost basis.  Extended coverage must include, at a minimum, wind civil commotion (including riots), smoke, hail, and damages caused by aircraft, vehicle, or explosions.  ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "RBI PRIVATE LENDING ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": "requires coverage equal to the lesser of the following:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 55,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 56,
+      "text": "100% of the insurable value of the improvements, as established by the property insurer; or",
+      "runs": [
+        {
+          "text": "100% of the insurable value of the improvements, as established by the property insurer; or",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 57,
+      "text": "The unpaid principal balance of the mortgage; of",
+      "runs": [
+        {
+          "text": "The unpaid principal balance of the mortgage; of",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 58,
+      "text": "In any event not less than the amount necessary or containing such endorsements as are necessary to avoid the operation or any insurance provisions",
+      "runs": [
+        {
+          "text": "In any event not less than the amount necessary or containing such endorsements as are necessary to avoid the operation or any insurance provisions",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 59,
+      "text": "",
+      "runs": [],
+      "style": "List Paragraph",
+      "source": "body"
+    },
+    {
+      "index": 60,
+      "text": "The policy must be written by a carrier that meets Lender minimum rating requirements.  General liability insurance required against claims for personal injury, bodily injury death or property damage with a limit of not less than $500,000 per property.  Builder’s risk insurance required on new construction and major renovations. Flood insurance required if property is in an area identified in the Federal Register by FEMA as having special flood hazards.  Insurer must be domiciled in the United States and/or licensed to do business in the state(s) in which the subject property is located and must be written by a carrier that meets RBI PRIVATE LENDING rating requirements.  Additional requirement may apply based on lender guidelines and due diligence.",
+      "runs": [
+        {
+          "text": "The policy must be written by a carrier that meets Lender minimum rating requirements.  General liability insurance required against claims for personal injury, bodily injury death or property damage with a limit of not less than $500,000 per property.  Builder’s risk insurance required on new construction and major renovations. Flood insurance required ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "if property is in an area identified in the Federal Register by FEMA as having special flood hazards.  Insurer must be domiciled in the United States and/or licensed to do business in the state(s) in which the subject property is located and must be written by a carrier that meets ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        },
+        {
+          "text": "RBI PRIVATE LENDING",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 2
+        },
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 3
+        },
+        {
+          "text": "rating requirements.  Additional requirement may apply based on lender guidelines and due diligence.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 4
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 61,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 62,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 63,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 64,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 65,
+      "text": "This Term Sheet is subject to, among other things, definitive documentation to be entered into by the parties.  Further, this Term Sheet is not intended to define or describe all of the terms and conditions of the proposed transaction described herein.  It is intended to outline certain basic points of business understanding around which the transaction could be structured.  Where discrepancies between this Term Sheet and final documentation exist, the final documentation shall govern.  Each party agrees that, except for the terms set forth below designated as “Binding Terms”, the terms set forth in this Term Sheet are not binding on the parties and, if final documentation is executed, the terms set forth in such final documentation shall control.",
+      "runs": [
+        {
+          "text": "This Term Sheet is subject to, among other things, definitive documentation to be entered into by the parties.  Further, this Term Sheet is not intended to define or describe all of the terms and conditions of the proposed transaction described herein.  It is intended to outline certain basic points of business understanding around which the transaction could be structured.  Where discrepancies between this Term Sheet and final documentation exist, the final documentation shall govern.  Each party agrees that, except for the terms set forth below designated as “Binding Terms”, the terms set forth in this Term Sheet are not binding on the parties and, if final documentation is executed, the terms set forth in such final documentation shall control.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 66,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 67,
+      "text": "This Term Sheet does not represent a commitment by Lender (defined above) or any of its affiliates or subsidiaries.  Such commitment will be represented by the final documentation.  Lender may alter the terms or determine not to originate the Loan Facility after Investment Committee discussion.  The terms herein are still subject to negotiation and modification until signed by the Lender.   Notwithstanding the foregoing, Lender may, at any time for any reason, not enter into the Loan Facility contemplated hereunder until final legal documentation is entered into after execution of this Term Sheet.",
+      "runs": [
+        {
+          "text": "This Term Sheet does not represent a commitment by Lender (defined above) or any of its affiliates or subsidiaries.  Such commitment will be represented by the final documentation.  Lender may alter the terms or determine not to originate the Loan Facility after Investment Committee discussion.  The terms herein are still subject to negotiation and modification until signed by the Lender.   Notwithstanding the foregoing, Lender may, at any time for any reason, not enter into the Loan Facility contemplated hereunder until final legal documentation is entered into after execution of this Term Sheet.",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 68,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 69,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 70,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 71,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 72,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 73,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 74,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 75,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 76,
+      "text": "Sincerely yours,",
+      "runs": [
+        {
+          "text": "Sincerely yours,",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 77,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 78,
+      "text": " ",
+      "runs": [
+        {
+          "text": " ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 79,
+      "text": "____________________________",
+      "runs": [
+        {
+          "text": "____________________________",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 80,
+      "text": "Andres Saias\t",
+      "runs": [
+        {
+          "text": "Andres Saias",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        },
+        {
+          "text": "\t",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 1
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 81,
+      "text": "CCO",
+      "runs": [
+        {
+          "text": "CCO",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 82,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 83,
+      "text": "The Borrower and Guarantor have read this letter and herby accept, acknowledge agree to same this [Date{\"system-name\":\"acceptance-date\"}].",
+      "runs": [
+        {
+          "text": "The Borrower and Guarantor have read this letter and herby accept, acknowledge agree to same this [Date{\"system-name\":\"acceptance-date\"}].",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 84,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 85,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 86,
+      "text": "Borrower:",
+      "runs": [
+        {
+          "text": "Borrower:",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 87,
+      "text": "",
+      "runs": [],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 88,
+      "text": "Mr. ",
+      "runs": [
+        {
+          "text": "Mr. ",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 89,
+      "text": "By: _____________________________",
+      "runs": [
+        {
+          "text": "By: _____________________________",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 90,
+      "text": "Name: [TextInput{\"system-name\":\"borrower-signatory-name\"}]",
+      "runs": [
+        {
+          "text": "Name: [TextInput{\"system-name\":\"borrower-signatory-name\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    },
+    {
+      "index": 91,
+      "text": "Title: [TextInput{\"system-name\":\"borrower-signatory-title\"}]",
+      "runs": [
+        {
+          "text": "Title: [TextInput{\"system-name\":\"borrower-signatory-title\"}]",
+          "bold": false,
+          "italic": false,
+          "underline": false,
+          "highlight": null,
+          "index": 0
+        }
+      ],
+      "style": "Normal",
+      "source": "body"
+    }
+  ],
+  "tables": [],
+  "headers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Header",
+      "source": "header"
+    }
+  ],
+  "footers": [
+    {
+      "index": 0,
+      "text": "",
+      "runs": [],
+      "style": "Footer",
+      "source": "footer"
+    }
+  ],
+  "comments": [],
+  "highlights": [],
+  "colored_text": [
+    {
+      "source": "body",
+      "paragraph_index": 6,
+      "text": "BORROWER:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 8,
+      "text": "GUARANTORS:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 10,
+      "text": "SUBJECT",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 10,
+      "text": "PROPERTY ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 10,
+      "text": "ADDRESS: ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 12,
+      "text": "LOAN PROGRAM",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 12,
+      "text": ":",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 14,
+      "text": "MAX LOAN ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 14,
+      "text": "AMOUNT:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 16,
+      "text": "MAX ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 16,
+      "text": "[TextInput{\"system-name\":\"max-ltv-ltc\"}]",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 18,
+      "text": "DAY 1 LOAN AMOUNT",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 18,
+      "text": ": [TextInput{\"system-name\":\"day1-loan-amount\"}] - ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 21,
+      "text": "CONSTRUCTION LOAN AMOUNT:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 23,
+      "text": "PURPOSE:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 24,
+      "text": "INTEREST RATE: ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 26,
+      "text": "TERMS & REPAYMENT: ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 28,
+      "text": "PREPAYMENT PENALTY:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 30,
+      "text": "NON-REFUNDABLE DEPOSIT:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 34,
+      "text": "STANDARD ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 34,
+      "text": "EXPENSES:",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 46,
+      "text": "DRAWS: ",
+      "color": "1C4587"
+    },
+    {
+      "source": "body",
+      "paragraph_index": 48,
+      "text": "PROPERTY INCURANCE:",
+      "color": "1C4587"
+    }
+  ],
+  "dropdowns": []
+}
