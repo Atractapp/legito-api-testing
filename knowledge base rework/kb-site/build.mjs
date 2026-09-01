@@ -27,18 +27,18 @@ const icon = (name, cls = "") => {
 
 /* ---------- category metadata ---------- */
 const CATS = [
-  ["GETTING STARTED", "Getting Started", "compass", "Deployment models and the basics of running Legito."],
-  ["ONBOARDING", "Onboarding", "rocket", "First steps for new Workspaces and new users."],
-  ["DOCUMENT EDITOR", "Document Editor", "file-pen", "Drafting, reviewing, exporting and importing documents."],
-  ["TEMPLATE AUTOMATION", "Template Automation", "layer-group", "Automated Templates — structure, conditions, repeats, tags and the Clause Library."],
-  ["PROCESS MANAGEMENT", "Process Management", "diagram-project", "Document management, Workflows, Records, properties and reporting."],
-  ["AI", "AI", "wand-magic-sparkles", "Kedy AI, AI Agents, the MCP Server and AI data privacy."],
-  ["ELECTRONIC SIGNATURE", "Electronic Signature", "signature", "Legito Sign and signature management."],
-  ["DASHBOARD", "Dashboard", "gauge-high", "The Dashboard and its widgets."],
-  ["WORKSPACE ADMINISTRATION", "Workspace Administration", "users-gear", "Users, permissions, SSO, settings and localization."],
-  ["INTEGRATIONS", "Integrations", "plug", "Connecting Legito with other applications and services."],
+  ["ONBOARDING", "Onboarding", "rocket"],
+  ["DOCUMENT EDITOR", "Document Editor", "file-pen"],
+  ["TEMPLATE AUTOMATION", "Template Automation", "layer-group"],
+  ["PROCESS MANAGEMENT", "Process Management", "diagram-project"],
+  ["AI", "AI", "wand-magic-sparkles"],
+  ["ELECTRONIC SIGNATURE", "Electronic Signature", "signature"],
+  ["DASHBOARD", "Dashboard", "gauge-high"],
+  ["WORKSPACE ADMINISTRATION", "Workspace Administration", "users-gear"],
+  ["INTEGRATIONS", "Integrations", "plug"],
 ];
-const catMeta = Object.fromEntries(CATS.map(([dir, name, ic, desc], i) => [dir, { name, ic, desc, order: i }]));
+const EXCLUDE_DIRS = new Set(["GETTING STARTED"]);
+const catMeta = Object.fromEntries(CATS.map(([dir, name, ic], i) => [dir, { name, ic, order: i }]));
 const titleCase = (s) => s.split(" ").map(w => (w === w.toUpperCase() && w.length > 2) ? w[0] + w.slice(1).toLowerCase() : w).join(" ");
 const prettyDir = (d) => catMeta[d] ? catMeta[d].name : titleCase(d);
 
@@ -59,6 +59,7 @@ for (const f of files) {
   const rel = path.relative(MD_ROOT, f).replace(/\\/g, "/");
   const parts = rel.split("/");
   const cat = parts[0];
+  if (EXCLUDE_DIRS.has(cat)) continue;
   if (!catMeta[cat]) throw new Error(`unknown category ${cat}`);
   const raw = fs.readFileSync(f, "utf8");
   const titleM = raw.match(/^#\s+(.+)$/m);
@@ -252,15 +253,16 @@ function renderNode(node, base, current, dirName) {
 
 /* ---------- page shell ---------- */
 const YEAR = new Date().getFullYear();
+const stripEmDash = (x) => x.replace(/[ \t]*\u2014[ \t]*/g, " - ");
 function shell({ title, desc, content, current, bodyClass = "", crumbs = null }) {
-  return `<!doctype html>
+  return stripEmDash(`<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>${esc(title)}</title>
-<meta name="description" content="${esc(desc || "Unofficial preview of the reworked Legito Knowledge Base.")}">
+<meta name="description" content="${esc(desc || "Legito Knowledge Base.")}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/opensans-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/opensans-700.woff2" as="font" type="font/woff2" crossorigin>
@@ -268,25 +270,19 @@ function shell({ title, desc, content, current, bodyClass = "", crumbs = null })
 </head>
 <body class="${bodyClass}">
 <a class="skip" href="#main">Skip to content</a>
-<div class="preview-strip" role="note"><strong>Unofficial preview</strong><span class="ps-sep"></span><span class="ps-txt">Draft of the reworked Knowledge Base (KB2026) — not the official Legito Knowledge Base.</span><a href="https://www.legito.com/knowledge-base/" target="_blank" rel="noopener">Official Knowledge Base ${ICONS["arrow-up-right-from-square"]}</a></div>
+<div class="preview-strip" role="note"><strong>Unofficial preview</strong><span class="ps-sep"></span><span class="ps-txt">Not the official Legito Knowledge Base.</span></div>
 <header class="hdr">
   <div class="hdr-in">
     <button class="nav-toggle" id="navToggle" aria-label="Open navigation">${ICONS.bars}</button>
-    <a class="brand" href="/"><img src="/legito-logo.svg" alt="Legito" width="96" height="28"><span class="brand-div"></span><span class="brand-kb">Knowledge&nbsp;Base</span><span class="brand-tag">2026&nbsp;preview</span></a>
+    <a class="brand" href="/"><img src="/legito-logo.svg" alt="Legito" width="96" height="28"><span class="brand-div"></span><span class="brand-kb">Knowledge&nbsp;Base</span></a>
     <div class="hdr-right">
       <button class="search-btn" id="searchBtn">${ICONS["magnifying-glass"]}<span>Search articles…</span><kbd>Ctrl&nbsp;K</kbd></button>
-      <a class="btn-outline hdr-official" href="https://www.legito.com/knowledge-base/" target="_blank" rel="noopener">Official KB ${ICONS["arrow-up-right-from-square"]}</a>
     </div>
   </div>
 </header>
 ${content}
 <footer class="ftr">
-  <div class="ftr-in">
-    <div class="ftr-brand"><img src="/legito-logo-white.svg" alt="Legito" width="110" height="32"><p>Document Management for Everyone. Draft, manage and automate documents in one place.</p></div>
-    <div class="ftr-col"><h4>Legito</h4><a href="https://www.legito.com" target="_blank" rel="noopener">legito.com</a><a href="https://www.legito.com/knowledge-base/" target="_blank" rel="noopener">Official Knowledge Base</a><a href="https://vimeo.com/legito" target="_blank" rel="noopener">Video guides</a></div>
-    <div class="ftr-col"><h4>This preview</h4><a href="/">All sections</a><a href="/about/">About this preview</a></div>
-  </div>
-  <div class="ftr-legal">Unofficial preview built from the KB2026 rework · not indexed, not the official Knowledge Base · © ${YEAR} Legito</div>
+  <div class="ftr-min"><img src="/legito-logo-white.svg" alt="Legito" width="96" height="28"><span>© ${YEAR} Legito</span></div>
 </footer>
 <div class="palette" id="palette" hidden>
   <div class="palette-back" data-close></div>
@@ -306,7 +302,7 @@ ${content}
 <script src="/minisearch.js" defer></script>
 <script src="/client.js" defer></script>
 </body>
-</html>`;
+</html>`);
 }
 
 const crumbHTML = (items) =>
@@ -343,8 +339,7 @@ function liveGallery(art) {
   const imgs = art.live.images.map((im, i) =>
     `<a class="g-item" href="/${im.src}" data-lb data-cap="${esc(im.alt || "")}"><img loading="lazy" src="/${im.src}" alt="${esc(im.alt || "Screenshot")}"></a>`).join("");
   return `<section class="gallery">
-    <h2 class="hd g-hd" id="current-screenshots">${ICONS.images}Screenshots from the current Knowledge Base</h2>
-    <p class="g-note">Captured from the live article at <a href="${esc(art.live.liveLink)}" target="_blank" rel="noopener">legito.com</a>.</p>
+    <h2 class="hd g-hd" id="screenshots">${ICONS.images}Screenshots</h2>
     <div class="g-grid">${imgs}</div>
   </section>`;
 }
@@ -353,7 +348,7 @@ function appendixBlock(appendix) {
   if (!appendix.length) return "";
   const imgs = appendix.map(im =>
     `<a class="g-item" href="${im.src}" data-lb data-cap="${esc(im.alt || "")}"><img loading="lazy" src="${im.src}" alt="${esc(im.alt || "Screenshot")}"></a>`).join("");
-  return `<details class="appendix"><summary>${ICONS.images}Additional screenshots from the 2024 article <span class="apx-n">${appendix.length}</span></summary><div class="g-grid">${imgs}</div></details>`;
+  return `<details class="appendix"><summary>${ICONS.images}More screenshots <span class="apx-n">${appendix.length}</span></summary><div class="g-grid">${imgs}</div></details>`;
 }
 
 /* ---------- build ---------- */
@@ -414,7 +409,6 @@ for (let i = 0; i < articles.length; i++) {
     <span class="meta-i">${ICONS.clock}${mins} min read</span>
     ${liveImgN ? `<span class="meta-i">${ICONS.images}${liveImgN} screenshot${liveImgN > 1 ? "s" : ""}</span>` : ""}
     ${vidN ? `<span class="meta-i meta-vid">${ICONS.video}Video guide</span>` : ""}
-    ${art.live ? `<a class="meta-live" href="${esc(art.live.liveLink)}" target="_blank" rel="noopener">View official article ${ICONS["arrow-up-right-from-square"]}</a>` : ""}
   </div>`;
 
   const content = `
@@ -438,7 +432,7 @@ for (let i = 0; i < articles.length; i++) {
   const dir = path.join(DIST, ...art.route.split("/").filter(Boolean));
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), shell({
-    title: `${art.title} — Legito KB preview`,
+    title: `${art.title} · Legito Knowledge Base`,
     desc: excerptOf(art), content, current: art, bodyClass: "page-art",
   }));
 
@@ -485,7 +479,7 @@ for (const [dir] of CATS) {
   ${sidebarHTML({ cat: dir, chain: [dir], rel: null })}
   <main id="main" class="art cat-page">
     ${crumbHTML([{ label: "Knowledge Base", href: "/" }, { label: meta.name, href: null }])}
-    <div class="cat-head"><span class="cat-ic">${ICONS[meta.ic]}</span><div><h1 class="art-title">${esc(meta.name)}</h1><p class="cat-desc">${esc(meta.desc)}</p></div></div>
+    <div class="cat-head"><span class="cat-ic">${ICONS[meta.ic]}</span><h1 class="art-title">${esc(meta.name)}</h1></div>
     <div class="rule"></div>
     ${sections}
   </main>
@@ -493,7 +487,7 @@ for (const [dir] of CATS) {
   const outDir = path.join(DIST, slugify(dir));
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, "index.html"), shell({
-    title: `${meta.name} — Legito KB preview`, desc: meta.desc, content, current: null, bodyClass: "page-cat",
+    title: `${meta.name} · Legito Knowledge Base`, desc: `${meta.name} · Legito Knowledge Base`, content, current: null, bodyClass: "page-cat",
   }));
 }
 
@@ -514,9 +508,8 @@ const homeContent = `
   <div class="hero-shapes" aria-hidden="true"><span class="sh sh1"></span><span class="sh sh2"></span><span class="sh sh3"></span><span class="sh sh4"></span></div>
   <div class="hero-in">
     <h1>How can we help?</h1>
-    <p class="hero-sub">The reworked Legito Knowledge Base — every article rewritten and brought current for 2026.</p>
-    <button class="hero-search" id="heroSearch">${ICONS["magnifying-glass"]}<span>Search ${articles.length} articles…</span><kbd>Ctrl K</kbd></button>
-    <div class="hero-stats"><span><strong>${articles.length}</strong> articles</span><span class="hs-dot"></span><span><strong>${CATS.length}</strong> sections</span><span class="hs-dot"></span><span><strong>${totalVids}</strong> video guides</span><span class="hs-dot"></span><span><strong>${totalShots}</strong> current screenshots</span></div>
+    <button class="hero-search" id="heroSearch">${ICONS["magnifying-glass"]}<span>Search articles…</span><kbd>Ctrl K</kbd></button>
+    <div class="hero-stats"><span><strong>${articles.length}</strong> articles</span><span class="hs-dot"></span><span><strong>${CATS.length}</strong> sections</span><span class="hs-dot"></span><span><strong>${totalVids}</strong> video guides</span></div>
   </div>
 </section>
 <main id="main">
@@ -528,7 +521,6 @@ const homeContent = `
         <span class="cat-card-ic">${ICONS[m.ic]}</span>
         <span class="cat-card-t">${esc(m.name)}</span>
         <span class="cat-card-n">${catCount[dir]} article${catCount[dir] > 1 ? "s" : ""}</span>
-        <span class="cat-card-d">${esc(m.desc)}</span>
         <span class="cat-card-go">Browse ${ICONS["arrow-right"]}</span>
       </a>`;
     }).join("")}
@@ -536,7 +528,7 @@ const homeContent = `
 </section>
 <section class="home-vids">
   <div class="hv-in">
-    <div class="hv-head"><h2>Video guides</h2><p>Walkthroughs from the current Knowledge Base.</p></div>
+    <div class="hv-head"><h2>Video guides</h2></div>
     <div class="hv-grid">${homeVids.map(v => `
       <div class="hv-card">
         <div class="vid" data-embed="${esc(v.embed)}"><img loading="lazy" src="/${v.poster}" alt="${esc(v.title)}"><button class="vid-play" aria-label="Play: ${esc(v.title)}"><span class="vid-play-c">${ICONS.play}</span></button></div>
@@ -545,60 +537,18 @@ const homeContent = `
     </div>
   </div>
 </section>
-<section class="about-strip">
-  <div class="as-in">
-    <div class="as-callout">
-      <h2>About this preview</h2>
-      <p>This site is an unofficial working preview of the 2026 Knowledge Base rework: <strong>${articles.length} articles</strong>, every one rewritten against the current product — with limitations stated, operator lists completed, and marketing filler removed. Screenshots and video guides are carried over from the current Knowledge Base.</p>
-      <a class="btn-secondary" href="/about/">Read more ${ICONS["arrow-right"]}</a>
-    </div>
-  </div>
-</section>
 </main>`;
 
 fs.writeFileSync(path.join(DIST, "index.html"), shell({
-  title: "Legito Knowledge Base — 2026 preview (unofficial)",
-  desc: "Unofficial preview of the reworked Legito Knowledge Base — 208 rewritten articles, search, video guides and current screenshots.",
+  title: "Legito Knowledge Base (preview)",
+  desc: "Legito Knowledge Base.",
   content: homeContent, current: null, bodyClass: "page-home",
-}));
-
-/* ---------- about page ---------- */
-const aboutContent = `
-<div class="layout">
-  ${sidebarHTML(null)}
-  <main id="main" class="art">
-    ${crumbHTML([{ label: "Knowledge Base", href: "/" }, { label: "About this preview", href: null }])}
-    <h1 class="art-title">About this preview</h1>
-    <div class="rule"></div>
-    <div class="prose">
-      <p><strong>This is not the official Legito Knowledge Base.</strong> It is an unofficial, internal preview of the 2026 Knowledge Base rework, published for review. The official Knowledge Base lives at <a href="https://www.legito.com/knowledge-base/" target="_blank" rel="noopener">legito.com/knowledge-base</a>.</p>
-      <h2 class="hd" id="what-changed">What changed in the rework</h2>
-      <ul>
-        <li><strong>${articles.length} articles</strong>, rewritten and brought current against the 2026 product.</li>
-        <li>Marketing openers and chatty asides replaced with limitations, operator lists and current facts — at the same article length.</li>
-        <li>Every article that has a limitation now states it.</li>
-        <li>Sections that were never reworked before (Integrations, Process Management, Workspace Administration) are covered.</li>
-      </ul>
-      <h2 class="hd" id="media">Screenshots and videos</h2>
-      <ul>
-        <li><strong>${totalShots} screenshots</strong> are carried over from the current live Knowledge Base and shown per article under “Screenshots from the current Knowledge Base”.</li>
-        <li><strong>${totalVids} video guides</strong> are embedded from Legito's Vimeo channel, as on the live site.</li>
-        <li>Screenshots from the 2024 article set are kept per article in a collapsed “Additional screenshots” block where they exist.</li>
-      </ul>
-      <h2 class="hd" id="status">Status</h2>
-      <p>Content is draft. Facts were source-traced during the rework, and open questions are tracked in the rework's fact-corrections log. This site is not indexed by search engines.</p>
-    </div>
-  </main>
-</div>`;
-fs.mkdirSync(path.join(DIST, "about"), { recursive: true });
-fs.writeFileSync(path.join(DIST, "about", "index.html"), shell({
-  title: "About this preview — Legito KB preview", desc: "What this unofficial KB preview is.", content: aboutContent, current: null, bodyClass: "page-about",
 }));
 
 /* ---------- 404 ---------- */
 fs.writeFileSync(path.join(DIST, "404.html"), shell({
-  title: "Page not found — Legito KB preview", desc: "",
-  content: `<main id="main" class="nf"><h1>404</h1><p>That article doesn't exist in this preview.</p><a class="btn-primary" href="/">Back to the Knowledge Base ${ICONS["arrow-right"]}</a></main>`,
+  title: "Page not found · Legito Knowledge Base", desc: "",
+  content: `<main id="main" class="nf"><h1>404</h1><p>Page not found.</p><a class="btn-primary" href="/">Back to the Knowledge Base ${ICONS["arrow-right"]}</a></main>`,
   current: null, bodyClass: "page-404",
 }));
 
@@ -611,7 +561,7 @@ for (const rel of usedMedia) {
 }
 
 /* ---------- search index ---------- */
-fs.writeFileSync(path.join(DIST, "search-docs.json"), JSON.stringify(searchDocs));
+fs.writeFileSync(path.join(DIST, "search-docs.json"), stripEmDash(JSON.stringify(searchDocs)));
 
 /* ---------- robots + vercel ---------- */
 fs.writeFileSync(path.join(DIST, "robots.txt"), "User-agent: *\nDisallow: /\n");
@@ -622,6 +572,12 @@ fs.writeFileSync(path.join(DIST, "vercel.json"), JSON.stringify({
     { source: "/(live|media|fonts)/(.*)", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
   ],
 }, null, 2));
+
+// keep the Vercel project link inside dist so `vercel deploy` targets legito-kb-preview
+fs.mkdirSync(path.join(DIST, ".vercel"), { recursive: true });
+fs.writeFileSync(path.join(DIST, ".vercel", "project.json"), JSON.stringify({
+  projectId: "prj_zNBsbOCPjrhsOWOKCoULIjXjLDVd", orgId: "team_HnENiA2ac6CiyXkGLL2OtupK", projectName: "legito-kb-preview",
+}));
 
 // minisearch for the client
 fs.copyFileSync(path.join(__dirname, "node_modules", "minisearch", "dist", "umd", "index.js"), path.join(DIST, "minisearch.js"));
