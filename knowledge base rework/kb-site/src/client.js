@@ -160,7 +160,7 @@
     var out = text;
     terms.forEach(function (t) {
       if (t.length < 2) return;
-      out = out.replace(new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "$1");
+      out = out.replace(new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[A-Za-z0-9]*)", "ig"), "$1");
     });
     return out.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
       .replace(//g, "<mark>").replace(//g, "</mark>");
