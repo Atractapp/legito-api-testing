@@ -543,25 +543,6 @@ for (const [dir] of CATS) {
 }
 
 /* ---------- home (mirrors the official KB landing) ---------- */
-function landTreeHTML() {
-  const renderArts = (arts) => arts.map(a =>
-    `<a class="lt-art" href="${a.route}">${ICONS["book-open"]}<span>${esc(a.title)}</span></a>`).join("");
-  const renderGroups = (node) => Object.entries(node.dirs).map(([d, sub]) =>
-    `<div class="lt-group">
-      <button class="lt-gbtn" aria-expanded="false">${ICONS["chevron-right"]}<span>${esc(titleCase(d))}</span></button>
-      <div class="lt-gbody">${renderArts(sub.arts)}${renderGroups(sub)}</div>
-    </div>`).join("");
-  return CATS.map(([dir]) => {
-    const meta = catMeta[dir];
-    const node = TREE[dir];
-    return `<section class="lt-cat">
-      <h2 class="lt-cat-h"><a href="/${slugify(dir)}/">${esc(meta.name)}</a></h2>
-      ${renderArts(node.arts)}
-      ${renderGroups(node)}
-    </section>`;
-  }).join("");
-}
-
 const homeContent = `
 <section class="search-band">
   <div class="sb-in">
@@ -572,19 +553,17 @@ const homeContent = `
     </button>
   </div>
 </section>
-<main id="main">
-<div class="land">
-  <nav class="land-tree" aria-label="Knowledge Base categories">${landTreeHTML()}</nav>
-  <section class="land-main">
+<div class="layout">
+  ${sidebarHTML(null)}
+  <main id="main" class="art home-main">
     <h2 class="lm-title">Welcome To The Legito Knowledge Base</h2>
     <p class="lm-intro">Categorized and detailed repository containing useful information about all of Legito's products and features. Armed with this resource, you will be able to confidently tackle any situation.</p>
     <h3 class="lm-sub">Key Components</h3>
     <a class="lm-fig" href="/live/kb-diagram.png" data-lb data-cap="Key Components"><img loading="lazy" src="/live/kb-diagram.png" alt="Legito key components diagram"></a>
     <h3 class="lm-sub">Basic Schema</h3>
     <a class="lm-fig" href="/live/kb-schema.png" data-lb data-cap="Smart Document Workspace"><img loading="lazy" src="/live/kb-schema.png" alt="Smart Document Workspace schema"></a>
-  </section>
-</div>
-</main>`;
+  </main>
+</div>`;
 
 fs.writeFileSync(path.join(DIST, "index.html"), shell({
   title: "Legito Knowledge Base (preview)",

@@ -27,13 +27,6 @@
       }
     });
   }
-  document.querySelectorAll(".lt-gbtn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var open = btn.parentElement.classList.toggle("open");
-      btn.setAttribute("aria-expanded", open);
-    });
-  });
-
   var active = document.querySelector(".side-link.active");
   if (active) active.scrollIntoView({ block: "center" });
 
