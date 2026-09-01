@@ -194,49 +194,65 @@ function toks(t) {
 }
 function placeLiveImages(html, images) {
   const blocks = html.split(/\n(?=<)/);
+  if (!blocks.length || !images.length) return html;
   const blockToks = blocks.map(toks);
   const df = {};
   for (const bt of blockToks) for (const t of bt) df[t] = (df[t] || 0) + 1;
+  const idf = (t) => 1 / (1 + (df[t] || 0));
   const headingIdx = [];
   blocks.forEach((b, i) => {
     const m = b.match(/^<h([2-6])[^>]*>(.*?)<\/h\1>/s);
     if (m) headingIdx.push({ i, toks: toks(m[2]) });
   });
-  const inserts = {}; // block index -> [figure html]
-  const unplaced = [];
-  for (const im of images) {
-    const fig = `<figure class="fig"><img class="shot" loading="lazy" src="/${im.src}" alt="${esc(im.alt || "")}"></figure>`;
-    const q = new Set([...toks(im.before), ...toks(im.alt), ...toks(im.heading)]);
-    // heading anchor: strong heading-text overlap narrows the search window
-    let lo = 0, hi = blocks.length - 1;
+  // score matrix: weighted token overlap (alt strongest, then heading, before, after)
+  const S = images.map((im) => {
+    const parts = [[toks(im.alt), 2.5], [toks(im.heading), 1.2], [toks(im.before), 1.0], [toks(im.after), 0.6]];
+    let aLo = -1, aHi = -1;
     if (im.heading) {
       const ht = toks(im.heading);
       let best = null, bestOv = 0;
       for (const h of headingIdx) {
         let ov = 0;
         for (const t of ht) if (h.toks.has(t)) ov++;
-        const denom = Math.max(1, Math.min(ht.size, h.toks.size));
-        if (ov / denom > 0.6 && ov > bestOv) { best = h; bestOv = ov; }
+        if (ov / Math.max(1, Math.min(ht.size, h.toks.size)) > 0.6 && ov > bestOv) { best = h; bestOv = ov; }
       }
       if (best) {
-        lo = best.i;
+        aLo = best.i;
         const next = headingIdx.find(h => h.i > best.i);
-        hi = next ? next.i - 1 : blocks.length - 1;
+        aHi = next ? next.i - 1 : blocks.length - 1;
       }
     }
-    let bestI = -1, bestScore = 0;
-    for (let i = lo; i <= hi; i++) {
-      if (/^<h[2-6]/.test(blocks[i]) && i !== lo) continue;
-      let score = 0, hits = 0;
-      for (const t of q) if (blockToks[i].has(t)) { score += 1 / (1 + (df[t] || 0)); hits++; }
-      if (hits >= 2 && score > bestScore) { bestScore = score; bestI = i; }
+    return blocks.map((_, j) => {
+      let sc = 0;
+      for (const [q, w] of parts) for (const t of q) if (blockToks[j].has(t)) sc += w * idf(t);
+      if (aLo >= 0 && j >= aLo && j <= aHi) sc += 0.8;
+      return sc;
+    });
+  });
+  // order-preserving alignment: image i goes after block pos[i], pos non-decreasing
+  const n = images.length, m = blocks.length;
+  const M = [], P = [];
+  for (let i = 0; i < n; i++) { M.push(new Array(m).fill(0)); P.push(new Array(m).fill(0)); }
+  for (let j = 0; j < m; j++) M[0][j] = S[0][j];
+  for (let i = 1; i < n; i++) {
+    let bestK = 0;
+    for (let j = 0; j < m; j++) {
+      if (M[i - 1][j] > M[i - 1][bestK]) bestK = j;
+      M[i][j] = S[i][j] + M[i - 1][bestK];
+      P[i][j] = bestK;
     }
-    if (bestI === -1 && im.heading && lo > 0) bestI = lo; // at least under its heading
-    if (bestI >= 0) (inserts[bestI] ||= []).push(fig);
-    else unplaced.push(fig);
   }
-  const out = blocks.map((b, i) => inserts[i] ? b + "\n" + inserts[i].join("\n") : b);
-  return out.join("\n") + (unplaced.length ? "\n" + unplaced.join("\n") : "");
+  const pos = new Array(n);
+  let j = 0;
+  for (let x = 1; x < m; x++) if (M[n - 1][x] > M[n - 1][j]) j = x;
+  pos[n - 1] = j;
+  for (let i = n - 1; i > 0; i--) { j = P[i][j]; pos[i - 1] = j; }
+  const inserts = {};
+  images.forEach((im, i) => {
+    const fig = `<figure class="fig"><img class="shot" loading="lazy" src="/${im.src}" alt="${esc(im.alt || "")}"></figure>`;
+    (inserts[pos[i]] ||= []).push(fig);
+  });
+  return blocks.map((b, i) => inserts[i] ? b + "\n" + inserts[i].join("\n") : b).join("\n");
 }
 
 /* plain text + excerpt for search */
@@ -319,7 +335,9 @@ function shell({ title, desc, content, current, bodyClass = "", crumbs = null })
 <meta name="robots" content="noindex, nofollow">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc || "Legito Knowledge Base.")}">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/legito-favicon-32.png" sizes="32x32">
+<link rel="icon" href="/legito-favicon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/legito-favicon-192.png">
 <link rel="preload" href="/fonts/opensans-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/opensans-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
@@ -399,10 +417,6 @@ for (const e of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, e), { recursive:
 fs.cpSync(PUB, DIST, { recursive: true });
 fs.copyFileSync(path.join(__dirname, "src", "styles.css"), path.join(DIST, "styles.css"));
 fs.copyFileSync(path.join(__dirname, "src", "client.js"), path.join(DIST, "client.js"));
-
-// favicon: green mark + white
-fs.writeFileSync(path.join(DIST, "favicon.svg"),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#74c078"/><path d="M11 8v13a3 3 0 0 0 3 3h8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`);
 
 const searchDocs = [];
 let totalShots = 0, totalVids = 0;
@@ -528,52 +542,48 @@ for (const [dir] of CATS) {
   }));
 }
 
-/* ---------- home ---------- */
-const featuredVids = [];
-for (const a of articles) {
-  if (!a.live) continue;
-  for (const u of a.live.vimeo || []) {
-    const vid = (u.match(/\/video\/(\d+)/) || [])[1];
-    const p = posters[vid];
-    if (p && p.poster) featuredVids.push({ art: a, vid, ...p, embed: u.replace(/&amp;/g, "&") });
-  }
+/* ---------- home (mirrors the official KB landing) ---------- */
+function landTreeHTML() {
+  const renderArts = (arts) => arts.map(a =>
+    `<a class="lt-art" href="${a.route}">${ICONS["book-open"]}<span>${esc(a.title)}</span></a>`).join("");
+  const renderGroups = (node) => Object.entries(node.dirs).map(([d, sub]) =>
+    `<div class="lt-group">
+      <button class="lt-gbtn" aria-expanded="false">${ICONS["chevron-right"]}<span>${esc(titleCase(d))}</span></button>
+      <div class="lt-gbody">${renderArts(sub.arts)}${renderGroups(sub)}</div>
+    </div>`).join("");
+  return CATS.map(([dir]) => {
+    const meta = catMeta[dir];
+    const node = TREE[dir];
+    return `<section class="lt-cat">
+      <h2 class="lt-cat-h"><a href="/${slugify(dir)}/">${esc(meta.name)}</a></h2>
+      ${renderArts(node.arts)}
+      ${renderGroups(node)}
+    </section>`;
+  }).join("");
 }
-const homeVids = featuredVids.filter(v => ["1188072915", "630768730", "531283842", "724439217"].includes(v.vid)).slice(0, 4);
 
 const homeContent = `
-<section class="hero">
-  <div class="hero-shapes" aria-hidden="true"><span class="sh sh1"></span><span class="sh sh2"></span><span class="sh sh3"></span><span class="sh sh4"></span></div>
-  <div class="hero-in">
-    <h1>How can we help?</h1>
-    <button class="hero-search" id="heroSearch">${ICONS["magnifying-glass"]}<span>Search articles…</span><kbd>Ctrl K</kbd></button>
-    <div class="hero-stats"><span><strong>${articles.length}</strong> articles</span><span class="hs-dot"></span><span><strong>${CATS.length}</strong> sections</span><span class="hs-dot"></span><span><strong>${totalVids}</strong> video guides</span></div>
+<section class="search-band">
+  <div class="sb-in">
+    <h1>Search Knowledge Base by Keyword</h1>
+    <button class="sb-search" id="heroSearch">
+      <span class="sb-field">${ICONS["magnifying-glass"]}<span>Search the documentation…</span></span>
+      <span class="sb-btn">Search</span>
+    </button>
   </div>
 </section>
 <main id="main">
-<section class="cats">
-  <div class="cats-in">
-    ${CATS.map(([dir], i) => {
-      const m = catMeta[dir];
-      return `<a class="cat-card" href="/${slugify(dir)}/" style="--d:${i * 45}ms">
-        <span class="cat-card-ic">${ICONS[m.ic]}</span>
-        <span class="cat-card-t">${esc(m.name)}</span>
-        <span class="cat-card-n">${catCount[dir]} article${catCount[dir] > 1 ? "s" : ""}</span>
-        <span class="cat-card-go">Browse ${ICONS["arrow-right"]}</span>
-      </a>`;
-    }).join("")}
-  </div>
-</section>
-<section class="home-vids">
-  <div class="hv-in">
-    <div class="hv-head"><h2>Video guides</h2></div>
-    <div class="hv-grid">${homeVids.map(v => `
-      <div class="hv-card">
-        <div class="vid" data-embed="${esc(v.embed)}"><img loading="lazy" src="/${v.poster}" alt="${esc(v.title)}"><button class="vid-play" aria-label="Play: ${esc(v.title)}"><span class="vid-play-c">${ICONS.play}</span></button></div>
-        <a class="hv-t" href="${v.art.route}">${esc(v.title)}</a><span class="hv-a">${esc(v.art.title)} · ${esc(catMeta[v.art.cat].name)}</span>
-      </div>`).join("")}
-    </div>
-  </div>
-</section>
+<div class="land">
+  <nav class="land-tree" aria-label="Knowledge Base categories">${landTreeHTML()}</nav>
+  <section class="land-main">
+    <h2 class="lm-title">Welcome To The Legito Knowledge Base</h2>
+    <p class="lm-intro">Categorized and detailed repository containing useful information about all of Legito's products and features. Armed with this resource, you will be able to confidently tackle any situation.</p>
+    <h3 class="lm-sub">Key Components</h3>
+    <a class="lm-fig" href="/live/kb-diagram.png" data-lb data-cap="Key Components"><img loading="lazy" src="/live/kb-diagram.png" alt="Legito key components diagram"></a>
+    <h3 class="lm-sub">Basic Schema</h3>
+    <a class="lm-fig" href="/live/kb-schema.png" data-lb data-cap="Smart Document Workspace"><img loading="lazy" src="/live/kb-schema.png" alt="Smart Document Workspace schema"></a>
+  </section>
+</div>
 </main>`;
 
 fs.writeFileSync(path.join(DIST, "index.html"), shell({

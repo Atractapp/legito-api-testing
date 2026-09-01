@@ -153,15 +153,19 @@ for rel, a in sorted(mapping.items()):
                 before = re.sub(r'<[^>]+>', ' ', a['html'][max(0, mm.start()-1500):mm.start()])
                 before = re.sub(r'\[[^\]]*\]?', ' ', htmllib.unescape(before))
                 before = ' '.join(t for t in before.split() if '=' not in t and '&' not in t)[-300:]
-                ctx_queue.append((srcm.group(1), last_heading, before))
+                after = re.sub(r'<[^>]+>', ' ', a['html'][mm.end():mm.end()+1200])
+                after = ' '.join(t for t in htmllib.unescape(after).split() if '=' not in t and '&' not in t and '[' not in t)[:300]
+                ctx_queue.append((srcm.group(1), last_heading, before, after))
     ctx_i = 0
     idx = 0
     for u in a["images"]:
         heading = None
         before_txt = ""
+        after_txt = ""
         if ctx_i < len(ctx_queue) and ctx_queue[ctx_i][0] == u:
             heading = ctx_queue[ctx_i][1]
             before_txt = ctx_queue[ctx_i][2]
+            after_txt = ctx_queue[ctx_i][3]
             ctx_i += 1
         uu = htmllib.unescape(u)
         if uu.startswith("data:"):
@@ -172,7 +176,7 @@ for rel, a in sorted(mapping.items()):
         if "s.w.org" in uu:
             continue
         if uu in seen_urls:
-            entry["images"].append({"src": seen_urls[uu], "alt": alts.get(u, ""), "heading": heading, "before": before_txt})
+            entry["images"].append({"src": seen_urls[uu], "alt": alts.get(u, ""), "heading": heading, "before": before_txt, "after": after_txt})
             continue
         idx += 1
         path = urllib.parse.urlparse(uu).path
@@ -185,7 +189,7 @@ for rel, a in sorted(mapping.items()):
         if download(uu, dest):
             rel_web = f"live/{fn}"
             seen_urls[uu] = rel_web
-            entry["images"].append({"src": rel_web, "alt": alts.get(u, ""), "heading": heading, "before": before_txt})
+            entry["images"].append({"src": rel_web, "alt": alts.get(u, ""), "heading": heading, "before": before_txt, "after": after_txt})
     if entry["vimeo"] or entry["images"] or entry.get("videoFiles"):
         result[rel] = entry
 

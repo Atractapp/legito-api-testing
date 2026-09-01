@@ -27,6 +27,13 @@
       }
     });
   }
+  document.querySelectorAll(".lt-gbtn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.parentElement.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open);
+    });
+  });
+
   var active = document.querySelector(".side-link.active");
   if (active) active.scrollIntoView({ block: "center" });
 
@@ -136,7 +143,8 @@
           searchOptions: {
             boost: { t: 4, h: 2, c: 1.5 },
             prefix: true,
-            fuzzy: 0.15
+            fuzzy: 0.15,
+            combineWith: "AND"
           }
         });
         mini.addAll(d);
@@ -173,7 +181,7 @@
       shown = [];
       return;
     }
-    var hits = mini.search(q).slice(0, 14);
+    var hits = mini.search(q).slice(0, 24);
     var terms = q.split(/\s+/);
     if (!hits.length) {
       results.innerHTML = '<div class="palette-hint">No results for “' + q.replace(/</g, "&lt;") + '”.</div>';
