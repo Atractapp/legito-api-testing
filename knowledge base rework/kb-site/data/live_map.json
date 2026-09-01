@@ -1,0 +1,3352 @@
+{
+ "AI/Kedy AI.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/ai-overview/",
+  "vimeo": [
+   "https://player.vimeo.com/video/1188072915?dnt=1&app_id=122963"
+  ],
+  "images": []
+ },
+ "AI/Word-to-Template Conversion.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/ai-template-automation/",
+  "vimeo": [
+   "https://player.vimeo.com/video/1186919592?dnt=1&app_id=122963"
+  ],
+  "images": []
+ },
+ "DASHBOARD/Dashboard Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/dashboard-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/dashboard-overview-01-fa230d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-02-8ecbed.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-03-8cec93.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-04-bf392f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-05-a8e377.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-06-824f7b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-07-e2078c.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-08-99ebaf.png",
+    "alt": ""
+   },
+   {
+    "src": "live/dashboard-overview-09-0e48d3.png",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Counter.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/counter/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/counter-01-03a736.jpg",
+    "alt": ""
+   },
+   {
+    "src": "live/counter-02-675b6f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/counter-03-85917e.png",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Document Records - Grid.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-records-grid/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-records-grid-01-1b8f33.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-records-grid-02-c1b43f.jpg",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Document Records - Kanban.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-records-kanban/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-records-kanban-01-6d20f9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-records-grid-02-c1b43f.jpg",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Drop Area.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/drop-area/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/drop-area-01-994ff9.png",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Object Records - Grid.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/object-records-grid/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/object-records-grid-01-df6b19.png",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Signature in Progress.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/signature-in-progress/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/signature-in-progress-01-15ec60.png",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Templates.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/dashboard-templates/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/templates-01-976718.png",
+    "alt": ""
+   }
+  ]
+ },
+ "DASHBOARD/Widget Types/Timeline.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/timeline-widget/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/timeline-01-6840e6.png",
+    "alt": ""
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/batch-generation-from-sheets/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/batch-generation-from-sheets-01-e6d5f1.png",
+    "alt": "Batch Generation"
+   },
+   {
+    "src": "live/batch-generation-from-sheets-02-1855d2.png",
+    "alt": "Batch Generation Tab"
+   },
+   {
+    "src": "live/batch-generation-from-sheets-03-d5c5a2.png",
+    "alt": "Names"
+   },
+   {
+    "src": "live/batch-generation-from-sheets-04-78595f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/batch-generation-from-sheets-05-9c8ae5.png",
+    "alt": ""
+   },
+   {
+    "src": "live/batch-generation-from-sheets-06-0e994e.png",
+    "alt": "Advanced Settings Button"
+   },
+   {
+    "src": "live/batch-generation-from-sheets-07-c51eb6.png",
+    "alt": "Create Document Records"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Data Import/Import from Legito Documents.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/import-from-legito-documents/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/import-from-legito-documents-01-5c651c.png",
+    "alt": "Import from Legito"
+   },
+   {
+    "src": "live/import-from-legito-documents-02-14498a.png",
+    "alt": "Creating Favorite Settings"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Data Import/Import from Sheets.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/import-from-sheets/",
+  "vimeo": [
+   "https://player.vimeo.com/video/286570777?dnt=1&app_id=122963"
+  ],
+  "images": [
+   {
+    "src": "live/import-from-sheets-01-4d07be.png",
+    "alt": "Import from Sheet"
+   },
+   {
+    "src": "live/import-from-sheets-02-649625.png",
+    "alt": "Advanced Settings Button"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Export/Download.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-download/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/download-01-09eadf.png",
+    "alt": "Save and Download"
+   },
+   {
+    "src": "live/download-02-86454d.png",
+    "alt": "Download Options"
+   },
+   {
+    "src": "live/download-03-ae49b3.png",
+    "alt": "Download Button"
+   },
+   {
+    "src": "live/download-04-bbf56e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/download-05-9cdd95.png",
+    "alt": "Download Permissions"
+   },
+   {
+    "src": "live/download-06-3bd02a.png",
+    "alt": "Workflow Download Documents"
+   },
+   {
+    "src": "live/download-07-77f1a3.png",
+    "alt": "Export Settings"
+   },
+   {
+    "src": "live/download-08-a946d7.png",
+    "alt": "Combining PDF's into One File"
+   },
+   {
+    "src": "live/download-09-69d48c.png",
+    "alt": "Pront Preview"
+   },
+   {
+    "src": "live/download-10-702fae.png",
+    "alt": "PDF Print Preview"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Export/Sending by Email.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/sending-by-email/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/sending-by-email-01-baf9d8.png",
+    "alt": "Send by Email Option"
+   },
+   {
+    "src": "live/sending-by-email-02-3ca4ba.png",
+    "alt": "Send by Email Setting"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Language/Dual Language Documents.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/translations-dual-language-documents/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/dual-language-documents-01-efa7f7.png",
+    "alt": "Dual Language Toggle"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Language/Translations.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/translations/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/translations-01-c9a411.png",
+    "alt": "Document Language"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Navigation/Document View Options.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-view-options/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-view-options-01-c1a1ad.png",
+    "alt": "Document View Option"
+   },
+   {
+    "src": "live/document-view-options-02-25161b.png",
+    "alt": "Apply Conditions"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Review/Comments.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/comments-feature/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/comments-01-66af22.png",
+    "alt": "Comments Feature"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Review/Compare.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/compare/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/compare-01-6a3533.png",
+    "alt": "Compare Documents"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Review/Real Time Document Collaboration.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/real-time-document-collaboration/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/real-time-document-collaboration-01-5d58bc.png",
+    "alt": "Document Collaboration Widget"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Document Review/Track Changes.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/track-changes/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/track-changes-01-adc09b.png",
+    "alt": "Track Changes"
+   },
+   {
+    "src": "live/track-changes-02-a73b31.png",
+    "alt": "Tracking All Changes"
+   },
+   {
+    "src": "live/track-changes-03-efe67f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/track-changes-04-cd0734.png",
+    "alt": "Reviewers"
+   },
+   {
+    "src": "live/track-changes-05-f36d83.png",
+    "alt": "Accept Reviews"
+   },
+   {
+    "src": "live/track-changes-06-2fb6f3.png",
+    "alt": "Track Changes"
+   },
+   {
+    "src": "live/track-changes-07-95d749.png",
+    "alt": ""
+   },
+   {
+    "src": "live/track-changes-08-3d2557.png",
+    "alt": "Mandatory Track Changes"
+   },
+   {
+    "src": "live/track-changes-09-d3a33c.png",
+    "alt": "Edit User"
+   },
+   {
+    "src": "live/track-changes-10-4c75d0.png",
+    "alt": "Edit Guests"
+   },
+   {
+    "src": "live/track-changes-11-b8f3f7.png",
+    "alt": "Consequential Changes"
+   },
+   {
+    "src": "live/track-changes-12-60686e.png",
+    "alt": "All Reviewers"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Overview of Document Drafting.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/overview-of-document-drafting/",
+  "vimeo": [
+   "https://player.vimeo.com/video/630768730?h=f4fd757688&badge=0&autopause=0&player_id=0&app_id=58479"
+  ],
+  "images": [
+   {
+    "src": "live/overview-of-document-drafting-01-1764db.png",
+    "alt": "Draft Documents from Automated Templates"
+   },
+   {
+    "src": "live/overview-of-document-drafting-02-2653ee.png",
+    "alt": "Outline"
+   },
+   {
+    "src": "live/overview-of-document-drafting-03-94f866.png",
+    "alt": "Question Element"
+   },
+   {
+    "src": "live/overview-of-document-drafting-04-3ab03f.png",
+    "alt": "Select Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-05-a7d7d0.png",
+    "alt": "Button Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-06-a9517b.png",
+    "alt": "Link Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-07-a02213.png",
+    "alt": "Calculation Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-08-3757ba.png",
+    "alt": "Text Input Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-09-c7bcea.png",
+    "alt": "Date Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-10-9f16a0.png",
+    "alt": "Money Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-11-91ceb4.png",
+    "alt": "Text Elements"
+   },
+   {
+    "src": "live/overview-of-document-drafting-12-cca6aa.png",
+    "alt": "Rich Text Element"
+   },
+   {
+    "src": "live/overview-of-document-drafting-13-fd152d.png",
+    "alt": "Initial Instructions"
+   },
+   {
+    "src": "live/overview-of-document-drafting-14-7f29ee.png",
+    "alt": "Follow-up Instructions"
+   },
+   {
+    "src": "live/overview-of-document-drafting-15-4f4b52.png",
+    "alt": "Warnings"
+   },
+   {
+    "src": "live/overview-of-document-drafting-16-21a92b.png",
+    "alt": "Help Text"
+   },
+   {
+    "src": "live/comments-01-66af22.png",
+    "alt": "Comments"
+   },
+   {
+    "src": "live/overview-of-document-drafting-17-85c1ac.gif",
+    "alt": "Mandatory and Optional Clauses"
+   },
+   {
+    "src": "live/overview-of-document-drafting-18-2af89a.png",
+    "alt": "Owner"
+   },
+   {
+    "src": "live/overview-of-document-drafting-19-69da9b.png",
+    "alt": "Workflow Stages - Workflow"
+   },
+   {
+    "src": "live/overview-of-document-drafting-20-df91b0.png",
+    "alt": "Workflow Stages - Sharing"
+   },
+   {
+    "src": "live/overview-of-document-drafting-21-7caa5c.png",
+    "alt": "Workflow Stages - Conversation"
+   },
+   {
+    "src": "live/overview-of-document-drafting-22-2bb411.png",
+    "alt": "Related Document Setting"
+   },
+   {
+    "src": "live/overview-of-document-drafting-23-701034.png",
+    "alt": "Attachments to Legito Documents"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Saving & Versions/Merging Template Updates.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/merging-template-updates/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/merging-template-updates-01-d6a0d1.png",
+    "alt": "Template Update"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Saving & Versions/Saving.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/saving/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/saving-01-c53461.png",
+    "alt": "Save Button"
+   },
+   {
+    "src": "live/saving-02-266f04.png",
+    "alt": "Save As A New Document"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-favorite-settings/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-favorite-settings-01-860714.png",
+    "alt": "Favorite Settings"
+   },
+   {
+    "src": "live/template-favorite-settings-02-5998ae.png",
+    "alt": "Create New Favorite Setting"
+   },
+   {
+    "src": "live/template-favorite-settings-03-d4ce26.png",
+    "alt": "My Favorite Settings"
+   },
+   {
+    "src": "live/template-favorite-settings-04-78a228.png",
+    "alt": "Checking Box \"Only For Me\""
+   },
+   {
+    "src": "live/template-favorite-settings-05-3c9c0c.png",
+    "alt": "Default Template Favorite Settings"
+   },
+   {
+    "src": "live/template-favorite-settings-06-74bac4.png",
+    "alt": "Verified Suppliers"
+   },
+   {
+    "src": "live/template-favorite-settings-07-bac37b.png",
+    "alt": "Save New Favorite Setting"
+   },
+   {
+    "src": "live/template-favorite-settings-08-c6fa5a.png",
+    "alt": "Delete Button"
+   },
+   {
+    "src": "live/template-favorite-settings-09-dacefc.png",
+    "alt": "Deleted Default Setting"
+   }
+  ]
+ },
+ "DOCUMENT EDITOR/Saving & Versions/Version History.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-version-history/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/version-history-01-ceb444.png",
+    "alt": "Version of the Document"
+   },
+   {
+    "src": "live/version-history-02-03a850.png",
+    "alt": "Previous Document Version Notification"
+   }
+  ]
+ },
+ "ELECTRONIC SIGNATURE/Legito Sign/Legito BioSign.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-biosign/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/legito-biosign-01-bad9b0.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/legito-biosign-02-75a25d.png",
+    "alt": ""
+   }
+  ]
+ },
+ "ELECTRONIC SIGNATURE/Legito Sign/Legito Sign Editor.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-sign-editor/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/legito-sign-editor-01-cfe976.png",
+    "alt": ""
+   }
+  ]
+ },
+ "ELECTRONIC SIGNATURE/Legito Sign/Legito Sign Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-sign-overview/",
+  "vimeo": [
+   "https://player.vimeo.com/video/724439217?h=97ea2e759f"
+  ],
+  "images": []
+ },
+ "ELECTRONIC SIGNATURE/Legito Sign/Manage Signatures.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/manage-signatures/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/manage-signatures-01-44e848.png",
+    "alt": ""
+   }
+  ]
+ },
+ "ELECTRONIC SIGNATURE/eSignature Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/esignature-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/esignature-overview-01-1714e3.png",
+    "alt": "Activation of eSignatures"
+   },
+   {
+    "src": "live/esignature-overview-02-59ed78.png",
+    "alt": ""
+   },
+   {
+    "src": "live/esignature-overview-03-5963f9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/esignature-overview-04-caf6c1.png",
+    "alt": ""
+   },
+   {
+    "src": "live/esignature-overview-05-fe9cb3.png",
+    "alt": "Automatic field creation for Legito Sign"
+   },
+   {
+    "src": "live/esignature-overview-06-66e526.png",
+    "alt": ""
+   },
+   {
+    "src": "live/esignature-overview-07-3e1da6.png",
+    "alt": ""
+   },
+   {
+    "src": "live/esignature-overview-08-09a97c.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Integration Tools/API Keys.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-api-keys/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/api-keys-01-966d0d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/api-keys-02-a3a8ca.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Integration Tools/JSON Integrations.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/json-integrations-legito/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/json-integrations-01-93772c.png",
+    "alt": "Legito_release_2022-09-22"
+   },
+   {
+    "src": "live/json-integrations-02-16aa86.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-03-152edd.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-04-047233.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-05-6a1574.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-06-ecb9a7.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-07-70e614.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-08-ace6f7.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-09-bd7f01.png",
+    "alt": ""
+   },
+   {
+    "src": "live/json-integrations-10-d1607c.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Integration Tools/Push API (Webhooks).md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-push-api/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/push-api-webhooks-01-8e7aee.png",
+    "alt": ""
+   },
+   {
+    "src": "live/push-api-webhooks-02-1d8897.png",
+    "alt": ""
+   },
+   {
+    "src": "live/push-api-webhooks-03-a950a1.png",
+    "alt": "Customizable header for Push API call"
+   },
+   {
+    "src": "live/push-api-webhooks-04-df8bdb.png",
+    "alt": ""
+   },
+   {
+    "src": "live/push-api-webhooks-05-75c41f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/push-api-webhooks-06-ed11c4.png",
+    "alt": ""
+   },
+   {
+    "src": "live/push-api-webhooks-07-b99b85.png",
+    "alt": ""
+   },
+   {
+    "src": "live/push-api-webhooks-08-945a1f.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Legito in Other Apps/Make.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-make-integration/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/make-01-9a42ac.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-microsoft-sharepoint-integration/",
+  "vimeo": [
+   "https://player.vimeo.com/video/925391322?h=7f514f6af2&dnt=1&app_id=122963"
+  ],
+  "images": [
+   {
+    "src": "live/microsoft-sharepoint-01-201706.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-sharepoint-02-cdbc4a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-sharepoint-03-eccad3.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-sharepoint-04-3eaafe.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-sharepoint-05-9384ee.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-sharepoint-06-1e21a8.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-sharepoint-07-970c1c.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Legito in Other Apps/Salesforce.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-salesforce-integration/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/salesforce-01-cffce3.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-02-3de2e7.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-03-3362a5.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-04-9ee34b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-05-0a0d14.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-06-9b94bb.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-07-59345a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-08-f63b24.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-09-6cbd91.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-10-545949.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-11-a5277f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-12-f2526a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-13-dae3e9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-14-c5a1d6.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-15-4d95fa.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-16-7564d6.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-17-8ebcfc.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-18-00fcef.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-19-1afd70.png",
+    "alt": ""
+   },
+   {
+    "src": "live/salesforce-20-bbf396.png",
+    "alt": ""
+   }
+  ],
+  "videoFiles": [
+   "live/salesforce-video.mp4"
+  ]
+ },
+ "INTEGRATIONS/Other Apps in Legito/DocuSign.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/docusign-integration/",
+  "vimeo": [
+   "https://player.vimeo.com/video/410944083",
+   "https://player.vimeo.com/video/410935852",
+   "https://player.vimeo.com/video/410930672"
+  ],
+  "images": [
+   {
+    "src": "live/docusign-01-1f8079.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md": {
+  "liveLink": "https://www.legito.com/knowledge-base/microsoft-entra-id/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/microsoft-entra-id-azure-ad-01-773d66.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-02-27fcc3.jpg",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-03-49b7a4.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-04-97bdc5.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-05-fe4d6d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-06-c698ee.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-07-2c7c81.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-08-dbcb89.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-09-150e84.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-10-3cf186.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-11-9a5546.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-12-abd49b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-13-1717cf.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-14-db94ab.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-15-c3386e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-16-f07177.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-17-ed5001.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-18-2fcc6f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-19-66b508.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-20-77047a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-21-ce71b8.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-17-ed5001.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-entra-id-azure-ad-18-2fcc6f.png",
+    "alt": ""
+   }
+  ]
+ },
+ "INTEGRATIONS/Other Apps in Legito/Microsoft Office For Web.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/microsoft-office-for-web/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/microsoft-office-for-web-01-40d9ad.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-office-for-web-02-2634c5.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-office-for-web-03-8b57f4.png",
+    "alt": ""
+   },
+   {
+    "src": "live/microsoft-office-for-web-04-47815f.png",
+    "alt": ""
+   }
+  ]
+ },
+ "ONBOARDING/Guided Tour.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/how-to-set-up-a-guided-tour/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/guided-tour-01-2fdcd0.png",
+    "alt": "Template Suite Description"
+   },
+   {
+    "src": "live/guided-tour-02-39b1fd.png",
+    "alt": "Adding Help Text"
+   }
+  ]
+ },
+ "ONBOARDING/User Onboarding.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/user-onboarding/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/user-onboarding-01-f34a2b.png",
+    "alt": "User Onboarding for non-Admin Users"
+   },
+   {
+    "src": "live/user-onboarding-02-d7c1e4.png",
+    "alt": "Edit User Onboarding"
+   }
+  ]
+ },
+ "ONBOARDING/Workspace Onboarding.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workspace-onboarding/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workspace-onboarding-01-70fe26.png",
+    "alt": "workspace onboarding"
+   },
+   {
+    "src": "live/workspace-onboarding-02-d34bd0.png",
+    "alt": "onboarding guide"
+   },
+   {
+    "src": "live/workspace-onboarding-03-7dfb36.png",
+    "alt": "onboarding guide - dashboard"
+   },
+   {
+    "src": "live/workspace-onboarding-04-b167b6.png",
+    "alt": "Legito Workspace"
+   },
+   {
+    "src": "live/workspace-onboarding-05-f2221e.png",
+    "alt": "Workspace onboarding"
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Custom Objects/Grid View (Objects).md": {
+  "liveLink": "https://www.legito.com/knowledge-base/grid-view-objects/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/grid-view-objects-01-00c37e.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Custom Objects/Object Administration.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/objects-administration/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/object-administration-01-117382.png",
+    "alt": ""
+   },
+   {
+    "src": "live/object-administration-02-5dde5c.png",
+    "alt": ""
+   },
+   {
+    "src": "live/object-administration-03-cd455d.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Document Management/Customizable Document Management Area.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/customizable-document-management-area/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/customizable-document-management-area-01-f3dfe7.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Document Management/Document Record Labels.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-record-labels/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-record-labels-01-93e314.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-labels-02-623047.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Document Management/Grid View (Documents).md": {
+  "liveLink": "https://www.legito.com/knowledge-base/grid-view/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/grid-view-objects-01-00c37e.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Document Management/Kanban View.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/kanban-view/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/kanban-view-01-db80b2.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Document Management/Search.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/search-filters/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/search-01-b6c869.png",
+    "alt": ""
+   },
+   {
+    "src": "live/search-02-2898ee.jpg",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Document Management/Text extraction and OCR.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/ai-document-data-extraction/",
+  "vimeo": [
+   "https://player.vimeo.com/video/1186918957?dnt=1&app_id=122963"
+  ],
+  "images": []
+ },
+ "PROCESS MANAGEMENT/Records/Anonymization.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/anonymization/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/anonymization-01-7b916b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/anonymization-02-ac22af.png",
+    "alt": ""
+   },
+   {
+    "src": "live/anonymization-03-31bdf0.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Conversations.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/conversations/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/conversations-01-b3f37f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/conversations-02-9b111e.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Document Record Details.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-record-details/",
+  "vimeo": [
+   "https://player.vimeo.com/video/286571059"
+  ],
+  "images": [
+   {
+    "src": "live/document-record-details-01-09757a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-details-02-8f8131.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Document Sharing.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-sharing/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-sharing-01-9630f9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-sharing-02-0e7756.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-sharing-03-92d169.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Document Timeline.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-timeline/",
+  "vimeo": [
+   "https://player.vimeo.com/video/437037518"
+  ],
+  "images": [
+   {
+    "src": "live/document-timeline-01-876bb6.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-timeline-02-41e003.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/record-properties-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-record-properties-overview-01-09d42c.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-properties-overview-02-e8c5b1.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-properties-overview-03-3aabee.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-properties-overview-04-30543d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-properties-overview-05-8e50d5.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-properties-overview-06-2a4eea.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-properties-overview-07-d81c78.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-record-properties-overview-08-fdd2f6.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Properties/Document Records Priority.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-records-priority/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-records-priority-01-a9e96f.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Properties/Properties - Choosing Options.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/properties-choosing-options/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/properties-choosing-options-01-2f8233.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-choosing-options-02-2f0029.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Properties/Properties - Inputs.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/properties-inputs/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/properties-inputs-01-71b257.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Properties/Properties - Special.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/properties-special/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/properties-special-01-1ed8bb.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-special-02-906f2a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-special-03-5031e8.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Records/Properties/Properties - System.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/properties-system/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/properties-system-01-662467.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-system-02-18dae2.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-system-03-3bd49e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-system-04-0b9dd0.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-system-05-2779e4.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-system-06-381722.png",
+    "alt": ""
+   },
+   {
+    "src": "live/properties-system-07-409358.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Smart Document Management Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/overview-of-smart-document-management/",
+  "vimeo": [
+   "https://player.vimeo.com/video/286571326"
+  ],
+  "images": [
+   {
+    "src": "live/smart-document-management-overview-01-f38e29.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-02-95e807.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-03-a5237e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-04-b87a1e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-05-0e782b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-06-d41e55.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-07-f3d74b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-08-145c3a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/smart-document-management-overview-09-6e3d0a.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workflow-approvals/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workflow-approvals-01-d37b2a.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-approvals-02-d131dd.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-approvals-03-090feb.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-approvals-04-f1c1bd.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-approvals-05-0d5cd3.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-approvals-06-8050fb.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-approvals-07-09e31d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-approvals-08-319376.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Workflows/Workflow Flows.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workflow-flows/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workflow-flows-01-29b919.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-02-1dc80f.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-03-36f8a0.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-04-81f9f4.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-05-a61433.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-06-344bcf.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-07-dea0a9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-08-5f66d3.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-09-ade452.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-flows-10-0c7057.png",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Workflows/Workflow Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workflow-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workflow-overview-01-596d9b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-02-5e29e8.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-03-1b11cd.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-04-3ebc77.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-05-d0d189.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-06-2f2eea.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-07-ecc608.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-08-584129.jpg",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-overview-09-43101b.jpg",
+    "alt": ""
+   }
+  ]
+ },
+ "PROCESS MANAGEMENT/Workflows/Workflow Stages.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workflow-stages/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workflow-stages-01-b2633c.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-02-ec678f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-03-4f3a47.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-04-59b5ad.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-05-328c9f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-06-2671b7.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-07-599ae9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-08-15f6d2.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-09-fc7a5e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-10-d59dab.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workflow-stages-11-064c7c.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/clause-library-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/clause-library-overview-01-4eb924.png",
+    "alt": ""
+   },
+   {
+    "src": "live/clause-library-overview-02-270697.png",
+    "alt": ""
+   },
+   {
+    "src": "live/clause-library-overview-03-06ea4b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/clause-library-overview-04-9c9487.png",
+    "alt": ""
+   },
+   {
+    "src": "live/clause-library-overview-05-328ad9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/clause-library-overview-06-544f48.png",
+    "alt": ""
+   },
+   {
+    "src": "live/clause-library-overview-07-cd4ef7.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/specifics-of-logical-dependencies/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/specifics-of-logical-dependencies-01-5c08ab.png",
+    "alt": ""
+   },
+   {
+    "src": "live/specifics-of-logical-dependencies-02-25ff8a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/specifics-of-logical-dependencies-03-76c4de.png",
+    "alt": ""
+   },
+   {
+    "src": "live/specifics-of-logical-dependencies-04-6b650c.png",
+    "alt": ""
+   },
+   {
+    "src": "live/specifics-of-logical-dependencies-05-3bd6a7.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Scripts/Documentation.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-documentation/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/documentation-01-19dd10.png",
+    "alt": ""
+   },
+   {
+    "src": "live/documentation-02-b790a5.png",
+    "alt": ""
+   },
+   {
+    "src": "live/documentation-03-d20729.png",
+    "alt": ""
+   },
+   {
+    "src": "live/documentation-04-c89311.png",
+    "alt": ""
+   },
+   {
+    "src": "live/documentation-05-52cbb4.png",
+    "alt": ""
+   },
+   {
+    "src": "live/documentation-06-3b4e6a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/documentation-07-3bc265.png",
+    "alt": ""
+   },
+   {
+    "src": "live/documentation-08-1df023.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Scripts/Script Administration.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/script-administration/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/script-administration-01-1f2760.png",
+    "alt": ""
+   },
+   {
+    "src": "live/script-administration-02-89a4eb.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Scripts/Script Editor.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/script-editor/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/script-editor-01-6e338a.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Settings/Assigned Advanced Layout Design.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/assigned-advanced-layout-design/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/assigned-advanced-layout-design-01-fc406c.png",
+    "alt": "No Advanced Layout Design"
+   },
+   {
+    "src": "live/assigned-advanced-layout-design-02-42b6ce.png",
+    "alt": "Advanced Style"
+   },
+   {
+    "src": "live/assigned-advanced-layout-design-03-1bae4a.png",
+    "alt": "Alternative Advanced Styles"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Settings/Export Format Restrictions.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/export-format-restrictions/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/export-format-restrictions-01-bd3dd8.png",
+    "alt": "Export Formats"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Settings/Properties.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-properties/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/properties-01-5df606.png",
+    "alt": "Template Setting - Properties"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Assigned Workflow.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/assigned-workflow/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/assigned-workflow-01-93bfc2.png",
+    "alt": "Assigned Workflow"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Country - Region.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/country-region-settings/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/country-region-01-bd1c62.png",
+    "alt": ""
+   },
+   {
+    "src": "live/country-region-02-766505.png",
+    "alt": "Change Assigned Country/Region"
+   },
+   {
+    "src": "live/country-region-03-1d26d8.png",
+    "alt": ""
+   },
+   {
+    "src": "live/country-region-04-7aa712.png",
+    "alt": "Templates by Country/Region"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Description.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/description/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/description-01-bb4315.png",
+    "alt": "Description Field"
+   },
+   {
+    "src": "live/description-02-67e22c.png",
+    "alt": "Edit Description"
+   },
+   {
+    "src": "live/description-03-8e228b.png",
+    "alt": "Description in the Template Suite"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-menu-bar-options/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-menu-bar-options-01-3bd221.png",
+    "alt": "Document Menu Bar Options"
+   },
+   {
+    "src": "live/document-menu-bar-options-02-c87697.png",
+    "alt": "Options for a default tab"
+   },
+   {
+    "src": "live/document-menu-bar-options-03-d93228.png",
+    "alt": "View tab"
+   },
+   {
+    "src": "live/document-menu-bar-options-04-4c17f6.png",
+    "alt": "Review Tab"
+   },
+   {
+    "src": "live/document-menu-bar-options-05-2b5a15.png",
+    "alt": "Languages Tab"
+   },
+   {
+    "src": "live/document-menu-bar-options-06-935b1c.png",
+    "alt": "Instructions Tab"
+   },
+   {
+    "src": "live/document-menu-bar-options-07-6ed244.png",
+    "alt": "Approval List"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Instructions.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/initial-instructions/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/instructions-01-8788d9.png",
+    "alt": "Initial Instructions"
+   },
+   {
+    "src": "live/instructions-02-4d409f.png",
+    "alt": "Edit Instructions"
+   },
+   {
+    "src": "live/instructions-03-41d05c.png",
+    "alt": "Drafting Guidance"
+   },
+   {
+    "src": "live/instructions-04-29c495.png",
+    "alt": ""
+   },
+   {
+    "src": "live/instructions-05-1b114a.png",
+    "alt": "Follow-up Instructions"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Language.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-language/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/language-01-d5ab6f.png",
+    "alt": "Language Settings"
+   },
+   {
+    "src": "live/language-02-d690ca.png",
+    "alt": "The Chose of Primary Language"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Search Keywords.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/search-keywords/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/search-keywords-01-ebfaf8.png",
+    "alt": "Search Keywords"
+   },
+   {
+    "src": "live/search-keywords-02-c01156.png",
+    "alt": "Edit Keywords"
+   },
+   {
+    "src": "live/search-keywords-03-e3650f.png",
+    "alt": "Search for a Template"
+   },
+   {
+    "src": "live/search-keywords-04-fe230d.png",
+    "alt": "Find Your Template"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Categories.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-categories/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-categories-01-226842.png",
+    "alt": "Template Categories"
+   },
+   {
+    "src": "live/template-categories-02-3f8fc7.png",
+    "alt": "Template Suite Placeholders"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Layout.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-suite-layout/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-suite-layout-01-11aec8.png",
+    "alt": "Template Suite Layouts"
+   },
+   {
+    "src": "live/template-suite-layout-02-be87be.png",
+    "alt": "The Default Single Option"
+   },
+   {
+    "src": "live/template-suite-layout-03-c8e142.png",
+    "alt": "The Dual Option"
+   },
+   {
+    "src": "live/template-suite-layout-04-2db2c5.png",
+    "alt": "Template Suite Administration Options"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Properties.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-suite-properties/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-suite-properties-01-861452.png",
+    "alt": "Template Suite Properties - Name"
+   },
+   {
+    "src": "live/template-suite-properties-02-f91fe9.png",
+    "alt": "Upload Attachments"
+   },
+   {
+    "src": "live/template-suite-properties-03-c31a3c.png",
+    "alt": "Combine All PDF's Into One File"
+   },
+   {
+    "src": "live/template-suite-properties-04-62ee96.png",
+    "alt": "Landscape View"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Versions.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-suite-versions/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-suite-versions-01-67c684.png",
+    "alt": "Template Suite Versions"
+   },
+   {
+    "src": "live/template-suite-versions-02-e229be.png",
+    "alt": "Make Available Option"
+   },
+   {
+    "src": "live/template-suite-versions-03-562af6.png",
+    "alt": "Create Custom Template Suite Version"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Automation Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-automation-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-automation-overview-01-4f1085.png",
+    "alt": "Template Automation Overview"
+   },
+   {
+    "src": "live/template-automation-overview-02-dbc351.png",
+    "alt": "Template Suites Dashboard"
+   },
+   {
+    "src": "live/template-automation-overview-03-3fcd43.png",
+    "alt": "Template Suites"
+   },
+   {
+    "src": "live/template-automation-overview-04-b46bd4.png",
+    "alt": "Clause Library"
+   },
+   {
+    "src": "live/template-automation-overview-05-c57b25.png",
+    "alt": "The Template Settings"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Any Content.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/any-template-suite-content/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/specifics-of-logical-dependencies-01-5c08ab.png",
+    "alt": "Condition to Any Content"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Currency-in-money.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-currency-in-money/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-currency-in-money-01-532913.png",
+    "alt": "The Currency-In-Money Condition"
+   },
+   {
+    "src": "live/condition-to-currency-in-money-02-d106b0.png",
+    "alt": "Generic (beta version)"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Date.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-date/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-date-01-7cc7ed.jpg",
+    "alt": "Condition to Date"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Days-in-date.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-days-in-date/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-days-in-date-01-605320.png",
+    "alt": "The Day-In-Date Condition"
+   },
+   {
+    "src": "live/condition-to-days-in-date-02-349b73.png",
+    "alt": "Day-In-Date Condition Settings"
+   },
+   {
+    "src": "live/condition-to-days-in-date-03-26a5b7.png",
+    "alt": "Building a Condition for a Day-In-Date Element"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To JSON Object.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-json-object/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-json-object-01-a1e3a7.png",
+    "alt": "Condition to JSON Object"
+   },
+   {
+    "src": "live/condition-to-json-object-02-0946f3.png",
+    "alt": "JSON Objects - Export to Templates"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Questions.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-questions/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-questions-01-161919.png",
+    "alt": "The Question Condition"
+   },
+   {
+    "src": "live/condition-to-questions-02-311df9.png",
+    "alt": "Generic Setting"
+   },
+   {
+    "src": "live/condition-to-questions-03-088a78.png",
+    "alt": "Text Setting"
+   },
+   {
+    "src": "live/condition-to-questions-04-140490.png",
+    "alt": "Builging a Condition for a Question"
+   },
+   {
+    "src": "live/condition-to-questions-05-250d07.png",
+    "alt": "Question Options"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Select Elements.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-select-elements/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-select-elements-01-6b6820.png",
+    "alt": "The Select Condition"
+   },
+   {
+    "src": "live/condition-to-select-elements-02-58f3bf.png",
+    "alt": "Select Condition Settings"
+   },
+   {
+    "src": "live/condition-to-select-elements-03-75ecfc.png",
+    "alt": "How To Build a Condition for a Select Element"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Switcher.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/conditions-to-switcher/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-switcher-01-37e7dd.png",
+    "alt": "The Conditions to Switcher"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text Inputs.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-textinputs-elements/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-text-inputs-01-ffdc97.png",
+    "alt": "The Text Input Condition"
+   },
+   {
+    "src": "live/condition-to-text-inputs-02-939000.png",
+    "alt": "How to Build a Condition for a Text Input Element"
+   },
+   {
+    "src": "live/condition-to-text-inputs-03-d6984b.png",
+    "alt": "Apply Conditions"
+   },
+   {
+    "src": "live/condition-to-text-inputs-04-74c1ed.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/condition-to-text/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-text-01-75364b.png",
+    "alt": "Condition to Text"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Conditions Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/conditions-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/conditions-overview-01-bef5ea.png",
+    "alt": "Types of Conditions"
+   },
+   {
+    "src": "live/conditions-overview-02-0bd926.png",
+    "alt": "Document Condition"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/conditional-default-values/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/conditional-default-values-01-96924d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/conditional-default-values-02-817f5e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/conditional-default-values-03-d3cb9d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/conditional-default-values-04-cf9eef.png",
+    "alt": ""
+   },
+   {
+    "src": "live/conditional-default-values-05-2aec42.png",
+    "alt": ""
+   },
+   {
+    "src": "live/conditional-default-values-06-3e7232.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Warnings.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-warnings/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/warnings-01-37e850.png",
+    "alt": ""
+   },
+   {
+    "src": "live/warnings-02-5aa5ac.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/advanced-layout-design/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/advanced-layout-design-01-98bdbe.png",
+    "alt": ""
+   },
+   {
+    "src": "live/advanced-layout-design-02-c87cae.png",
+    "alt": ""
+   },
+   {
+    "src": "live/advanced-layout-design-03-901afa.png",
+    "alt": ""
+   },
+   {
+    "src": "live/advanced-layout-design-04-971d04.png",
+    "alt": ""
+   },
+   {
+    "src": "live/advanced-layout-design-05-e00058.jpg",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Formatting, Styles & Design Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/formatting-styles-and-design-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/formatting-styles-design-overview-01-ddcc41.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Numbering.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/clause-numbering/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/numbering-01-153a04.png",
+    "alt": ""
+   },
+   {
+    "src": "live/numbering-02-48b4c8.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Section Formatting.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/section-formatting/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/section-formatting-01-d40dcc.png",
+    "alt": ""
+   },
+   {
+    "src": "live/section-formatting-02-91c870.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/styles-legito/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/styles-01-b12cb3.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/styles-02-7c4ac7.png",
+    "alt": "Create Style button"
+   },
+   {
+    "src": "live/styles-03-2fe145.png",
+    "alt": "Style - Numbering"
+   },
+   {
+    "src": "live/styles-04-357730.png",
+    "alt": "Spacing Before and After"
+   },
+   {
+    "src": "live/styles-05-3f270d.png",
+    "alt": "Style - Design"
+   },
+   {
+    "src": "live/styles-06-5da436.png",
+    "alt": "Default Styles"
+   },
+   {
+    "src": "live/styles-07-1dd759.png",
+    "alt": "Styles - Formattin Parameters"
+   },
+   {
+    "src": "live/styles-08-922814.png",
+    "alt": "Clear Formatting Button"
+   },
+   {
+    "src": "live/styles-09-7341d1.png",
+    "alt": "Default Document Style"
+   },
+   {
+    "src": "live/styles-10-00889b.png",
+    "alt": "Duplication of Styles for Legito Templates"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Import/Import Legito Templates.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/import-legito-templates/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/import-legito-templates-01-75b98c.png",
+    "alt": "Import Automated Template"
+   },
+   {
+    "src": "live/import-legito-templates-02-6f6b26.jpg",
+    "alt": "Import Document Button"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Import/Import from Word.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/import-from-word/",
+  "vimeo": [
+   "https://player.vimeo.com/video/309730886"
+  ],
+  "images": [
+   {
+    "src": "live/import-from-word-01-44a039.png",
+    "alt": "Import Word Document"
+   },
+   {
+    "src": "live/import-from-word-02-bb0f93.png",
+    "alt": "Import Settings"
+   },
+   {
+    "src": "live/import-from-word-03-768333.jpg",
+    "alt": "Formatting Example"
+   },
+   {
+    "src": "live/import-from-word-04-2c8fcd.jpg",
+    "alt": "Formatting Example"
+   },
+   {
+    "src": "live/import-from-word-05-a1daea.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Any Content.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/repeat-to-any-content/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/repeat-to-any-content-01-0abfa4.png",
+    "alt": "Repeat to Any Content"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Buttons.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/repeat-to-buttons/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/repeat-to-buttons-01-dea28d.png",
+    "alt": "Repeat to Buttons"
+   },
+   {
+    "src": "live/repeat-to-buttons-02-7827fd.png",
+    "alt": "Applying the Repeat Condition to a Clause"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To JSON Object.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/repeat-to-json-object/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/condition-to-json-object-02-0946f3.png",
+    "alt": "Repeat to JSON Objects"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Text Inputs.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/repeat-to-text-inputs/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/repeat-to-text-inputs-01-0acde9.png",
+    "alt": "Repeat To Text Inputs"
+   },
+   {
+    "src": "live/repeat-to-text-inputs-02-f1fdad.png",
+    "alt": "Applying the Repeat Condition to the Content"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Button.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/button-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/button-01-9b72fd.png",
+    "alt": "Button Element"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Calculation.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/calculation-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/calculation-01-3e10e4.png",
+    "alt": "Calculation Elements"
+   },
+   {
+    "src": "live/calculation-02-b4d6e3.png",
+    "alt": "Calculation Element - Help Tab"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Clauses.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-clauses/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/clauses-01-ede5ec.png",
+    "alt": "Legito Clause Structure"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Date.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/date-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/date-01-bce300.png",
+    "alt": "Date Element"
+   },
+   {
+    "src": "live/date-02-366670.png",
+    "alt": "In Words Option"
+   },
+   {
+    "src": "live/date-03-293bcc.png",
+    "alt": "Date Element - Help Tab"
+   },
+   {
+    "src": "live/date-04-858321.png",
+    "alt": "Date Element - Suggested Tags"
+   },
+   {
+    "src": "live/date-05-774da5.png",
+    "alt": "Deadline Reminder"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Element Group.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/element-group/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/element-group-01-3da45e.png",
+    "alt": "Element Group"
+   },
+   {
+    "src": "live/element-group-02-98acd3.png",
+    "alt": "Conditions for Repeated Items"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Footnotes and Endnotes.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-footnotes-and-endnotes/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/footnotes-and-endnotes-01-038089.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Header & Footer.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/header-footer/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/header-footer-01-3855a0.png",
+    "alt": "Create Header"
+   },
+   {
+    "src": "live/header-footer-02-e239ad.png",
+    "alt": "Create Footer"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Image.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/image-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/image-01-4c1e7a.png",
+    "alt": "Image Element"
+   },
+   {
+    "src": "live/image-02-07700d.png",
+    "alt": "Image Element - Layout Options"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/link-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/link-01-69856c.png",
+    "alt": "Link Element"
+   },
+   {
+    "src": "live/link-02-7ff2e9.png",
+    "alt": "Link Element - Web Page"
+   },
+   {
+    "src": "live/link-03-2bf0e9.png",
+    "alt": "Link Element - Object Property"
+   },
+   {
+    "src": "live/link-04-ac3e86.png",
+    "alt": ""
+   },
+   {
+    "src": "live/link-05-b5c64f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/link-06-a97ffe.png",
+    "alt": "Link Element Formatting"
+   },
+   {
+    "src": "live/link-07-5a46be.png",
+    "alt": "Link Element - Design Tab"
+   },
+   {
+    "src": "live/link-08-6731dc.png",
+    "alt": "Link Element - Top Menu"
+   },
+   {
+    "src": "live/link-09-aec7a1.png",
+    "alt": "Link Error"
+   },
+   {
+    "src": "live/link-10-c3e2d8.png",
+    "alt": ""
+   },
+   {
+    "src": "live/link-11-370782.png",
+    "alt": ""
+   },
+   {
+    "src": "live/link-12-dd8eef.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/money-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/money-01-b2d708.png",
+    "alt": "Money Element"
+   },
+   {
+    "src": "live/money-02-794a94.png",
+    "alt": "In Words Button"
+   },
+   {
+    "src": "live/money-03-9c15b6.png",
+    "alt": "Money Element"
+   },
+   {
+    "src": "live/money-04-2a1498.png",
+    "alt": "Money Element - Full Width"
+   },
+   {
+    "src": "live/money-05-db2f20.png",
+    "alt": "Money Element - Help Tab"
+   },
+   {
+    "src": "live/money-06-6f8880.png",
+    "alt": "Money Element - suggested tags"
+   },
+   {
+    "src": "live/money-07-bc60a8.png",
+    "alt": "Money Element - Value"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Page Number.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/page-number-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/page-number-01-4b2a85.png",
+    "alt": "Pge Number Element"
+   },
+   {
+    "src": "live/page-number-02-7478ad.png",
+    "alt": "Multiple Page Number"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/qr-code-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/qr-code-01-39a5fa.png",
+    "alt": "QR Code Element"
+   },
+   {
+    "src": "live/qr-code-02-f3bdf4.png",
+    "alt": "Details of QR Code Element"
+   },
+   {
+    "src": "live/qr-code-03-c89982.png",
+    "alt": "QR Code for Payment"
+   },
+   {
+    "src": "live/qr-code-04-1a790b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/qr-code-05-06dd2d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/qr-code-06-bf190a.png",
+    "alt": ""
+   },
+   {
+    "src": "live/qr-code-07-15ed1d.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/question-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/question-01-48fe7b.png",
+    "alt": "Question Element"
+   },
+   {
+    "src": "live/question-02-a14107.png",
+    "alt": "Question Element - Help Tab"
+   },
+   {
+    "src": "live/question-03-cb7776.png",
+    "alt": "Question Element - New Response"
+   },
+   {
+    "src": "live/question-04-e6df57.png",
+    "alt": "Reference Options"
+   },
+   {
+    "src": "live/question-05-1e9a24.png",
+    "alt": "Sorting of Options"
+   },
+   {
+    "src": "live/question-06-32cdbe.png",
+    "alt": "A Question Without the First Response Chosen Automatically"
+   },
+   {
+    "src": "live/question-07-b3b2b1.png",
+    "alt": "Multiple Choice Question"
+   },
+   {
+    "src": "live/question-08-7cb6e0.png",
+    "alt": "Questions Referring to Objects"
+   },
+   {
+    "src": "live/question-09-530fe1.png",
+    "alt": "Question Element - Search"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Rich Text.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/rich-text/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/rich-text-01-68210c.png",
+    "alt": "Rich Text Element"
+   },
+   {
+    "src": "live/overview-of-document-drafting-12-cca6aa.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/select-elements/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/select-01-2a4b35.jpg",
+    "alt": "Select Elements"
+   },
+   {
+    "src": "live/select-02-5b6ae4.png",
+    "alt": "Reference Options"
+   },
+   {
+    "src": "live/select-03-dbdf4b.png",
+    "alt": "List of Shareholders"
+   },
+   {
+    "src": "live/select-04-6179a7.png",
+    "alt": "List of Shareholders"
+   },
+   {
+    "src": "live/select-05-5ce918.png",
+    "alt": "Non-exportable Options"
+   },
+   {
+    "src": "live/select-06-928a7c.png",
+    "alt": "Option Settings"
+   },
+   {
+    "src": "live/select-07-be42dc.png",
+    "alt": "Sorting of Options"
+   },
+   {
+    "src": "live/select-08-d328b0.png",
+    "alt": "Sorting Options"
+   },
+   {
+    "src": "live/select-09-d1badf.png",
+    "alt": "Multiple-Choice Selects"
+   },
+   {
+    "src": "live/select-10-5b3f54.png",
+    "alt": "Selects Referring to Objects"
+   },
+   {
+    "src": "live/select-11-2e25af.png",
+    "alt": "Search"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Switcher.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-switcher/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/switcher-01-a8b212.png",
+    "alt": "Switcher Element"
+   },
+   {
+    "src": "live/switcher-02-150144.png",
+    "alt": "Toggle Icon"
+   },
+   {
+    "src": "live/switcher-03-c989e1.png",
+    "alt": "Checkbox Icon"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Table of Contents.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/table-of-contents/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/table-of-contents-01-3b0129.png",
+    "alt": "Table of Contents"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/table-element/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/table-01-34ce60.png",
+    "alt": "Table Element"
+   },
+   {
+    "src": "live/table-02-8ec7db.png",
+    "alt": "Table Tool - Plus Icon"
+   },
+   {
+    "src": "live/table-03-3f50f2.png",
+    "alt": "Table Tool - Cell Merge Icons"
+   },
+   {
+    "src": "live/table-04-8b58f4.png",
+    "alt": "Table Tool - Unmerge Icon"
+   },
+   {
+    "src": "live/table-05-dd6e95.png",
+    "alt": "Table Design"
+   },
+   {
+    "src": "live/table-06-e73603.png",
+    "alt": "Table Properties"
+   },
+   {
+    "src": "live/table-07-d02b84.png",
+    "alt": "Specific Table Design - Table Width"
+   },
+   {
+    "src": "live/table-08-0f8ec6.png",
+    "alt": "Specific Table Design - Spacing"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Template Sections.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-sections/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-sections-01-439eed.png",
+    "alt": "Templates Sections"
+   },
+   {
+    "src": "live/template-sections-02-09843c.png",
+    "alt": "Section Properties"
+   },
+   {
+    "src": "live/template-sections-03-66e284.png",
+    "alt": "Next Page Sections"
+   },
+   {
+    "src": "live/template-sections-04-257679.png",
+    "alt": "Continuous Section"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Text Input.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/text-input/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/text-input-01-345f3f.png",
+    "alt": "Text Input Element"
+   },
+   {
+    "src": "live/text-input-02-03d685.png",
+    "alt": "Text Input Properties"
+   },
+   {
+    "src": "live/text-input-03-c3f671.png",
+    "alt": "The Help Tab"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Text.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/text-element-legito/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/text-01-ad370a.png",
+    "alt": "Text Element"
+   },
+   {
+    "src": "live/text-02-bb003b.png",
+    "alt": "Text Element - Split Feature"
+   },
+   {
+    "src": "live/text-03-f9f9a8.png",
+    "alt": "Text Element Settings"
+   },
+   {
+    "src": "live/text-04-5aabc9.png",
+    "alt": "Text Element Settins - Workflow Example"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Title.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/legito-title/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/title-01-7c4079.png",
+    "alt": "Title Element"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-editor-features-overview/",
+  "vimeo": [
+   "https://player.vimeo.com/video/531283842?color=74c078&title=0&byline=0&portrait=0",
+   "https://player.vimeo.com/video/560340471"
+  ],
+  "images": [
+   {
+    "src": "live/template-editor-features-overview-01-113a6c.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-02-4a7c19.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-03-e30fef.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-04-810733.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-05-ce9879.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-06-15362e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-07-70c535.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-08-6c6000.jpg",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-09-9e77a5.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-10-da7149.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-11-6da97b.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-12-bdc57f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-13-d84c5d.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-14-2636c7.jpg",
+    "alt": ""
+   },
+   {
+    "src": "live/template-editor-features-overview-15-d084bb.png",
+    "alt": "Duplicate feature for Document Editor "
+   },
+   {
+    "src": "live/template-editor-features-overview-16-850628.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Translation Mode.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/translation-mode/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/translation-mode-01-eb96fd.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Template Tags/Document Records - Data Extraction.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-records-data-extraction/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-records-data-extraction-01-61d907.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-records-data-extraction-02-a2f73a.png",
+    "alt": ""
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Editor/Template Tags/Template Tags Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-tags-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-tags-overview-01-5b5a5e.png",
+    "alt": "Template Tags Overview"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Types/Form Template.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/form-template/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/form-template-01-e78698.png",
+    "alt": "Form Template - Block Types"
+   },
+   {
+    "src": "live/form-template-02-e21fe8.png",
+    "alt": "Quick Actions Bar"
+   },
+   {
+    "src": "live/form-template-03-a04917.png",
+    "alt": "creating Advanced Forms"
+   },
+   {
+    "src": "live/form-template-04-e9cbaa.png",
+    "alt": "Clauses and Elements"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Types/PDF Template.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/pdf-template/",
+  "vimeo": [
+   "https://player.vimeo.com/video/864928009?h=172021a582&badge=0&autopause=0&player_id=0&app_id=58479"
+  ],
+  "images": [
+   {
+    "src": "live/pdf-template-01-3fc63b.png",
+    "alt": "PDF Template"
+   },
+   {
+    "src": "live/pdf-template-02-268eb3.png",
+    "alt": ""
+   },
+   {
+    "src": "live/pdf-template-03-3d8615.png",
+    "alt": ""
+   },
+   {
+    "src": "live/pdf-template-04-2a5ef0.png",
+    "alt": "The Extraction of Data"
+   },
+   {
+    "src": "live/pdf-template-05-205d33.png",
+    "alt": "PDF Template Conditions"
+   },
+   {
+    "src": "live/pdf-template-06-480d69.png",
+    "alt": ""
+   },
+   {
+    "src": "live/pdf-template-07-81723e.png",
+    "alt": "Attaching Processed PDF Documents"
+   }
+  ]
+ },
+ "TEMPLATE AUTOMATION/Template Types/Template Type Overview.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-type-overview/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-type-overview-01-c350c8.png",
+    "alt": "Template Types"
+   },
+   {
+    "src": "live/template-type-overview-02-001fe1.png",
+    "alt": "Document Type Template"
+   },
+   {
+    "src": "live/template-type-overview-03-813607.png",
+    "alt": ""
+   },
+   {
+    "src": "live/template-type-overview-04-5eafa2.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/People & Access/Guests.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/guests-in-legito/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/guests-01-a8c24e.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/People & Access/Single Sign-On (SSO).md": {
+  "liveLink": "https://www.legito.com/knowledge-base/single-sign-on-sso/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/single-sign-on-sso-01-45a57e.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/People & Access/User Groups.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/user-groups/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/user-groups-01-ba034f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/user-groups-02-de32b6.png",
+    "alt": ""
+   },
+   {
+    "src": "live/user-groups-03-129b8f.png",
+    "alt": ""
+   },
+   {
+    "src": "live/user-groups-04-4a07c4.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/users-and-permissions/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/users-and-permissions-01-f3fb58.png",
+    "alt": ""
+   },
+   {
+    "src": "live/users-and-permissions-02-7c7158.png",
+    "alt": ""
+   },
+   {
+    "src": "live/users-and-permissions-03-9c5ba3.png",
+    "alt": ""
+   },
+   {
+    "src": "live/users-and-permissions-04-e657a9.png",
+    "alt": ""
+   },
+   {
+    "src": "live/users-and-permissions-05-5ee811.png",
+    "alt": ""
+   },
+   {
+    "src": "live/users-and-permissions-06-b5e378.png",
+    "alt": ""
+   },
+   {
+    "src": "live/users-and-permissions-07-4cf43c.png",
+    "alt": ""
+   },
+   {
+    "src": "live/users-and-permissions-08-c4a09b.png",
+    "alt": "User-Specific Custom Data field in Legito"
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Personal Settings/Notifications.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/notifications/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/notifications-01-cfeef1.png",
+    "alt": ""
+   },
+   {
+    "src": "live/notifications-02-142265.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/notifications-03-4a1a57.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Personal Settings/User Account.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/user-account/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/user-account-01-96b1c2.gif",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Announcements.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/announcements/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/announcements-01-9411a8.png",
+    "alt": ""
+   },
+   {
+    "src": "live/announcements-02-ea410a.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Billing.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/billing/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/billing-01-e01b25.png",
+    "alt": ""
+   },
+   {
+    "src": "live/billing-02-c946c4.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Document Localizations.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/document-localizations/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/document-localizations-01-e8392e.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-localizations-02-8d0767.png",
+    "alt": ""
+   },
+   {
+    "src": "live/document-localizations-03-0bc2da.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/General Workspace Settings.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/general-workspace-settings/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/general-workspace-settings-01-2a5a56.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Security Settings.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/security-settings/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/security-settings-01-9ff2c3.png",
+    "alt": ""
+   },
+   {
+    "src": "live/security-settings-02-6f0f35.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Template & Document Grouping.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/template-document-grouping/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/template-document-grouping-01-32b250.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/template-document-grouping-02-aa5850.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/template-document-grouping-03-fff8f0.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/template-document-grouping-04-ff8001.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Branding.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workspace-branding/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workspace-branding-01-576584.png",
+    "alt": ""
+   },
+   {
+    "src": "live/workspace-branding-02-58881c.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Footer.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workspace-footer/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workspace-footer-01-3b11f8.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/workspace-footer-02-f0fb78.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/workspace-footer-03-487bbc.gif",
+    "alt": ""
+   },
+   {
+    "src": "live/workspace-footer-04-deb551.png",
+    "alt": ""
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Localization.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workspace-localization/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workspace-localization-01-1daa0e.png",
+    "alt": "Localization Settings for Workspace"
+   }
+  ]
+ },
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Navigation.md": {
+  "liveLink": "https://www.legito.com/knowledge-base/workspace-navigation/",
+  "vimeo": [],
+  "images": [
+   {
+    "src": "live/workspace-navigation-01-512336.png",
+    "alt": ""
+   }
+  ]
+ }
+}
