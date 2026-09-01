@@ -140,8 +140,29 @@ for rel, a in sorted(mapping.items()):
         altm = re.search(r'alt="([^"]*)"', tag)
         if srcm:
             alts[srcm.group(1)] = htmllib.unescape(altm.group(1)) if altm else ""
+    # heading context per image occurrence, in document order
+    ctx_queue = []
+    last_heading = None
+    for mm in re.finditer(r'<h([1-6])[^>]*>(.*?)</h\1>|<img\b[^>]*>', a["html"], re.I | re.S):
+        if mm.group(0).lower().startswith("<h"):
+            last_heading = re.sub(r"<[^>]+>", "", mm.group(2))
+            last_heading = " ".join(htmllib.unescape(last_heading).split())
+        else:
+            srcm = re.search(r'src="([^"]+)"', mm.group(0))
+            if srcm:
+                before = re.sub(r'<[^>]+>', ' ', a['html'][max(0, mm.start()-1500):mm.start()])
+                before = re.sub(r'\[[^\]]*\]?', ' ', htmllib.unescape(before))
+                before = ' '.join(t for t in before.split() if '=' not in t and '&' not in t)[-300:]
+                ctx_queue.append((srcm.group(1), last_heading, before))
+    ctx_i = 0
     idx = 0
     for u in a["images"]:
+        heading = None
+        before_txt = ""
+        if ctx_i < len(ctx_queue) and ctx_queue[ctx_i][0] == u:
+            heading = ctx_queue[ctx_i][1]
+            before_txt = ctx_queue[ctx_i][2]
+            ctx_i += 1
         uu = htmllib.unescape(u)
         if uu.startswith("data:"):
             continue
@@ -151,7 +172,7 @@ for rel, a in sorted(mapping.items()):
         if "s.w.org" in uu:
             continue
         if uu in seen_urls:
-            entry["images"].append({"src": seen_urls[uu], "alt": alts.get(u, "")})
+            entry["images"].append({"src": seen_urls[uu], "alt": alts.get(u, ""), "heading": heading, "before": before_txt})
             continue
         idx += 1
         path = urllib.parse.urlparse(uu).path
@@ -164,7 +185,7 @@ for rel, a in sorted(mapping.items()):
         if download(uu, dest):
             rel_web = f"live/{fn}"
             seen_urls[uu] = rel_web
-            entry["images"].append({"src": rel_web, "alt": alts.get(u, "")})
+            entry["images"].append({"src": rel_web, "alt": alts.get(u, ""), "heading": heading, "before": before_txt})
     if entry["vimeo"] or entry["images"] or entry.get("videoFiles"):
         result[rel] = entry
 

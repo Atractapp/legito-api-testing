@@ -119,6 +119,7 @@ function resolveImg(src, art) {
 }
 
 function renderArticleBody(art) {
+  const useLive = !!(art.live && (art.live.images || []).length);
   let md = art.raw.replace(/^#\s+.+\n/, ""); // drop H1 (rendered in header)
   // split appendix gallery
   let appendix = [];
@@ -162,10 +163,9 @@ function renderArticleBody(art) {
         const d = Math.min(depth + 1, 6); // shift down: article H1 is the title
         return `<h${d} id="${id}" class="hd"><a class="anchor" href="#${id}" aria-label="Link to section">${ICONS.link}</a>${text}</h${d}>\n`;
       },
-      image({ href, text }) {
-        const src = resolveImg(href, art);
-        if (!src) return "";
-        return `<img class="shot" loading="lazy" src="${src}" alt="${esc(text || "")}">`;
+      image() {
+        // 2024-corpus images predate the current UI; the site carries live-KB media only
+        return "";
       },
       link({ href, tokens }) {
         const inner = this.parser.parseInline(tokens);
@@ -180,7 +180,63 @@ function renderArticleBody(art) {
   // standalone image paragraphs -> figures; tables -> scroll wrap
   html = html.replace(/<p>(<img class="shot"[^>]*>)<\/p>/g, '<figure class="fig">$1</figure>');
   html = html.replace(/<table>/g, '<div class="twrap"><table>').replace(/<\/table>/g, "</table></div>");
-  return { html, headings, appendix, related };
+  if (useLive) html = placeLiveImages(html, art.live.images);
+  return { html, headings, related };
+}
+
+/* ---------- live image placement ----------
+   Each live image carries the heading and the text that preceded it in the live
+   article. Place it after the KB block that best matches that context. */
+const STOP = new Set(["the","and","for","with","that","this","are","can","its","from","into","was","were","been","will","has","have","had","not","you","your","all","one","two","when","where","which","also","then","than","only","other","after","before","more","most","such","each","between","under","over","while","them","they","their","there","here","what","how","who","any","new","use","used","using","user","users","document","documents","legito","template","templates","click","clicking","clicked","button","option","options","page","allows","allow"]);
+function toks(t) {
+  return new Set((t || "").toLowerCase().replace(/<[^>]+>/g, " ").replace(/[^a-z0-9]+/g, " ")
+    .split(" ").filter(w => w.length >= 3 && !STOP.has(w)));
+}
+function placeLiveImages(html, images) {
+  const blocks = html.split(/\n(?=<)/);
+  const blockToks = blocks.map(toks);
+  const df = {};
+  for (const bt of blockToks) for (const t of bt) df[t] = (df[t] || 0) + 1;
+  const headingIdx = [];
+  blocks.forEach((b, i) => {
+    const m = b.match(/^<h([2-6])[^>]*>(.*?)<\/h\1>/s);
+    if (m) headingIdx.push({ i, toks: toks(m[2]) });
+  });
+  const inserts = {}; // block index -> [figure html]
+  const unplaced = [];
+  for (const im of images) {
+    const fig = `<figure class="fig"><img class="shot" loading="lazy" src="/${im.src}" alt="${esc(im.alt || "")}"></figure>`;
+    const q = new Set([...toks(im.before), ...toks(im.alt), ...toks(im.heading)]);
+    // heading anchor: strong heading-text overlap narrows the search window
+    let lo = 0, hi = blocks.length - 1;
+    if (im.heading) {
+      const ht = toks(im.heading);
+      let best = null, bestOv = 0;
+      for (const h of headingIdx) {
+        let ov = 0;
+        for (const t of ht) if (h.toks.has(t)) ov++;
+        const denom = Math.max(1, Math.min(ht.size, h.toks.size));
+        if (ov / denom > 0.6 && ov > bestOv) { best = h; bestOv = ov; }
+      }
+      if (best) {
+        lo = best.i;
+        const next = headingIdx.find(h => h.i > best.i);
+        hi = next ? next.i - 1 : blocks.length - 1;
+      }
+    }
+    let bestI = -1, bestScore = 0;
+    for (let i = lo; i <= hi; i++) {
+      if (/^<h[2-6]/.test(blocks[i]) && i !== lo) continue;
+      let score = 0, hits = 0;
+      for (const t of q) if (blockToks[i].has(t)) { score += 1 / (1 + (df[t] || 0)); hits++; }
+      if (hits >= 2 && score > bestScore) { bestScore = score; bestI = i; }
+    }
+    if (bestI === -1 && im.heading && lo > 0) bestI = lo; // at least under its heading
+    if (bestI >= 0) (inserts[bestI] ||= []).push(fig);
+    else unplaced.push(fig);
+  }
+  const out = blocks.map((b, i) => inserts[i] ? b + "\n" + inserts[i].join("\n") : b);
+  return out.join("\n") + (unplaced.length ? "\n" + unplaced.join("\n") : "");
 }
 
 /* plain text + excerpt for search */
@@ -334,23 +390,6 @@ function videoBlock(art) {
   return `<section class="vids${items.length > 1 ? " vids-multi" : ""}" aria-label="Video guides">${items.join("")}</section>`;
 }
 
-function liveGallery(art) {
-  if (!art.live || !(art.live.images || []).length) return "";
-  const imgs = art.live.images.map((im, i) =>
-    `<a class="g-item" href="/${im.src}" data-lb data-cap="${esc(im.alt || "")}"><img loading="lazy" src="/${im.src}" alt="${esc(im.alt || "Screenshot")}"></a>`).join("");
-  return `<section class="gallery">
-    <h2 class="hd g-hd" id="screenshots">${ICONS.images}Screenshots</h2>
-    <div class="g-grid">${imgs}</div>
-  </section>`;
-}
-
-function appendixBlock(appendix) {
-  if (!appendix.length) return "";
-  const imgs = appendix.map(im =>
-    `<a class="g-item" href="${im.src}" data-lb data-cap="${esc(im.alt || "")}"><img loading="lazy" src="${im.src}" alt="${esc(im.alt || "Screenshot")}"></a>`).join("");
-  return `<details class="appendix"><summary>${ICONS.images}More screenshots <span class="apx-n">${appendix.length}</span></summary><div class="g-grid">${imgs}</div></details>`;
-}
-
 /* ---------- build ---------- */
 // clear dist contents (keep the dir itself — a stale handle on it must not kill the build)
 fs.mkdirSync(DIST, { recursive: true });
@@ -373,7 +412,7 @@ for (const a of articles) (perCatArticles[a.cat] ||= []).push(a);
 
 for (let i = 0; i < articles.length; i++) {
   const art = articles[i];
-  const { html, headings, appendix, related } = renderArticleBody(art);
+  const { html, headings, related } = renderArticleBody(art);
   const words = plainText(art.raw).split(" ").length;
   const mins = Math.max(1, Math.round(words / 220));
   const liveImgN = art.live ? (art.live.images || []).length : 0;
@@ -421,8 +460,6 @@ for (let i = 0; i < articles.length; i++) {
     ${metaRow}
     ${videoBlock(art)}
     <div class="prose">${html}</div>
-    ${liveGallery(art)}
-    ${appendixBlock(appendix)}
     ${relatedHTML}
     ${pager}
   </main>
@@ -552,14 +589,6 @@ fs.writeFileSync(path.join(DIST, "404.html"), shell({
   current: null, bodyClass: "page-404",
 }));
 
-/* ---------- copy used local media ---------- */
-for (const rel of usedMedia) {
-  const src = path.join(MEDIA_ROOT, rel);
-  const dst = path.join(DIST, "media", rel);
-  fs.mkdirSync(path.dirname(dst), { recursive: true });
-  fs.copyFileSync(src, dst);
-}
-
 /* ---------- search index ---------- */
 fs.writeFileSync(path.join(DIST, "search-docs.json"), stripEmDash(JSON.stringify(searchDocs)));
 
@@ -583,4 +612,4 @@ fs.writeFileSync(path.join(DIST, ".vercel", "project.json"), JSON.stringify({
 fs.copyFileSync(path.join(__dirname, "node_modules", "minisearch", "dist", "umd", "index.js"), path.join(DIST, "minisearch.js"));
 
 const nPages = articles.length + CATS.length + 3;
-console.log(`built ${nPages} pages, ${usedMedia.size} local media files, ${totalShots} live screenshots, ${totalVids} videos, search docs ${(fs.statSync(path.join(DIST, "search-docs.json")).size / 1024).toFixed(0)} KB`);
+console.log(`built ${nPages} pages, ${totalShots} live screenshots, ${totalVids} videos, search docs ${(fs.statSync(path.join(DIST, "search-docs.json")).size / 1024).toFixed(0)} KB`);
