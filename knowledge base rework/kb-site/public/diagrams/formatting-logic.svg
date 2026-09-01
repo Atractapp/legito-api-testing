@@ -22,7 +22,7 @@
 <path d="M560.0,514 L560.0,568" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
 <path d="M670.0,600.0 L750,600.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
 <path d="M560.0,632 L560.0,778 L260.0,778 L260.0,804" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
-<path d="M85.00000000000001,836.0 L150,836.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M136.0,836.0 L150,836.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
 <path d="M370.0,836.0 L450,836.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
 <path d="M260.0,868 L260.0,922" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
 <path d="M370.0,954.0 L450,954.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
@@ -120,8 +120,8 @@
 <rect x="750" y="568" width="220.0" height="64" rx="9" fill="#74c078"/>
 <text x="860.0" y="596.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Changed Row / Column / Cell</text>
 <text x="860.0" y="611.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
-<rect x="-15.699999999999996" y="816.0" width="80.4" height="40" rx="20" fill="#435964"/>
-<text x="24.500000000000007" y="840.5" font-size="12.5" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">CLAUSE</text>
+<rect x="35.300000000000004" y="816.0" width="80.4" height="40" rx="20" fill="#435964"/>
+<text x="75.5" y="840.5" font-size="12.5" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">CLAUSE</text>
 <rect x="150" y="804" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
 <text x="260.0" y="832.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Clause formatting changed</text>
 <text x="260.0" y="847.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in the Template Editor?</text>
