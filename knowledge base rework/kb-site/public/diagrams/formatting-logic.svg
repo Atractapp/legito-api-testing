@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1930 1560" font-family='"Open Sans", "Segoe UI", Arial, sans-serif'>
+<rect width="1930" height="1560" fill="#ffffff"/>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#435964" opacity="0.55"/></marker></defs>
+<text x="40" y="44" font-size="26" font-weight="700" fill="#435964">How formatting is resolved</text>
+<rect x="40" y="58" width="14" height="14" rx="3" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="60" y="70" font-size="12" fill="#435964">Decision</text>
+<rect x="141.2" y="58" width="14" height="14" rx="3" fill="#74c078"/>
+<text x="161.2" y="70" font-size="12" fill="#435964">Formatting outcome</text>
+<rect x="306.4" y="58" width="14" height="14" rx="3" fill="#c2dec3"/>
+<text x="326.4" y="70" font-size="12" fill="#435964">Outcome that modifies Normal in Word</text>
+<rect x="586.8" y="58" width="14" height="14" rx="3" fill="#f2d452"/>
+<text x="606.8" y="70" font-size="12" fill="#435964">Fallback or merged content</text>
+<path d="M260.0,160 L260.0,214" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M370.0,246.0 L450,246.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M670.0,246.0 L716,246.0 L716,201.16 L750,201.16" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M670.0,246.0 L716,246.0 L716,295.56 L750,295.56" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,278 L260.0,332" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M370.0,364.0 L450,364.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,396 L260.0,450" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,514 L260.0,600.0 L450,600.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,514 L260.0,804" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M560.0,514 L560.0,568" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M670.0,600.0 L750,600.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M560.0,632 L560.0,778 L260.0,778 L260.0,804" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M85.00000000000001,836.0 L150,836.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M370.0,836.0 L450,836.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,868 L260.0,922" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M370.0,954.0 L450,954.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M670.0,954.0 L750,954.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M560.0,986 L560.0,1022 L326.0,1022 L326.0,1040" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,986 L260.0,1040" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M370.0,1072.0 L450,1072.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M670.0,1072.0 L750,1072.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M560.0,1104 L560.0,1190.0 L750,1190.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,1104 L260.0,1158" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,1222 L260.0,1308.0 L450,1308.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M670.0,1308.0 L750,1308.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M560.0,1340 L560.0,1426.0 L750,1426.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M260.0,1222 L260.0,1394" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1340.0,160 L1340.0,214" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1450.0,246.0 L1560.0,246.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1670.0,214 L1670.0,160" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1670.0,278 L1670.0,332" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1780.0,364.0 L1824.0,364.0 L1824.0,128.0 L1780.0,128.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1670.0,396 L1670.0,450" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1670.0,514 L1670.0,568" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1780.0,482.0 L1505.0,482.0 L1505.0,686" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1340.0,278 L1340.0,332" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1230.0,364.0 L1115.0,364.0 L1115.0,402.8" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1340.0,396 L1340.0,450" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1230.0,482.0 L1115.0,482.0 L1115.0,466.8" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1340.0,514 L1340.0,568" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1230.0,600.0 L1115.0,600.0 L1115.0,466.8" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<path d="M1340.0,632 L1340.0,718.0 L1395.0,718.0" fill="none" stroke="#435964" stroke-opacity="0.45" stroke-width="1.6" marker-end="url(#arr)"/>
+<rect x="392.5" y="236.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="410.0" y="250.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="715.5" y="191.16" width="35" height="18" rx="9" fill="#ffffff"/><text x="733.0" y="205.16" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="719.0" y="285.56" width="28" height="18" rx="9" fill="#ffffff"/><text x="733.0" y="299.56" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="246.0" y="295.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="309.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="392.5" y="354.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="410.0" y="368.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="246.0" y="413.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="427.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="242.5" y="547.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="561.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="246.0" y="649.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="663.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="692.5" y="590.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="710.0" y="604.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="546.0" y="695.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="560.0" y="709.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="392.5" y="826.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="410.0" y="840.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="246.0" y="885.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="899.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="392.5" y="944.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="410.0" y="958.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="692.5" y="944.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="710.0" y="958.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="546.0" y="994.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="560.0" y="1008.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="246.0" y="1003.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="1017.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="392.5" y="1062.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="410.0" y="1076.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="692.5" y="1062.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="710.0" y="1076.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="546.0" y="1137.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="560.0" y="1151.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="246.0" y="1121.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="1135.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="242.5" y="1255.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="1269.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="692.5" y="1298.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="710.0" y="1312.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="546.0" y="1373.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="560.0" y="1387.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="246.0" y="1298.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="260.0" y="1312.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="1491.0" y="236.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="1505.0" y="250.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="1656.0" y="177.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="1670.0" y="191.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="1652.5" y="295.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="1670.0" y="309.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="1784.5" y="354.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="1802.0" y="368.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="1656.0" y="413.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="1670.0" y="427.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="1652.5" y="531.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="1670.0" y="545.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="1628.5" y="472.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="1642.5" y="486.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="1322.5" y="295.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="1340.0" y="309.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="1158.5" y="354.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="1172.5" y="368.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="1322.5" y="413.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="1340.0" y="427.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="1155.0" y="472.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="1172.5" y="486.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="1326.0" y="531.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="1340.0" y="545.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="1155.0" y="590.0" width="35" height="18" rx="9" fill="#ffffff"/><text x="1172.5" y="604.0" font-size="11.5" font-weight="700" fill="#58a35c" fill-opacity="1" text-anchor="middle">Yes</text>
+<rect x="1326.0" y="665.0" width="28" height="18" rx="9" fill="#ffffff"/><text x="1340.0" y="679.0" font-size="11.5" font-weight="700" fill="#435964" fill-opacity="0.75" text-anchor="middle">No</text>
+<rect x="215.6" y="108.0" width="88.80000000000001" height="40" rx="20" fill="#435964"/>
+<text x="260.0" y="132.5" font-size="12.5" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">ELEMENT</text>
+<rect x="150" y="214" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="260.0" y="242.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is the Element</text>
+<text x="260.0" y="257.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">a Rich Text Element?</text>
+<rect x="450" y="214" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="560.0" y="242.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is the Rich Text using</text>
+<text x="560.0" y="257.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">HTML formatting?</text>
+<rect x="750" y="169.16" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="860.0" y="205.16" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">HTML formatting used</text>
+<rect x="750" y="263.56" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="860.0" y="292.06" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Default Rich Text</text>
+<text x="860.0" y="307.06" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="150" y="332" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="260.0" y="360.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Element formatting changed</text>
+<text x="260.0" y="375.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in the Template Editor?</text>
+<rect x="450" y="332" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="560.0" y="360.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Changed Element</text>
+<text x="560.0" y="375.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="150" y="450" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="260.0" y="478.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is the Element</text>
+<text x="260.0" y="493.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in a Table?</text>
+<rect x="465.2" y="462.0" width="189.6" height="40" rx="20" fill="#435964"/>
+<text x="560.0" y="486.5" font-size="12.5" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">ROW / COLUMN / CELL</text>
+<rect x="450" y="568" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="560.0" y="596.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Row, Column or Cell formatting</text>
+<text x="560.0" y="611.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">changed in the Template Editor?</text>
+<rect x="750" y="568" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="860.0" y="596.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Changed Row / Column / Cell</text>
+<text x="860.0" y="611.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="-15.699999999999996" y="816.0" width="80.4" height="40" rx="20" fill="#435964"/>
+<text x="24.500000000000007" y="840.5" font-size="12.5" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">CLAUSE</text>
+<rect x="150" y="804" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="260.0" y="832.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Clause formatting changed</text>
+<text x="260.0" y="847.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in the Template Editor?</text>
+<rect x="450" y="804" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="560.0" y="832.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Changed Clause</text>
+<text x="560.0" y="847.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="150" y="922" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="260.0" y="950.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Advanced Style assigned?</text>
+<text x="260.0" y="965.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">(manually or via a Legito Style)</text>
+<rect x="450" y="922" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="560.0" y="950.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is that Advanced Style present</text>
+<text x="560.0" y="965.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in the ALD in use?</text>
+<rect x="750" y="922" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="860.0" y="950.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Advanced Style (ALD)</text>
+<text x="860.0" y="965.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="150" y="1040" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="260.0" y="1068.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Clause has an assigned</text>
+<text x="260.0" y="1083.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Legito Style?</text>
+<rect x="450" y="1040" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="560.0" y="1068.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is the Legito Style set</text>
+<text x="560.0" y="1083.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">to Export to Word?</text>
+<rect x="750" y="1040" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="860.0" y="1068.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Legito Style used</text>
+<text x="860.0" y="1083.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">(exported as a Word style)</text>
+<rect x="750" y="1158" width="220.0" height="64" rx="9" fill="#c2dec3"/>
+<text x="860.0" y="1179.0" font-size="12" font-weight="600" fill="#58a35c" text-anchor="middle">Legito Style formatting applied</text>
+<text x="860.0" y="1194.0" font-size="12" font-weight="600" fill="#58a35c" text-anchor="middle">directly (modifies Normal</text>
+<text x="860.0" y="1209.0" font-size="12" font-weight="600" fill="#58a35c" text-anchor="middle">in Word)</text>
+<rect x="150" y="1158" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="260.0" y="1186.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Does the Workspace have</text>
+<text x="260.0" y="1201.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Default Styles?</text>
+<rect x="450" y="1276" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="560.0" y="1304.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Are the Default Styles set</text>
+<text x="560.0" y="1319.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">to Export to Word?</text>
+<rect x="750" y="1276" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="860.0" y="1312.0" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Legito Default Style used</text>
+<rect x="750" y="1394" width="220.0" height="64" rx="9" fill="#c2dec3"/>
+<text x="860.0" y="1415.0" font-size="12" font-weight="600" fill="#58a35c" text-anchor="middle">Default Style formatting applied</text>
+<text x="860.0" y="1430.0" font-size="12" font-weight="600" fill="#58a35c" text-anchor="middle">directly (modifies Normal</text>
+<text x="860.0" y="1445.0" font-size="12" font-weight="600" fill="#58a35c" text-anchor="middle">in Word)</text>
+<rect x="150" y="1394" width="220.0" height="64" rx="9" fill="#f2d452"/>
+<text x="260.0" y="1430.0" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Fallback Legito Style used</text>
+<rect x="1295.6" y="108.0" width="88.80000000000001" height="40" rx="20" fill="#435964"/>
+<text x="1340.0" y="132.5" font-size="12.5" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">SECTION</text>
+<rect x="1230.0" y="214" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="1340.0" y="242.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Section formatting changed</text>
+<text x="1340.0" y="257.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in the Template Editor?</text>
+<rect x="1560.0" y="214" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="1670.0" y="242.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is an Advanced Layout</text>
+<text x="1670.0" y="257.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Design in use?</text>
+<rect x="1560.0" y="96" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="1670.0" y="124.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Default Template Section</text>
+<text x="1670.0" y="139.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="1560.0" y="332" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="1670.0" y="360.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is it a Continuous</text>
+<text x="1670.0" y="375.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Section?</text>
+<rect x="1560.0" y="450" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="1670.0" y="478.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is the Section annotated</text>
+<text x="1670.0" y="493.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in the ALD?</text>
+<rect x="1560.0" y="568" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="1670.0" y="596.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">ALD Section</text>
+<text x="1670.0" y="611.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="1230.0" y="332" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="1340.0" y="360.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is an Advanced Layout</text>
+<text x="1340.0" y="375.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Design in use?</text>
+<rect x="1005.0" y="402.8" width="220.0" height="64" rx="9" fill="#74c078"/>
+<text x="1115.0" y="431.3" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Changed Section</text>
+<text x="1115.0" y="446.3" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">formatting used</text>
+<rect x="1230.0" y="450" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="1340.0" y="478.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is it a Continuous</text>
+<text x="1340.0" y="493.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Section?</text>
+<rect x="1230.0" y="568" width="220.0" height="64" rx="9" fill="#ffffff" stroke="#58a35c" stroke-width="2"/>
+<text x="1340.0" y="596.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Is the Section annotated</text>
+<text x="1340.0" y="611.5" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">in the ALD?</text>
+<rect x="1395.0" y="686" width="220.0" height="64" rx="9" fill="#f2d452"/>
+<text x="1505.0" y="707.0" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">Section formatting ignored -</text>
+<text x="1505.0" y="722.0" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">content merges into the</text>
+<text x="1505.0" y="737.0" font-size="12" font-weight="600" fill="#435964" text-anchor="middle">previous Section</text>
+<text x="150" y="1540" font-size="11.5" fill="#435964" fill-opacity="0.7">A greyed-out value in the Template Editor is inherited. A highlighted value is a manual change and always wins. Clear Formatting (the crossed T) returns the Clause to its inherited values.</text>
+</svg>

@@ -1,0 +1,2682 @@
+{
+ "DASHBOARD/Dashboard Overview.md": [
+  {
+   "src": "live/dashboard-overview-01-fa230d.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/dashboard-overview-02-8ecbed.png",
+   "anchor": "Public and private Dashboards"
+  },
+  {
+   "src": "live/dashboard-overview-03-8cec93.png",
+   "anchor": "Layout"
+  },
+  {
+   "src": "live/dashboard-overview-04-bf392f.png",
+   "anchor": "Editing"
+  },
+  {
+   "src": "live/dashboard-overview-05-a8e377.png",
+   "anchor": "Layout"
+  },
+  {
+   "src": "live/dashboard-overview-06-824f7b.png",
+   "anchor": "Editing"
+  },
+  {
+   "src": "live/dashboard-overview-07-e2078c.png",
+   "anchor": "Editing"
+  },
+  {
+   "src": "live/dashboard-overview-08-99ebaf.png",
+   "anchor": "Creating a Dashboard"
+  },
+  {
+   "src": "live/dashboard-overview-09-0e48d3.png",
+   "anchor": "Creating a Dashboard"
+  }
+ ],
+ "DASHBOARD/Widget Types/Counter.md": [
+  {
+   "src": "live/counter-01-03a736.jpg",
+   "anchor": "Types"
+  },
+  {
+   "src": "live/counter-02-675b6f.png",
+   "anchor": "Visualization"
+  },
+  {
+   "src": "live/counter-03-85917e.png",
+   "anchor": "Visualization"
+  }
+ ],
+ "DASHBOARD/Widget Types/Document Records - Grid.md": [
+  {
+   "src": "live/document-records-grid-01-1b8f33.png",
+   "anchor": "Choosing the sort"
+  },
+  {
+   "src": "live/document-records-grid-02-c1b43f.jpg",
+   "anchor": "Settings"
+  }
+ ],
+ "DASHBOARD/Widget Types/Document Records - Kanban.md": [
+  {
+   "src": "live/document-records-kanban-01-6d20f9.png",
+   "anchor": "Settings"
+  },
+  {
+   "src": "live/document-records-grid-02-c1b43f.jpg",
+   "anchor": "Settings"
+  }
+ ],
+ "DASHBOARD/Widget Types/Drop Area.md": [
+  {
+   "src": "live/drop-area-01-994ff9.png",
+   "anchor": "intro"
+  }
+ ],
+ "DASHBOARD/Widget Types/Object Records - Grid.md": [
+  {
+   "src": "live/object-records-grid-01-df6b19.png",
+   "anchor": "Settings"
+  }
+ ],
+ "DASHBOARD/Widget Types/Signature in Progress.md": [
+  {
+   "src": "live/signature-in-progress-01-15ec60.png",
+   "anchor": "intro"
+  }
+ ],
+ "DASHBOARD/Widget Types/Templates.md": [
+  {
+   "src": "live/templates-01-976718.png",
+   "anchor": "Filters"
+  }
+ ],
+ "DASHBOARD/Widget Types/Timeline.md": [
+  {
+   "src": "live/timeline-01-6840e6.png",
+   "anchor": "intro"
+  }
+ ],
+ "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md": [
+  {
+   "src": "live/batch-generation-from-sheets-01-e6d5f1.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/batch-generation-from-sheets-02-1855d2.png",
+   "anchor": "Generating a batch"
+  },
+  {
+   "src": "live/batch-generation-from-sheets-03-d5c5a2.png",
+   "anchor": "Generating a batch"
+  },
+  {
+   "src": "live/batch-generation-from-sheets-04-78595f.png",
+   "anchor": "Generating a batch"
+  },
+  {
+   "src": "live/batch-generation-from-sheets-05-9c8ae5.png",
+   "anchor": "Generating a batch"
+  },
+  {
+   "src": "live/batch-generation-from-sheets-06-0e994e.png",
+   "anchor": "Advanced settings"
+  },
+  {
+   "src": "live/batch-generation-from-sheets-07-c51eb6.png",
+   "anchor": "Batch settings"
+  }
+ ],
+ "DOCUMENT EDITOR/Data Import/Import from Legito Documents.md": [
+  {
+   "src": "live/import-from-legito-documents-01-5c651c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/import-from-legito-documents-02-14498a.png",
+   "anchor": "Creating a Favorite Import Setting"
+  }
+ ],
+ "DOCUMENT EDITOR/Data Import/Import from Sheets.md": [
+  {
+   "src": "live/import-from-sheets-01-4d07be.png",
+   "anchor": "Importing"
+  },
+  {
+   "src": "live/import-from-sheets-02-649625.png",
+   "anchor": "Advanced settings"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Export/Download.md": [
+  {
+   "src": "live/download-01-09eadf.png",
+   "anchor": "Formats"
+  },
+  {
+   "src": "live/download-02-86454d.png",
+   "anchor": "Formats"
+  },
+  {
+   "src": "live/download-03-ae49b3.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/download-04-bbf56e.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/download-05-9cdd95.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/download-06-3bd02a.png",
+   "anchor": "Export settings"
+  },
+  {
+   "src": "live/download-07-77f1a3.png",
+   "anchor": "Export settings"
+  },
+  {
+   "src": "live/download-08-a946d7.png",
+   "anchor": "Combining PDFs into one file"
+  },
+  {
+   "src": "live/download-09-69d48c.png",
+   "anchor": "Print Preview"
+  },
+  {
+   "src": "live/download-10-702fae.png",
+   "anchor": "Print Preview"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Export/Sending by Email.md": [
+  {
+   "src": "live/sending-by-email-01-baf9d8.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/sending-by-email-02-3ca4ba.png",
+   "anchor": "Settings"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Language/Dual Language Documents.md": [
+  {
+   "src": "live/dual-language-documents-01-efa7f7.png",
+   "anchor": "intro"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Language/Translations.md": [
+  {
+   "src": "live/translations-01-c9a411.png",
+   "anchor": "intro"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Navigation/Document View Options.md": [
+  {
+   "src": "live/document-view-options-01-c1a1ad.png",
+   "anchor": "Modifiable Fields Only"
+  },
+  {
+   "src": "live/document-view-options-02-25161b.png",
+   "anchor": "Apply Conditions"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Review/Comments.md": [
+  {
+   "src": "live/comments-01-66af22.png",
+   "anchor": "intro"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Review/Compare.md": [
+  {
+   "src": "live/compare-01-6a3533.png",
+   "anchor": "intro"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Review/Real Time Document Collaboration.md": [
+  {
+   "src": "live/real-time-document-collaboration-01-5d58bc.png",
+   "anchor": "intro"
+  }
+ ],
+ "DOCUMENT EDITOR/Document Review/Track Changes.md": [
+  {
+   "src": "live/track-changes-01-adc09b.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/track-changes-02-a73b31.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/track-changes-03-efe67f.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/track-changes-04-cd0734.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/track-changes-05-f36d83.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/track-changes-06-2fb6f3.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/track-changes-07-95d749.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/track-changes-08-3d2557.png",
+   "anchor": "Making Track Changes mandatory"
+  },
+  {
+   "src": "live/track-changes-09-d3a33c.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/track-changes-10-4c75d0.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/track-changes-11-b8f3f7.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/track-changes-12-60686e.png",
+   "anchor": "Permissions"
+  }
+ ],
+ "DOCUMENT EDITOR/Overview of Document Drafting.md": [
+  {
+   "src": "live/overview-of-document-drafting-01-1764db.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/overview-of-document-drafting-02-2653ee.png",
+   "anchor": "Smart Navigation and Quick Actions sidebar"
+  },
+  {
+   "src": "live/overview-of-document-drafting-03-94f866.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-04-3ab03f.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-05-a7d7d0.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-06-a9517b.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-07-a02213.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-08-3757ba.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-09-c7bcea.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-10-9f16a0.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-11-91ceb4.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-12-cca6aa.png",
+   "anchor": "The Elements a user meets"
+  },
+  {
+   "src": "live/overview-of-document-drafting-13-fd152d.png",
+   "anchor": "Template features that shape the drafting experience"
+  },
+  {
+   "src": "live/overview-of-document-drafting-14-7f29ee.png",
+   "anchor": "Template features that shape the drafting experience"
+  },
+  {
+   "src": "live/overview-of-document-drafting-15-4f4b52.png",
+   "anchor": "Template features that shape the drafting experience"
+  },
+  {
+   "src": "live/overview-of-document-drafting-16-21a92b.png",
+   "anchor": "Template features that shape the drafting experience"
+  },
+  {
+   "src": "live/comments-01-66af22.png",
+   "anchor": "Template features that shape the drafting experience"
+  },
+  {
+   "src": "live/overview-of-document-drafting-17-85c1ac.gif",
+   "anchor": "Template features that shape the drafting experience"
+  },
+  {
+   "src": "live/overview-of-document-drafting-18-2af89a.png",
+   "anchor": "What becomes available once a document is saved"
+  },
+  {
+   "src": "live/overview-of-document-drafting-19-69da9b.png",
+   "anchor": "What becomes available once a document is saved"
+  },
+  {
+   "src": "live/overview-of-document-drafting-20-df91b0.png",
+   "anchor": "What becomes available once a document is saved"
+  },
+  {
+   "src": "live/overview-of-document-drafting-21-7caa5c.png",
+   "anchor": "What becomes available once a document is saved"
+  },
+  {
+   "src": "live/overview-of-document-drafting-22-2bb411.png",
+   "anchor": "What becomes available once a document is saved"
+  },
+  {
+   "src": "live/overview-of-document-drafting-23-701034.png",
+   "anchor": "Attachments"
+  }
+ ],
+ "DOCUMENT EDITOR/Saving & Versions/Merging Template Updates.md": [
+  {
+   "src": "live/merging-template-updates-01-d6a0d1.png",
+   "anchor": "intro"
+  }
+ ],
+ "DOCUMENT EDITOR/Saving & Versions/Saving.md": [
+  {
+   "src": "live/saving-01-c53461.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/saving-02-266f04.png",
+   "anchor": "Save as a New Document"
+  }
+ ],
+ "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md": [
+  {
+   "src": "live/template-favorite-settings-01-860714.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-favorite-settings-02-5998ae.png",
+   "anchor": "Creating a Favorite Setting"
+  },
+  {
+   "src": "live/template-favorite-settings-03-d4ce26.png",
+   "anchor": "Two kinds of Favorite Setting"
+  },
+  {
+   "src": "live/template-favorite-settings-04-78a228.png",
+   "anchor": "Two kinds of Favorite Setting"
+  },
+  {
+   "src": "live/template-favorite-settings-05-3c9c0c.png",
+   "anchor": "Default Favorite Settings"
+  },
+  {
+   "src": "live/template-favorite-settings-06-74bac4.png",
+   "anchor": "Default Favorite Settings"
+  },
+  {
+   "src": "live/template-favorite-settings-07-bac37b.png",
+   "anchor": "Default Favorite Settings"
+  },
+  {
+   "src": "live/template-favorite-settings-08-c6fa5a.png",
+   "anchor": "Default Favorite Settings"
+  },
+  {
+   "src": "live/template-favorite-settings-09-dacefc.png",
+   "anchor": "Default Favorite Settings"
+  }
+ ],
+ "DOCUMENT EDITOR/Saving & Versions/Version History.md": [
+  {
+   "src": "live/version-history-01-ceb444.png",
+   "anchor": "Reading the history"
+  },
+  {
+   "src": "live/version-history-02-03a850.png",
+   "anchor": "Previous version notification"
+  }
+ ],
+ "ELECTRONIC SIGNATURE/Legito Sign/Legito BioSign.md": [
+  {
+   "src": "live/legito-biosign-01-bad9b0.gif",
+   "anchor": "end"
+  },
+  {
+   "src": "live/legito-biosign-02-75a25d.png",
+   "anchor": "end"
+  }
+ ],
+ "ELECTRONIC SIGNATURE/Legito Sign/Legito Sign Editor.md": [
+  {
+   "src": "live/legito-sign-editor-01-cfe976.png",
+   "anchor": "What signatories see"
+  }
+ ],
+ "ELECTRONIC SIGNATURE/Legito Sign/Manage Signatures.md": [
+  {
+   "src": "live/manage-signatures-01-44e848.png",
+   "anchor": "intro"
+  }
+ ],
+ "ELECTRONIC SIGNATURE/eSignature Overview.md": [
+  {
+   "src": "live/esignature-overview-01-1714e3.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/esignature-overview-02-59ed78.png",
+   "anchor": "Step 2 — Define signatories"
+  },
+  {
+   "src": "live/esignature-overview-03-5963f9.png",
+   "anchor": "Template prerequisites"
+  },
+  {
+   "src": "live/esignature-overview-04-caf6c1.png",
+   "anchor": "Automatic field creation"
+  },
+  {
+   "src": "live/esignature-overview-05-fe9cb3.png",
+   "anchor": "Automatic field creation"
+  },
+  {
+   "src": "live/esignature-overview-06-66e526.png",
+   "anchor": "Relation to Workflows and Document Records"
+  },
+  {
+   "src": "live/esignature-overview-07-3e1da6.png",
+   "anchor": "Step 1 — Start from a document"
+  },
+  {
+   "src": "live/esignature-overview-08-09a97c.png",
+   "anchor": "Step 1 — Start from a document"
+  }
+ ],
+ "INTEGRATIONS/Integration Tools/API Keys.md": [
+  {
+   "src": "live/api-keys-01-966d0d.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/api-keys-02-a3a8ca.png",
+   "anchor": "Default user for the REST API and Push API"
+  }
+ ],
+ "INTEGRATIONS/Integration Tools/JSON Integrations.md": [
+  {
+   "src": "live/json-integrations-01-93772c.png",
+   "anchor": "Administration"
+  },
+  {
+   "src": "live/json-integrations-02-16aa86.png",
+   "anchor": "Administration"
+  },
+  {
+   "src": "live/json-integrations-03-152edd.png",
+   "anchor": "JSON Integration Editor"
+  },
+  {
+   "src": "live/json-integrations-04-047233.png",
+   "anchor": "JSON Integration Editor"
+  },
+  {
+   "src": "live/json-integrations-05-6a1574.png",
+   "anchor": "Choosing which integration handles a file"
+  },
+  {
+   "src": "live/json-integrations-06-ecb9a7.png",
+   "anchor": "Choosing which integration handles a file"
+  },
+  {
+   "src": "live/json-integrations-07-70e614.png",
+   "anchor": "Arrays and repeated content"
+  },
+  {
+   "src": "live/json-integrations-08-ace6f7.png",
+   "anchor": "Filtering"
+  },
+  {
+   "src": "live/json-integrations-09-bd7f01.png",
+   "anchor": "Sorting"
+  },
+  {
+   "src": "live/json-integrations-10-d1607c.png",
+   "anchor": "Several Template Suites on one integration"
+  }
+ ],
+ "INTEGRATIONS/Integration Tools/Push API (Webhooks).md": [
+  {
+   "src": "live/push-api-webhooks-01-8e7aee.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/push-api-webhooks-02-1d8897.png",
+   "anchor": "1. Push Connections"
+  },
+  {
+   "src": "live/push-api-webhooks-03-a950a1.png",
+   "anchor": "Variables in custom headers"
+  },
+  {
+   "src": "live/push-api-webhooks-04-df8bdb.png",
+   "anchor": "2. Push Connection settings"
+  },
+  {
+   "src": "live/push-api-webhooks-05-75c41f.png",
+   "anchor": "Attached files"
+  },
+  {
+   "src": "live/push-api-webhooks-06-ed11c4.png",
+   "anchor": "3. What is pushed"
+  },
+  {
+   "src": "live/push-api-webhooks-07-b99b85.png",
+   "anchor": "4. Logs"
+  },
+  {
+   "src": "live/push-api-webhooks-08-945a1f.png",
+   "anchor": "4. Logs"
+  }
+ ],
+ "INTEGRATIONS/Legito in Other Apps/Make.md": [
+  {
+   "src": "live/make-01-9a42ac.png",
+   "anchor": "intro"
+  }
+ ],
+ "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md": [
+  {
+   "src": "live/microsoft-sharepoint-01-201706.png",
+   "anchor": "Setting up the integration"
+  },
+  {
+   "src": "live/microsoft-sharepoint-02-cdbc4a.png",
+   "anchor": "Step 1 — Credentials from App registrations"
+  },
+  {
+   "src": "live/microsoft-sharepoint-03-eccad3.png",
+   "anchor": "Step 1 — Credentials from App registrations"
+  },
+  {
+   "src": "live/microsoft-sharepoint-04-3eaafe.png",
+   "anchor": "Step 1 — Credentials from App registrations"
+  },
+  {
+   "src": "live/microsoft-sharepoint-05-9384ee.png",
+   "anchor": "Step 1 — Credentials from App registrations"
+  },
+  {
+   "src": "live/microsoft-sharepoint-06-1e21a8.png",
+   "anchor": "Step 1 — Credentials from App registrations"
+  },
+  {
+   "src": "live/microsoft-sharepoint-07-970c1c.png",
+   "anchor": "Step 1 — Credentials from App registrations"
+  }
+ ],
+ "INTEGRATIONS/Legito in Other Apps/Salesforce.md": [
+  {
+   "src": "live/salesforce-01-cffce3.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/salesforce-02-3de2e7.png",
+   "anchor": "What users experience"
+  },
+  {
+   "src": "live/salesforce-03-3362a5.png",
+   "anchor": "Installing the component"
+  },
+  {
+   "src": "live/salesforce-04-9ee34b.png",
+   "anchor": "Installing the component"
+  },
+  {
+   "src": "live/salesforce-05-0a0d14.png",
+   "anchor": "Installing the component"
+  },
+  {
+   "src": "live/salesforce-06-9b94bb.png",
+   "anchor": "Installing the component"
+  },
+  {
+   "src": "live/salesforce-07-59345a.png",
+   "anchor": "Setting up the component"
+  },
+  {
+   "src": "live/salesforce-08-f63b24.png",
+   "anchor": "Step 1 — Actions"
+  },
+  {
+   "src": "live/salesforce-09-6cbd91.png",
+   "anchor": "Step 2 — Identify the Legito server"
+  },
+  {
+   "src": "live/salesforce-10-545949.png",
+   "anchor": "Step 4 — Insert API keys"
+  },
+  {
+   "src": "live/salesforce-11-a5277f.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/salesforce-12-f2526a.png",
+   "anchor": "Step 6 — Download the JSON example"
+  },
+  {
+   "src": "live/salesforce-13-dae3e9.png",
+   "anchor": "Step 7 — Create the JSON Integration"
+  },
+  {
+   "src": "live/salesforce-14-c5a1d6.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/salesforce-15-4d95fa.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/salesforce-16-7564d6.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/salesforce-17-8ebcfc.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/salesforce-18-00fcef.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/salesforce-19-1afd70.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/salesforce-20-bbf396.png",
+   "anchor": "end"
+  }
+ ],
+ "INTEGRATIONS/Other Apps in Legito/DocuSign.md": [
+  {
+   "src": "live/docusign-01-1f8079.png",
+   "anchor": "License plans"
+  }
+ ],
+ "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md": [
+  {
+   "src": "live/microsoft-entra-id-azure-ad-01-773d66.png",
+   "anchor": "How the flow works"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-02-27fcc3.jpg",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-03-49b7a4.png",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-04-97bdc5.png",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-05-fe4d6d.png",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-06-c698ee.png",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-07-2c7c81.png",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-08-dbcb89.png",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-09-150e84.png",
+   "anchor": "In Entra ID"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-10-3cf186.png",
+   "anchor": "In Legito"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-11-9a5546.png",
+   "anchor": "In Legito"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-12-abd49b.png",
+   "anchor": "Creating a Role"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-13-1717cf.png",
+   "anchor": "Pairing a Role with an Entra ID group"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-14-db94ab.png",
+   "anchor": "Pairing a Role with an Entra ID group"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-15-c3386e.png",
+   "anchor": "Pairing a Role with an Entra ID group"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-16-f07177.png",
+   "anchor": "Pairing a Role with an Entra ID group"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-19-66b508.png",
+   "anchor": "Pairing a Role with an Entra ID role"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-20-77047a.png",
+   "anchor": "Pairing a Role with an Entra ID role"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-21-ce71b8.png",
+   "anchor": "Pairing a Role with an Entra ID role"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-17-ed5001.png",
+   "anchor": "Pairing a Role with an Entra ID group"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-17-ed5001.png",
+   "anchor": "Pairing a Role with an Entra ID role"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-18-2fcc6f.png",
+   "anchor": "Pairing a Role with an Entra ID group"
+  },
+  {
+   "src": "live/microsoft-entra-id-azure-ad-18-2fcc6f.png",
+   "anchor": "Pairing a Role with an Entra ID role"
+  }
+ ],
+ "INTEGRATIONS/Other Apps in Legito/Microsoft Office For Web.md": [
+  {
+   "src": "live/microsoft-office-for-web-01-40d9ad.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/microsoft-office-for-web-02-2634c5.png",
+   "anchor": "What it offers"
+  },
+  {
+   "src": "live/microsoft-office-for-web-03-8b57f4.png",
+   "anchor": "Supported formats"
+  },
+  {
+   "src": "live/microsoft-office-for-web-04-47815f.png",
+   "anchor": "Attachments"
+  }
+ ],
+ "ONBOARDING/Guided Tour.md": [
+  {
+   "src": "live/guided-tour-01-2fdcd0.png",
+   "anchor": "Building a Guided Tour"
+  },
+  {
+   "src": "live/guided-tour-02-39b1fd.png",
+   "anchor": "Building a Guided Tour"
+  }
+ ],
+ "ONBOARDING/User Onboarding.md": [
+  {
+   "src": "live/user-onboarding-01-f34a2b.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/user-onboarding-02-d7c1e4.png",
+   "anchor": "Customizing"
+  }
+ ],
+ "ONBOARDING/Workspace Onboarding.md": [
+  {
+   "src": "live/workspace-onboarding-01-70fe26.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/workspace-onboarding-02-d34bd0.png",
+   "anchor": "Chapters"
+  },
+  {
+   "src": "live/workspace-onboarding-03-7dfb36.png",
+   "anchor": "Reaching it"
+  },
+  {
+   "src": "live/workspace-onboarding-04-b167b6.png",
+   "anchor": "Reaching it"
+  },
+  {
+   "src": "live/workspace-onboarding-05-f2221e.png",
+   "anchor": "Deactivating"
+  }
+ ],
+ "PROCESS MANAGEMENT/Custom Objects/Grid View (Objects).md": [
+  {
+   "src": "live/grid-view-objects-01-00c37e.png",
+   "anchor": "Editing columns"
+  }
+ ],
+ "PROCESS MANAGEMENT/Custom Objects/Object Administration.md": [
+  {
+   "src": "live/object-administration-01-117382.png",
+   "anchor": "Administering Objects"
+  },
+  {
+   "src": "live/object-administration-02-5dde5c.png",
+   "anchor": "Sharing"
+  },
+  {
+   "src": "live/object-administration-03-cd455d.png",
+   "anchor": "Customizing the create button"
+  }
+ ],
+ "PROCESS MANAGEMENT/Document Management/Customizable Document Management Area.md": [
+  {
+   "src": "live/customizable-document-management-area-01-f3dfe7.png",
+   "anchor": "Settings"
+  }
+ ],
+ "PROCESS MANAGEMENT/Document Management/Document Record Labels.md": [
+  {
+   "src": "live/document-record-labels-01-93e314.png",
+   "anchor": "Who can create Labels"
+  },
+  {
+   "src": "live/document-record-labels-02-623047.png",
+   "anchor": "Central management"
+  }
+ ],
+ "PROCESS MANAGEMENT/Document Management/Grid View (Documents).md": [
+  {
+   "src": "live/grid-view-objects-01-00c37e.png",
+   "anchor": "Editing columns"
+  }
+ ],
+ "PROCESS MANAGEMENT/Document Management/Kanban View.md": [
+  {
+   "src": "live/kanban-view-01-db80b2.png",
+   "anchor": "intro"
+  }
+ ],
+ "PROCESS MANAGEMENT/Document Management/Search.md": [
+  {
+   "src": "live/search-01-b6c869.png",
+   "anchor": "What is searched"
+  },
+  {
+   "src": "live/search-02-2898ee.jpg",
+   "anchor": "Filters"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Anonymization.md": [
+  {
+   "src": "live/anonymization-01-7b916b.png",
+   "anchor": "Manual anonymization"
+  },
+  {
+   "src": "live/anonymization-02-ac22af.png",
+   "anchor": "Manual anonymization"
+  },
+  {
+   "src": "live/anonymization-03-31bdf0.png",
+   "anchor": "Scheduled anonymization"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Conversations.md": [
+  {
+   "src": "live/conversations-01-b3f37f.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/conversations-02-9b111e.png",
+   "anchor": "One Conversation per record"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Document Record Details.md": [
+  {
+   "src": "live/document-record-details-01-09757a.png",
+   "anchor": "Details held on every record"
+  },
+  {
+   "src": "live/document-record-details-02-8f8131.png",
+   "anchor": "Properties"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Document Sharing.md": [
+  {
+   "src": "live/document-sharing-01-9630f9.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/document-sharing-02-0e7756.png",
+   "anchor": "Sharing inside the Workspace"
+  },
+  {
+   "src": "live/document-sharing-03-92d169.png",
+   "anchor": "Deadline notification"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Document Timeline.md": [
+  {
+   "src": "live/document-timeline-01-876bb6.png",
+   "anchor": "Filtering and export"
+  },
+  {
+   "src": "live/document-timeline-02-41e003.png",
+   "anchor": "Incognito mode"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md": [
+  {
+   "src": "live/document-record-properties-overview-01-09d42c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/document-record-properties-overview-02-e8c5b1.png",
+   "anchor": "Properties"
+  },
+  {
+   "src": "live/document-record-properties-overview-03-3aabee.png",
+   "anchor": "Behavior settings"
+  },
+  {
+   "src": "live/document-record-properties-overview-04-30543d.png",
+   "anchor": "Behavior settings"
+  },
+  {
+   "src": "live/document-record-properties-overview-05-8e50d5.png",
+   "anchor": "Property Groups"
+  },
+  {
+   "src": "live/document-record-properties-overview-06-2a4eea.png",
+   "anchor": "Property Groups"
+  },
+  {
+   "src": "live/document-record-properties-overview-07-d81c78.png",
+   "anchor": "Document Record Types"
+  },
+  {
+   "src": "live/document-record-properties-overview-08-fdd2f6.png",
+   "anchor": "Permission to edit a Property"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Properties/Document Records Priority.md": [
+  {
+   "src": "live/document-records-priority-01-a9e96f.png",
+   "anchor": "intro"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Properties/Properties - Choosing Options.md": [
+  {
+   "src": "live/properties-choosing-options-01-2f8233.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/properties-choosing-options-02-2f0029.png",
+   "anchor": "Extraction Keywords"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Properties/Properties - Inputs.md": [
+  {
+   "src": "live/properties-inputs-01-71b257.png",
+   "anchor": "intro"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Properties/Properties - Special.md": [
+  {
+   "src": "live/properties-special-01-1ed8bb.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/properties-special-02-906f2a.png",
+   "anchor": "Users and User Groups"
+  },
+  {
+   "src": "live/properties-special-03-5031e8.png",
+   "anchor": "Document and Object Records"
+  }
+ ],
+ "PROCESS MANAGEMENT/Records/Properties/Properties - System.md": [
+  {
+   "src": "live/properties-system-01-662467.png",
+   "anchor": "Saved Files"
+  },
+  {
+   "src": "live/properties-system-02-18dae2.png",
+   "anchor": "Saved Files"
+  },
+  {
+   "src": "live/properties-system-03-3bd49e.png",
+   "anchor": "Associated Templates"
+  },
+  {
+   "src": "live/properties-system-04-0b9dd0.png",
+   "anchor": "Associated Templates"
+  },
+  {
+   "src": "live/properties-system-05-2779e4.png",
+   "anchor": "Associated Templates"
+  },
+  {
+   "src": "live/properties-system-06-381722.png",
+   "anchor": "Associated Templates"
+  },
+  {
+   "src": "live/properties-system-07-409358.png",
+   "anchor": "Associated Templates"
+  }
+ ],
+ "PROCESS MANAGEMENT/Smart Document Management Overview.md": [
+  {
+   "src": "live/smart-document-management-overview-01-f38e29.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/smart-document-management-overview-02-95e807.png",
+   "anchor": "Filtering"
+  },
+  {
+   "src": "live/smart-document-management-overview-03-a5237e.png",
+   "anchor": "Statistics"
+  },
+  {
+   "src": "live/smart-document-management-overview-04-b87a1e.png",
+   "anchor": "Searching"
+  },
+  {
+   "src": "live/smart-document-management-overview-05-0e782b.png",
+   "anchor": "Batch Generation"
+  },
+  {
+   "src": "live/smart-document-management-overview-06-d41e55.png",
+   "anchor": "Batch Generation"
+  },
+  {
+   "src": "live/smart-document-management-overview-07-f3d74b.png",
+   "anchor": "Export to CSV"
+  },
+  {
+   "src": "live/smart-document-management-overview-08-145c3a.png",
+   "anchor": "Download all"
+  },
+  {
+   "src": "live/smart-document-management-overview-09-6e3d0a.png",
+   "anchor": "Trash"
+  }
+ ],
+ "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md": [
+  {
+   "src": "live/workflow-approvals-01-d37b2a.gif",
+   "anchor": "Defining an Approval"
+  },
+  {
+   "src": "live/workflow-approvals-02-d131dd.png",
+   "anchor": "Running an Approval"
+  },
+  {
+   "src": "live/workflow-approvals-03-090feb.png",
+   "anchor": "Running an Approval"
+  },
+  {
+   "src": "live/workflow-approvals-04-f1c1bd.png",
+   "anchor": "Running an Approval"
+  },
+  {
+   "src": "live/workflow-approvals-05-0d5cd3.png",
+   "anchor": "Approval names"
+  },
+  {
+   "src": "live/workflow-approvals-06-8050fb.png",
+   "anchor": "Approvers"
+  },
+  {
+   "src": "live/workflow-approvals-07-09e31d.png",
+   "anchor": "Approvers"
+  },
+  {
+   "src": "live/workflow-approvals-08-319376.png",
+   "anchor": "Automatically launched Approvals"
+  }
+ ],
+ "PROCESS MANAGEMENT/Workflows/Workflow Flows.md": [
+  {
+   "src": "live/workflow-flows-01-29b919.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/workflow-flows-02-1dc80f.gif",
+   "anchor": "Rules"
+  },
+  {
+   "src": "live/workflow-flows-03-36f8a0.png",
+   "anchor": "Manual activation"
+  },
+  {
+   "src": "live/workflow-flows-04-81f9f4.png",
+   "anchor": "Plus and Minus on dates"
+  },
+  {
+   "src": "live/workflow-flows-05-a61433.png",
+   "anchor": "Combining triggers"
+  },
+  {
+   "src": "live/workflow-flows-06-344bcf.png",
+   "anchor": "Allow manual activation"
+  },
+  {
+   "src": "live/workflow-flows-07-dea0a9.png",
+   "anchor": "Green and red Flows"
+  },
+  {
+   "src": "live/workflow-flows-08-5f66d3.png",
+   "anchor": "Green and red Flows"
+  },
+  {
+   "src": "live/workflow-flows-09-ade452.png",
+   "anchor": "Green and red Flows"
+  },
+  {
+   "src": "live/workflow-flows-10-0c7057.png",
+   "anchor": "Green and red Flows"
+  }
+ ],
+ "PROCESS MANAGEMENT/Workflows/Workflow Overview.md": [
+  {
+   "src": "live/workflow-overview-01-596d9b.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/workflow-overview-02-5e29e8.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/workflow-overview-03-1b11cd.gif",
+   "anchor": "Workflow administration"
+  },
+  {
+   "src": "live/workflow-overview-04-3ebc77.png",
+   "anchor": "Workflow Editor"
+  },
+  {
+   "src": "live/workflow-overview-05-d0d189.png",
+   "anchor": "Workflow Editor"
+  },
+  {
+   "src": "live/workflow-overview-06-2f2eea.png",
+   "anchor": "Workflow properties"
+  },
+  {
+   "src": "live/workflow-overview-07-ecc608.png",
+   "anchor": "Stage View Order"
+  },
+  {
+   "src": "live/workflow-overview-08-584129.jpg",
+   "anchor": "Workflows for Objects"
+  },
+  {
+   "src": "live/workflow-overview-09-43101b.jpg",
+   "anchor": "Workflow administration"
+  }
+ ],
+ "PROCESS MANAGEMENT/Workflows/Workflow Stages.md": [
+  {
+   "src": "live/workflow-stages-01-b2633c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/workflow-stages-02-ec678f.png",
+   "anchor": "Configuring a Stage"
+  },
+  {
+   "src": "live/workflow-stages-03-4f3a47.png",
+   "anchor": "Configuring a Stage"
+  },
+  {
+   "src": "live/workflow-stages-04-59b5ad.png",
+   "anchor": "Stage icons"
+  },
+  {
+   "src": "live/workflow-stages-05-328c9f.png",
+   "anchor": "Stage icons"
+  },
+  {
+   "src": "live/workflow-stages-06-2671b7.png",
+   "anchor": "Stage icons"
+  },
+  {
+   "src": "live/workflow-stages-07-599ae9.png",
+   "anchor": "Stage icons"
+  },
+  {
+   "src": "live/workflow-stages-08-15f6d2.png",
+   "anchor": "Adding a Stage"
+  },
+  {
+   "src": "live/workflow-stages-09-fc7a5e.png",
+   "anchor": "Adding a Stage"
+  },
+  {
+   "src": "live/workflow-stages-10-d59dab.png",
+   "anchor": "Configuring a Stage"
+  },
+  {
+   "src": "live/workflow-stages-11-064c7c.png",
+   "anchor": "Configuring a Stage"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md": [
+  {
+   "src": "live/clause-library-overview-01-4eb924.png",
+   "anchor": "Managing Clauses"
+  },
+  {
+   "src": "live/clause-library-overview-02-270697.png",
+   "anchor": "Managing Clauses"
+  },
+  {
+   "src": "live/clause-library-overview-03-06ea4b.png",
+   "anchor": "Managing Clauses"
+  },
+  {
+   "src": "live/clause-library-overview-04-9c9487.png",
+   "anchor": "Inserting Library Clauses into Templates"
+  },
+  {
+   "src": "live/clause-library-overview-05-328ad9.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/clause-library-overview-06-544f48.png",
+   "anchor": "Permissions"
+  },
+  {
+   "src": "live/clause-library-overview-07-cd4ef7.png",
+   "anchor": "Dynamic insertion of Clauses"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md": [
+  {
+   "src": "live/specifics-of-logical-dependencies-01-5c08ab.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/specifics-of-logical-dependencies-02-25ff8a.png",
+   "anchor": "Practical consequence"
+  },
+  {
+   "src": "live/specifics-of-logical-dependencies-03-76c4de.png",
+   "anchor": "Practical consequence"
+  },
+  {
+   "src": "live/specifics-of-logical-dependencies-04-6b650c.png",
+   "anchor": "Practical consequence"
+  },
+  {
+   "src": "live/specifics-of-logical-dependencies-05-3bd6a7.png",
+   "anchor": "end"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Scripts/Documentation.md": [
+  {
+   "src": "live/documentation-01-19dd10.png",
+   "anchor": "1. Tag the Elements"
+  },
+  {
+   "src": "live/documentation-02-b790a5.png",
+   "anchor": "1. Tag the Elements"
+  },
+  {
+   "src": "live/documentation-03-d20729.png",
+   "anchor": "2. Create the Script"
+  },
+  {
+   "src": "live/documentation-04-c89311.png",
+   "anchor": "3. Write the Script"
+  },
+  {
+   "src": "live/documentation-05-52cbb4.png",
+   "anchor": "3. Write the Script"
+  },
+  {
+   "src": "live/documentation-06-3b4e6a.png",
+   "anchor": "Debugging"
+  },
+  {
+   "src": "live/documentation-07-3bc265.png",
+   "anchor": "Finders"
+  },
+  {
+   "src": "live/documentation-08-1df023.png",
+   "anchor": "Authenticating against the Legito API"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Scripts/Script Administration.md": [
+  {
+   "src": "live/script-administration-01-1f2760.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/script-administration-02-89a4eb.png",
+   "anchor": "What can be done there"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Scripts/Script Editor.md": [
+  {
+   "src": "live/script-editor-01-6e338a.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Settings/Assigned Advanced Layout Design.md": [
+  {
+   "src": "live/assigned-advanced-layout-design-01-fc406c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/assigned-advanced-layout-design-02-42b6ce.png",
+   "anchor": "Assigning a design"
+  },
+  {
+   "src": "live/assigned-advanced-layout-design-03-1bae4a.png",
+   "anchor": "Alternative designs"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Settings/Export Format Restrictions.md": [
+  {
+   "src": "live/export-format-restrictions-01-bd3dd8.png",
+   "anchor": "Setting the restriction"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Settings/Properties.md": [
+  {
+   "src": "live/properties-01-5df606.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Assigned Workflow.md": [
+  {
+   "src": "live/assigned-workflow-01-93bfc2.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Country - Region.md": [
+  {
+   "src": "live/country-region-01-bd1c62.png",
+   "anchor": "Assigning at creation"
+  },
+  {
+   "src": "live/country-region-02-766505.png",
+   "anchor": "Changing it later"
+  },
+  {
+   "src": "live/country-region-03-1d26d8.png",
+   "anchor": "Changing it later"
+  },
+  {
+   "src": "live/country-region-04-7aa712.png",
+   "anchor": "What it is used for"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Description.md": [
+  {
+   "src": "live/description-01-bb4315.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/description-02-67e22c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/description-03-8e228b.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md": [
+  {
+   "src": "live/document-menu-bar-options-01-3bd221.png",
+   "anchor": "Default tab"
+  },
+  {
+   "src": "live/document-menu-bar-options-02-c87697.png",
+   "anchor": "Default tab"
+  },
+  {
+   "src": "live/document-menu-bar-options-03-d93228.png",
+   "anchor": "Default tab"
+  },
+  {
+   "src": "live/document-menu-bar-options-04-4c17f6.png",
+   "anchor": "Default tab"
+  },
+  {
+   "src": "live/document-menu-bar-options-05-2b5a15.png",
+   "anchor": "Default tab"
+  },
+  {
+   "src": "live/document-menu-bar-options-06-935b1c.png",
+   "anchor": "Default tab"
+  },
+  {
+   "src": "live/document-menu-bar-options-07-6ed244.png",
+   "anchor": "Default tab"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Instructions.md": [
+  {
+   "src": "live/instructions-01-8788d9.png",
+   "anchor": "Initial Instructions"
+  },
+  {
+   "src": "live/instructions-02-4d409f.png",
+   "anchor": "Initial Instructions"
+  },
+  {
+   "src": "live/instructions-03-41d05c.png",
+   "anchor": "What Instructions are used for"
+  },
+  {
+   "src": "live/instructions-04-29c495.png",
+   "anchor": "Follow-Up Instructions"
+  },
+  {
+   "src": "live/instructions-05-1b114a.png",
+   "anchor": "Follow-Up Instructions"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Language.md": [
+  {
+   "src": "live/language-01-d5ab6f.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/language-02-d690ca.png",
+   "anchor": "Changing the primary language"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Search Keywords.md": [
+  {
+   "src": "live/search-keywords-01-ebfaf8.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/search-keywords-02-c01156.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/search-keywords-03-e3650f.png",
+   "anchor": "Why it matters"
+  },
+  {
+   "src": "live/search-keywords-04-fe230d.png",
+   "anchor": "Why it matters"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Categories.md": [
+  {
+   "src": "live/template-categories-01-226842.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-categories-02-3f8fc7.png",
+   "anchor": "How Categories differ from Country / Region"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Layout.md": [
+  {
+   "src": "live/template-suite-layout-01-11aec8.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-suite-layout-02-be87be.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-suite-layout-03-c8e142.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-suite-layout-04-2db2c5.png",
+   "anchor": "Behavior under the Dual layout"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Properties.md": [
+  {
+   "src": "live/template-suite-properties-01-861452.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-suite-properties-02-f91fe9.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-suite-properties-03-c31a3c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-suite-properties-04-62ee96.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Versions.md": [
+  {
+   "src": "live/template-suite-versions-01-67c684.png",
+   "anchor": "Making a previous version available"
+  },
+  {
+   "src": "live/template-suite-versions-02-e229be.png",
+   "anchor": "Making a previous version available"
+  },
+  {
+   "src": "live/template-suite-versions-03-562af6.png",
+   "anchor": "Building a version by hand"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Automation Overview.md": [
+  {
+   "src": "live/template-automation-overview-01-4f1085.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-automation-overview-02-dbc351.png",
+   "anchor": "Template Suites"
+  },
+  {
+   "src": "live/template-automation-overview-03-3fcd43.png",
+   "anchor": "Template Suites"
+  },
+  {
+   "src": "live/template-automation-overview-04-b46bd4.png",
+   "anchor": "The building blocks"
+  },
+  {
+   "src": "live/template-automation-overview-05-c57b25.png",
+   "anchor": "Template settings"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Any Content.md": [
+  {
+   "src": "live/specifics-of-logical-dependencies-01-5c08ab.png",
+   "anchor": "Operators"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Currency-in-money.md": [
+  {
+   "src": "live/condition-to-currency-in-money-01-532913.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/condition-to-currency-in-money-02-d106b0.png",
+   "anchor": "Operators"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Date.md": [
+  {
+   "src": "live/condition-to-date-01-7cc7ed.jpg",
+   "anchor": "Operators"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Days-in-date.md": [
+  {
+   "src": "live/condition-to-days-in-date-01-605320.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/condition-to-days-in-date-02-349b73.png",
+   "anchor": "Operators"
+  },
+  {
+   "src": "live/condition-to-days-in-date-03-26a5b7.png",
+   "anchor": "Configuring the Condition"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To JSON Object.md": [
+  {
+   "src": "live/condition-to-json-object-01-a1e3a7.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/condition-to-json-object-02-0946f3.png",
+   "anchor": "Prerequisite"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Questions.md": [
+  {
+   "src": "live/condition-to-questions-01-161919.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/condition-to-questions-02-311df9.png",
+   "anchor": "Operators"
+  },
+  {
+   "src": "live/condition-to-questions-03-088a78.png",
+   "anchor": "Operators"
+  },
+  {
+   "src": "live/condition-to-questions-04-140490.png",
+   "anchor": "Configuring the Condition"
+  },
+  {
+   "src": "live/condition-to-questions-05-250d07.png",
+   "anchor": "Configuring the Condition"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Select Elements.md": [
+  {
+   "src": "live/condition-to-select-elements-01-6b6820.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/condition-to-select-elements-02-58f3bf.png",
+   "anchor": "Operators"
+  },
+  {
+   "src": "live/condition-to-select-elements-03-75ecfc.png",
+   "anchor": "Configuring the Condition"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Switcher.md": [
+  {
+   "src": "live/condition-to-switcher-01-37e7dd.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text Inputs.md": [
+  {
+   "src": "live/condition-to-text-inputs-01-ffdc97.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/condition-to-text-inputs-02-939000.png",
+   "anchor": "Configuring the Condition"
+  },
+  {
+   "src": "live/condition-to-text-inputs-03-d6984b.png",
+   "anchor": "Configuring the Condition"
+  },
+  {
+   "src": "live/condition-to-text-inputs-04-74c1ed.png",
+   "anchor": "Configuring the Condition"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text.md": [
+  {
+   "src": "live/condition-to-text-01-75364b.png",
+   "anchor": "Operators"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Conditions/Conditions Overview.md": [
+  {
+   "src": "live/conditions-overview-01-bef5ea.png",
+   "anchor": "Condition types"
+  },
+  {
+   "src": "live/conditions-overview-02-0bd926.png",
+   "anchor": "Document-level Conditions"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md": [
+  {
+   "src": "live/conditional-default-values-01-96924d.png",
+   "anchor": "Setting a Default Value"
+  },
+  {
+   "src": "live/conditional-default-values-02-817f5e.png",
+   "anchor": "Setting a Default Value"
+  },
+  {
+   "src": "live/conditional-default-values-03-d3cb9d.png",
+   "anchor": "Several Default Values on one Element"
+  },
+  {
+   "src": "live/conditional-default-values-04-cf9eef.png",
+   "anchor": "Several Default Values on one Element"
+  },
+  {
+   "src": "live/conditional-default-values-05-2aec42.png",
+   "anchor": "Several Default Values on one Element"
+  },
+  {
+   "src": "live/conditional-default-values-06-3e7232.png",
+   "anchor": "Supported Elements and Clauses"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Warnings.md": [
+  {
+   "src": "live/warnings-01-37e850.png",
+   "anchor": "Where Warnings can be applied"
+  },
+  {
+   "src": "live/warnings-02-5aa5ac.png",
+   "anchor": "Impact levels"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md": [
+  {
+   "src": "live/advanced-layout-design-01-98bdbe.png",
+   "anchor": "Creating an Advanced Layout Design"
+  },
+  {
+   "src": "live/advanced-layout-design-02-c87cae.png",
+   "anchor": "Creating an Advanced Layout Design"
+  },
+  {
+   "src": "live/advanced-layout-design-03-901afa.png",
+   "anchor": "Headers and footers"
+  },
+  {
+   "src": "live/advanced-layout-design-04-971d04.png",
+   "anchor": "Template Tag annotations"
+  },
+  {
+   "src": "live/advanced-layout-design-05-e00058.jpg",
+   "anchor": "Formatting logic"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Formatting, Styles & Design Overview.md": [
+  {
+   "src": "live/formatting-styles-design-overview-01-ddcc41.png",
+   "anchor": "Element spacing and new line"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Numbering.md": [
+  {
+   "src": "live/numbering-01-153a04.png",
+   "anchor": "Two types"
+  },
+  {
+   "src": "live/numbering-02-48b4c8.png",
+   "anchor": "Numbering per Clause"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Section Formatting.md": [
+  {
+   "src": "live/section-formatting-01-d40dcc.png",
+   "anchor": "Page size and margins"
+  },
+  {
+   "src": "live/section-formatting-02-91c870.png",
+   "anchor": "Columns"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md": [
+  {
+   "src": "live/styles-01-b12cb3.gif",
+   "anchor": "Styles administration"
+  },
+  {
+   "src": "live/styles-02-7c4ac7.png",
+   "anchor": "Styles administration"
+  },
+  {
+   "src": "live/styles-03-2fe145.png",
+   "anchor": "Style settings"
+  },
+  {
+   "src": "live/styles-04-357730.png",
+   "anchor": "Applying Styles in the Template Editor"
+  },
+  {
+   "src": "live/styles-05-3f270d.png",
+   "anchor": "Applying Styles in the Template Editor"
+  },
+  {
+   "src": "live/styles-06-5da436.png",
+   "anchor": "Default Styles per Clause level"
+  },
+  {
+   "src": "live/styles-07-1dd759.png",
+   "anchor": "Default Styles per Clause level"
+  },
+  {
+   "src": "live/styles-08-922814.png",
+   "anchor": "Clear formatting"
+  },
+  {
+   "src": "live/styles-09-7341d1.png",
+   "anchor": "end"
+  },
+  {
+   "src": "live/styles-10-00889b.png",
+   "anchor": "Styles administration"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Import/Import Legito Templates.md": [
+  {
+   "src": "live/import-legito-templates-01-75b98c.png",
+   "anchor": "Importing an entire Template"
+  },
+  {
+   "src": "live/import-legito-templates-02-6f6b26.jpg",
+   "anchor": "Importing an entire Template"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Import/Import from Word.md": [
+  {
+   "src": "live/import-from-word-01-44a039.png",
+   "anchor": "AI conversion"
+  },
+  {
+   "src": "live/import-from-word-02-bb0f93.png",
+   "anchor": "AI conversion"
+  },
+  {
+   "src": "live/import-from-word-03-768333.jpg",
+   "anchor": "Formatting rule for annotations"
+  },
+  {
+   "src": "live/import-from-word-04-2c8fcd.jpg",
+   "anchor": "Formatting rule for annotations"
+  },
+  {
+   "src": "live/import-from-word-05-a1daea.png",
+   "anchor": "Formatting rule for annotations"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Any Content.md": [
+  {
+   "src": "live/repeat-to-any-content-01-0abfa4.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Buttons.md": [
+  {
+   "src": "live/repeat-to-buttons-01-dea28d.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/repeat-to-buttons-02-7827fd.png",
+   "anchor": "Configuring the Repeat"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To JSON Object.md": [
+  {
+   "src": "live/condition-to-json-object-02-0946f3.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Text Inputs.md": [
+  {
+   "src": "live/repeat-to-text-inputs-01-0acde9.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/repeat-to-text-inputs-02-f1fdad.png",
+   "anchor": "Configuring the Repeat"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Button.md": [
+  {
+   "src": "live/button-01-9b72fd.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Calculation.md": [
+  {
+   "src": "live/calculation-01-3e10e4.png",
+   "anchor": "Writing a formula"
+  },
+  {
+   "src": "live/calculation-02-b4d6e3.png",
+   "anchor": "Writing a formula"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Clauses.md": [
+  {
+   "src": "live/clauses-01-ede5ec.png",
+   "anchor": "The five levels"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Date.md": [
+  {
+   "src": "live/date-01-bce300.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/date-02-366670.png",
+   "anchor": "Formatting"
+  },
+  {
+   "src": "live/date-03-293bcc.png",
+   "anchor": "Help text"
+  },
+  {
+   "src": "live/date-04-858321.png",
+   "anchor": "Deadline reminders"
+  },
+  {
+   "src": "live/date-05-774da5.png",
+   "anchor": "Deadline reminders"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Element Group.md": [
+  {
+   "src": "live/element-group-01-3da45e.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/element-group-02-98acd3.png",
+   "anchor": "Conditions on repeated Elements"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Footnotes and Endnotes.md": [
+  {
+   "src": "live/footnotes-and-endnotes-01-038089.png",
+   "anchor": "Adding a note"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Header & Footer.md": [
+  {
+   "src": "live/header-footer-01-3855a0.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/header-footer-02-e239ad.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Image.md": [
+  {
+   "src": "live/image-01-4c1e7a.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/image-02-07700d.png",
+   "anchor": "Sizing"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md": [
+  {
+   "src": "live/link-01-69856c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/link-02-7ff2e9.png",
+   "anchor": "Compatible targets"
+  },
+  {
+   "src": "live/link-03-2bf0e9.png",
+   "anchor": "Compatible targets"
+  },
+  {
+   "src": "live/link-04-ac3e86.png",
+   "anchor": "What a Link does"
+  },
+  {
+   "src": "live/link-05-b5c64f.png",
+   "anchor": "What a Link does"
+  },
+  {
+   "src": "live/link-06-a97ffe.png",
+   "anchor": "Formatting"
+  },
+  {
+   "src": "live/link-07-5a46be.png",
+   "anchor": "Formatting"
+  },
+  {
+   "src": "live/link-08-6731dc.png",
+   "anchor": "Creating a Link"
+  },
+  {
+   "src": "live/link-09-aec7a1.png",
+   "anchor": "Troubleshooting"
+  },
+  {
+   "src": "live/link-10-c3e2d8.png",
+   "anchor": "Troubleshooting"
+  },
+  {
+   "src": "live/link-11-370782.png",
+   "anchor": "Export"
+  },
+  {
+   "src": "live/link-12-dd8eef.png",
+   "anchor": "Export"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md": [
+  {
+   "src": "live/money-01-b2d708.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/money-02-794a94.png",
+   "anchor": "Short form and long form"
+  },
+  {
+   "src": "live/money-03-9c15b6.png",
+   "anchor": "Formatting"
+  },
+  {
+   "src": "live/money-04-2a1498.png",
+   "anchor": "Formatting"
+  },
+  {
+   "src": "live/money-05-db2f20.png",
+   "anchor": "Help text"
+  },
+  {
+   "src": "live/money-06-6f8880.png",
+   "anchor": "Document Record values"
+  },
+  {
+   "src": "live/money-07-bc60a8.png",
+   "anchor": "Document Record values"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Page Number.md": [
+  {
+   "src": "live/page-number-01-4b2a85.png",
+   "anchor": "Options"
+  },
+  {
+   "src": "live/page-number-02-7478ad.png",
+   "anchor": "Options"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md": [
+  {
+   "src": "live/qr-code-01-39a5fa.png",
+   "anchor": "Formatting"
+  },
+  {
+   "src": "live/qr-code-02-f3bdf4.png",
+   "anchor": "When the code is generated"
+  },
+  {
+   "src": "live/qr-code-03-c89982.png",
+   "anchor": "Inserting a value into the code"
+  },
+  {
+   "src": "live/qr-code-04-1a790b.png",
+   "anchor": "Inserting a value into the code"
+  },
+  {
+   "src": "live/qr-code-05-06dd2d.png",
+   "anchor": "Inserting a value into the code"
+  },
+  {
+   "src": "live/qr-code-06-bf190a.png",
+   "anchor": "Inserting a value into the code"
+  },
+  {
+   "src": "live/qr-code-07-15ed1d.png",
+   "anchor": "Inserting a value into the code"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md": [
+  {
+   "src": "live/question-01-48fe7b.png",
+   "anchor": "Adding a Question"
+  },
+  {
+   "src": "live/question-02-a14107.png",
+   "anchor": "Adding a Question"
+  },
+  {
+   "src": "live/question-03-cb7776.png",
+   "anchor": "Adding a Question"
+  },
+  {
+   "src": "live/question-04-e6df57.png",
+   "anchor": "Reference Options"
+  },
+  {
+   "src": "live/question-05-1e9a24.png",
+   "anchor": "Sorting options"
+  },
+  {
+   "src": "live/question-06-32cdbe.png",
+   "anchor": "First option selected"
+  },
+  {
+   "src": "live/question-07-b3b2b1.png",
+   "anchor": "Multiple Choice"
+  },
+  {
+   "src": "live/question-08-7cb6e0.png",
+   "anchor": "Questions referring to Objects"
+  },
+  {
+   "src": "live/question-09-530fe1.png",
+   "anchor": "Search"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Rich Text.md": [
+  {
+   "src": "live/rich-text-01-68210c.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/overview-of-document-drafting-12-cca6aa.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md": [
+  {
+   "src": "live/select-01-2a4b35.jpg",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/select-02-5b6ae4.png",
+   "anchor": "Reference Options"
+  },
+  {
+   "src": "live/select-03-dbdf4b.png",
+   "anchor": "Reference Options"
+  },
+  {
+   "src": "live/select-04-6179a7.png",
+   "anchor": "Reference Options"
+  },
+  {
+   "src": "live/select-05-5ce918.png",
+   "anchor": "Non-exportable options"
+  },
+  {
+   "src": "live/select-06-928a7c.png",
+   "anchor": "Non-exportable options"
+  },
+  {
+   "src": "live/select-07-be42dc.png",
+   "anchor": "Sorting options"
+  },
+  {
+   "src": "live/select-08-d328b0.png",
+   "anchor": "Sorting options"
+  },
+  {
+   "src": "live/select-09-d1badf.png",
+   "anchor": "Multiple Choice"
+  },
+  {
+   "src": "live/select-10-5b3f54.png",
+   "anchor": "Selects referring to Objects"
+  },
+  {
+   "src": "live/select-11-2e25af.png",
+   "anchor": "Search"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Switcher.md": [
+  {
+   "src": "live/switcher-01-a8b212.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/switcher-02-150144.png",
+   "anchor": "Visualization"
+  },
+  {
+   "src": "live/switcher-03-c989e1.png",
+   "anchor": "Visualization"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Table of Contents.md": [
+  {
+   "src": "live/table-of-contents-01-3b0129.png",
+   "anchor": "Limitations"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md": [
+  {
+   "src": "live/table-01-34ce60.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/table-02-8ec7db.png",
+   "anchor": "Table tools"
+  },
+  {
+   "src": "live/table-03-3f50f2.png",
+   "anchor": "Merging cells"
+  },
+  {
+   "src": "live/table-04-8b58f4.png",
+   "anchor": "Merging cells"
+  },
+  {
+   "src": "live/table-05-dd6e95.png",
+   "anchor": "Rows and columns are configured separately"
+  },
+  {
+   "src": "live/table-06-e73603.png",
+   "anchor": "Table tools"
+  },
+  {
+   "src": "live/table-07-d02b84.png",
+   "anchor": "Rows and columns are configured separately"
+  },
+  {
+   "src": "live/table-08-0f8ec6.png",
+   "anchor": "Rows and columns are configured separately"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Template Sections.md": [
+  {
+   "src": "live/template-sections-01-439eed.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-sections-02-09843c.png",
+   "anchor": "What can be applied to a Section"
+  },
+  {
+   "src": "live/template-sections-03-66e284.png",
+   "anchor": "Next Page Sections"
+  },
+  {
+   "src": "live/template-sections-04-257679.png",
+   "anchor": "Continuous Sections"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Text Input.md": [
+  {
+   "src": "live/text-input-01-345f3f.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/text-input-02-03d685.png",
+   "anchor": "Properties"
+  },
+  {
+   "src": "live/text-input-03-c3f671.png",
+   "anchor": "Help text"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Text.md": [
+  {
+   "src": "live/text-01-ad370a.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/text-02-bb003b.png",
+   "anchor": "Splitting a Text Element"
+  },
+  {
+   "src": "live/text-03-f9f9a8.png",
+   "anchor": "Formatting"
+  },
+  {
+   "src": "live/text-04-5aabc9.png",
+   "anchor": "Formatting"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Structure/Title.md": [
+  {
+   "src": "live/title-01-7c4079.png",
+   "anchor": "Working with a Title"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md": [
+  {
+   "src": "live/template-editor-features-overview-01-113a6c.png",
+   "anchor": "Left bar"
+  },
+  {
+   "src": "live/template-editor-features-overview-02-4a7c19.png",
+   "anchor": "Left bar"
+  },
+  {
+   "src": "live/template-editor-features-overview-03-e30fef.png",
+   "anchor": "Left bar"
+  },
+  {
+   "src": "live/template-editor-features-overview-04-810733.png",
+   "anchor": "Template search"
+  },
+  {
+   "src": "live/template-editor-features-overview-05-ce9879.png",
+   "anchor": "Template search"
+  },
+  {
+   "src": "live/template-editor-features-overview-06-15362e.png",
+   "anchor": "Undo and redo"
+  },
+  {
+   "src": "live/template-editor-features-overview-07-70c535.png",
+   "anchor": "Undo and redo"
+  },
+  {
+   "src": "live/template-editor-features-overview-08-6c6000.jpg",
+   "anchor": "Labels"
+  },
+  {
+   "src": "live/template-editor-features-overview-09-9e77a5.png",
+   "anchor": "Labels"
+  },
+  {
+   "src": "live/template-editor-features-overview-10-da7149.png",
+   "anchor": "Ruler"
+  },
+  {
+   "src": "live/template-editor-features-overview-11-6da97b.png",
+   "anchor": "Ruler"
+  },
+  {
+   "src": "live/template-editor-features-overview-12-bdc57f.png",
+   "anchor": "Bulk Actions"
+  },
+  {
+   "src": "live/template-editor-features-overview-13-d84c5d.png",
+   "anchor": "Bulk Actions"
+  },
+  {
+   "src": "live/template-editor-features-overview-14-2636c7.jpg",
+   "anchor": "Duplicate"
+  },
+  {
+   "src": "live/template-editor-features-overview-15-d084bb.png",
+   "anchor": "Duplicate"
+  },
+  {
+   "src": "live/template-editor-features-overview-16-850628.png",
+   "anchor": "Duplicate"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Translation Mode.md": [
+  {
+   "src": "live/translation-mode-01-eb96fd.png",
+   "anchor": "What changes in Translation mode"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Template Tags/Document Records - Data Extraction.md": [
+  {
+   "src": "live/document-records-data-extraction-01-61d907.png",
+   "anchor": "3. Extracting data into Document Record Properties"
+  },
+  {
+   "src": "live/document-records-data-extraction-02-a2f73a.png",
+   "anchor": "Extraction rules"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Editor/Template Tags/Template Tags Overview.md": [
+  {
+   "src": "live/template-tags-overview-01-5b5a5e.png",
+   "anchor": "intro"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Types/Form Template.md": [
+  {
+   "src": "live/form-template-01-e78698.png",
+   "anchor": "Quick Actions"
+  },
+  {
+   "src": "live/form-template-02-e21fe8.png",
+   "anchor": "Quick Actions"
+  },
+  {
+   "src": "live/form-template-03-a04917.png",
+   "anchor": "Combining with the full Element set"
+  },
+  {
+   "src": "live/form-template-04-e9cbaa.png",
+   "anchor": "Combining with the full Element set"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Types/PDF Template.md": [
+  {
+   "src": "live/pdf-template-01-3fc63b.png",
+   "anchor": "Adding a PDF Template"
+  },
+  {
+   "src": "live/pdf-template-02-268eb3.png",
+   "anchor": "Mapping fields with Template Tags"
+  },
+  {
+   "src": "live/pdf-template-03-3d8615.png",
+   "anchor": "Mapping fields with Template Tags"
+  },
+  {
+   "src": "live/pdf-template-04-2a5ef0.png",
+   "anchor": "Mapping fields with Template Tags"
+  },
+  {
+   "src": "live/pdf-template-05-205d33.png",
+   "anchor": "Conditions"
+  },
+  {
+   "src": "live/pdf-template-06-480d69.png",
+   "anchor": "Where the finished PDF appears"
+  },
+  {
+   "src": "live/pdf-template-07-81723e.png",
+   "anchor": "Where the finished PDF appears"
+  }
+ ],
+ "TEMPLATE AUTOMATION/Template Types/Template Type Overview.md": [
+  {
+   "src": "live/template-type-overview-01-c350c8.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-type-overview-02-001fe1.png",
+   "anchor": "Choosing between Document and Form"
+  },
+  {
+   "src": "live/template-type-overview-03-813607.png",
+   "anchor": "Choosing between Document and Form"
+  },
+  {
+   "src": "live/template-type-overview-04-5eafa2.png",
+   "anchor": "intro"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/People & Access/Guests.md": [
+  {
+   "src": "live/guests-01-a8c24e.png",
+   "anchor": "What a Guest cannot do"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/People & Access/Single Sign-On (SSO).md": [
+  {
+   "src": "live/single-sign-on-sso-01-45a57e.png",
+   "anchor": "Activating"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/People & Access/User Groups.md": [
+  {
+   "src": "live/user-groups-01-ba034f.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/user-groups-02-de32b6.png",
+   "anchor": "Access levels"
+  },
+  {
+   "src": "live/user-groups-03-129b8f.png",
+   "anchor": "Access levels"
+  },
+  {
+   "src": "live/user-groups-04-4a07c4.png",
+   "anchor": "Where User Groups appear"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md": [
+  {
+   "src": "live/users-and-permissions-01-f3fb58.png",
+   "anchor": "Adding a user"
+  },
+  {
+   "src": "live/users-and-permissions-02-7c7158.png",
+   "anchor": "Adding a user"
+  },
+  {
+   "src": "live/users-and-permissions-03-9c5ba3.png",
+   "anchor": "Adding a user"
+  },
+  {
+   "src": "live/users-and-permissions-04-e657a9.png",
+   "anchor": "Workspace Admin"
+  },
+  {
+   "src": "live/users-and-permissions-05-5ee811.png",
+   "anchor": "Workspace Admin"
+  },
+  {
+   "src": "live/users-and-permissions-06-b5e378.png",
+   "anchor": "Templates and automation"
+  },
+  {
+   "src": "live/users-and-permissions-07-4cf43c.png",
+   "anchor": "Recommended settings"
+  },
+  {
+   "src": "live/users-and-permissions-08-c4a09b.png",
+   "anchor": "Adding a user"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Personal Settings/Notifications.md": [
+  {
+   "src": "live/notifications-01-cfeef1.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/notifications-02-142265.gif",
+   "anchor": "Days in advance"
+  },
+  {
+   "src": "live/notifications-03-4a1a57.png",
+   "anchor": "Events"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Personal Settings/User Account.md": [
+  {
+   "src": "live/user-account-01-96b1c2.gif",
+   "anchor": "intro"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Announcements.md": [
+  {
+   "src": "live/announcements-01-9411a8.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/announcements-02-ea410a.png",
+   "anchor": "intro"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Billing.md": [
+  {
+   "src": "live/billing-01-e01b25.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/billing-02-c946c4.png",
+   "anchor": "intro"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Document Localizations.md": [
+  {
+   "src": "live/document-localizations-01-e8392e.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/document-localizations-02-8d0767.png",
+   "anchor": "Language Specific"
+  },
+  {
+   "src": "live/document-localizations-03-0bc2da.png",
+   "anchor": "Monetary"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/General Workspace Settings.md": [
+  {
+   "src": "live/general-workspace-settings-01-2a5a56.png",
+   "anchor": "intro"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Security Settings.md": [
+  {
+   "src": "live/security-settings-01-9ff2c3.png",
+   "anchor": "Password parameters"
+  },
+  {
+   "src": "live/security-settings-02-6f0f35.png",
+   "anchor": "IP address restriction"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Template & Document Grouping.md": [
+  {
+   "src": "live/template-document-grouping-01-32b250.gif",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/template-document-grouping-02-aa5850.gif",
+   "anchor": "Countries and Regions"
+  },
+  {
+   "src": "live/template-document-grouping-03-fff8f0.gif",
+   "anchor": "Template Categories"
+  },
+  {
+   "src": "live/template-document-grouping-04-ff8001.png",
+   "anchor": "External Document Record Default Summary"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Branding.md": [
+  {
+   "src": "live/workspace-branding-01-576584.png",
+   "anchor": "intro"
+  },
+  {
+   "src": "live/workspace-branding-02-58881c.png",
+   "anchor": "intro"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Footer.md": [
+  {
+   "src": "live/workspace-footer-01-3b11f8.gif",
+   "anchor": "Building a footer"
+  },
+  {
+   "src": "live/workspace-footer-02-f0fb78.gif",
+   "anchor": "Building a footer"
+  },
+  {
+   "src": "live/workspace-footer-03-487bbc.gif",
+   "anchor": "Building a footer"
+  },
+  {
+   "src": "live/workspace-footer-04-deb551.png",
+   "anchor": "Color scheme"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Localization.md": [
+  {
+   "src": "live/workspace-localization-01-1daa0e.png",
+   "anchor": "intro"
+  }
+ ],
+ "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Navigation.md": [
+  {
+   "src": "live/workspace-navigation-01-512336.png",
+   "anchor": "intro"
+  }
+ ]
+}

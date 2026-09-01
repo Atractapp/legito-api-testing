@@ -14,6 +14,9 @@ const PUB = path.join(__dirname, "public");
 
 const liveMap = JSON.parse(fs.readFileSync(path.join(DATA, "live_map.json"), "utf8"));
 const posters = JSON.parse(fs.readFileSync(path.join(DATA, "vimeo_posters.json"), "utf8"));
+const placementOverrides = fs.existsSync(path.join(DATA, "placement_overrides.json"))
+  ? JSON.parse(fs.readFileSync(path.join(DATA, "placement_overrides.json"), "utf8")) : {};
+let ovUsed = 0, ovMiss = 0;
 
 /* ---------- helpers ---------- */
 const slugify = (s) =>
@@ -163,8 +166,14 @@ function renderArticleBody(art) {
         const d = Math.min(depth + 1, 6); // shift down: article H1 is the title
         return `<h${d} id="${id}" class="hd"><a class="anchor" href="#${id}" aria-label="Link to section">${ICONS.link}</a>${text}</h${d}>\n`;
       },
-      image() {
-        // 2024-corpus images predate the current UI; the site carries live-KB media only
+      image({ href, text }) {
+        // 2024-corpus images predate the current UI and are dropped; curated
+        // diagrams under media/diagrams are the one exception
+        const dec = decodeURIComponent(href);
+        if (dec.includes("media/diagrams/")) {
+          const fn = dec.split("/").pop();
+          return `<img class="shot diagram" loading="lazy" src="/diagrams/${fn}" alt="${esc(text || "")}">`;
+        }
         return "";
       },
       link({ href, tokens }) {
@@ -180,7 +189,7 @@ function renderArticleBody(art) {
   // standalone image paragraphs -> figures; tables -> scroll wrap
   html = html.replace(/<p>(<img class="shot"[^>]*>)<\/p>/g, '<figure class="fig">$1</figure>');
   html = html.replace(/<table>/g, '<div class="twrap"><table>').replace(/<\/table>/g, "</table></div>");
-  if (useLive) html = placeLiveImages(html, art.live.images);
+  if (useLive) html = placeLiveImages(html, art.live.images, placementOverrides[art.rel]);
   return { html, headings, related };
 }
 
@@ -192,7 +201,50 @@ function toks(t) {
   return new Set((t || "").toLowerCase().replace(/<[^>]+>/g, " ").replace(/[^a-z0-9]+/g, " ")
     .split(" ").filter(w => w.length >= 3 && !STOP.has(w)));
 }
-function placeLiveImages(html, images) {
+const normH = (t) => (t || "").toLowerCase().replace(/<[^>]+>/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+function placeByOverride(html, images, override) {
+  const blocks = html.split(/\n(?=<)/);
+  const headings = [];
+  blocks.forEach((b, i) => {
+    const m = b.match(/^<h([2-6])[^>]*>(.*?)<\/h\1>/s);
+    if (m) headings.push({ i, key: normH(m[2]) });
+  });
+  const bySrc = Object.fromEntries(override.map(o => [o.src, o.anchor]));
+  const inserts = {};
+  const endFigs = [];
+  let ok = true;
+  for (const im of images) {
+    const fig = `<figure class="fig"><img class="shot" loading="lazy" src="/${im.src}" alt="${esc(im.alt || "")}"></figure>`;
+    const anchor = bySrc[im.src];
+    if (anchor === undefined) { ok = false; break; }
+    if (anchor === "end") { endFigs.push(fig); continue; }
+    if (anchor === "intro") {
+      let j = 0;
+      while (j < blocks.length && /^<h[2-6]/.test(blocks[j])) j++;
+      (inserts[Math.min(j, blocks.length - 1)] ||= []).push(fig);
+      continue;
+    }
+    const h = headings.find(x => x.key === normH(anchor));
+    if (!h) { ok = false; break; }
+    let j = h.i;
+    for (let k = h.i + 1; k < blocks.length; k++) {
+      if (/^<h[2-6]/.test(blocks[k])) break;
+      j = k;
+    }
+    (inserts[j] ||= []).push(fig);
+  }
+  if (!ok) return null;
+  let out = blocks.map((b, i) => inserts[i] ? b + "\n" + inserts[i].join("\n") : b).join("\n");
+  if (endFigs.length) out += "\n" + endFigs.join("\n");
+  return out;
+}
+
+function placeLiveImages(html, images, override) {
+  if (override && override.length) {
+    const r = placeByOverride(html, images, override);
+    if (r !== null) { ovUsed++; return r; }
+    ovMiss++;
+  }
   const blocks = html.split(/\n(?=<)/);
   if (!blocks.length || !images.length) return html;
   const blockToks = blocks.map(toks);
@@ -601,4 +653,5 @@ fs.writeFileSync(path.join(DIST, ".vercel", "project.json"), JSON.stringify({
 fs.copyFileSync(path.join(__dirname, "node_modules", "minisearch", "dist", "umd", "index.js"), path.join(DIST, "minisearch.js"));
 
 const nPages = articles.length + CATS.length + 3;
+console.log(`placement overrides: ${ovUsed} applied, ${ovMiss} fell back to alignment`);
 console.log(`built ${nPages} pages, ${totalShots} live screenshots, ${totalVids} videos, search docs ${(fs.statSync(path.join(DIST, "search-docs.json")).size / 1024).toFixed(0)} KB`);
