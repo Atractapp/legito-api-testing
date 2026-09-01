@@ -426,6 +426,7 @@ ${content}
   <button class="lb-next" aria-label="Next">${ICONS["arrow-right"]}</button>
 </div>
 <script src="/minisearch.js" defer></script>
+<script src="/webmcp.js" defer></script>
 <script src="/client.js" defer></script>
 </body>
 </html>`);
@@ -469,6 +470,7 @@ for (const e of fs.readdirSync(DIST)) fs.rmSync(path.join(DIST, e), { recursive:
 fs.cpSync(PUB, DIST, { recursive: true });
 fs.copyFileSync(path.join(__dirname, "src", "styles.css"), path.join(DIST, "styles.css"));
 fs.copyFileSync(path.join(__dirname, "src", "client.js"), path.join(DIST, "client.js"));
+fs.copyFileSync(path.join(__dirname, "src", "webmcp.js"), path.join(DIST, "webmcp.js"));
 
 const searchDocs = [];
 let totalShots = 0, totalVids = 0;
