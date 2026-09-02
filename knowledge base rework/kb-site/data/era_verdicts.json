@@ -1,0 +1,5267 @@
+[
+ {
+  "src": "live/dashboard-overview-01-fa230d.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "intro",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "retaken from live workspace 2026-09-01"
+ },
+ {
+  "src": "live/dashboard-overview-02-8ecbed.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Public and private Dashboards",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Top bar shows US flag icon; current nav has only bell and avatar"
+ },
+ {
+  "src": "live/dashboard-overview-03-8cec93.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Layout",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Rename input, Save button, privacy checkboxes match current dashboard customize mode"
+ },
+ {
+  "src": "live/dashboard-overview-04-bf392f.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Editing",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Customize Dashboard button and Powered by Legito footer match current design"
+ },
+ {
+  "src": "live/dashboard-overview-05-a8e377.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Editing",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Dark icon-bar row picker not shown in any current reference capture"
+ },
+ {
+  "src": "live/dashboard-overview-06-824f7b.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Editing",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "View/Edit pill buttons on document rows; current uses single Open button"
+ },
+ {
+  "src": "live/dashboard-overview-07-e2078c.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Editing",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Dashboard name input plus Save button matches current customize-mode reference"
+ },
+ {
+  "src": "live/dashboard-overview-08-99ebaf.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Creating a Dashboard",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "US flag/language icon in top bar; absent from current top nav"
+ },
+ {
+  "src": "live/dashboard-overview-09-0e48d3.png",
+  "article": "DASHBOARD/Dashboard Overview.md",
+  "section": "Creating a Dashboard",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Create New Dashboard/Finish/Delete Row buttons match, but flag icon is stale"
+ },
+ {
+  "src": "live/counter-01-03a736.jpg",
+  "article": "DASHBOARD/Widget Types/Counter.md",
+  "section": "Types",
+  "uploaded": "2022-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Ring-gauge Counter widget style; supported display variant per current widget"
+ },
+ {
+  "src": "live/counter-02-675b6f.png",
+  "article": "DASHBOARD/Widget Types/Counter.md",
+  "section": "Types",
+  "uploaded": "2022-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "user-confirmed valid 2026-09-01"
+ },
+ {
+  "src": "live/counter-03-85917e.png",
+  "article": "DASHBOARD/Widget Types/Counter.md",
+  "section": "Types",
+  "uploaded": "2022-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "user-confirmed valid 2026-09-01"
+ },
+ {
+  "src": "live/document-records-grid-01-1b8f33.png",
+  "article": "DASHBOARD/Widget Types/Document Records - Grid.md",
+  "section": "Choosing the sort",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "View/Edit pill buttons; replaced by unified Open button in current UI"
+ },
+ {
+  "src": "live/document-records-grid-02-c1b43f.jpg",
+  "article": "DASHBOARD/Widget Types/Document Records - Grid.md",
+  "section": "Choosing the sort",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Filter dropdown shown as custom checkmark list, not current native select"
+ },
+ {
+  "src": "live/document-records-kanban-01-6d20f9.png",
+  "article": "DASHBOARD/Widget Types/Document Records - Kanban.md",
+  "section": "Settings",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "retaken from live workspace 2026-09-01"
+ },
+ {
+  "src": "live/drop-area-01-994ff9.png",
+  "article": "DASHBOARD/Widget Types/Drop Area.md",
+  "section": "intro",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Create Document Record / Sign document drop boxes match current dashboard"
+ },
+ {
+  "src": "live/object-records-grid-01-df6b19.png",
+  "article": "DASHBOARD/Widget Types/Object Records - Grid.md",
+  "section": "Settings",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Object dropdown lists 'Vendors', renamed to 'Suppliers' in current top nav"
+ },
+ {
+  "src": "live/signature-in-progress-01-15ec60.png",
+  "article": "DASHBOARD/Widget Types/Signature in Progress.md",
+  "section": "intro",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Ready For Signature widget frame (search, title, arrows) matches current"
+ },
+ {
+  "src": "live/templates-01-976718.png",
+  "article": "DASHBOARD/Widget Types/Templates.md",
+  "section": "Filters",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Checkbox filter panel; current Templates page uses text-link Show/Sort filters"
+ },
+ {
+  "src": "live/timeline-01-6840e6.png",
+  "article": "DASHBOARD/Widget Types/Timeline.md",
+  "section": "intro",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Timeline entry card style (avatar, badge, description) matches current Timeline tab"
+ },
+ {
+  "src": "live/batch-generation-from-sheets-01-e6d5f1.png",
+  "article": "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Batch Generation",
+  "verdict": "N-A",
+  "evidence": "Excel spreadsheet screenshot, not Legito UI"
+ },
+ {
+  "src": "live/batch-generation-from-sheets-02-1855d2.png",
+  "article": "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md",
+  "section": "Generating a batch",
+  "uploaded": "2020-03",
+  "alt": "Batch Generation Tab",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar has Instructions/split Import tabs; current unifies to one Import tab"
+ },
+ {
+  "src": "live/batch-generation-from-sheets-03-d5c5a2.png",
+  "article": "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md",
+  "section": "Generating a batch",
+  "uploaded": "2020-03",
+  "alt": "Names",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Batch Generation column-mapping dropdown exists"
+ },
+ {
+  "src": "live/batch-generation-from-sheets-04-78595f.png",
+  "article": "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md",
+  "section": "Generating a batch",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Batch Generation column-mapping row exists"
+ },
+ {
+  "src": "live/batch-generation-from-sheets-05-9c8ae5.png",
+  "article": "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md",
+  "section": "Generating a batch",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Batch Generation column delete control exists"
+ },
+ {
+  "src": "live/batch-generation-from-sheets-06-0e994e.png",
+  "article": "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md",
+  "section": "Advanced settings",
+  "uploaded": "2020-03",
+  "alt": "Advanced Settings Button",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Batch Generation Advanced Settings modal exists"
+ },
+ {
+  "src": "live/batch-generation-from-sheets-07-c51eb6.png",
+  "article": "DOCUMENT EDITOR/Data Import/Batch Generation from Sheets.md",
+  "section": "Batch settings",
+  "uploaded": "2020-03",
+  "alt": "Create Document Records",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Run Batch Generation confirmation modal exists"
+ },
+ {
+  "src": "live/import-from-legito-documents-01-5c651c.png",
+  "article": "DOCUMENT EDITOR/Data Import/Import from Legito Documents.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Import from Legito",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar shows Instructions/Import from Sheet/Import from Legito as separate tabs"
+ },
+ {
+  "src": "live/import-from-legito-documents-02-14498a.png",
+  "article": "DOCUMENT EDITOR/Data Import/Import from Legito Documents.md",
+  "section": "Creating a Favorite Import Setting",
+  "uploaded": "2020-03",
+  "alt": "Creating Favorite Settings",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Import from Legito column-mapping dropdown exists"
+ },
+ {
+  "src": "live/import-from-sheets-01-4d07be.png",
+  "article": "DOCUMENT EDITOR/Data Import/Import from Sheets.md",
+  "section": "Importing",
+  "uploaded": "2020-03",
+  "alt": "Import from Sheet",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar shows Instructions/Import from Sheet/Import from Legito as separate tabs"
+ },
+ {
+  "src": "live/import-from-sheets-02-649625.png",
+  "article": "DOCUMENT EDITOR/Data Import/Import from Sheets.md",
+  "section": "Advanced settings",
+  "uploaded": "2020-03",
+  "alt": "Advanced Settings Button",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Import from Sheet Advanced Settings modal exists"
+ },
+ {
+  "src": "live/download-01-09eadf.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Formats",
+  "uploaded": "2020-03",
+  "alt": "Save and Download",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar plus Save-primary button; current is Download-primary"
+ },
+ {
+  "src": "live/download-02-86454d.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Formats",
+  "uploaded": "2020-03",
+  "alt": "Download Options",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of the Download modal or format list exists"
+ },
+ {
+  "src": "live/download-03-ae49b3.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Permissions",
+  "uploaded": "2020-03",
+  "alt": "Download Button",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar includes separate Instructions/Import from Sheet/Import from Legito tabs"
+ },
+ {
+  "src": "live/download-04-bbf56e.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Permissions",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Powered by Legito footer and Conversation panel match current document editor"
+ },
+ {
+  "src": "live/download-05-9cdd95.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Permissions",
+  "uploaded": "2020-03",
+  "alt": "Download Permissions",
+  "verdict": "LEGACY",
+  "evidence": "Permission list includes 'Sign with Legito BioSign', a removed feature"
+ },
+ {
+  "src": "live/download-06-3bd02a.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Permissions",
+  "uploaded": "2020-03",
+  "alt": "Workflow Download Documents",
+  "verdict": "VALID",
+  "evidence": "Workflow canvas chrome (zoom, Undo/Redo, Publish, stage boxes) matches current"
+ },
+ {
+  "src": "live/download-07-77f1a3.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Export settings",
+  "uploaded": "2020-03",
+  "alt": "Export Settings",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Download modal Export Settings dropdown exists"
+ },
+ {
+  "src": "live/download-08-a946d7.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Export settings",
+  "uploaded": "2020-03",
+  "alt": "Combining PDF's into One File",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Download modal Combine PDFs state exists"
+ },
+ {
+  "src": "live/download-09-69d48c.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Print Preview",
+  "uploaded": "2022-11",
+  "alt": "Pront Preview",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar plus 'Start signing' primary button vs current Download-primary"
+ },
+ {
+  "src": "live/download-10-702fae.png",
+  "article": "DOCUMENT EDITOR/Document Export/Download.md",
+  "section": "Print Preview",
+  "uploaded": "2020-03",
+  "alt": "PDF Print Preview",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of PDF print preview modal exists"
+ },
+ {
+  "src": "live/sending-by-email-01-baf9d8.png",
+  "article": "DOCUMENT EDITOR/Document Export/Sending by Email.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Send by Email Option",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar includes separate Instructions/Import from Sheet/Import from Legito tabs"
+ },
+ {
+  "src": "live/sending-by-email-02-3ca4ba.png",
+  "article": "DOCUMENT EDITOR/Document Export/Sending by Email.md",
+  "section": "Settings",
+  "uploaded": "2020-03",
+  "alt": "Send by Email Setting",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of Send by e-mail modal exists"
+ },
+ {
+  "src": "live/dual-language-documents-01-efa7f7.png",
+  "article": "DOCUMENT EDITOR/Document Language/Dual Language Documents.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "Dual Language Toggle",
+  "verdict": "LEGACY",
+  "evidence": "Split Import tabs and Save-primary button vs current unified Import/Download-primary"
+ },
+ {
+  "src": "live/translations-01-c9a411.png",
+  "article": "DOCUMENT EDITOR/Document Language/Translations.md",
+  "section": "Updating translations of older Template versions",
+  "uploaded": "2024-02",
+  "alt": "Document Language",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar has Languages/Instructions/split Import tabs; current unified 5-tab bar"
+ },
+ {
+  "src": "live/document-view-options-01-c1a1ad.png",
+  "article": "DOCUMENT EDITOR/Document Navigation/Document View Options.md",
+  "section": "Modifiable Fields Only",
+  "uploaded": "2020-02",
+  "alt": "Document View Option",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar has Instructions/split Import tabs, not current's unified 5-tab bar"
+ },
+ {
+  "src": "live/document-view-options-02-25161b.png",
+  "article": "DOCUMENT EDITOR/Document Navigation/Document View Options.md",
+  "section": "Apply Conditions",
+  "uploaded": "2020-02",
+  "alt": "Apply Conditions",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Instructions/split Import tab bar as View Options 01"
+ },
+ {
+  "src": "live/comments-01-66af22.png",
+  "article": "DOCUMENT EDITOR/Document Review/Comments.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "Comments Feature",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of inline paragraph Add Comment hover control exists"
+ },
+ {
+  "src": "live/compare-01-6a3533.png",
+  "article": "DOCUMENT EDITOR/Document Review/Compare.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "Compare Documents",
+  "verdict": "LEGACY",
+  "evidence": "Tab bar has Instructions/split Import tabs despite Review toolbar matching current"
+ },
+ {
+  "src": "live/real-time-document-collaboration-01-5d58bc.png",
+  "article": "DOCUMENT EDITOR/Document Review/Real Time Document Collaboration.md",
+  "section": "intro",
+  "uploaded": "2021-01",
+  "alt": "Document Collaboration Widget",
+  "verdict": "NO-REF",
+  "evidence": "No current capture of 'Currently drafted by/Viewers' collaboration panel exists"
+ },
+ {
+  "src": "live/track-changes-01-adc09b.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Track Changes",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar (Instructions/split Import) and Save-primary button"
+ },
+ {
+  "src": "live/track-changes-02-a73b31.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Tracking All Changes",
+  "verdict": "VALID",
+  "evidence": "Tracked-changes strikethrough, field pills, reviewer accept/reject card match current style"
+ },
+ {
+  "src": "live/track-changes-03-efe67f.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar with Instructions/split Import tabs visible"
+ },
+ {
+  "src": "live/track-changes-04-cd0734.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Reviewers",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar with Instructions/split Import tabs visible"
+ },
+ {
+  "src": "live/track-changes-05-f36d83.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Accept Reviews",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar with Instructions/split Import tabs visible"
+ },
+ {
+  "src": "live/track-changes-06-2fb6f3.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Track Changes",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar and Save-primary button, not current Download-primary"
+ },
+ {
+  "src": "live/track-changes-07-95d749.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar with Instructions/split Import tabs visible"
+ },
+ {
+  "src": "live/track-changes-08-3d2557.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Mandatory Track Changes",
+  "verdict": "VALID",
+  "evidence": "Workflow canvas chrome and stage-box styling matches current workflows reference"
+ },
+ {
+  "src": "live/track-changes-09-d3a33c.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Edit User",
+  "verdict": "LEGACY",
+  "evidence": "Nav shows 'List of Partners'/'Minimum wage'/'Analytics' plus BioSign, all legacy"
+ },
+ {
+  "src": "live/track-changes-10-4c75d0.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Edit Guests",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav: List of Partners, Minimum wage, Analytics items"
+ },
+ {
+  "src": "live/track-changes-11-b8f3f7.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "Consequential Changes",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Instructions, Import from Sheet, Import from Legito"
+ },
+ {
+  "src": "live/track-changes-12-60686e.png",
+  "article": "DOCUMENT EDITOR/Document Review/Track Changes.md",
+  "section": "Permissions",
+  "uploaded": "2024-02",
+  "alt": "All Reviewers",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Instructions, Import from Sheet, Import from Legito"
+ },
+ {
+  "src": "live/overview-of-document-drafting-01-1764db.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "intro",
+  "uploaded": "2021-10",
+  "alt": "Draft Documents from Automated Templates",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Import from Sheet, Import from Legito split tabs"
+ },
+ {
+  "src": "live/overview-of-document-drafting-02-2653ee.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "Smart Navigation and Quick Actions sidebar",
+  "uploaded": "2021-12",
+  "alt": "Outline",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Import from Sheet, Import from Legito split tabs"
+ },
+ {
+  "src": "live/overview-of-document-drafting-03-94f866.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Question Element",
+  "verdict": "VALID",
+  "evidence": "Static native radio-button question; control style unchanged"
+ },
+ {
+  "src": "live/overview-of-document-drafting-04-3ab03f.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Select Elements",
+  "verdict": "NO-REF",
+  "evidence": "Open Select dropdown style unverified; no interview-select capture"
+ },
+ {
+  "src": "live/overview-of-document-drafting-05-a7d7d0.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Button Elements",
+  "verdict": "VALID",
+  "evidence": "Green rounded buttons match current Legito button style"
+ },
+ {
+  "src": "live/overview-of-document-drafting-06-a9517b.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Link Elements",
+  "verdict": "VALID",
+  "evidence": "Plain underlined linked field text, static, no dated chrome"
+ },
+ {
+  "src": "live/overview-of-document-drafting-07-a02213.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Calculation Elements",
+  "verdict": "VALID",
+  "evidence": "Plain calculation table, static content, timeless styling"
+ },
+ {
+  "src": "live/overview-of-document-drafting-08-3757ba.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Text Input Elements",
+  "verdict": "VALID",
+  "evidence": "Plain bordered text-input box matches current editor style"
+ },
+ {
+  "src": "live/overview-of-document-drafting-09-c7bcea.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Date Elements",
+  "verdict": "NO-REF",
+  "evidence": "Open calendar date-picker style unverified; no capture exists"
+ },
+ {
+  "src": "live/overview-of-document-drafting-10-9f16a0.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Money Elements",
+  "verdict": "NO-REF",
+  "evidence": "Open currency dropdown list unverified; no capture exists"
+ },
+ {
+  "src": "live/overview-of-document-drafting-11-91ceb4.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2020-03",
+  "alt": "Text Elements",
+  "verdict": "NO-REF",
+  "evidence": "Locked-text unlock tooltip unverified; no capture exists"
+ },
+ {
+  "src": "live/overview-of-document-drafting-12-cca6aa.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "The Elements a user meets",
+  "uploaded": "2022-07",
+  "alt": "Rich Text Element",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Instructions, Import from Sheet, Import from Legito"
+ },
+ {
+  "src": "live/overview-of-document-drafting-13-fd152d.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "Template features that shape the drafting experience",
+  "uploaded": "2019-03",
+  "alt": "Initial Instructions",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar with separate Instructions tab highlighted"
+ },
+ {
+  "src": "live/overview-of-document-drafting-14-7f29ee.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "Template features that shape the drafting experience",
+  "uploaded": "2020-03",
+  "alt": "Follow-up Instructions",
+  "verdict": "N-A",
+  "evidence": "Gmail email client screenshot, not Legito app UI"
+ },
+ {
+  "src": "live/overview-of-document-drafting-15-4f4b52.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "Template features that shape the drafting experience",
+  "uploaded": "2020-02",
+  "alt": "Warnings",
+  "verdict": "NO-REF",
+  "evidence": "Warning tooltip on field unverified; no current capture"
+ },
+ {
+  "src": "live/overview-of-document-drafting-16-21a92b.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "Template features that shape the drafting experience",
+  "uploaded": "2020-02",
+  "alt": "Help Text",
+  "verdict": "NO-REF",
+  "evidence": "Help-text tooltip unverified; no current capture exists"
+ },
+ {
+  "src": "live/overview-of-document-drafting-17-85c1ac.gif",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "Template features that shape the drafting experience",
+  "uploaded": "2020-02",
+  "alt": "Mandatory and Optional Clauses",
+  "verdict": "VALID",
+  "evidence": "Plain clause text with visibility eye icon, static content"
+ },
+ {
+  "src": "live/overview-of-document-drafting-18-2af89a.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "What becomes available once a document is saved",
+  "uploaded": "2019-03",
+  "alt": "Owner",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Instructions, Import from Sheet, Import from Legito"
+ },
+ {
+  "src": "live/overview-of-document-drafting-19-69da9b.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "What becomes available once a document is saved",
+  "uploaded": "2019-03",
+  "alt": "Workflow Stages - Workflow",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar visible; workflow-stage status dropdown shown"
+ },
+ {
+  "src": "live/overview-of-document-drafting-20-df91b0.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "What becomes available once a document is saved",
+  "uploaded": "2019-03",
+  "alt": "Workflow Stages - Sharing",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar visible behind share-icon arrow"
+ },
+ {
+  "src": "live/overview-of-document-drafting-21-7caa5c.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "What becomes available once a document is saved",
+  "uploaded": "2020-02",
+  "alt": "Workflow Stages - Conversation",
+  "verdict": "VALID",
+  "evidence": "Conversation panel wording matches current doc-editor reference"
+ },
+ {
+  "src": "live/overview-of-document-drafting-22-2bb411.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "What becomes available once a document is saved",
+  "uploaded": "2022-11",
+  "alt": "Related Document Setting",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar; Record Properties assign-to-record dropdown"
+ },
+ {
+  "src": "live/overview-of-document-drafting-23-701034.png",
+  "article": "DOCUMENT EDITOR/Overview of Document Drafting.md",
+  "section": "Attachments",
+  "uploaded": "2019-03",
+  "alt": "Attachments to Legito Documents",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Import from Sheet, Import from Legito visible"
+ },
+ {
+  "src": "live/merging-template-updates-01-d6a0d1.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Merging Template Updates.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Template Update",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar visible above merge-to-template banner"
+ },
+ {
+  "src": "live/saving-01-c53461.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Saving.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Save Button",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar visible; Save dropdown menu shown"
+ },
+ {
+  "src": "live/saving-02-266f04.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Saving.md",
+  "section": "Save as a New Document",
+  "uploaded": "2020-03",
+  "alt": "Save As A New Document",
+  "verdict": "LEGACY",
+  "evidence": "Same Save dropdown menu as confirmed-legacy saving-01"
+ },
+ {
+  "src": "live/template-favorite-settings-01-860714.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "Favorite Settings",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Instructions, Import from Sheet, Import from Legito"
+ },
+ {
+  "src": "live/template-favorite-settings-02-5998ae.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Creating a Favorite Setting",
+  "uploaded": "2020-02",
+  "alt": "Create New Favorite Setting",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar; Add to Favorite Settings menu item highlighted"
+ },
+ {
+  "src": "live/template-favorite-settings-03-d4ce26.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Two kinds of Favorite Setting",
+  "uploaded": "2020-02",
+  "alt": "My Favorite Settings",
+  "verdict": "LEGACY",
+  "evidence": "Chevron-arrow Save-button modal; partial 'Import fi' legacy chrome"
+ },
+ {
+  "src": "live/template-favorite-settings-04-78a228.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Two kinds of Favorite Setting",
+  "uploaded": "2020-02",
+  "alt": "Checking Box \"Only For Me\"",
+  "verdict": "LEGACY",
+  "evidence": "Chevron-arrow Save button modal absent from current modals"
+ },
+ {
+  "src": "live/template-favorite-settings-05-3c9c0c.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Default Favorite Settings",
+  "uploaded": "2020-02",
+  "alt": "Default Template Favorite Settings",
+  "verdict": "LEGACY",
+  "evidence": "Same chevron-arrow Save button modal style"
+ },
+ {
+  "src": "live/template-favorite-settings-06-74bac4.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Default Favorite Settings",
+  "uploaded": "2024-08",
+  "alt": "Verified Suppliers",
+  "verdict": "NO-REF",
+  "evidence": "My Favorite Settings dropdown unverified; no current capture"
+ },
+ {
+  "src": "live/template-favorite-settings-07-bac37b.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Default Favorite Settings",
+  "uploaded": "2024-08",
+  "alt": "Save New Favorite Setting",
+  "verdict": "LEGACY",
+  "evidence": "Chevron-arrow Save button modal persists 2024-08, absent now"
+ },
+ {
+  "src": "live/template-favorite-settings-08-c6fa5a.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Default Favorite Settings",
+  "uploaded": "2024-08",
+  "alt": "Delete Button",
+  "verdict": "NO-REF",
+  "evidence": "Favorite-settings edit/delete dropdown unverified; no capture"
+ },
+ {
+  "src": "live/template-favorite-settings-09-dacefc.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Template Favorite Settings.md",
+  "section": "Default Favorite Settings",
+  "uploaded": "2024-08",
+  "alt": "Deleted Default Setting",
+  "verdict": "NO-REF",
+  "evidence": "Toast message only, no chrome to verify against current UI"
+ },
+ {
+  "src": "live/version-history-01-ceb444.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Version History.md",
+  "section": "Reading the history",
+  "uploaded": "2020-03",
+  "alt": "Version of the Document",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar: Instructions, Import from Sheet, Import from Legito"
+ },
+ {
+  "src": "live/version-history-02-03a850.png",
+  "article": "DOCUMENT EDITOR/Saving & Versions/Version History.md",
+  "section": "Previous version notification",
+  "uploaded": "2020-03",
+  "alt": "Previous Document Version Notification",
+  "verdict": "LEGACY",
+  "evidence": "Partial legacy tab bar behind 'Nice to see you again' modal"
+ },
+ {
+  "src": "live/legito-biosign-01-bad9b0.gif",
+  "article": "ELECTRONIC SIGNATURE/Legito Sign/Legito BioSign.md",
+  "section": "end",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old nav missing Clause Library/Kedy AI; teaches removed BioSign"
+ },
+ {
+  "src": "live/legito-biosign-02-75a25d.png",
+  "article": "ELECTRONIC SIGNATURE/Legito Sign/Legito BioSign.md",
+  "section": "end",
+  "uploaded": "2020-01",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Illustrates LEGITOSIGN block for removed BioSign feature"
+ },
+ {
+  "src": "live/legito-sign-editor-01-cfe976.png",
+  "article": "ELECTRONIC SIGNATURE/Legito Sign/Legito Sign Editor.md",
+  "section": "What signatories see",
+  "uploaded": "2022-06",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito Sign Editor signing page unverified; no capture exists"
+ },
+ {
+  "src": "live/manage-signatures-01-44e848.png",
+  "article": "ELECTRONIC SIGNATURE/Legito Sign/Manage Signatures.md",
+  "section": "intro",
+  "uploaded": "2022-06",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "retaken from live workspace 2026-09-01"
+ },
+ {
+  "src": "live/esignature-overview-01-1714e3.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "intro",
+  "uploaded": "2023-08",
+  "alt": "Activation of eSignatures",
+  "verdict": "LEGACY",
+  "evidence": "Lists deprecated BioSign option; old sidebar has Billing item"
+ },
+ {
+  "src": "live/esignature-overview-02-59ed78.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "Step 2 — Define signatories",
+  "uploaded": "2021-10",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Choose Signatories modal unverified; no current capture"
+ },
+ {
+  "src": "live/esignature-overview-03-5963f9.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "Template prerequisites",
+  "uploaded": "2022-06",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Template settings Type/Properties panel unverified; no capture"
+ },
+ {
+  "src": "live/esignature-overview-04-caf6c1.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "Automatic field creation",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old per-block Edit/Add-question toolbar, differs from current WYSIWYG"
+ },
+ {
+  "src": "live/esignature-overview-05-fe9cb3.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "Automatic field creation",
+  "uploaded": "2023-08",
+  "alt": "Automatic field creation for Legito Sign",
+  "verdict": "VALID",
+  "evidence": "Drag-handle chevron and dashed boxes match current Template Editor"
+ },
+ {
+  "src": "live/esignature-overview-06-66e526.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "Relation to Workflows and Document Records",
+  "uploaded": "2022-06",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Pill-shaped stage nodes, dashed arrows match current Workflow Editor"
+ },
+ {
+  "src": "live/esignature-overview-07-3e1da6.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "end",
+  "uploaded": "2022-06",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Separate on-page Select Widget list; current flow uses modal Type field"
+ },
+ {
+  "src": "live/esignature-overview-08-09a97c.png",
+  "article": "ELECTRONIC SIGNATURE/eSignature Overview.md",
+  "section": "end",
+  "uploaded": "2022-06",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Edit Dashboard Widget modal fields match current reference exactly"
+ },
+ {
+  "src": "live/api-keys-01-966d0d.png",
+  "article": "INTEGRATIONS/Integration Tools/API Keys.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav Analytics; missing Clause Library, Data Insights, Kedy AI"
+ },
+ {
+  "src": "live/api-keys-02-a3a8ca.png",
+  "article": "INTEGRATIONS/Integration Tools/API Keys.md",
+  "section": "Default user for the REST API and Push API",
+  "uploaded": "2023-05",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Settings > API page unverified; no current capture exists"
+ },
+ {
+  "src": "live/json-integrations-01-93772c.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Administration",
+  "uploaded": "2024-02",
+  "alt": "Legito_release_2022-09-22",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav items Manage Signings and Analytics visible"
+ },
+ {
+  "src": "live/json-integrations-02-16aa86.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Administration",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav (Analytics) visible behind Create JSON Integration modal"
+ },
+ {
+  "src": "live/json-integrations-03-152edd.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "JSON Integration Editor",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav: Manage Signings, Analytics visible in full"
+ },
+ {
+  "src": "live/json-integrations-04-047233.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "JSON Integration Editor",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same JSON Integrations session as confirmed-legacy screenshot 03"
+ },
+ {
+  "src": "live/json-integrations-05-6a1574.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Choosing which integration handles a file",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same JSON Integrations session as confirmed-legacy screenshot 03"
+ },
+ {
+  "src": "live/json-integrations-06-ecb9a7.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Choosing which integration handles a file",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Condition-builder modal for JSON Integrations; feature has no reference capture"
+ },
+ {
+  "src": "live/json-integrations-07-70e614.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Arrays and repeated content",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "JSON Integrations mapping editor page; feature not covered by reference set"
+ },
+ {
+  "src": "live/json-integrations-08-ace6f7.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Filtering",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Top nav shows Analytics, Manage Signings, no Clause Library - confirmed legacy nav"
+ },
+ {
+  "src": "live/json-integrations-09-bd7f01.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Sorting",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Same JSON Integrations mapping editor panel; no reference capture exists"
+ },
+ {
+  "src": "live/json-integrations-10-d1607c.png",
+  "article": "INTEGRATIONS/Integration Tools/JSON Integrations.md",
+  "section": "Several Template Suites on one integration",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "JSON Integrations trigger/template-suite panel; no reference capture exists"
+ },
+ {
+  "src": "live/push-api-webhooks-01-8e7aee.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "intro",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure explanatory flow diagram, not a live UI screenshot"
+ },
+ {
+  "src": "live/push-api-webhooks-02-1d8897.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "1. Push Connections",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Top nav: Dashboard/Templates/.../Analytics/Pricing, no Clause Library - legacy nav"
+ },
+ {
+  "src": "live/push-api-webhooks-03-a950a1.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "Variables in custom headers",
+  "uploaded": "2023-08",
+  "alt": "Customizable header for Push API call",
+  "verdict": "NO-REF",
+  "evidence": "Create Push Connection modal; Push API feature has no reference capture"
+ },
+ {
+  "src": "live/push-api-webhooks-04-df8bdb.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "Variables in custom headers",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Edit Push Connection modal, nav cropped; no Push API reference exists"
+ },
+ {
+  "src": "live/push-api-webhooks-05-75c41f.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "Variables in custom headers",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Push Connection file-attachment settings; no nav visible, no reference capture"
+ },
+ {
+  "src": "live/push-api-webhooks-06-ed11c4.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "Variables in custom headers",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "PushResponse API schema documentation; no comparable reference exists"
+ },
+ {
+  "src": "live/push-api-webhooks-07-b99b85.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "Variables in custom headers",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy top nav (Analytics, no Clause Library) on Push API Logs list"
+ },
+ {
+  "src": "live/push-api-webhooks-08-945a1f.png",
+  "article": "INTEGRATIONS/Integration Tools/Push API (Webhooks).md",
+  "section": "Variables in custom headers",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy top nav (Analytics) on Push API Logs detail/JSON viewer"
+ },
+ {
+  "src": "live/make-01-9a42ac.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Make.md",
+  "section": "intro",
+  "uploaded": "2024-03",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Make.com marketplace app listing page, third-party site"
+ },
+ {
+  "src": "live/microsoft-sharepoint-01-201706.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md",
+  "section": "Setting up the integration",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito SharePoint add-on authentication setup page; no reference capture"
+ },
+ {
+  "src": "live/microsoft-sharepoint-02-cdbc4a.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md",
+  "section": "Step 1 — Credentials from App registrations",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Entra admin center App registrations list, third-party"
+ },
+ {
+  "src": "live/microsoft-sharepoint-03-eccad3.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md",
+  "section": "Step 1 — Credentials from App registrations",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Entra admin center Register an application, third-party"
+ },
+ {
+  "src": "live/microsoft-sharepoint-04-3eaafe.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md",
+  "section": "Step 1 — Credentials from App registrations",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Entra admin center Essentials panel, third-party"
+ },
+ {
+  "src": "live/microsoft-sharepoint-05-9384ee.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md",
+  "section": "Step 1 — Credentials from App registrations",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Entra Certificates & secrets page, third-party"
+ },
+ {
+  "src": "live/microsoft-sharepoint-06-1e21a8.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md",
+  "section": "Step 1 — Credentials from App registrations",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Entra client secret value display, third-party"
+ },
+ {
+  "src": "live/microsoft-sharepoint-07-970c1c.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Microsoft SharePoint.md",
+  "section": "Step 1 — Credentials from App registrations",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Entra API permissions page, third-party"
+ },
+ {
+  "src": "live/salesforce-01-cffce3.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "intro",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure illustrative diagram of Salesforce/Legito integration flow"
+ },
+ {
+  "src": "live/salesforce-02-3de2e7.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "What users experience",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce Lightning Opportunity record page, third-party dominant"
+ },
+ {
+  "src": "live/salesforce-03-3362a5.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Installing the component",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce AppExchange package install screen, third-party"
+ },
+ {
+  "src": "live/salesforce-04-9ee34b.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Installing the component",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce AppExchange installation-complete screen, third-party"
+ },
+ {
+  "src": "live/salesforce-05-0a0d14.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Installing the component",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce Setup Installed Packages page, third-party"
+ },
+ {
+  "src": "live/salesforce-06-9b94bb.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Setting up the component",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce Lightning App Builder, third-party"
+ },
+ {
+  "src": "live/salesforce-07-59345a.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Setting up the component",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce Sales app with embedded widget, third-party dominant"
+ },
+ {
+  "src": "live/salesforce-08-f63b24.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Step 1 — Actions",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito Salesforce-widget config wizard (Actions/Authentication); no reference capture"
+ },
+ {
+  "src": "live/salesforce-09-6cbd91.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Step 2 — Identify the Legito server",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito widget Authentication step wizard; no reference capture"
+ },
+ {
+  "src": "live/salesforce-10-545949.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Step 4 — Insert API keys",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure illustrative diagram, stylized browser mockups"
+ },
+ {
+  "src": "live/salesforce-11-a5277f.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Step 6 — Download the JSON example",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito widget Data Mapping step; no reference capture"
+ },
+ {
+  "src": "live/salesforce-12-f2526a.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Step 6 — Download the JSON example",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito widget JSON data-mapping step; no reference capture"
+ },
+ {
+  "src": "live/salesforce-13-dae3e9.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "Step 7 — Create the JSON Integration",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure illustrative diagram of JSON upload/download flow"
+ },
+ {
+  "src": "live/salesforce-14-c5a1d6.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce Lightning Experience App Manager list, third-party"
+ },
+ {
+  "src": "live/salesforce-15-4d95fa.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce New Connected App setup form, third-party"
+ },
+ {
+  "src": "live/salesforce-16-7564d6.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Salesforce Manage Connected Apps detail page, third-party"
+ },
+ {
+  "src": "live/salesforce-17-8ebcfc.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Cropped Advanced-settings toggle from Legito widget wizard; no reference"
+ },
+ {
+  "src": "live/salesforce-18-00fcef.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Push connection row (Active/Edit/Delete); no Push API reference exists"
+ },
+ {
+  "src": "live/salesforce-19-1afd70.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Edit Push Connection modal with custom headers; no reference exists"
+ },
+ {
+  "src": "live/salesforce-20-bbf396.png",
+  "article": "INTEGRATIONS/Legito in Other Apps/Salesforce.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito widget Metadata Mapping step; no reference capture"
+ },
+ {
+  "src": "live/docusign-01-1f8079.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/DocuSign.md",
+  "section": "License plans",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Generic pricing table, non-Legito third-party content"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-01-773d66.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "How the flow works",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure OAuth sequence diagram, not a UI screenshot"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-02-27fcc3.jpg",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Entra admin center, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-03-49b7a4.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure app registration Essentials, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-04-97bdc5.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Certificates & secrets page, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-05-fe4d6d.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Configure Web redirect URIs panel, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-06-c698ee.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Certificates & secrets page, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-07-2c7c81.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Add a client secret panel, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-08-dbcb89.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure client secret value display, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-09-150e84.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure app Essentials/client credentials, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-10-3cf186.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Edit groups claim panel, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-11-9a5546.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Configuration",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Settings sidebar shows 'Application design', lacks Branding/Signatories vs current"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-12-abd49b.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Creating a Role",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Legito SSO Roles & Permissions tab; no reference capture"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-13-1717cf.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Creating a Role",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "Create SSO Role permissions modal; no reference capture"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-14-db94ab.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID group",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Default Directory overview, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-15-c3386e.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID group",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Groups | All groups page, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-16-f07177.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID group",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure group detail page, third-party"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-17-ed5001.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID role",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Same non-matching settings sidebar (Application design, no Branding) recurs"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-18-2fcc6f.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID role",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Nav shows Clause Library, Pricing; Edit/Delete buttons match current settings pattern"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-19-66b508.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID role",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure AD portal Overview screen, non-Legito content"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-20-77047a.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID role",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Roles and administrators page, non-Legito content"
+ },
+ {
+  "src": "live/microsoft-entra-id-azure-ad-21-ce71b8.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Entra ID (Azure AD).md",
+  "section": "Pairing a Role with an Entra ID role",
+  "uploaded": "2023-04",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Azure Application Administrator description page, non-Legito content"
+ },
+ {
+  "src": "live/microsoft-office-for-web-01-40d9ad.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Office For Web.md",
+  "section": "intro",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "FILES/Saved Files/Upload File + Messages panel matches document-record-detail structure"
+ },
+ {
+  "src": "live/microsoft-office-for-web-02-2634c5.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Office For Web.md",
+  "section": "What it offers",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old nav: Dashboard, Analytics, Vendors, Customers, Case Management, all legacy names"
+ },
+ {
+  "src": "live/microsoft-office-for-web-03-8b57f4.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Office For Web.md",
+  "section": "Supported formats",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy nav (Analytics/Vendors/Customers/Case Management) behind the Word window"
+ },
+ {
+  "src": "live/microsoft-office-for-web-04-47815f.png",
+  "article": "INTEGRATIONS/Other Apps in Legito/Microsoft Office For Web.md",
+  "section": "Attachments",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of attachment-upload widget exists for comparison"
+ },
+ {
+  "src": "live/guided-tour-01-2fdcd0.png",
+  "article": "ONBOARDING/Guided Tour.md",
+  "section": "Building a Guided Tour",
+  "uploaded": "2020-02",
+  "alt": "Template Suite Description",
+  "verdict": "LEGACY",
+  "evidence": "No category-folder layer, no Actions dropdown; differs from current Templates page"
+ },
+ {
+  "src": "live/guided-tour-02-39b1fd.png",
+  "article": "ONBOARDING/Guided Tour.md",
+  "section": "Annotations",
+  "uploaded": "2020-02",
+  "alt": "Adding Help Text",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Editor shell (DOCUMENT/AUTOMATION panels) unlike current dark-ribbon editor"
+ },
+ {
+  "src": "live/user-onboarding-01-f34a2b.png",
+  "article": "ONBOARDING/User Onboarding.md",
+  "section": "intro",
+  "uploaded": "2023-03",
+  "alt": "User Onboarding for non-Admin Users",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of Dashboard onboarding-progress widget exists"
+ },
+ {
+  "src": "live/user-onboarding-02-d7c1e4.png",
+  "article": "ONBOARDING/User Onboarding.md",
+  "section": "Customizing",
+  "uploaded": "2023-03",
+  "alt": "Edit User Onboarding",
+  "verdict": "LEGACY",
+  "evidence": "Settings sidebar (Application design, Agreement templates) missing current items like Branding"
+ },
+ {
+  "src": "live/workspace-onboarding-01-70fe26.png",
+  "article": "ONBOARDING/Workspace Onboarding.md",
+  "section": "intro",
+  "uploaded": "2023-02",
+  "alt": "workspace onboarding",
+  "verdict": "NO-REF",
+  "evidence": "Cropped Onboarding Guide widget, no nav; no matching dashboard reference exists"
+ },
+ {
+  "src": "live/workspace-onboarding-02-d34bd0.png",
+  "article": "ONBOARDING/Workspace Onboarding.md",
+  "section": "Chapters",
+  "uploaded": "2023-02",
+  "alt": "onboarding guide",
+  "verdict": "LEGACY",
+  "evidence": "Top nav shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/workspace-onboarding-03-7dfb36.png",
+  "article": "ONBOARDING/Workspace Onboarding.md",
+  "section": "Reaching it",
+  "uploaded": "2023-02",
+  "alt": "onboarding guide - dashboard",
+  "verdict": "LEGACY",
+  "evidence": "Tour modal background nav shows Analytics, a legacy name"
+ },
+ {
+  "src": "live/workspace-onboarding-04-b167b6.png",
+  "article": "ONBOARDING/Workspace Onboarding.md",
+  "section": "Reaching it",
+  "uploaded": "2023-02",
+  "alt": "Legito Workspace",
+  "verdict": "NO-REF",
+  "evidence": "Full-page onboarding personalization screen; no reference capture exists"
+ },
+ {
+  "src": "live/workspace-onboarding-05-f2221e.png",
+  "article": "ONBOARDING/Workspace Onboarding.md",
+  "section": "Deactivating",
+  "uploaded": "2023-05",
+  "alt": "Workspace onboarding",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Sidebar close to current but missing Signatories and Workspace localization items"
+ },
+ {
+  "src": "live/grid-view-objects-01-00c37e.png",
+  "article": "PROCESS MANAGEMENT/Custom Objects/Grid View (Objects).md",
+  "section": "Editing columns",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old nav (Analytics/Vendors/Customers/Case Management) plus Edit button instead of Open"
+ },
+ {
+  "src": "live/object-administration-01-117382.png",
+  "article": "PROCESS MANAGEMENT/Custom Objects/Object Administration.md",
+  "section": "Administering Objects",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old nav (Analytics, Vendors, Customers, Case Management) on Objects admin page"
+ },
+ {
+  "src": "live/object-administration-02-5dde5c.png",
+  "article": "PROCESS MANAGEMENT/Custom Objects/Object Administration.md",
+  "section": "Sharing",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Modal background nav fragment shows Vendors, Customers legacy names"
+ },
+ {
+  "src": "live/object-administration-03-cd455d.png",
+  "article": "PROCESS MANAGEMENT/Custom Objects/Object Administration.md",
+  "section": "Sharing",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Object records list uses Edit pill; same legacy session as sibling images"
+ },
+ {
+  "src": "live/customizable-document-management-area-01-f3dfe7.png",
+  "article": "PROCESS MANAGEMENT/Document Management/Customizable Document Management Area.md",
+  "section": "intro",
+  "uploaded": "2021-01",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of Manage Documents/Priorities settings tab exists"
+ },
+ {
+  "src": "live/document-record-labels-01-93e314.png",
+  "article": "PROCESS MANAGEMENT/Document Management/Document Record Labels.md",
+  "section": "Who can create Labels",
+  "uploaded": "2020-08",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Edit/Download outlined buttons, no FILES/MESSAGES headers unlike current record detail"
+ },
+ {
+  "src": "live/document-record-labels-02-623047.png",
+  "article": "PROCESS MANAGEMENT/Document Management/Document Record Labels.md",
+  "section": "Central management",
+  "uploaded": "2020-08",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old settings sidebar (Billing, Signatures, Templates & Docs Grouping) differs from current"
+ },
+ {
+  "src": "live/kanban-view-01-db80b2.png",
+  "article": "PROCESS MANAGEMENT/Document Management/Kanban View.md",
+  "section": "intro",
+  "uploaded": "2021-01",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No current Kanban board capture exists for card-style comparison"
+ },
+ {
+  "src": "live/search-01-b6c869.png",
+  "article": "PROCESS MANAGEMENT/Document Management/Search.md",
+  "section": "What is searched",
+  "uploaded": "2020-09",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Checkbox dropdown style matches current green-check pattern used throughout"
+ },
+ {
+  "src": "live/search-02-2898ee.jpg",
+  "article": "PROCESS MANAGEMENT/Document Management/Search.md",
+  "section": "Filters",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Filter uses flat STAGE section; current restructured to STATUS with workflow subgroups"
+ },
+ {
+  "src": "live/anonymization-01-7b916b.png",
+  "article": "PROCESS MANAGEMENT/Records/Anonymization.md",
+  "section": "Manual anonymization",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Edit/Download outlined buttons, no FILES/MESSAGES headers, old panel style"
+ },
+ {
+  "src": "live/anonymization-02-ac22af.png",
+  "article": "PROCESS MANAGEMENT/Records/Anonymization.md",
+  "section": "Manual anonymization",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of the Anonymize-agreement modal exists"
+ },
+ {
+  "src": "live/anonymization-03-31bdf0.png",
+  "article": "PROCESS MANAGEMENT/Records/Anonymization.md",
+  "section": "Scheduled anonymization",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legito Free Trial nav shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/conversations-01-b3f37f.png",
+  "article": "PROCESS MANAGEMENT/Records/Conversations.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Conversation collapsed panel matches current document-editor.png bottom-right exactly"
+ },
+ {
+  "src": "live/conversations-02-9b111e.png",
+  "article": "PROCESS MANAGEMENT/Records/Conversations.md",
+  "section": "One Conversation per record",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Edit pill button, no FILES/MESSAGES headers, matches old inline-detail pattern"
+ },
+ {
+  "src": "live/document-record-details-01-09757a.png",
+  "article": "PROCESS MANAGEMENT/Records/Document Record Details.md",
+  "section": "Details held on every record",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Lacks FILES/MESSAGES/APPROVAL LIST headers present in current document-record-detail reference"
+ },
+ {
+  "src": "live/document-record-details-02-8f8131.png",
+  "article": "PROCESS MANAGEMENT/Records/Document Record Details.md",
+  "section": "Properties",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same old layout without section headers, Edit/Download outlined buttons"
+ },
+ {
+  "src": "live/document-sharing-01-9630f9.png",
+  "article": "PROCESS MANAGEMENT/Records/Document Sharing.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old inline-detail panel lacking FILES/MESSAGES headers, Edit button not Open"
+ },
+ {
+  "src": "live/document-sharing-02-0e7756.png",
+  "article": "PROCESS MANAGEMENT/Records/Document Sharing.md",
+  "section": "Sharing inside the Workspace",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of the Share modal exists for comparison"
+ },
+ {
+  "src": "live/document-sharing-03-92d169.png",
+  "article": "PROCESS MANAGEMENT/Records/Document Sharing.md",
+  "section": "External sharing",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of External Sharing panel exists for comparison"
+ },
+ {
+  "src": "live/document-timeline-01-876bb6.png",
+  "article": "PROCESS MANAGEMENT/Records/Document Timeline.md",
+  "section": "Filtering and export",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Full-page Timeline with Users/Event sidebar and CSV export, unlike current compact panel"
+ },
+ {
+  "src": "live/document-timeline-02-41e003.png",
+  "article": "PROCESS MANAGEMENT/Records/Document Timeline.md",
+  "section": "Incognito mode",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Edit/Download pills and My account dropdown indicate older UI era than current"
+ },
+ {
+  "src": "live/document-record-properties-overview-01-09d42c.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "intro",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legito Free Trial nav shows Analytics; My account dropdown, Stage column"
+ },
+ {
+  "src": "live/document-record-properties-overview-02-e8c5b1.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "intro",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Nav shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/document-record-properties-overview-03-3aabee.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "Properties",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Background nav fragment shows Customers, Clause Library, Case Management legacy names"
+ },
+ {
+  "src": "live/document-record-properties-overview-04-30543d.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "Properties",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legito Free Trial nav shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/document-record-properties-overview-05-8e50d5.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "Property Groups",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Legito Free Trial workspace, Analytics nav confirmed in this article's session"
+ },
+ {
+  "src": "live/document-record-properties-overview-06-2a4eea.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "Property Groups",
+  "uploaded": "2022-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy trial-workspace session as sibling images in this article"
+ },
+ {
+  "src": "live/document-record-properties-overview-07-d81c78.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "Document Record Types",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Nav shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/document-record-properties-overview-08-fdd2f6.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Record Properties Overview.md",
+  "section": "Permission to edit a Property",
+  "uploaded": "2022-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy trial-workspace session as this article's other confirmed-legacy captures"
+ },
+ {
+  "src": "live/document-records-priority-01-a9e96f.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Document Records Priority.md",
+  "section": "intro",
+  "uploaded": "2021-01",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Set As Default/Edit/Delete buttons match current Styles/ALD page pattern exactly"
+ },
+ {
+  "src": "live/properties-choosing-options-01-2f8233.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - Choosing Options.md",
+  "section": "intro",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Background nav fragment shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/properties-choosing-options-02-2f0029.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - Choosing Options.md",
+  "section": "Extraction Keywords",
+  "uploaded": "2021-01",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Create Document Record Property modal/session as legacy-confirmed sibling image"
+ },
+ {
+  "src": "live/properties-inputs-01-71b257.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - Inputs.md",
+  "section": "intro",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Background nav shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/properties-special-01-1ed8bb.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - Special.md",
+  "section": "intro",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old settings sidebar (Billing, Signatures) missing current items (General, Onboarding, Objects)"
+ },
+ {
+  "src": "live/properties-special-02-906f2a.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - Special.md",
+  "section": "Users and User Groups",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Create Document Record Property modal, same legacy trial-workspace session"
+ },
+ {
+  "src": "live/properties-special-03-5031e8.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - Special.md",
+  "section": "Document and Object Records",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Background nav shows Analytics, Vendors, Customers, all retired legacy names"
+ },
+ {
+  "src": "live/properties-system-01-662467.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - System.md",
+  "section": "Saved Files",
+  "uploaded": "2022-01",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Sign with Legito BioSign button; BioSign is a removed feature"
+ },
+ {
+  "src": "live/properties-system-02-18dae2.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - System.md",
+  "section": "Saved Files",
+  "uploaded": "2021-12",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of file Versions modal/Attachment pill exists"
+ },
+ {
+  "src": "live/properties-system-03-3bd49e.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - System.md",
+  "section": "Associated Templates",
+  "uploaded": "2022-11",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Background nav shows Analytics, a retired legacy name"
+ },
+ {
+  "src": "live/properties-system-04-0b9dd0.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - System.md",
+  "section": "Associated Templates",
+  "uploaded": "2022-11",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "FILES/KEY FACTS caps headers and Status column match current record-detail structure"
+ },
+ {
+  "src": "live/properties-system-05-2779e4.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - System.md",
+  "section": "Associated Templates",
+  "uploaded": "2022-11",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Associated Templates dropdown as properties-system-03, confirmed legacy via nav"
+ },
+ {
+  "src": "live/properties-system-06-381722.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - System.md",
+  "section": "Associated Templates",
+  "uploaded": "2022-11",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No capture of Object/Property create-edit modal in Settings"
+ },
+ {
+  "src": "live/properties-system-07-409358.png",
+  "article": "PROCESS MANAGEMENT/Records/Properties/Properties - System.md",
+  "section": "Associated Templates",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old nav shows 'Analytics'; old Settings menu (Billing/Signatures/Document Records) gone"
+ },
+ {
+  "src": "live/smart-document-management-overview-01-f38e29.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Filtering",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav item; old Settings sidebar structure not in current"
+ },
+ {
+  "src": "live/smart-document-management-overview-02-95e807.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Filtering",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav; text 'Trash' button and 'Persons' column, unlike current"
+ },
+ {
+  "src": "live/smart-document-management-overview-03-a5237e.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Statistics",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Flat Status filter list; same old session as Analytics-nav captures"
+ },
+ {
+  "src": "live/smart-document-management-overview-04-b87a1e.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Statistics",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav visible; old flat filter panel structure"
+ },
+ {
+  "src": "live/smart-document-management-overview-05-0e782b.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Batch Generation",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav; old Manage Documents grid with Persons column"
+ },
+ {
+  "src": "live/smart-document-management-overview-06-d41e55.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Batch Generation",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'My account' dropdown; old Actions menu; grid has Persons column"
+ },
+ {
+  "src": "live/smart-document-management-overview-07-f3d74b.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Export to CSV",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav, 'My account' dropdown, old grid layout"
+ },
+ {
+  "src": "live/smart-document-management-overview-08-145c3a.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Download all",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'My account' dropdown; old grid with Persons column, text Trash button"
+ },
+ {
+  "src": "live/smart-document-management-overview-09-6e3d0a.png",
+  "article": "PROCESS MANAGEMENT/Smart Document Management Overview.md",
+  "section": "Trash",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'My account' dropdown; text 'Trash' button; old Manage Documents grid"
+ },
+ {
+  "src": "live/workflow-approvals-01-d37b2a.gif",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Defining an Approval",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav; old workflow USE panel has only 3 options"
+ },
+ {
+  "src": "live/workflow-approvals-02-d131dd.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Running an Approval",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Appoint Approvers' button removed; missing current FILES/MESSAGES/APPROVAL LIST headers"
+ },
+ {
+  "src": "live/workflow-approvals-03-090feb.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Running an Approval",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Create List modal belongs to removed Appoint Approvers flow"
+ },
+ {
+  "src": "live/workflow-approvals-04-f1c1bd.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Running an Approval",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Flat Approve/Reject buttons; missing current section headers in record detail"
+ },
+ {
+  "src": "live/workflow-approvals-05-0d5cd3.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Approval reset",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell icon pair on every stage, absent from current design"
+ },
+ {
+  "src": "live/workflow-approvals-06-8050fb.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Approval names",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "USE panel only 3 options vs current 5 (adds Object/Any Records)"
+ },
+ {
+  "src": "live/workflow-approvals-07-09e31d.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Approval names",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same pen+muted-bell stage icon set as confirmed old USE-panel version"
+ },
+ {
+  "src": "live/workflow-approvals-08-319376.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Approvals.md",
+  "section": "Limitation",
+  "uploaded": "2021-05",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same pen+muted-bell stage icons; Approvers Properties-radio panel not in current"
+ },
+ {
+  "src": "live/workflow-flows-01-29b919.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "intro",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "USE panel only 3 options; pen+muted-bell stage icons"
+ },
+ {
+  "src": "live/workflow-flows-02-1dc80f.gif",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Rules",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Play+muted-bell icon on Draft stage; bell icon absent from current"
+ },
+ {
+  "src": "live/workflow-flows-03-36f8a0.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Manual activation",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell stage icons; old transition activation panel"
+ },
+ {
+  "src": "live/workflow-flows-04-81f9f4.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Plus and Minus on dates",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell stage icons on old transition activation panel"
+ },
+ {
+  "src": "live/workflow-flows-05-a61433.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Combining triggers",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell stage icons on old transition activation panel"
+ },
+ {
+  "src": "live/workflow-flows-06-344bcf.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Allow manual activation",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell stage icons on old transition activation panel"
+ },
+ {
+  "src": "live/workflow-flows-07-dea0a9.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Green and red Flows",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell stage icons on old transition activation panel"
+ },
+ {
+  "src": "live/workflow-flows-08-5f66d3.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Green and red Flows",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell icons on Managers Confirmation/Ready For Signature stage badges"
+ },
+ {
+  "src": "live/workflow-flows-09-ade452.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Green and red Flows",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell stage icons; old Approval Result panel"
+ },
+ {
+  "src": "live/workflow-flows-10-0c7057.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Flows.md",
+  "section": "Green and red Flows",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Pen+muted-bell stage icons; old Approval Result panel"
+ },
+ {
+  "src": "live/workflow-overview-01-596d9b.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No capture of open Status-dropdown radio list in Manage Documents"
+ },
+ {
+  "src": "live/workflow-overview-02-5e29e8.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No capture of document-creation seal-attachment dialog/green banner screen"
+ },
+ {
+  "src": "live/workflow-overview-03-1b11cd.gif",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "Workflow administration",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav, 'My account' dropdown, old flat Dashboard with template cards"
+ },
+ {
+  "src": "live/workflow-overview-04-3ebc77.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "Workflow administration",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav and 'My account' dropdown on Workflows list page"
+ },
+ {
+  "src": "live/workflow-overview-05-d0d189.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "Workflow Editor",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "USE panel only 3 options; plain Draft stage with no icons"
+ },
+ {
+  "src": "live/workflow-overview-06-2f2eea.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "Workflow Editor",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Plain stage boxes w/o icons; old wording 'Editable/Fixed', 'All approvals needed'"
+ },
+ {
+  "src": "live/workflow-overview-07-ecc608.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "Stage View Order",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "USE panel only 3 options (Smart Documents/External/Both)"
+ },
+ {
+  "src": "live/workflow-overview-08-584129.jpg",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "Workflows for Objects",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Type dropdown says 'Legito Templates', obsolete term vs current 'Smart Documents'"
+ },
+ {
+  "src": "live/workflow-overview-09-43101b.jpg",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Overview.md",
+  "section": "end",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No capture of Edit custom object modal in Objects settings"
+ },
+ {
+  "src": "live/workflow-stages-01-b2633c.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old green full-width banner document screen; old Status radio dropdown"
+ },
+ {
+  "src": "live/workflow-stages-02-ec678f.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Configuring a Stage",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Analytics' nav; Persons column in Manage Documents grid"
+ },
+ {
+  "src": "live/workflow-stages-03-4f3a47.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Configuring a Stage",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old-era 'Global Colors' Stage panel, superseded by 'Suggested Colors' version"
+ },
+ {
+  "src": "live/workflow-stages-04-59b5ad.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Stage icons",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Play icon still used for starting stage, matches current Draft badge"
+ },
+ {
+  "src": "live/workflow-stages-05-328c9f.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Stage icons",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Pencil icon still used for editable stage, matches current design"
+ },
+ {
+  "src": "live/workflow-stages-06-2671b7.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Stage icons",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Muted-bell icon no longer present anywhere in current workflow design"
+ },
+ {
+  "src": "live/workflow-stages-07-599ae9.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Stage icons",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Lock icon still used for locked stage, matches current design"
+ },
+ {
+  "src": "live/workflow-stages-08-15f6d2.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Adding a Stage",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Play+muted-bell icon combo on Draft; bell icon absent from current"
+ },
+ {
+  "src": "live/workflow-stages-09-fc7a5e.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "Adding a Stage",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Muted-bell icon on Draft/New Stage badges, absent from current"
+ },
+ {
+  "src": "live/workflow-stages-10-d59dab.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "end",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Lock+pen+muted-bell icon combo; old 'Suggested Colors' stage panel"
+ },
+ {
+  "src": "live/workflow-stages-11-064c7c.png",
+  "article": "PROCESS MANAGEMENT/Workflows/Workflow Stages.md",
+  "section": "end",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Play+pencil+muted-bell icon combo on Draft stage badge"
+ },
+ {
+  "src": "live/clause-library-overview-01-4eb924.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md",
+  "section": "Managing Clauses",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Nav shows 'Manage Signings' and 'Analytics', both legacy names"
+ },
+ {
+  "src": "live/clause-library-overview-02-270697.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md",
+  "section": "Managing Clauses",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No capture of Settings Templates & Docs Grouping/Clause Library categories page"
+ },
+ {
+  "src": "live/clause-library-overview-03-06ea4b.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md",
+  "section": "Managing Clauses",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Clause card, Edit/dropdown, New Clause tile match current clause-library design"
+ },
+ {
+  "src": "live/clause-library-overview-04-9c9487.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md",
+  "section": "How updates reach documents",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Template Editor Library panel matches current icon rail and top bar"
+ },
+ {
+  "src": "live/clause-library-overview-05-328ad9.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md",
+  "section": "Permissions",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No capture of Invite a User permissions modal"
+ },
+ {
+  "src": "live/clause-library-overview-06-544f48.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md",
+  "section": "Permissions",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No capture of Invite a User Clause Library access modal"
+ },
+ {
+  "src": "live/clause-library-overview-07-cd4ef7.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md",
+  "section": "Dynamic insertion of Clauses",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Template Editor elements panel and top bar match current design"
+ },
+ {
+  "src": "live/specifics-of-logical-dependencies-01-5c08ab.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md",
+  "section": "From a Template toward a Library Clause",
+  "uploaded": "2022-09",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows 'Default Values'/'Help', missing current 'AI' tab"
+ },
+ {
+  "src": "live/specifics-of-logical-dependencies-02-25ff8a.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md",
+  "section": "Practical consequence",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Save button icon/style matches current Template Editor Save button"
+ },
+ {
+  "src": "live/specifics-of-logical-dependencies-03-76c4de.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md",
+  "section": "Practical consequence",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows 'Default Values'/'Help', missing current 'AI' tab"
+ },
+ {
+  "src": "live/specifics-of-logical-dependencies-04-6b650c.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md",
+  "section": "Practical consequence",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Dark top toolbar; current Template Editor toolbar is white/light (Conditions/Repeat/Tags match)"
+ },
+ {
+  "src": "live/specifics-of-logical-dependencies-05-3bd6a7.png",
+  "article": "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Same dark toolbar; Repeat tab config otherwise matches current Template Editor"
+ },
+ {
+  "src": "live/documentation-01-19dd10.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "1. Tag the Elements",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Clauses/Elements sidebar list identical to current Template Editor reference"
+ },
+ {
+  "src": "live/documentation-02-b790a5.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "1. Tag the Elements",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Element tab bar style (Tags active, green underline) matches current Template Editor"
+ },
+ {
+  "src": "live/documentation-03-d20729.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "2. Create the Script",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Tag chip + suggested-tags panel matches current tagging UI pattern"
+ },
+ {
+  "src": "live/documentation-04-c89311.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "3. Write the Script",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Plain document field content, matches current doc-preview typography"
+ },
+ {
+  "src": "live/documentation-05-52cbb4.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "3. Write the Script",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of Template Tags & Scripts Debugger/IDE panel"
+ },
+ {
+  "src": "live/documentation-06-3b4e6a.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "Debugging",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference of Script Debugger run-log tree/JSON view"
+ },
+ {
+  "src": "live/documentation-07-3bc265.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "Methods",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Blue-outline Edit template cards; current uses green filled Edit/Create split button"
+ },
+ {
+  "src": "live/documentation-08-1df023.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Documentation.md",
+  "section": "RestClient",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference of Settings > API Keys / Personal Settings token panel"
+ },
+ {
+  "src": "live/script-administration-01-1f2760.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Script Administration.md",
+  "section": "intro",
+  "uploaded": "2022-11",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Template Tags & Scripts screen confirmed legacy in sibling image -02"
+ },
+ {
+  "src": "live/script-administration-02-89a4eb.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Script Administration.md",
+  "section": "What can be done there",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old top nav: Analytics/Pricing only, no Clause Library/Kedy AI/Data Insights"
+ },
+ {
+  "src": "live/script-editor-01-6e338a.png",
+  "article": "TEMPLATE AUTOMATION/Scripts/Script Editor.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old top nav: Dashboard/Templates/Manage Documents/People/Analytics/Pricing"
+ },
+ {
+  "src": "live/assigned-advanced-layout-design-01-fc406c.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Settings/Assigned Advanced Layout Design.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "No Advanced Layout Design",
+  "verdict": "LEGACY",
+  "evidence": "Same tutorial session as -02 (confirmed legacy nav); old ALD assignment dropdown"
+ },
+ {
+  "src": "live/assigned-advanced-layout-design-02-42b6ce.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Settings/Assigned Advanced Layout Design.md",
+  "section": "Assigning a design",
+  "uploaded": "2020-03",
+  "alt": "Advanced Style",
+  "verdict": "LEGACY",
+  "evidence": "Old nav 'Legito Free Trial': Analytics/Pricing, no Clause Library/Kedy AI"
+ },
+ {
+  "src": "live/assigned-advanced-layout-design-03-1bae4a.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Settings/Assigned Advanced Layout Design.md",
+  "section": "Alternative designs",
+  "uploaded": "2020-03",
+  "alt": "Alternative Advanced Styles",
+  "verdict": "LEGACY",
+  "evidence": "Same tutorial session as -02; old Template Settings side panel"
+ },
+ {
+  "src": "live/export-format-restrictions-01-bd3dd8.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Settings/Export Format Restrictions.md",
+  "section": "Signing is unaffected",
+  "uploaded": "2022-11",
+  "alt": "Export Formats",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Properties/Export formats/Sign with fields)"
+ },
+ {
+  "src": "live/properties-01-5df606.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Settings/Properties.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Template Setting - Properties",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel; Assigned Workflow dropdown, outline Edit buttons"
+ },
+ {
+  "src": "live/assigned-workflow-01-93bfc2.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Assigned Workflow.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Assigned Workflow",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Description/Instructions/Default workflow fields)"
+ },
+ {
+  "src": "live/country-region-01-bd1c62.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Country - Region.md",
+  "section": "Assigning at creation",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old 'New Template Suite' modal; current create flow is file-drop based"
+ },
+ {
+  "src": "live/country-region-02-766505.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Country - Region.md",
+  "section": "Changing it later",
+  "uploaded": "2020-03",
+  "alt": "Change Assigned Country/Region",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel with outline Edit suite cards"
+ },
+ {
+  "src": "live/country-region-03-1d26d8.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Country - Region.md",
+  "section": "Changing it later",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old country-picker modal, same session/design language as confirmed-legacy panel"
+ },
+ {
+  "src": "live/country-region-04-7aa712.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Country - Region.md",
+  "section": "What it is used for",
+  "uploaded": "2020-03",
+  "alt": "Templates by Country/Region",
+  "verdict": "LEGACY",
+  "evidence": "Nav shows Analytics not Data Insights (Beta); no Kedy AI/Employees/Suppliers"
+ },
+ {
+  "src": "live/description-01-bb4315.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Description.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Description Field",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Description/Search Keywords/Instructions fields)"
+ },
+ {
+  "src": "live/description-02-67e22c.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Description.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Edit Description",
+  "verdict": "LEGACY",
+  "evidence": "Edit-description modal opened from confirmed-legacy Settings side panel"
+ },
+ {
+  "src": "live/description-03-8e228b.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Description.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Description in the Template Suite",
+  "verdict": "LEGACY",
+  "evidence": "'Show Templates by US' suite-card grid, same generation as confirmed-legacy country-region-04"
+ },
+ {
+  "src": "live/document-menu-bar-options-01-3bd221.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md",
+  "section": "Default tab",
+  "uploaded": "2021-10",
+  "alt": "Document Menu Bar Options",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Document Menu Bar Options/Default Tab fields)"
+ },
+ {
+  "src": "live/document-menu-bar-options-02-c87697.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md",
+  "section": "Default tab",
+  "uploaded": "2024-02",
+  "alt": "Options for a default tab",
+  "verdict": "LEGACY",
+  "evidence": "Legacy 8-tab Document Editor bar (View/Review/Languages/Instructions/Import from Sheet/Import from Legito) vs current 5 tabs"
+ },
+ {
+  "src": "live/document-menu-bar-options-03-d93228.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md",
+  "section": "Default tab",
+  "uploaded": "2024-02",
+  "alt": "View tab",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Document Editor tab bar, View tab active"
+ },
+ {
+  "src": "live/document-menu-bar-options-04-4c17f6.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md",
+  "section": "Default tab",
+  "uploaded": "2024-02",
+  "alt": "Review Tab",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Document Editor tab bar, Review tab active"
+ },
+ {
+  "src": "live/document-menu-bar-options-05-2b5a15.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md",
+  "section": "Default tab",
+  "uploaded": "2024-02",
+  "alt": "Languages Tab",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Document Editor tab bar, Languages tab active"
+ },
+ {
+  "src": "live/document-menu-bar-options-06-935b1c.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md",
+  "section": "Default tab",
+  "uploaded": "2024-02",
+  "alt": "Instructions Tab",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Document Editor tab bar, Instructions tab active"
+ },
+ {
+  "src": "live/document-menu-bar-options-07-6ed244.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Document Menu Bar Options.md",
+  "section": "Default tab",
+  "uploaded": "2024-02",
+  "alt": "Approval List",
+  "verdict": "LEGACY",
+  "evidence": "Legacy tab bar plus 'Approval List' tab absent from current 5-tab bar"
+ },
+ {
+  "src": "live/instructions-01-8788d9.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Instructions.md",
+  "section": "Initial Instructions",
+  "uploaded": "2020-03",
+  "alt": "Initial Instructions",
+  "verdict": "LEGACY",
+  "evidence": "Old top nav: Dashboard/Templates/Manage Documents/People/Analytics/Pricing, no Clause Library"
+ },
+ {
+  "src": "live/instructions-02-4d409f.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Instructions.md",
+  "section": "Initial Instructions",
+  "uploaded": "2020-03",
+  "alt": "Edit Instructions",
+  "verdict": "LEGACY",
+  "evidence": "Edit-instructions modal on same confirmed-legacy page as instructions-01"
+ },
+ {
+  "src": "live/instructions-03-41d05c.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Instructions.md",
+  "section": "Initial Instructions",
+  "uploaded": "2020-03",
+  "alt": "Drafting Guidance",
+  "verdict": "LEGACY",
+  "evidence": "Legacy Document Editor tab bar visible behind modal: View/Review/Instructions/Import from Sheet/Import from Legito"
+ },
+ {
+  "src": "live/instructions-04-29c495.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Instructions.md",
+  "section": "Follow-Up Instructions",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy Document Editor tab bar: View/Review/Instructions/Import from Sheet/Import from Legito/Batch Generation"
+ },
+ {
+  "src": "live/instructions-05-1b114a.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Instructions.md",
+  "section": "Follow-Up Instructions",
+  "uploaded": "2020-03",
+  "alt": "Follow-up Instructions",
+  "verdict": "LEGACY",
+  "evidence": "Old top nav (Analytics/Pricing) plus old Template Settings side panel"
+ },
+ {
+  "src": "live/language-01-d5ab6f.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Language.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Language Settings",
+  "verdict": "LEGACY",
+  "evidence": "Old 'New Template Suite' modal, same design as confirmed-legacy country-region-01"
+ },
+ {
+  "src": "live/language-02-d690ca.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Language.md",
+  "section": "Changing the primary language",
+  "uploaded": "2020-03",
+  "alt": "The Chose of Primary Language",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel with outline Edit suite cards"
+ },
+ {
+  "src": "live/search-keywords-01-ebfaf8.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Search Keywords.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Search Keywords",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Search Keywords field, outline Edit cards)"
+ },
+ {
+  "src": "live/search-keywords-02-c01156.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Search Keywords.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Edit Keywords",
+  "verdict": "LEGACY",
+  "evidence": "Edit-keywords modal opened from confirmed-legacy Settings side panel"
+ },
+ {
+  "src": "live/search-keywords-03-e3650f.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Search Keywords.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Search for a Template",
+  "verdict": "LEGACY",
+  "evidence": "Nav shows Analytics, no Kedy AI/Employees/Suppliers/Data Insights (Beta)"
+ },
+ {
+  "src": "live/search-keywords-04-fe230d.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Search Keywords.md",
+  "section": "Why it matters",
+  "uploaded": "2020-03",
+  "alt": "Find Your Template",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy nav (Analytics); old Dashboard Templates widget layout"
+ },
+ {
+  "src": "live/template-categories-01-226842.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Categories.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Template Categories",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Template Categories dropdown field)"
+ },
+ {
+  "src": "live/template-categories-02-3f8fc7.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Categories.md",
+  "section": "How Categories differ from Country / Region",
+  "uploaded": "2020-03",
+  "alt": "Template Suite Placeholders",
+  "verdict": "LEGACY",
+  "evidence": "Old nav 'Legito Free Trial': Analytics/Pricing, no Clause Library/Kedy AI"
+ },
+ {
+  "src": "live/template-suite-layout-01-11aec8.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Layout.md",
+  "section": "intro",
+  "uploaded": "2024-02",
+  "alt": "Template Suite Layouts",
+  "verdict": "VALID",
+  "evidence": "Conceptual Single/Dual/Smart Document diagram, concepts still exist per current Layout dropdown"
+ },
+ {
+  "src": "live/template-suite-layout-02-be87be.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Layout.md",
+  "section": "intro",
+  "uploaded": "2024-02",
+  "alt": "The Default Single Option",
+  "verdict": "LEGACY",
+  "evidence": "Legacy 7-tab Document Editor bar: View/Review/Languages/Import from Sheet/Import from Legito"
+ },
+ {
+  "src": "live/template-suite-layout-03-c8e142.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Layout.md",
+  "section": "intro",
+  "uploaded": "2024-02",
+  "alt": "The Dual Option",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Document Editor tab bar, 'Dual' layout variant, Review tab active"
+ },
+ {
+  "src": "live/template-suite-layout-04-2db2c5.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Layout.md",
+  "section": "Behavior under the Dual layout",
+  "uploaded": "2024-02",
+  "alt": "Template Suite Administration Options",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Template Suite Layout dropdown field)"
+ },
+ {
+  "src": "live/template-suite-properties-01-861452.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Properties.md",
+  "section": "intro",
+  "uploaded": "2024-02",
+  "alt": "Template Suite Properties - Name",
+  "verdict": "LEGACY",
+  "evidence": "Same tutorial session as -02 (confirmed legacy Document Editor)"
+ },
+ {
+  "src": "live/template-suite-properties-02-f91fe9.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Properties.md",
+  "section": "intro",
+  "uploaded": "2024-02",
+  "alt": "Upload Attachments",
+  "verdict": "LEGACY",
+  "evidence": "Legacy 8-tab Document Editor bar: View/Review/Languages/Instructions/Import from Sheet/Import from Legito"
+ },
+ {
+  "src": "live/template-suite-properties-03-c31a3c.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Properties.md",
+  "section": "intro",
+  "uploaded": "2024-02",
+  "alt": "Combine All PDF's Into One File",
+  "verdict": "LEGACY",
+  "evidence": "Download modal opened from confirmed-legacy Document Editor (-02) in same session"
+ },
+ {
+  "src": "live/template-suite-properties-04-62ee96.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Properties.md",
+  "section": "intro",
+  "uploaded": "2021-10",
+  "alt": "Landscape View",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel (Auto-Sharing/Properties checkboxes, outline Edit cards)"
+ },
+ {
+  "src": "live/template-suite-versions-01-67c684.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Versions.md",
+  "section": "Making a previous version available",
+  "uploaded": "2020-08",
+  "alt": "Template Suite Versions",
+  "verdict": "LEGACY",
+  "evidence": "Old Template Settings side panel with Template Suite Versions button"
+ },
+ {
+  "src": "live/template-suite-versions-02-e229be.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Versions.md",
+  "section": "Making a previous version available",
+  "uploaded": "2020-08",
+  "alt": "Make Available Option",
+  "verdict": "LEGACY",
+  "evidence": "Version-list modal opened from confirmed-legacy Settings side panel"
+ },
+ {
+  "src": "live/template-suite-versions-03-562af6.png",
+  "article": "TEMPLATE AUTOMATION/Template Administration/Template Suite Settings/Template Suite Versions.md",
+  "section": "Building a version by hand",
+  "uploaded": "2020-08",
+  "alt": "Create Custom Template Suite Version",
+  "verdict": "LEGACY",
+  "evidence": "Create Custom Template Suite Version modal, same legacy flow"
+ },
+ {
+  "src": "live/template-automation-overview-01-4f1085.png",
+  "article": "TEMPLATE AUTOMATION/Template Automation Overview.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Template Automation Overview",
+  "verdict": "LEGACY",
+  "evidence": "Old nav 'Legito': Analytics/Pricing only, no Clause Library/Manage Signatures"
+ },
+ {
+  "src": "live/template-automation-overview-02-dbc351.png",
+  "article": "TEMPLATE AUTOMATION/Template Automation Overview.md",
+  "section": "Template Suites",
+  "uploaded": "2020-03",
+  "alt": "Template Suites Dashboard",
+  "verdict": "LEGACY",
+  "evidence": "Nav shows Customers/Vendors/Analytics (legacy names), not current item set"
+ },
+ {
+  "src": "live/template-automation-overview-03-3fcd43.png",
+  "article": "TEMPLATE AUTOMATION/Template Automation Overview.md",
+  "section": "Template Suites",
+  "uploaded": "2020-03",
+  "alt": "Template Suites",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of template suite overview with settings panel."
+ },
+ {
+  "src": "live/template-automation-overview-04-b46bd4.png",
+  "article": "TEMPLATE AUTOMATION/Template Automation Overview.md",
+  "section": "Template Suite settings",
+  "uploaded": "2020-03",
+  "alt": "Clause Library",
+  "verdict": "LEGACY",
+  "evidence": "Old nav: Dashboard/Customers/Vendors/Disputes/Analytics/Case Management, replaced by current items."
+ },
+ {
+  "src": "live/template-automation-overview-05-c57b25.png",
+  "article": "TEMPLATE AUTOMATION/Template Automation Overview.md",
+  "section": "Template Suite settings",
+  "uploaded": "2020-03",
+  "alt": "The Template Settings",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of template Settings panel (ALD/Type/Export formats)."
+ },
+ {
+  "src": "live/condition-to-currency-in-money-01-532913.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Currency-in-money.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "The Currency-In-Money Condition",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs shown, current has AI instead."
+ },
+ {
+  "src": "live/condition-to-currency-in-money-02-d106b0.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Currency-in-money.md",
+  "section": "Operators",
+  "uploaded": "2020-03",
+  "alt": "Generic (beta version)",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Same old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-date-01-7cc7ed.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Date.md",
+  "section": "Operators",
+  "uploaded": "2020-10",
+  "alt": "Condition to Date",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Oldest tab style: Find/Learn-as-tab, no System Name box, no AI tab."
+ },
+ {
+  "src": "live/condition-to-days-in-date-01-605320.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Days-in-date.md",
+  "section": "Operators",
+  "uploaded": "2020-03",
+  "alt": "The Day-In-Date Condition",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Help and Learn tabs present, no current AI tab."
+ },
+ {
+  "src": "live/condition-to-days-in-date-02-349b73.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Days-in-date.md",
+  "section": "Operators",
+  "uploaded": "2020-03",
+  "alt": "Day-In-Date Condition Settings",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Same old tab bar: Help/Learn tabs present, no AI tab."
+ },
+ {
+  "src": "live/condition-to-days-in-date-03-26a5b7.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Days-in-date.md",
+  "section": "Configuring the Condition",
+  "uploaded": "2020-03",
+  "alt": "Building a Condition for a Day-In-Date Element",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Same old tab bar: Help/Learn tabs present, no AI tab."
+ },
+ {
+  "src": "live/condition-to-json-object-01-a1e3a7.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To JSON Object.md",
+  "section": "intro",
+  "uploaded": "2022-09",
+  "alt": "Condition to JSON Object",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old element tabs: Default Values/Help shown, no AI; rest of chrome matches."
+ },
+ {
+  "src": "live/condition-to-json-object-02-0946f3.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To JSON Object.md",
+  "section": "Prerequisite",
+  "uploaded": "2022-09",
+  "alt": "JSON Objects - Export to Templates",
+  "verdict": "LEGACY",
+  "evidence": "Old nav: Dashboard/People/Analytics/Manage Signings, replaced by current nav items."
+ },
+ {
+  "src": "live/condition-to-questions-01-161919.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Questions.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "The Question Condition",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-questions-02-311df9.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Questions.md",
+  "section": "Operators",
+  "uploaded": "2020-03",
+  "alt": "Generic Setting",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-questions-03-088a78.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Questions.md",
+  "section": "Operators",
+  "uploaded": "2020-03",
+  "alt": "Text Setting",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current Design/AI tabs."
+ },
+ {
+  "src": "live/condition-to-questions-04-140490.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Questions.md",
+  "section": "Configuring the Condition",
+  "uploaded": "2020-03",
+  "alt": "Builging a Condition for a Question",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-questions-05-250d07.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Questions.md",
+  "section": "Configuring the Condition",
+  "uploaded": "2020-03",
+  "alt": "Question Options",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-select-elements-01-6b6820.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Select Elements.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "The Select Condition",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-select-elements-02-58f3bf.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Select Elements.md",
+  "section": "Operators",
+  "uploaded": "2020-03",
+  "alt": "Select Condition Settings",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-select-elements-03-75ecfc.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Select Elements.md",
+  "section": "Configuring the Condition",
+  "uploaded": "2020-03",
+  "alt": "How To Build a Condition for a Select Element",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-switcher-01-37e7dd.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Switcher.md",
+  "section": "intro",
+  "uploaded": "2021-07",
+  "alt": "The Conditions to Switcher",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Help tab shown instead of current AI tab on Article element."
+ },
+ {
+  "src": "live/condition-to-text-inputs-01-ffdc97.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text Inputs.md",
+  "section": "Operators",
+  "uploaded": "2020-03",
+  "alt": "The Text Input Condition",
+  "verdict": "VALID",
+  "evidence": "Tab bar not visible; dropdown and phrasing match current condition builder."
+ },
+ {
+  "src": "live/condition-to-text-inputs-02-939000.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text Inputs.md",
+  "section": "Configuring the Condition",
+  "uploaded": "2020-03",
+  "alt": "How to Build a Condition for a Text Input Element",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current AI tab."
+ },
+ {
+  "src": "live/condition-to-text-inputs-03-d6984b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text Inputs.md",
+  "section": "Configuring the Condition",
+  "uploaded": "2020-03",
+  "alt": "Apply Conditions",
+  "verdict": "VALID",
+  "evidence": "5-tab pattern plus Apply conditions toggle matches current View toolbar."
+ },
+ {
+  "src": "live/condition-to-text-inputs-04-74c1ed.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text Inputs.md",
+  "section": "Configuring the Condition",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "5-tab pattern (Conditions/Repeat/Tags/Properties/Design) matches current minus AI tab."
+ },
+ {
+  "src": "live/condition-to-text-01-75364b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text.md",
+  "section": "Operators",
+  "uploaded": "2024-03",
+  "alt": "Condition to Text",
+  "verdict": "VALID",
+  "evidence": "5-tab pattern matches current; Text element plausibly lacks AI tab too."
+ },
+ {
+  "src": "live/conditions-overview-01-bef5ea.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Conditions Overview.md",
+  "section": "Condition types",
+  "uploaded": "2020-04",
+  "alt": "Types of Conditions",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tab bar: Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/conditions-overview-02-0bd926.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Conditions/Conditions Overview.md",
+  "section": "Document-level Conditions",
+  "uploaded": "2020-04",
+  "alt": "Document Condition",
+  "verdict": "VALID",
+  "evidence": "Chrome and left icon rail match current template editor exactly."
+ },
+ {
+  "src": "live/conditional-default-values-01-96924d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md",
+  "section": "Setting a Default Value",
+  "uploaded": "2024-03",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current AI tab."
+ },
+ {
+  "src": "live/conditional-default-values-02-817f5e.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md",
+  "section": "Setting a Default Value",
+  "uploaded": "2024-03",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current AI tab."
+ },
+ {
+  "src": "live/conditional-default-values-03-d3cb9d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md",
+  "section": "Several Default Values on one Element",
+  "uploaded": "2024-03",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current AI tab."
+ },
+ {
+  "src": "live/conditional-default-values-04-cf9eef.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md",
+  "section": "Several Default Values on one Element",
+  "uploaded": "2024-03",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current AI tab."
+ },
+ {
+  "src": "live/conditional-default-values-05-2aec42.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md",
+  "section": "Several Default Values on one Element",
+  "uploaded": "2024-03",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current AI tab."
+ },
+ {
+  "src": "live/conditional-default-values-06-3e7232.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Conditional Default Values.md",
+  "section": "Limitations",
+  "uploaded": "2022-12",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help shown, missing current AI tab."
+ },
+ {
+  "src": "live/warnings-01-37e850.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Warnings.md",
+  "section": "Where Warnings can be applied",
+  "uploaded": "2024-08",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help present, no AI tab (2024-08 upload)."
+ },
+ {
+  "src": "live/warnings-02-5aa5ac.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Warnings.md",
+  "section": "Example",
+  "uploaded": "2024-08",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Old tabs: Default Values/Warning/Help present, no AI tab (2024-08 upload)."
+ },
+ {
+  "src": "live/advanced-layout-design-01-98bdbe.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md",
+  "section": "Creating an Advanced Layout Design",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Sidebar has old items (Billing/Signatures), missing General/Navigation/current Signatories naming."
+ },
+ {
+  "src": "live/advanced-layout-design-02-c87cae.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md",
+  "section": "Creating an Advanced Layout Design",
+  "uploaded": "2018-08",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Word document view (ruler, page), not Legito application UI."
+ },
+ {
+  "src": "live/advanced-layout-design-03-901afa.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md",
+  "section": "Creating an Advanced Layout Design",
+  "uploaded": "2019-09",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Word document with ALD merge tags, not Legito application UI."
+ },
+ {
+  "src": "live/advanced-layout-design-04-971d04.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md",
+  "section": "Creating an Advanced Layout Design",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Help tab shown instead of current AI tab on element panel."
+ },
+ {
+  "src": "live/advanced-layout-design-05-e00058.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md",
+  "section": "Creating an Advanced Layout Design",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Rendered two-page Word/document design mockup, not Legito application UI."
+ },
+ {
+  "src": "live/formatting-styles-design-overview-01-ddcc41.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Formatting, Styles & Design Overview.md",
+  "section": "Element spacing and new line",
+  "uploaded": "2022-08",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Design tab toolbar and chrome match current template editor exactly."
+ },
+ {
+  "src": "live/numbering-01-153a04.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Numbering.md",
+  "section": "Two types",
+  "uploaded": "2021-10",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Old nav: Dashboard/Analytics/Vendors/Customers/Case Management, replaced by current nav items."
+ },
+ {
+  "src": "live/numbering-02-48b4c8.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Numbering.md",
+  "section": "Numbering per Clause",
+  "uploaded": "2021-10",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Margins panel matches current Design tab settings exactly."
+ },
+ {
+  "src": "live/section-formatting-01-d40dcc.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Section Formatting.md",
+  "section": "Page size and margins",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Left rail, clause list and Design tab match current reference exactly."
+ },
+ {
+  "src": "live/section-formatting-02-91c870.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Section Formatting.md",
+  "section": "Columns",
+  "uploaded": "2022-08",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Margins panel matches current Design tab settings exactly."
+ },
+ {
+  "src": "live/styles-01-b12cb3.gif",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Styles administration",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy 'Free Trial' dashboard, old nav, 'My account' text link."
+ },
+ {
+  "src": "live/styles-02-7c4ac7.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Styles administration",
+  "uploaded": "2020-03",
+  "alt": "Create Style button",
+  "verdict": "LEGACY",
+  "evidence": "Old nav (Analytics, My account link) visible behind Style modal."
+ },
+ {
+  "src": "live/styles-03-2fe145.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Style settings",
+  "uploaded": "2020-03",
+  "alt": "Style - Numbering",
+  "verdict": "LEGACY",
+  "evidence": "Old nav item 'Customers' visible behind Style modal."
+ },
+ {
+  "src": "live/styles-04-357730.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Applying Styles in the Template Editor",
+  "uploaded": "2020-03",
+  "alt": "Spacing Before and After",
+  "verdict": "LEGACY",
+  "evidence": "Old toolbar (Find/Learn tab) and old inline Style/Font/Align Design layout."
+ },
+ {
+  "src": "live/styles-05-3f270d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Applying Styles in the Template Editor",
+  "uploaded": "2020-05",
+  "alt": "Style - Design",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Border-style icon boxes shown, not current Beginning&End/case-sensitivity dropdowns."
+ },
+ {
+  "src": "live/styles-06-5da436.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Default Styles per Clause level",
+  "uploaded": "2020-03",
+  "alt": "Default Styles",
+  "verdict": "STALE-DETAIL",
+  "evidence": "List lacks Default column/Set As Default/Duplicate; old settings sidebar items."
+ },
+ {
+  "src": "live/styles-07-1dd759.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Default Styles per Clause level",
+  "uploaded": "2021-03",
+  "alt": "Styles - Formattin Parameters",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Help tab shown instead of current AI tab on element panel."
+ },
+ {
+  "src": "live/styles-08-922814.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "Default Styles per Clause level",
+  "uploaded": "2021-05",
+  "alt": "Clear Formatting Button",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Help tab shown instead of current AI tab on element panel."
+ },
+ {
+  "src": "live/styles-09-7341d1.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "end",
+  "uploaded": "2023-07",
+  "alt": "Default Document Style",
+  "verdict": "LEGACY",
+  "evidence": "Top nav shows legacy 'Analytics' item, now Data Insights (Beta)."
+ },
+ {
+  "src": "live/styles-10-00889b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Styles.md",
+  "section": "end",
+  "uploaded": "2023-08",
+  "alt": "Duplication of Styles for Legito Templates",
+  "verdict": "VALID",
+  "evidence": "Styles list (Default/Set As Default/Duplicate/Edit/Delete) matches current exactly."
+ },
+ {
+  "src": "live/import-legito-templates-01-75b98c.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Import/Import Legito Templates.md",
+  "section": "Importing an entire Template",
+  "uploaded": "2020-03",
+  "alt": "Import Automated Template",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of current Import Word/Automated Template modal."
+ },
+ {
+  "src": "live/import-legito-templates-02-6f6b26.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Import/Import Legito Templates.md",
+  "section": "Importing an entire Template",
+  "uploaded": "2020-03",
+  "alt": "Import Document Button",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of current Template-icon Import Template panel."
+ },
+ {
+  "src": "live/import-from-word-01-44a039.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Import/Import from Word.md",
+  "section": "AI conversion",
+  "uploaded": "2020-02",
+  "alt": "Import Word Document",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of current Import Word document modal."
+ },
+ {
+  "src": "live/import-from-word-02-bb0f93.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Import/Import from Word.md",
+  "section": "AI conversion",
+  "uploaded": "2020-02",
+  "alt": "Import Settings",
+  "verdict": "NO-REF",
+  "evidence": "No reference capture of current Import Word document modal with settings."
+ },
+ {
+  "src": "live/import-from-word-03-768333.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Import/Import from Word.md",
+  "section": "Formatting rule for annotations",
+  "uploaded": "2020-02",
+  "alt": "Formatting Example",
+  "verdict": "N-A",
+  "evidence": "Word document screenshot with highlighted placeholder brackets; non-Legito content."
+ },
+ {
+  "src": "live/import-from-word-04-2c8fcd.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Import/Import from Word.md",
+  "section": "Formatting rule for annotations",
+  "uploaded": "2020-02",
+  "alt": "Formatting Example",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Text Input fields render solid yellow; current UI uses white bordered boxes (question-01)."
+ },
+ {
+  "src": "live/import-from-word-05-a1daea.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Import/Import from Word.md",
+  "section": "Formatting rule for annotations",
+  "uploaded": "2020-01",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Microsoft Word app icon graphic; non-Legito branding image."
+ },
+ {
+  "src": "live/repeat-to-any-content-01-0abfa4.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Any Content.md",
+  "section": "intro",
+  "uploaded": "2024-08",
+  "alt": "Repeat to Any Content",
+  "verdict": "VALID",
+  "evidence": "Repeat tab active, Clause Library messaging matches current template editor chrome."
+ },
+ {
+  "src": "live/repeat-to-buttons-01-dea28d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Buttons.md",
+  "section": "Configuring the Repeat",
+  "uploaded": "2024-08",
+  "alt": "Repeat to Buttons",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows obsolete Default Values/Help; current clause tabs end in AI."
+ },
+ {
+  "src": "live/repeat-to-buttons-02-7827fd.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Buttons.md",
+  "section": "Configuring the Repeat",
+  "uploaded": "2024-08",
+  "alt": "Applying the Repeat Condition to a Clause",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Same obsolete Default Values/Help tabs; missing current AI tab."
+ },
+ {
+  "src": "live/repeat-to-text-inputs-01-0acde9.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Text Inputs.md",
+  "section": "Configuring the Repeat",
+  "uploaded": "2024-08",
+  "alt": "Repeat To Text Inputs",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Obsolete Default Values/Help tabs on subparagraph; current UI has AI tab instead."
+ },
+ {
+  "src": "live/repeat-to-text-inputs-02-f1fdad.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Text Inputs.md",
+  "section": "Configuring the Repeat",
+  "uploaded": "2024-08",
+  "alt": "Applying the Repeat Condition to the Content",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Same obsolete Default Values/Help tab set, no AI tab."
+ },
+ {
+  "src": "live/button-01-9b72fd.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Button.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Button Element",
+  "verdict": "VALID",
+  "evidence": "Top bar, left rail, elements list match current Template Editor exactly."
+ },
+ {
+  "src": "live/calculation-01-3e10e4.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Calculation.md",
+  "section": "Writing a formula",
+  "uploaded": "2020-02",
+  "alt": "Calculation Elements",
+  "verdict": "VALID",
+  "evidence": "Conditions/Repeat/Tags/Properties/Warning/Design tabs and FX bar match current element-panel style."
+ },
+ {
+  "src": "live/calculation-02-b4d6e3.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Calculation.md",
+  "section": "Writing a formula",
+  "uploaded": "2020-02",
+  "alt": "Calculation Element - Help Tab",
+  "verdict": "VALID",
+  "evidence": "FX formula bar and tab set match current Template Editor chrome."
+ },
+ {
+  "src": "live/clauses-01-ede5ec.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Clauses.md",
+  "section": "The five levels",
+  "uploaded": "2020-03",
+  "alt": "Legito Clause Structure",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Article shows Default Values/Help tabs; current clause tabs show AI, not these."
+ },
+ {
+  "src": "live/date-01-bce300.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Date.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Date Element",
+  "verdict": "VALID",
+  "evidence": "Calendar date-picker + In Words toggle consistent with current green design."
+ },
+ {
+  "src": "live/date-02-366670.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Date.md",
+  "section": "intro",
+  "uploaded": "2024-08",
+  "alt": "In Words Option",
+  "verdict": "VALID",
+  "evidence": "Same calendar/In Words control, closer crop; consistent styling."
+ },
+ {
+  "src": "live/date-03-293bcc.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Date.md",
+  "section": "Deadline reminders",
+  "uploaded": "2024-08",
+  "alt": "Date Element - Help Tab",
+  "verdict": "VALID",
+  "evidence": "Tags tab with tag chips matches current chip style elsewhere."
+ },
+ {
+  "src": "live/date-04-858321.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Date.md",
+  "section": "Deadline reminders",
+  "uploaded": "2024-08",
+  "alt": "Date Element - Suggested Tags",
+  "verdict": "VALID",
+  "evidence": "Suggested tags UI consistent with current Tags-tab pattern."
+ },
+ {
+  "src": "live/date-05-774da5.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Date.md",
+  "section": "Deadline reminders",
+  "uploaded": "2024-08",
+  "alt": "Deadline Reminder",
+  "verdict": "VALID",
+  "evidence": "Signing/Payment/Delivery/Expiration fields match current Key Facts panel exactly."
+ },
+ {
+  "src": "live/element-group-01-3da45e.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Element Group.md",
+  "section": "intro",
+  "uploaded": "2021-09",
+  "alt": "Element Group",
+  "verdict": "VALID",
+  "evidence": "Repeat config tab bar and chrome match current Template Editor."
+ },
+ {
+  "src": "live/element-group-02-98acd3.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Element Group.md",
+  "section": "Conditions on repeated Elements",
+  "uploaded": "2021-09",
+  "alt": "Conditions for Repeated Items",
+  "verdict": "VALID",
+  "evidence": "Conditions tab and 'Add selected text if' phrasing match current style."
+ },
+ {
+  "src": "live/footnotes-and-endnotes-01-038089.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Footnotes and Endnotes.md",
+  "section": "Adding a note",
+  "uploaded": "2021-08",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No reference for this dark floating Insert Footnote/Endnote popup menu."
+ },
+ {
+  "src": "live/header-footer-01-3855a0.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Header & Footer.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Create Header",
+  "verdict": "VALID",
+  "evidence": "Drag Article here to create header; matches current top bar chrome."
+ },
+ {
+  "src": "live/header-footer-02-e239ad.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Header & Footer.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Create Footer",
+  "verdict": "VALID",
+  "evidence": "Drag Article here to create footer + New Page Section button matches."
+ },
+ {
+  "src": "live/image-01-4c1e7a.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Image.md",
+  "section": "Two ways to use it",
+  "uploaded": "2020-03",
+  "alt": "Image Element",
+  "verdict": "VALID",
+  "evidence": "Upload Image dropzone and chrome match current Template Editor exactly."
+ },
+ {
+  "src": "live/image-02-07700d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Image.md",
+  "section": "Sizing",
+  "uploaded": "2020-03",
+  "alt": "Image Element - Layout Options",
+  "verdict": "VALID",
+  "evidence": "Layout Options / Position-Text Wrapping modal matches current design language."
+ },
+ {
+  "src": "live/link-01-69856c.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "What a Link does",
+  "uploaded": "2020-03",
+  "alt": "Link Element",
+  "verdict": "VALID",
+  "evidence": "Link chips and chrome match current Template Editor exactly."
+ },
+ {
+  "src": "live/link-02-7ff2e9.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Compatible targets",
+  "uploaded": "2024-08",
+  "alt": "Link Element - Web Page",
+  "verdict": "VALID",
+  "evidence": "Link to Web page config matches current element-panel style."
+ },
+ {
+  "src": "live/link-03-2bf0e9.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Compatible targets",
+  "uploaded": "2024-08",
+  "alt": "Link Element - Object Property",
+  "verdict": "VALID",
+  "evidence": "Object property link to Clause Library record matches current UI."
+ },
+ {
+  "src": "live/link-04-ac3e86.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Compatible targets",
+  "uploaded": "2024-08",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Rendered plain-bordered text fields match current field styling."
+ },
+ {
+  "src": "live/link-05-b5c64f.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Compatible targets",
+  "uploaded": "2024-08",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Link chip pills match confirmed current chip style."
+ },
+ {
+  "src": "live/link-06-a97ffe.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Formatting",
+  "uploaded": "2024-08",
+  "alt": "Link Element Formatting",
+  "verdict": "VALID",
+  "evidence": "Design toolbar subset matches current formatting-bar style for elements."
+ },
+ {
+  "src": "live/link-07-5a46be.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Formatting",
+  "uploaded": "2024-08",
+  "alt": "Link Element - Design Tab",
+  "verdict": "VALID",
+  "evidence": "Same Link-to-Date config panel, consistent chrome."
+ },
+ {
+  "src": "live/link-08-6731dc.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Formatting",
+  "uploaded": "2024-08",
+  "alt": "Link Element - Top Menu",
+  "verdict": "VALID",
+  "evidence": "Same Link-to-Date config panel top menu, consistent chrome."
+ },
+ {
+  "src": "live/link-09-aec7a1.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Troubleshooting",
+  "uploaded": "2024-08",
+  "alt": "Link Error",
+  "verdict": "VALID",
+  "evidence": "Red error link chip matches color-coded chip convention."
+ },
+ {
+  "src": "live/link-10-c3e2d8.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Troubleshooting",
+  "uploaded": "2024-08",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Article shows old Default Values/Help tabs, missing current AI tab."
+ },
+ {
+  "src": "live/link-11-370782.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Troubleshooting",
+  "uploaded": "2024-08",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Rendered radio choice + cross-reference consistent with current styling."
+ },
+ {
+  "src": "live/link-12-dd8eef.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md",
+  "section": "Troubleshooting",
+  "uploaded": "2024-08",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Native browser tooltip on hyperlink cross-reference; generic, unchanged behavior."
+ },
+ {
+  "src": "live/money-01-b2d708.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md",
+  "section": "Short form and long form",
+  "uploaded": "2020-03",
+  "alt": "Money Element",
+  "verdict": "VALID",
+  "evidence": "Chrome, elements list, icon-box Money rendering match current UI."
+ },
+ {
+  "src": "live/money-02-794a94.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md",
+  "section": "Short form and long form",
+  "uploaded": "2020-03",
+  "alt": "In Words Button",
+  "verdict": "VALID",
+  "evidence": "Rendered $ amount + In Words button matches money-04 styling."
+ },
+ {
+  "src": "live/money-03-9c15b6.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md",
+  "section": "Formatting",
+  "uploaded": "2024-08",
+  "alt": "Money Element",
+  "verdict": "VALID",
+  "evidence": "Tab bar/canvas chrome match confirmed current Template Editor style."
+ },
+ {
+  "src": "live/money-04-2a1498.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md",
+  "section": "Formatting",
+  "uploaded": "2024-08",
+  "alt": "Money Element - Full Width",
+  "verdict": "VALID",
+  "evidence": "Rendered $ amount + in words fields match current styling."
+ },
+ {
+  "src": "live/money-05-db2f20.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md",
+  "section": "Help text",
+  "uploaded": "2024-08",
+  "alt": "Money Element - Help Tab",
+  "verdict": "VALID",
+  "evidence": "Design tab toolbar and Full width toggle match current style."
+ },
+ {
+  "src": "live/money-06-6f8880.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md",
+  "section": "Document Record values",
+  "uploaded": "2024-08",
+  "alt": "Money Element - suggested tags",
+  "verdict": "VALID",
+  "evidence": "Tags tab chip style matches confirmed current pattern."
+ },
+ {
+  "src": "live/money-07-bc60a8.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md",
+  "section": "Document Record values",
+  "uploaded": "2024-08",
+  "alt": "Money Element - Value",
+  "verdict": "LEGACY",
+  "evidence": "Edit/Download pills + Stage/Active columns; current UI uses Open + Status/Expiration."
+ },
+ {
+  "src": "live/page-number-01-4b2a85.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Page Number.md",
+  "section": "Options",
+  "uploaded": "2024-08",
+  "alt": "Pge Number Element",
+  "verdict": "VALID",
+  "evidence": "Elements list and chrome match current Template Editor exactly."
+ },
+ {
+  "src": "live/page-number-02-7478ad.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Page Number.md",
+  "section": "Options",
+  "uploaded": "2022-11",
+  "alt": "Multiple Page Number",
+  "verdict": "VALID",
+  "evidence": "Page numbering format toggles and collapsed clause rows match current style."
+ },
+ {
+  "src": "live/qr-code-01-39a5fa.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md",
+  "section": "Formatting",
+  "uploaded": "2023-01",
+  "alt": "QR Code Element",
+  "verdict": "VALID",
+  "evidence": "QR Code element insertion matches current elements list and chrome."
+ },
+ {
+  "src": "live/qr-code-02-f3bdf4.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md",
+  "section": "When the code is generated",
+  "uploaded": "2024-02",
+  "alt": "Details of QR Code Element",
+  "verdict": "VALID",
+  "evidence": "Data/Preview/Legend QR config layout is internally consistent, current style."
+ },
+ {
+  "src": "live/qr-code-03-c89982.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "QR Code for Payment",
+  "verdict": "VALID",
+  "evidence": "Rendered QR code for payment matches known QR feature."
+ },
+ {
+  "src": "live/qr-code-04-1a790b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Data field URL entry matches qr-code-02 layout exactly."
+ },
+ {
+  "src": "live/qr-code-05-06dd2d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Empty Data/Preview/Legend state matches confirmed QR config layout."
+ },
+ {
+  "src": "live/qr-code-06-bf190a.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Variable autocomplete dropdown matches Legito's system-name suggestion convention."
+ },
+ {
+  "src": "live/qr-code-07-15ed1d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/QR Code.md",
+  "section": "end",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Property autocomplete list matches confirmed QR variable convention."
+ },
+ {
+  "src": "live/question-01-48fe7b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Adding a Question",
+  "uploaded": "2024-08",
+  "alt": "Question Element",
+  "verdict": "VALID",
+  "evidence": "Client is / Company-Individual radio choice matches current toggle style."
+ },
+ {
+  "src": "live/question-02-a14107.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Adding a Question",
+  "uploaded": "2024-08",
+  "alt": "Question Element - Help Tab",
+  "verdict": "VALID",
+  "evidence": "Help tooltip on Question element matches current help-icon convention."
+ },
+ {
+  "src": "live/question-03-cb7776.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Adding a Question",
+  "uploaded": "2020-02",
+  "alt": "Question Element - New Response",
+  "verdict": "VALID",
+  "evidence": "New Response button + Options/Object Records tabs match current chrome."
+ },
+ {
+  "src": "live/question-04-e6df57.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Reference Options",
+  "uploaded": "2022-04",
+  "alt": "Reference Options",
+  "verdict": "VALID",
+  "evidence": "Reference Option dropdown matches current autocomplete/reference styling."
+ },
+ {
+  "src": "live/question-05-1e9a24.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Sorting options",
+  "uploaded": "2024-08",
+  "alt": "Sorting of Options",
+  "verdict": "VALID",
+  "evidence": "Sort options dropdown (Custom/Alphabetical) matches current Properties tab style."
+ },
+ {
+  "src": "live/question-06-32cdbe.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "First option selected",
+  "uploaded": "2021-05",
+  "alt": "A Question Without the First Response Chosen Automatically",
+  "verdict": "VALID",
+  "evidence": "Bilingual hide/Automatic Full Stop/Select first option toggles match current style."
+ },
+ {
+  "src": "live/question-07-b3b2b1.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Multiple Choice",
+  "uploaded": "2021-10",
+  "alt": "Multiple Choice Question",
+  "verdict": "VALID",
+  "evidence": "Rendered checkbox list matches Legito's green checkbox convention."
+ },
+ {
+  "src": "live/question-08-7cb6e0.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Questions referring to Objects",
+  "uploaded": "2022-05",
+  "alt": "Questions Referring to Objects",
+  "verdict": "VALID",
+  "evidence": "Edit/Actions drag-handle and Options/Object Records pills match current editor chrome exactly"
+ },
+ {
+  "src": "live/question-09-530fe1.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md",
+  "section": "Search",
+  "uploaded": "2024-08",
+  "alt": "Question Element - Search",
+  "verdict": "VALID",
+  "evidence": "Search-in-dropdown pattern matches current minimal select search box style"
+ },
+ {
+  "src": "live/rich-text-01-68210c.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Rich Text.md",
+  "section": "intro",
+  "uploaded": "2022-07",
+  "alt": "Rich Text Element",
+  "verdict": "VALID",
+  "evidence": "Elements list order after Date matches current; toolbar icons consistent flat style"
+ },
+ {
+  "src": "live/select-01-2a4b35.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Select Elements",
+  "verdict": "VALID",
+  "evidence": "Select row present in elements list, same position and card style as current"
+ },
+ {
+  "src": "live/select-02-5b6ae4.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Reference Options",
+  "uploaded": "2022-04",
+  "alt": "Reference Options",
+  "verdict": "VALID",
+  "evidence": "+Text Option/+Reference dropdown matches current Select value-editing pattern seen elsewhere"
+ },
+ {
+  "src": "live/select-03-dbdf4b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Reference Options",
+  "uploaded": "2022-04",
+  "alt": "List of Shareholders",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Top tabs show removed Warning/Help; current shows Design/AI only"
+ },
+ {
+  "src": "live/select-04-6179a7.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Reference Options",
+  "uploaded": "2022-04",
+  "alt": "List of Shareholders",
+  "verdict": "VALID",
+  "evidence": "Multi-select pills with X-remove and Add button match current green-accent flat style"
+ },
+ {
+  "src": "live/select-05-5ce918.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Non-exportable options",
+  "uploaded": "2022-04",
+  "alt": "Non-exportable Options",
+  "verdict": "VALID",
+  "evidence": "Dropdown with Text Option/Reference and hover icons matches current Select editing"
+ },
+ {
+  "src": "live/select-06-928a7c.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Non-exportable options",
+  "uploaded": "2022-04",
+  "alt": "Option Settings",
+  "verdict": "NO-REF",
+  "evidence": "No current small in-canvas Option-settings modal capture to confirm banner-header style"
+ },
+ {
+  "src": "live/select-07-be42dc.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Sorting options",
+  "uploaded": "2022-04",
+  "alt": "Sorting of Options",
+  "verdict": "VALID",
+  "evidence": "Sort-icon dropdown with Text Option/Reference matches current Select interaction pattern"
+ },
+ {
+  "src": "live/select-08-d328b0.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Sorting options",
+  "uploaded": "2022-04",
+  "alt": "Sorting Options",
+  "verdict": "VALID",
+  "evidence": "Sort by Alphabetical Asc/Desc/Custom radio list matches current sorting UI pattern"
+ },
+ {
+  "src": "live/select-09-d1badf.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Multiple Choice",
+  "uploaded": "2021-10",
+  "alt": "Multiple-Choice Selects",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Top tabs show removed Warning and Help; current has Design/AI only"
+ },
+ {
+  "src": "live/select-10-5b3f54.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Selects referring to Objects",
+  "uploaded": "2022-05",
+  "alt": "Selects Referring to Objects",
+  "verdict": "VALID",
+  "evidence": "Options/Object Records tab toggle matches confirmed current pill-toggle pattern"
+ },
+ {
+  "src": "live/select-11-2e25af.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Select.md",
+  "section": "Search",
+  "uploaded": "2022-05",
+  "alt": "Search",
+  "verdict": "VALID",
+  "evidence": "Search-enabled select dropdown matches current minimal white dropdown box style"
+ },
+ {
+  "src": "live/switcher-01-a8b212.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Switcher.md",
+  "section": "intro",
+  "uploaded": "2021-07",
+  "alt": "Switcher Element",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tabs show Help only, missing Default Values/AI; rail missing Library icon"
+ },
+ {
+  "src": "live/switcher-02-150144.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Switcher.md",
+  "section": "Visualization",
+  "uploaded": "2024-08",
+  "alt": "Toggle Icon",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab; current consolidates Help into Learn menu"
+ },
+ {
+  "src": "live/switcher-03-c989e1.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Switcher.md",
+  "section": "Visualization",
+  "uploaded": "2024-08",
+  "alt": "Checkbox Icon",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab; current consolidates Help into Learn menu"
+ },
+ {
+  "src": "live/table-of-contents-01-3b0129.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table of Contents.md",
+  "section": "Limitations",
+  "uploaded": "2024-03",
+  "alt": "Table of Contents",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab; current uses Design/AI only, no Help"
+ },
+ {
+  "src": "live/table-01-34ce60.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Table Element",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab (no AI); rest of chrome matches current"
+ },
+ {
+  "src": "live/table-02-8ec7db.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "Table tools",
+  "uploaded": "2020-03",
+  "alt": "Table Tool - Plus Icon",
+  "verdict": "VALID",
+  "evidence": "Table cell toolbar icons match confirmed table-01 current editor context"
+ },
+ {
+  "src": "live/table-03-3f50f2.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "Table tools",
+  "uploaded": "2020-03",
+  "alt": "Table Tool - Cell Merge Icons",
+  "verdict": "VALID",
+  "evidence": "Merge cells tooltip consistent with confirmed current table toolbar context"
+ },
+ {
+  "src": "live/table-04-8b58f4.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "Table tools",
+  "uploaded": "2020-03",
+  "alt": "Table Tool - Unmerge Icon",
+  "verdict": "VALID",
+  "evidence": "Unmerge icon consistent with confirmed current table toolbar context"
+ },
+ {
+  "src": "live/table-05-dd6e95.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "Rows and columns are configured separately",
+  "uploaded": "2020-03",
+  "alt": "Table Design",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab; Design toolbar otherwise matches current controls"
+ },
+ {
+  "src": "live/table-06-e73603.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "Rows and columns are configured separately",
+  "uploaded": "2020-03",
+  "alt": "Table Properties",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab, removed in current UI (Learn menu)"
+ },
+ {
+  "src": "live/table-07-d02b84.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "Rows and columns are configured separately",
+  "uploaded": "2020-03",
+  "alt": "Specific Table Design - Table Width",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab, removed in current UI (Learn menu)"
+ },
+ {
+  "src": "live/table-08-0f8ec6.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Table.md",
+  "section": "Rows and columns are configured separately",
+  "uploaded": "2020-03",
+  "alt": "Specific Table Design - Spacing",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab; 'Beginning & End' dropdown text matches current exactly"
+ },
+ {
+  "src": "live/template-sections-01-439eed.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Template Sections.md",
+  "section": "intro",
+  "uploaded": "2022-08",
+  "alt": "Templates Sections",
+  "verdict": "VALID",
+  "evidence": "Continuous Section clause present as in current; missing Library icon is later addition"
+ },
+ {
+  "src": "live/template-sections-02-09843c.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Template Sections.md",
+  "section": "What can be applied to a Section",
+  "uploaded": "2022-08",
+  "alt": "Section Properties",
+  "verdict": "VALID",
+  "evidence": "Conditions/Repeat/Tags/Properties/Design tabs match current exactly, missing only newer AI tab"
+ },
+ {
+  "src": "live/template-sections-03-66e284.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Template Sections.md",
+  "section": "Next Page Sections",
+  "uploaded": "2022-08",
+  "alt": "Next Page Sections",
+  "verdict": "VALID",
+  "evidence": "Party-link tags and +New Page Section button match current canvas pattern"
+ },
+ {
+  "src": "live/template-sections-04-257679.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Template Sections.md",
+  "section": "Continuous Sections",
+  "uploaded": "2022-08",
+  "alt": "Continuous Section",
+  "verdict": "VALID",
+  "evidence": "Continuous Section selection and canvas tag match current; Library icon addition unrelated"
+ },
+ {
+  "src": "live/text-input-01-345f3f.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Text Input.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Text Input Element",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Warning and Help tabs, both removed in current UI"
+ },
+ {
+  "src": "live/text-input-02-03d685.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Text Input.md",
+  "section": "Properties",
+  "uploaded": "2020-03",
+  "alt": "Text Input Properties",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Warning and Help tabs, both removed in current UI"
+ },
+ {
+  "src": "live/text-input-03-c3f671.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Text Input.md",
+  "section": "Help text",
+  "uploaded": "2020-03",
+  "alt": "The Help Tab",
+  "verdict": "LEGACY",
+  "evidence": "Pre-2024 Document Editor: separate Import from Sheet/Legito tabs, not single Import tab"
+ },
+ {
+  "src": "live/text-01-ad370a.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Text.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Text Element",
+  "verdict": "VALID",
+  "evidence": "Conditions/Repeat/Tags/Properties/Design tabs match current exactly; Library icon present, no Warning/Help"
+ },
+ {
+  "src": "live/text-02-bb003b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Text.md",
+  "section": "Splitting a Text Element",
+  "uploaded": "2020-03",
+  "alt": "Text Element - Split Feature",
+  "verdict": "VALID",
+  "evidence": "Dark right-click context menu (Split/Duplicate/Replace) matches confirmed current dark-menu style"
+ },
+ {
+  "src": "live/text-03-f9f9a8.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Text.md",
+  "section": "Formatting",
+  "uploaded": "2020-03",
+  "alt": "Text Element Settings",
+  "verdict": "VALID",
+  "evidence": "Conditions/Repeat/Tags/Properties/Design tabs match current exactly, no Warning/Help shown"
+ },
+ {
+  "src": "live/text-04-5aabc9.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Text.md",
+  "section": "Formatting",
+  "uploaded": "2020-03",
+  "alt": "Text Element Settins - Workflow Example",
+  "verdict": "VALID",
+  "evidence": "Workflow canvas breadcrumb, Publish button, zoom/undo-redo, stage nodes match current Workflows page"
+ },
+ {
+  "src": "live/title-01-7c4079.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Structure/Title.md",
+  "section": "Working with a Title",
+  "uploaded": "2020-02",
+  "alt": "Title Element",
+  "verdict": "VALID",
+  "evidence": "Full rail with Library icon, Learn top bar, CLAUSES order all match current"
+ },
+ {
+  "src": "live/template-editor-features-overview-01-113a6c.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Left bar",
+  "uploaded": "2022-11",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Popular/Full List toggle and CLAUSES/ELEMENTS panel match current template editor exactly"
+ },
+ {
+  "src": "live/template-editor-features-overview-02-4a7c19.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Left bar",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Condition suggestions panel matches confirmed current Create/Apply condition pattern"
+ },
+ {
+  "src": "live/template-editor-features-overview-03-e30fef.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Left bar",
+  "uploaded": "2021-05",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Create Link/Apply recent link/Paste link mirrors confirmed current Conditions-tab convention"
+ },
+ {
+  "src": "live/template-editor-features-overview-04-810733.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Template search",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Warning and Help tabs, removed in current UI"
+ },
+ {
+  "src": "live/template-editor-features-overview-05-ce9879.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Template search",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Condition suggestions/search panel matches confirmed current Conditions & Repeats pattern"
+ },
+ {
+  "src": "live/template-editor-features-overview-06-15362e.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Undo and redo",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Condition suggestions panel and tooltip match confirmed current pattern"
+ },
+ {
+  "src": "live/template-editor-features-overview-07-70c535.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Undo and redo",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Find in Template dark search panel matches current top-bar search label"
+ },
+ {
+  "src": "live/template-editor-features-overview-08-6c6000.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Labels",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Warning and Help tabs, removed in current UI"
+ },
+ {
+  "src": "live/template-editor-features-overview-09-9e77a5.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Labels",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Undo dropdown history list matches current Undo chevron control"
+ },
+ {
+  "src": "live/template-editor-features-overview-10-da7149.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Ruler",
+  "uploaded": "2021-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Document title header (pencil+checkmark) matches current header widget exactly"
+ },
+ {
+  "src": "live/template-editor-features-overview-11-6da97b.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Ruler",
+  "uploaded": "2022-07",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Callout annotations on eye-icon/dropdown content match confirmed current scene"
+ },
+ {
+  "src": "live/template-editor-features-overview-12-bdc57f.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Bulk Actions",
+  "uploaded": "2022-01",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab, removed in current UI (Learn menu)"
+ },
+ {
+  "src": "live/template-editor-features-overview-13-d84c5d.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Bulk Actions",
+  "uploaded": "2022-04",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Help tab, removed in current UI (Learn menu)"
+ },
+ {
+  "src": "live/template-editor-features-overview-14-2636c7.jpg",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Duplicate",
+  "uploaded": "2022-05",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Warning and Help tabs, removed in current UI"
+ },
+ {
+  "src": "live/template-editor-features-overview-15-d084bb.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Duplicate",
+  "uploaded": "2023-09",
+  "alt": "Duplicate feature for Document Editor ",
+  "verdict": "VALID",
+  "evidence": "Actions dropdown and Options/Object Records pill match confirmed current pattern"
+ },
+ {
+  "src": "live/template-editor-features-overview-16-850628.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Template Editor Features Overview.md",
+  "section": "Duplicate",
+  "uploaded": "2021-10",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Editor Settings rail icon confirmed current; auto-generated system name panel plausible"
+ },
+ {
+  "src": "live/translation-mode-01-eb96fd.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Editor Settings/Translation Mode.md",
+  "section": "What changes in Translation mode",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Translate rail icon confirmed current; Languages panel matches Translation Mode feature"
+ },
+ {
+  "src": "live/document-records-data-extraction-01-61d907.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Tags/Document Records - Data Extraction.md",
+  "section": "3. Extracting data into Document Record Properties",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure rule-reference spreadsheet table, not a Legito application UI screenshot"
+ },
+ {
+  "src": "live/document-records-data-extraction-02-a2f73a.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Tags/Document Records - Data Extraction.md",
+  "section": "3. Extracting data into Document Record Properties",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure rule-reference spreadsheet table, not a Legito application UI screenshot"
+ },
+ {
+  "src": "live/template-tags-overview-01-5b5a5e.png",
+  "article": "TEMPLATE AUTOMATION/Template Editor/Template Tags/Template Tags Overview.md",
+  "section": "What Tags are used for",
+  "uploaded": "2020-03",
+  "alt": "Template Tags Overview",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Warning/Help (removed); Tags tab and DocumentName content match current"
+ },
+ {
+  "src": "live/form-template-01-e78698.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Form Template.md",
+  "section": "Quick Actions",
+  "uploaded": "2023-10",
+  "alt": "Form Template - Block Types",
+  "verdict": "VALID",
+  "evidence": "Dark Quick Actions grid matches confirmed current dark-panel menu design language"
+ },
+ {
+  "src": "live/form-template-02-e21fe8.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Form Template.md",
+  "section": "Quick Actions",
+  "uploaded": "2024-02",
+  "alt": "Quick Actions Bar",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Tab bar shows Default Values/Warning/Help tabs, missing current AI tab"
+ },
+ {
+  "src": "live/form-template-03-a04917.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Form Template.md",
+  "section": "Combining with the full Element set",
+  "uploaded": "2023-10",
+  "alt": "creating Advanced Forms",
+  "verdict": "VALID",
+  "evidence": "Rendered form fields (toggle, dropdowns) match current form widget styling"
+ },
+ {
+  "src": "live/form-template-04-e9cbaa.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Form Template.md",
+  "section": "Combining with the full Element set",
+  "uploaded": "2024-02",
+  "alt": "Clauses and Elements",
+  "verdict": "LEGACY",
+  "evidence": "Old 7-tab editor: View/Review/Instructions/Import from Sheet/Import from Legito/Batch Generation"
+ },
+ {
+  "src": "live/pdf-template-01-3fc63b.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/PDF Template.md",
+  "section": "Adding a PDF Template",
+  "uploaded": "2023-07",
+  "alt": "PDF Template",
+  "verdict": "LEGACY",
+  "evidence": "Top nav shows 'Analytics'/'Manage Signings', legacy names for current items"
+ },
+ {
+  "src": "live/pdf-template-02-268eb3.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/PDF Template.md",
+  "section": "Mapping fields with Template Tags",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Generic fillable PDF form, no Legito UI chrome visible"
+ },
+ {
+  "src": "live/pdf-template-03-3d8615.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/PDF Template.md",
+  "section": "Mapping fields with Template Tags",
+  "uploaded": "2023-06",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Pure documentation table/diagram, no Legito UI present"
+ },
+ {
+  "src": "live/pdf-template-04-2a5ef0.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/PDF Template.md",
+  "section": "Adding fields the PDF does not have",
+  "uploaded": "2024-02",
+  "alt": "The Extraction of Data",
+  "verdict": "NO-REF",
+  "evidence": "Need PDF Template extraction-keywords panel capture; not in reference set"
+ },
+ {
+  "src": "live/pdf-template-05-205d33.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/PDF Template.md",
+  "section": "Conditions",
+  "uploaded": "2023-07",
+  "alt": "PDF Template Conditions",
+  "verdict": "VALID",
+  "evidence": "Top bar (Undo/Redo/Save/Publish/Test) and left rail match template-editor.png reference"
+ },
+ {
+  "src": "live/pdf-template-06-480d69.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/PDF Template.md",
+  "section": "Where the finished PDF appears",
+  "uploaded": "2024-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Background tab bar shows separate 'Import from Sheet'/'Import from Legito' tabs"
+ },
+ {
+  "src": "live/pdf-template-07-81723e.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/PDF Template.md",
+  "section": "Where the finished PDF appears",
+  "uploaded": "2024-02",
+  "alt": "Attaching Processed PDF Documents",
+  "verdict": "NO-REF",
+  "evidence": "Need document-editor attached-PDF-file-card capture to confirm current styling"
+ },
+ {
+  "src": "live/template-type-overview-01-c350c8.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Template Type Overview.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "Template Types",
+  "verdict": "NO-REF",
+  "evidence": "Need 'New Template Suite' type-chooser (Document/Form/Table/PDF) screen capture"
+ },
+ {
+  "src": "live/template-type-overview-02-001fe1.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Template Type Overview.md",
+  "section": "Choosing between Document and Form",
+  "uploaded": "2020-03",
+  "alt": "Document Type Template",
+  "verdict": "NO-REF",
+  "evidence": "Need per-paragraph eye-icon visibility view capture; not in references"
+ },
+ {
+  "src": "live/template-type-overview-03-813607.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Template Type Overview.md",
+  "section": "Choosing between Document and Form",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Rendered form example (radios/dropdowns) matches current form field styling"
+ },
+ {
+  "src": "live/template-type-overview-04-5eafa2.png",
+  "article": "TEMPLATE AUTOMATION/Template Types/Template Type Overview.md",
+  "section": "Choosing between Document and Form",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "N-A",
+  "evidence": "Third-party/native PDF form render, no Legito chrome visible"
+ },
+ {
+  "src": "live/guests-01-a8c24e.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Guests.md",
+  "section": "What a Guest cannot do",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Bare 'Guest' page, plain Sign out button, no modern top-nav at all"
+ },
+ {
+  "src": "live/single-sign-on-sso-01-45a57e.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Single Sign-On (SSO).md",
+  "section": "Activating",
+  "uploaded": "2022-07",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Settings shell/sidebar and field styling match current settings-general.png reference"
+ },
+ {
+  "src": "live/user-groups-01-ba034f.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/User Groups.md",
+  "section": "intro",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Top nav 'My account'+flag, shows 'Analytics', missing Clause Library/Kedy AI"
+ },
+ {
+  "src": "live/user-groups-02-de32b6.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/User Groups.md",
+  "section": "Access levels",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav cropped: 'Analytics', 'My account', bell/flag icons"
+ },
+ {
+  "src": "live/user-groups-03-129b8f.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/User Groups.md",
+  "section": "Access levels",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy top nav (Analytics, My account, flag) visible above button"
+ },
+ {
+  "src": "live/user-groups-04-4a07c4.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/User Groups.md",
+  "section": "Access levels",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Modal chrome (title/X/green button) matches current dashboard-widget-picker.png style"
+ },
+ {
+  "src": "live/users-and-permissions-01-f3fb58.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "Adding a user",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav + 'Add User' button and 'Caption' column, not current 'Invite User'/'Role'"
+ },
+ {
+  "src": "live/users-and-permissions-02-7c7158.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "Adding a user",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav (Analytics, My account) + old 'Add User' button label"
+ },
+ {
+  "src": "live/users-and-permissions-03-9c5ba3.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "Adding a user",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'Invite a user' modal includes removed 'Sign with Legito BioSign' checkbox"
+ },
+ {
+  "src": "live/users-and-permissions-04-e657a9.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "Adding a user",
+  "uploaded": "2020-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same 'Invite a user' modal as -03, which contains BioSign checkbox"
+ },
+ {
+  "src": "live/users-and-permissions-05-5ee811.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "Workspace Admin",
+  "uploaded": "2020-03",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Users-list screen as -01; old 'Add User' button, no 'Role' column"
+ },
+ {
+  "src": "live/users-and-permissions-06-b5e378.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "Templates and automation",
+  "uploaded": "2022-08",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Permission list includes 'Sign with Legito BioSign', a removed feature"
+ },
+ {
+  "src": "live/users-and-permissions-07-4cf43c.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "Recommended settings",
+  "uploaded": "2022-08",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Edit-User permissions panel as -06, which contains BioSign checkbox"
+ },
+ {
+  "src": "live/users-and-permissions-08-c4a09b.png",
+  "article": "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md",
+  "section": "end",
+  "uploaded": "2023-08",
+  "alt": "User-Specific Custom Data field in Legito",
+  "verdict": "VALID",
+  "evidence": "'Edit User' modal chrome matches current modal style; no legacy markers"
+ },
+ {
+  "src": "live/notifications-01-cfeef1.png",
+  "article": "WORKSPACE ADMINISTRATION/Personal Settings/Notifications.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Crop shows 'My account' text nav item, legacy (current uses avatar)"
+ },
+ {
+  "src": "live/notifications-02-142265.gif",
+  "article": "WORKSPACE ADMINISTRATION/Personal Settings/Notifications.md",
+  "section": "Days in advance",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Full legacy nav: 'Legito Free Trial', 'My account', 'Analytics', flag icon"
+ },
+ {
+  "src": "live/notifications-03-4a1a57.png",
+  "article": "WORKSPACE ADMINISTRATION/Personal Settings/Notifications.md",
+  "section": "Events",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Settings shell as sibling shots (old nav, missing current items)"
+ },
+ {
+  "src": "live/user-account-01-96b1c2.gif",
+  "article": "WORKSPACE ADMINISTRATION/Personal Settings/User Account.md",
+  "section": "Settings",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "'My account' text-dropdown (Help/Guided Tour/Settings), legacy nav confirmed"
+ },
+ {
+  "src": "live/announcements-01-9411a8.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Announcements.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav ('My account'/Analytics); sidebar missing General/Navigation/Security/Onboarding"
+ },
+ {
+  "src": "live/announcements-02-ea410a.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Announcements.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same Personal Settings screen as -01, same legacy nav and sidebar"
+ },
+ {
+  "src": "live/billing-01-e01b25.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Billing.md",
+  "section": "intro",
+  "uploaded": "2021-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No current Billing/Payments page capture to confirm tab style, flow"
+ },
+ {
+  "src": "live/billing-02-c946c4.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Billing.md",
+  "section": "intro",
+  "uploaded": "2021-02",
+  "alt": "",
+  "verdict": "NO-REF",
+  "evidence": "No current Upgrade-Subscription screen capture to confirm pricing table UI"
+ },
+ {
+  "src": "live/document-localizations-01-e8392e.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Document Localizations.md",
+  "section": "intro",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Sidebar missing 'Numbering' item between Styles and Templates & Docs Grouping"
+ },
+ {
+  "src": "live/document-localizations-02-8d0767.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Document Localizations.md",
+  "section": "Language Specific",
+  "uploaded": "2020-12",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Tab/table/button styling (Edit/Restore pills) matches current design language"
+ },
+ {
+  "src": "live/document-localizations-03-0bc2da.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Document Localizations.md",
+  "section": "Monetary",
+  "uploaded": "2020-08",
+  "alt": "",
+  "verdict": "VALID",
+  "evidence": "Segmented-button selector style matches current SSO/Billing tab-group patterns"
+ },
+ {
+  "src": "live/general-workspace-settings-01-2a5a56.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/General Workspace Settings.md",
+  "section": "intro",
+  "uploaded": "2022-07",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Sidebar missing Onboarding/Signatories/Workspace localization; Branding/Footer order swapped"
+ },
+ {
+  "src": "live/security-settings-01-9ff2c3.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Security Settings.md",
+  "section": "Password parameters",
+  "uploaded": "2020-11",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Sidebar lacks 'General' as first WORKSPACE item and lacks 'Numbering'"
+ },
+ {
+  "src": "live/security-settings-02-6f0f35.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Security Settings.md",
+  "section": "IP address restriction",
+  "uploaded": "2020-11",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Background top nav shows 'My account' text, bell '10', no avatar"
+ },
+ {
+  "src": "live/template-document-grouping-01-32b250.gif",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Template & Document Grouping.md",
+  "section": "intro",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Full legacy nav ('My account', Analytics) on Legito Free Trial dashboard"
+ },
+ {
+  "src": "live/template-document-grouping-02-aa5850.gif",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Template & Document Grouping.md",
+  "section": "Countries and Regions",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav + combined 'Advanced Styles' item (now split in current UI)"
+ },
+ {
+  "src": "live/template-document-grouping-03-fff8f0.gif",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Template & Document Grouping.md",
+  "section": "Template Categories",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav + obsolete 'BASIC CLAUSES' sidebar section, not in current nav"
+ },
+ {
+  "src": "live/template-document-grouping-04-ff8001.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Template & Document Grouping.md",
+  "section": "External Document Record Default Summary",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same 'Templates & Docs Grouping' screen as -01/-03, confirmed legacy chrome"
+ },
+ {
+  "src": "live/workspace-branding-01-576584.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Branding.md",
+  "section": "Settings",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav + combined 'Advanced Styles' item; only 2 color fields shown"
+ },
+ {
+  "src": "live/workspace-branding-02-58881c.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Branding.md",
+  "section": "Settings",
+  "uploaded": "2021-06",
+  "alt": "",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Sidebar missing General/Navigation/Objects (Workspace) and Numbering (Templates&Documents)"
+ },
+ {
+  "src": "live/workspace-footer-01-3b11f8.gif",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Footer.md",
+  "section": "Building a footer",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Full legacy nav ('My account', Analytics, flag) on Free Trial dashboard"
+ },
+ {
+  "src": "live/workspace-footer-02-f0fb78.gif",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Footer.md",
+  "section": "Building a footer",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Legacy nav + combined 'Advanced Styles' + obsolete 'BASIC CLAUSES' section"
+ },
+ {
+  "src": "live/workspace-footer-03-487bbc.gif",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Footer.md",
+  "section": "Building a footer",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Same legacy Footer screen as -02 (legacy nav, BASIC CLAUSES section)"
+ },
+ {
+  "src": "live/workspace-footer-04-deb551.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Footer.md",
+  "section": "Color scheme",
+  "uploaded": "2020-02",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Crop shows 'My account' text nav item and bell '3', legacy"
+ },
+ {
+  "src": "live/workspace-localization-01-1daa0e.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Localization.md",
+  "section": "intro",
+  "uploaded": "2023-09",
+  "alt": "Localization Settings for Workspace",
+  "verdict": "STALE-DETAIL",
+  "evidence": "Sidebar shows 'Application design'/'Localization', current names are 'Branding'/'Workspace localization'"
+ },
+ {
+  "src": "live/workspace-navigation-01-512336.png",
+  "article": "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Navigation.md",
+  "section": "intro",
+  "uploaded": "2021-07",
+  "alt": "",
+  "verdict": "LEGACY",
+  "evidence": "Top nav shows 'Vendors'/'Customers'/'Case Management'/'Analytics', all legacy/removed names"
+ }
+]
