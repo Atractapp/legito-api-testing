@@ -10,7 +10,7 @@
   },
   {
    "src": "live/dashboard-overview-03-8cec93.png",
-   "anchor": "Public and private Dashboards"
+   "anchor": "Layout"
   },
   {
    "src": "live/dashboard-overview-04-bf392f.png",
@@ -18,11 +18,11 @@
   },
   {
    "src": "live/dashboard-overview-05-a8e377.png",
-   "anchor": "Layout"
+   "anchor": "Editing"
   },
   {
    "src": "live/dashboard-overview-06-824f7b.png",
-   "anchor": "Layout"
+   "anchor": "Editing"
   },
   {
    "src": "live/dashboard-overview-07-e2078c.png",
@@ -44,11 +44,11 @@
   },
   {
    "src": "live/counter-02-675b6f.png",
-   "anchor": "Visualization"
+   "anchor": "Types"
   },
   {
    "src": "live/counter-03-85917e.png",
-   "anchor": "Visualization"
+   "anchor": "Types"
   }
  ],
  "DASHBOARD/Widget Types/Document Records - Grid.md": [
@@ -58,7 +58,7 @@
   },
   {
    "src": "live/document-records-grid-02-c1b43f.jpg",
-   "anchor": "Settings"
+   "anchor": "Choosing the sort"
   }
  ],
  "DASHBOARD/Widget Types/Document Records - Kanban.md": [
@@ -174,7 +174,7 @@
   },
   {
    "src": "live/download-06-3bd02a.png",
-   "anchor": "Export settings"
+   "anchor": "Permissions"
   },
   {
    "src": "live/download-07-77f1a3.png",
@@ -182,7 +182,7 @@
   },
   {
    "src": "live/download-08-a946d7.png",
-   "anchor": "Combining PDFs into one file"
+   "anchor": "Export settings"
   },
   {
    "src": "live/download-09-69d48c.png",
@@ -212,7 +212,7 @@
  "DOCUMENT EDITOR/Document Language/Translations.md": [
   {
    "src": "live/translations-01-c9a411.png",
-   "anchor": "intro"
+   "anchor": "Updating translations of older Template versions"
   }
  ],
  "DOCUMENT EDITOR/Document Navigation/Document View Options.md": [
@@ -246,11 +246,11 @@
  "DOCUMENT EDITOR/Document Review/Track Changes.md": [
   {
    "src": "live/track-changes-01-adc09b.png",
-   "anchor": "intro"
+   "anchor": "Permissions"
   },
   {
    "src": "live/track-changes-02-a73b31.png",
-   "anchor": "intro"
+   "anchor": "Permissions"
   },
   {
    "src": "live/track-changes-03-efe67f.png",
@@ -274,7 +274,7 @@
   },
   {
    "src": "live/track-changes-08-3d2557.png",
-   "anchor": "Making Track Changes mandatory"
+   "anchor": "Permissions"
   },
   {
    "src": "live/track-changes-09-d3a33c.png",
@@ -286,7 +286,7 @@
   },
   {
    "src": "live/track-changes-11-b8f3f7.png",
-   "anchor": "end"
+   "anchor": "Permissions"
   },
   {
    "src": "live/track-changes-12-60686e.png",
@@ -504,11 +504,11 @@
   },
   {
    "src": "live/esignature-overview-07-3e1da6.png",
-   "anchor": "Step 1 — Start from a document"
+   "anchor": "end"
   },
   {
    "src": "live/esignature-overview-08-09a97c.png",
-   "anchor": "Step 1 — Start from a document"
+   "anchor": "end"
   }
  ],
  "INTEGRATIONS/Integration Tools/API Keys.md": [
@@ -578,23 +578,23 @@
   },
   {
    "src": "live/push-api-webhooks-04-df8bdb.png",
-   "anchor": "2. Push Connection settings"
+   "anchor": "Variables in custom headers"
   },
   {
    "src": "live/push-api-webhooks-05-75c41f.png",
-   "anchor": "Attached files"
+   "anchor": "Variables in custom headers"
   },
   {
    "src": "live/push-api-webhooks-06-ed11c4.png",
-   "anchor": "3. What is pushed"
+   "anchor": "Variables in custom headers"
   },
   {
    "src": "live/push-api-webhooks-07-b99b85.png",
-   "anchor": "4. Logs"
+   "anchor": "Variables in custom headers"
   },
   {
    "src": "live/push-api-webhooks-08-945a1f.png",
-   "anchor": "4. Logs"
+   "anchor": "Variables in custom headers"
   }
  ],
  "INTEGRATIONS/Legito in Other Apps/Make.md": [
@@ -656,7 +656,7 @@
   },
   {
    "src": "live/salesforce-06-9b94bb.png",
-   "anchor": "Installing the component"
+   "anchor": "Setting up the component"
   },
   {
    "src": "live/salesforce-07-59345a.png",
@@ -676,7 +676,7 @@
   },
   {
    "src": "live/salesforce-11-a5277f.png",
-   "anchor": "end"
+   "anchor": "Step 6 — Download the JSON example"
   },
   {
    "src": "live/salesforce-12-f2526a.png",
@@ -728,43 +728,43 @@
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-02-27fcc3.jpg",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-03-49b7a4.png",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-04-97bdc5.png",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-05-fe4d6d.png",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-06-c698ee.png",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-07-2c7c81.png",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-08-dbcb89.png",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-09-150e84.png",
-   "anchor": "In Entra ID"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-10-3cf186.png",
-   "anchor": "In Legito"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-11-9a5546.png",
-   "anchor": "In Legito"
+   "anchor": "Configuration"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-12-abd49b.png",
@@ -772,7 +772,7 @@
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-13-1717cf.png",
-   "anchor": "Pairing a Role with an Entra ID group"
+   "anchor": "Creating a Role"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-14-db94ab.png",
@@ -800,7 +800,7 @@
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-17-ed5001.png",
-   "anchor": "Pairing a Role with an Entra ID group"
+   "anchor": "Pairing a Role with an Entra ID role"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-17-ed5001.png",
@@ -808,7 +808,7 @@
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-18-2fcc6f.png",
-   "anchor": "Pairing a Role with an Entra ID group"
+   "anchor": "Pairing a Role with an Entra ID role"
   },
   {
    "src": "live/microsoft-entra-id-azure-ad-18-2fcc6f.png",
@@ -840,7 +840,7 @@
   },
   {
    "src": "live/guided-tour-02-39b1fd.png",
-   "anchor": "Building a Guided Tour"
+   "anchor": "Annotations"
   }
  ],
  "ONBOARDING/User Onboarding.md": [
@@ -892,13 +892,13 @@
   },
   {
    "src": "live/object-administration-03-cd455d.png",
-   "anchor": "Customizing the create button"
+   "anchor": "Sharing"
   }
  ],
  "PROCESS MANAGEMENT/Document Management/Customizable Document Management Area.md": [
   {
    "src": "live/customizable-document-management-area-01-f3dfe7.png",
-   "anchor": "Settings"
+   "anchor": "intro"
   }
  ],
  "PROCESS MANAGEMENT/Document Management/Document Record Labels.md": [
@@ -978,7 +978,7 @@
   },
   {
    "src": "live/document-sharing-03-92d169.png",
-   "anchor": "Deadline notification"
+   "anchor": "External sharing"
   }
  ],
  "PROCESS MANAGEMENT/Records/Document Timeline.md": [
@@ -998,15 +998,15 @@
   },
   {
    "src": "live/document-record-properties-overview-02-e8c5b1.png",
-   "anchor": "Properties"
+   "anchor": "intro"
   },
   {
    "src": "live/document-record-properties-overview-03-3aabee.png",
-   "anchor": "Behavior settings"
+   "anchor": "Properties"
   },
   {
    "src": "live/document-record-properties-overview-04-30543d.png",
-   "anchor": "Behavior settings"
+   "anchor": "Properties"
   },
   {
    "src": "live/document-record-properties-overview-05-8e50d5.png",
@@ -1094,7 +1094,7 @@
  "PROCESS MANAGEMENT/Smart Document Management Overview.md": [
   {
    "src": "live/smart-document-management-overview-01-f38e29.png",
-   "anchor": "intro"
+   "anchor": "Filtering"
   },
   {
    "src": "live/smart-document-management-overview-02-95e807.png",
@@ -1106,7 +1106,7 @@
   },
   {
    "src": "live/smart-document-management-overview-04-b87a1e.png",
-   "anchor": "Searching"
+   "anchor": "Statistics"
   },
   {
    "src": "live/smart-document-management-overview-05-0e782b.png",
@@ -1148,19 +1148,19 @@
   },
   {
    "src": "live/workflow-approvals-05-0d5cd3.png",
-   "anchor": "Approval names"
+   "anchor": "Approval reset"
   },
   {
    "src": "live/workflow-approvals-06-8050fb.png",
-   "anchor": "Approvers"
+   "anchor": "Approval names"
   },
   {
    "src": "live/workflow-approvals-07-09e31d.png",
-   "anchor": "Approvers"
+   "anchor": "Approval names"
   },
   {
    "src": "live/workflow-approvals-08-319376.png",
-   "anchor": "Automatically launched Approvals"
+   "anchor": "Limitation"
   }
  ],
  "PROCESS MANAGEMENT/Workflows/Workflow Flows.md": [
@@ -1220,7 +1220,7 @@
   },
   {
    "src": "live/workflow-overview-04-3ebc77.png",
-   "anchor": "Workflow Editor"
+   "anchor": "Workflow administration"
   },
   {
    "src": "live/workflow-overview-05-d0d189.png",
@@ -1228,7 +1228,7 @@
   },
   {
    "src": "live/workflow-overview-06-2f2eea.png",
-   "anchor": "Workflow properties"
+   "anchor": "Workflow Editor"
   },
   {
    "src": "live/workflow-overview-07-ecc608.png",
@@ -1240,7 +1240,7 @@
   },
   {
    "src": "live/workflow-overview-09-43101b.jpg",
-   "anchor": "Workflow administration"
+   "anchor": "end"
   }
  ],
  "PROCESS MANAGEMENT/Workflows/Workflow Stages.md": [
@@ -1282,11 +1282,11 @@
   },
   {
    "src": "live/workflow-stages-10-d59dab.png",
-   "anchor": "Configuring a Stage"
+   "anchor": "end"
   },
   {
    "src": "live/workflow-stages-11-064c7c.png",
-   "anchor": "Configuring a Stage"
+   "anchor": "end"
   }
  ],
  "TEMPLATE AUTOMATION/Clause Library/Clause Library Overview.md": [
@@ -1304,7 +1304,7 @@
   },
   {
    "src": "live/clause-library-overview-04-9c9487.png",
-   "anchor": "Inserting Library Clauses into Templates"
+   "anchor": "How updates reach documents"
   },
   {
    "src": "live/clause-library-overview-05-328ad9.png",
@@ -1322,7 +1322,7 @@
  "TEMPLATE AUTOMATION/Clause Library/Specifics of Logical Dependencies.md": [
   {
    "src": "live/specifics-of-logical-dependencies-01-5c08ab.png",
-   "anchor": "intro"
+   "anchor": "From a Template toward a Library Clause"
   },
   {
    "src": "live/specifics-of-logical-dependencies-02-25ff8a.png",
@@ -1368,11 +1368,11 @@
   },
   {
    "src": "live/documentation-07-3bc265.png",
-   "anchor": "Finders"
+   "anchor": "Methods"
   },
   {
    "src": "live/documentation-08-1df023.png",
-   "anchor": "Authenticating against the Legito API"
+   "anchor": "RestClient"
   }
  ],
  "TEMPLATE AUTOMATION/Scripts/Script Administration.md": [
@@ -1408,7 +1408,7 @@
  "TEMPLATE AUTOMATION/Template Administration/Template Settings/Export Format Restrictions.md": [
   {
    "src": "live/export-format-restrictions-01-bd3dd8.png",
-   "anchor": "Setting the restriction"
+   "anchor": "Signing is unaffected"
   }
  ],
  "TEMPLATE AUTOMATION/Template Administration/Template Settings/Properties.md": [
@@ -1496,7 +1496,7 @@
   },
   {
    "src": "live/instructions-03-41d05c.png",
-   "anchor": "What Instructions are used for"
+   "anchor": "Initial Instructions"
   },
   {
    "src": "live/instructions-04-29c495.png",
@@ -1528,7 +1528,7 @@
   },
   {
    "src": "live/search-keywords-03-e3650f.png",
-   "anchor": "Why it matters"
+   "anchor": "intro"
   },
   {
    "src": "live/search-keywords-04-fe230d.png",
@@ -1610,11 +1610,11 @@
   },
   {
    "src": "live/template-automation-overview-04-b46bd4.png",
-   "anchor": "The building blocks"
+   "anchor": "Template Suite settings"
   },
   {
    "src": "live/template-automation-overview-05-c57b25.png",
-   "anchor": "Template settings"
+   "anchor": "Template Suite settings"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Any Content.md": [
@@ -1642,7 +1642,7 @@
  "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Days-in-date.md": [
   {
    "src": "live/condition-to-days-in-date-01-605320.png",
-   "anchor": "intro"
+   "anchor": "Operators"
   },
   {
    "src": "live/condition-to-days-in-date-02-349b73.png",
@@ -1708,7 +1708,7 @@
  "TEMPLATE AUTOMATION/Template Editor/Conditions/Condition To Text Inputs.md": [
   {
    "src": "live/condition-to-text-inputs-01-ffdc97.png",
-   "anchor": "intro"
+   "anchor": "Operators"
   },
   {
    "src": "live/condition-to-text-inputs-02-939000.png",
@@ -1762,7 +1762,7 @@
   },
   {
    "src": "live/conditional-default-values-06-3e7232.png",
-   "anchor": "Supported Elements and Clauses"
+   "anchor": "Limitations"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Default Values & Warnings/Warnings.md": [
@@ -1772,7 +1772,7 @@
   },
   {
    "src": "live/warnings-02-5aa5ac.png",
-   "anchor": "Impact levels"
+   "anchor": "Example"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Advanced Layout Design.md": [
@@ -1786,15 +1786,15 @@
   },
   {
    "src": "live/advanced-layout-design-03-901afa.png",
-   "anchor": "Headers and footers"
+   "anchor": "Creating an Advanced Layout Design"
   },
   {
    "src": "live/advanced-layout-design-04-971d04.png",
-   "anchor": "Template Tag annotations"
+   "anchor": "Creating an Advanced Layout Design"
   },
   {
    "src": "live/advanced-layout-design-05-e00058.jpg",
-   "anchor": "Formatting logic"
+   "anchor": "Creating an Advanced Layout Design"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Formatting, Styles & Design/Formatting, Styles & Design Overview.md": [
@@ -1854,7 +1854,7 @@
   },
   {
    "src": "live/styles-08-922814.png",
-   "anchor": "Clear formatting"
+   "anchor": "Default Styles per Clause level"
   },
   {
    "src": "live/styles-09-7341d1.png",
@@ -1862,7 +1862,7 @@
   },
   {
    "src": "live/styles-10-00889b.png",
-   "anchor": "Styles administration"
+   "anchor": "end"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Import/Import Legito Templates.md": [
@@ -1906,7 +1906,7 @@
  "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Buttons.md": [
   {
    "src": "live/repeat-to-buttons-01-dea28d.png",
-   "anchor": "intro"
+   "anchor": "Configuring the Repeat"
   },
   {
    "src": "live/repeat-to-buttons-02-7827fd.png",
@@ -1922,7 +1922,7 @@
  "TEMPLATE AUTOMATION/Template Editor/Repeats/Repeat To Text Inputs.md": [
   {
    "src": "live/repeat-to-text-inputs-01-0acde9.png",
-   "anchor": "intro"
+   "anchor": "Configuring the Repeat"
   },
   {
    "src": "live/repeat-to-text-inputs-02-f1fdad.png",
@@ -1958,11 +1958,11 @@
   },
   {
    "src": "live/date-02-366670.png",
-   "anchor": "Formatting"
+   "anchor": "intro"
   },
   {
    "src": "live/date-03-293bcc.png",
-   "anchor": "Help text"
+   "anchor": "Deadline reminders"
   },
   {
    "src": "live/date-04-858321.png",
@@ -2002,7 +2002,7 @@
  "TEMPLATE AUTOMATION/Template Editor/Structure/Image.md": [
   {
    "src": "live/image-01-4c1e7a.png",
-   "anchor": "intro"
+   "anchor": "Two ways to use it"
   },
   {
    "src": "live/image-02-07700d.png",
@@ -2012,7 +2012,7 @@
  "TEMPLATE AUTOMATION/Template Editor/Structure/Link.md": [
   {
    "src": "live/link-01-69856c.png",
-   "anchor": "intro"
+   "anchor": "What a Link does"
   },
   {
    "src": "live/link-02-7ff2e9.png",
@@ -2024,11 +2024,11 @@
   },
   {
    "src": "live/link-04-ac3e86.png",
-   "anchor": "What a Link does"
+   "anchor": "Compatible targets"
   },
   {
    "src": "live/link-05-b5c64f.png",
-   "anchor": "What a Link does"
+   "anchor": "Compatible targets"
   },
   {
    "src": "live/link-06-a97ffe.png",
@@ -2040,7 +2040,7 @@
   },
   {
    "src": "live/link-08-6731dc.png",
-   "anchor": "Creating a Link"
+   "anchor": "Formatting"
   },
   {
    "src": "live/link-09-aec7a1.png",
@@ -2052,17 +2052,17 @@
   },
   {
    "src": "live/link-11-370782.png",
-   "anchor": "Export"
+   "anchor": "Troubleshooting"
   },
   {
    "src": "live/link-12-dd8eef.png",
-   "anchor": "Export"
+   "anchor": "Troubleshooting"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Structure/Money.md": [
   {
    "src": "live/money-01-b2d708.png",
-   "anchor": "intro"
+   "anchor": "Short form and long form"
   },
   {
    "src": "live/money-02-794a94.png",
@@ -2110,23 +2110,23 @@
   },
   {
    "src": "live/qr-code-03-c89982.png",
-   "anchor": "Inserting a value into the code"
+   "anchor": "end"
   },
   {
    "src": "live/qr-code-04-1a790b.png",
-   "anchor": "Inserting a value into the code"
+   "anchor": "end"
   },
   {
    "src": "live/qr-code-05-06dd2d.png",
-   "anchor": "Inserting a value into the code"
+   "anchor": "end"
   },
   {
    "src": "live/qr-code-06-bf190a.png",
-   "anchor": "Inserting a value into the code"
+   "anchor": "end"
   },
   {
    "src": "live/qr-code-07-15ed1d.png",
-   "anchor": "Inserting a value into the code"
+   "anchor": "end"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Structure/Question.md": [
@@ -2254,11 +2254,11 @@
   },
   {
    "src": "live/table-03-3f50f2.png",
-   "anchor": "Merging cells"
+   "anchor": "Table tools"
   },
   {
    "src": "live/table-04-8b58f4.png",
-   "anchor": "Merging cells"
+   "anchor": "Table tools"
   },
   {
    "src": "live/table-05-dd6e95.png",
@@ -2266,7 +2266,7 @@
   },
   {
    "src": "live/table-06-e73603.png",
-   "anchor": "Table tools"
+   "anchor": "Rows and columns are configured separately"
   },
   {
    "src": "live/table-07-d02b84.png",
@@ -2412,13 +2412,13 @@
   },
   {
    "src": "live/document-records-data-extraction-02-a2f73a.png",
-   "anchor": "Extraction rules"
+   "anchor": "3. Extracting data into Document Record Properties"
   }
  ],
  "TEMPLATE AUTOMATION/Template Editor/Template Tags/Template Tags Overview.md": [
   {
    "src": "live/template-tags-overview-01-5b5a5e.png",
-   "anchor": "intro"
+   "anchor": "What Tags are used for"
   }
  ],
  "TEMPLATE AUTOMATION/Template Types/Form Template.md": [
@@ -2454,7 +2454,7 @@
   },
   {
    "src": "live/pdf-template-04-2a5ef0.png",
-   "anchor": "Mapping fields with Template Tags"
+   "anchor": "Adding fields the PDF does not have"
   },
   {
    "src": "live/pdf-template-05-205d33.png",
@@ -2484,7 +2484,7 @@
   },
   {
    "src": "live/template-type-overview-04-5eafa2.png",
-   "anchor": "intro"
+   "anchor": "Choosing between Document and Form"
   }
  ],
  "WORKSPACE ADMINISTRATION/People & Access/Guests.md": [
@@ -2514,7 +2514,7 @@
   },
   {
    "src": "live/user-groups-04-4a07c4.png",
-   "anchor": "Where User Groups appear"
+   "anchor": "Access levels"
   }
  ],
  "WORKSPACE ADMINISTRATION/People & Access/Users and Permissions.md": [
@@ -2532,7 +2532,7 @@
   },
   {
    "src": "live/users-and-permissions-04-e657a9.png",
-   "anchor": "Workspace Admin"
+   "anchor": "Adding a user"
   },
   {
    "src": "live/users-and-permissions-05-5ee811.png",
@@ -2548,7 +2548,7 @@
   },
   {
    "src": "live/users-and-permissions-08-c4a09b.png",
-   "anchor": "Adding a user"
+   "anchor": "end"
   }
  ],
  "WORKSPACE ADMINISTRATION/Personal Settings/Notifications.md": [
@@ -2568,7 +2568,7 @@
  "WORKSPACE ADMINISTRATION/Personal Settings/User Account.md": [
   {
    "src": "live/user-account-01-96b1c2.gif",
-   "anchor": "intro"
+   "anchor": "Settings"
   }
  ],
  "WORKSPACE ADMINISTRATION/Workspace Settings/Announcements.md": [
@@ -2642,11 +2642,11 @@
  "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Branding.md": [
   {
    "src": "live/workspace-branding-01-576584.png",
-   "anchor": "intro"
+   "anchor": "Settings"
   },
   {
    "src": "live/workspace-branding-02-58881c.png",
-   "anchor": "intro"
+   "anchor": "Settings"
   }
  ],
  "WORKSPACE ADMINISTRATION/Workspace Settings/Workspace Footer.md": [

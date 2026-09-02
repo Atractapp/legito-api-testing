@@ -240,6 +240,9 @@ function placeByOverride(html, images, override) {
 }
 
 function placeLiveImages(html, images, override) {
+  // the live article occasionally repeats a screenshot - render each once
+  const seenSrc = new Set();
+  images = images.filter(im => !seenSrc.has(im.src) && seenSrc.add(im.src));
   if (override && override.length) {
     const r = placeByOverride(html, images, override);
     if (r !== null) { ovUsed++; return r; }
